@@ -1,0 +1,34 @@
+<p>employee works!</p>
+<form [formGroup]="employeeForm" class="example-form" (ngSubmit)="onSubmit()">
+    <mat-form-field class="example-full-width">
+      <mat-label>First Name</mat-label>
+      <input matInput placeholder="First Name" formControlName="firstName">
+    </mat-form-field>
+<br>
+    <mat-form-field class="example-full-width">
+        <mat-label>Last Name</mat-label>
+        <input matInput placeholder="Last Name" formControlName="lastName">
+      </mat-form-field>
+<br>
+      <mat-form-field class="example-full-width">
+        <mat-label>Position</mat-label>
+        <input matInput placeholder="Position" formControlName="position">
+      </mat-form-field>
+<br>
+      <mat-form-field class="example-full-width">
+        <mat-label>Age</mat-label>
+        <input matInput placeholder="Age" formControlName="age">
+      </mat-form-field>
+<br>
+<mat-form-field class="example-full-width">
+    <mat-label>Email</mat-label>
+    <input matInput placeholder="Email" formControlName="age">
+  </mat-form-field>
+<br>
+      <mat-form-field class="example-full-width">
+        <mat-label>Contact No.</mat-label>
+        <input matInput placeholder="Contact No." formControlName="contactNo">
+      </mat-form-field>
+<br>
+    <button type="submit" value="submit" mat-flat-button>Basic</button>
+  
