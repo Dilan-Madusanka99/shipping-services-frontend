@@ -60,10 +60,17 @@ const routes: Routes = [
       {
         path: 'pages',
         loadChildren: () => import('./demo/pages/pages.module').then((m) => m.PagesModule) 
-      }
+      },
+      {
+        path: 'register',
+        loadChildren: () => import('./registration/registration.module'). then((m) => m.RegistrationModule)
+      },
       
     ]
-  }
+  },
+
+
+
 ];
 
 @NgModule({

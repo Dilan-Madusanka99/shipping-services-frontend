@@ -106,8 +106,8 @@ const NavigationItems = [
   },
 
   {
-    id: 'Employee',
-    title: 'Employee',
+    id: 'Registration',
+    title: 'Registration',
     type: 'group',
     icon: 'icon-navigation',
     auth: authenticationEnum.Home,
@@ -116,7 +116,18 @@ const NavigationItems = [
         id: 'EmployeeDet',
         title: 'Employee',
         type: 'item',
-        url: '/pages/employee',
+        url: '/registration/employee',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
+
+      {
+        id: 'SeafarersDet',
+        title: 'Seafarers',
+        type: 'item',
+        url: '/registration/seafarers',
         icon: 'feather icon-home',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,

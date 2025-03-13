@@ -29,6 +29,8 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@a
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { ToastrModule } from 'ngx-toastr';
+import { RegistrationModule } from './registration/registration.module';
+
 
 @NgModule({
   declarations: [
@@ -56,7 +58,8 @@ import { ToastrModule } from 'ngx-toastr';
     SharedModule,
     BrowserAnimationsModule,
     MaterialModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    RegistrationModule   
   ],
   providers: [
     NavigationItem,

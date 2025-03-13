@@ -22,7 +22,7 @@ export class FormDemoServiceService {
         Authorization: 'Bearer ' + this.httpService.getAuthToken()
       };
     }
-    return this.http.post(requestUrl, form_details, headers);
+    return this.http.post(requestUrl, form_details, {headers: headers});
   }  
 
   getData() {

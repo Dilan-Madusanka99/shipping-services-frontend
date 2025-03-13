@@ -3,28 +3,50 @@
     <form [formGroup]="demoForm" class="example-form" (ngSubmit)="onSubmit()">
     <mat-form-field class="example-full-width">
       <mat-label>First Name</mat-label>
-      <input matInput placeholder="First Name" value="Sushi" formControlName="firstName" />
+      <input matInput placeholder="First Name" formControlName="firstName" />
       <span class="text-danger" 
-      *ngIf="(demoForm.get('firstName').touched || submitted) && 
-              demoForm.get('firstName').errors &&
-              demoForm.get['required'] ">
+      *ngIf="(demoForm.get('firstName').touched || submitted) && demoForm.get('firstName').errors && demoForm.get('firstName').errors['required'] ">
         First Name is Required
       </span>
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
         <mat-label>Last Name</mat-label>
-        <input matInput placeholder="Last Name" value="Sushi" formControlName="lastName" />
+        <input matInput placeholder="Last Name" formControlName="lastName" />
+        <span class="text-danger" 
+      *ngIf="(demoForm.get('lastName').touched || submitted) && demoForm.get('lastName').errors && demoForm.get('lastName').errors['minlength'] ">
+        Minimum length of last name three charactors
+      </span>
+      <span class="text-danger" 
+      *ngIf="(demoForm.get('lastName').touched || submitted) && demoForm.get('lastName').errors && demoForm.get('lastName').errors['maxlength'] ">
+        Maximum length of last name eight charactors
+      </span>
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
         <mat-label>Age</mat-label>
-        <input matInput placeholder="Age" value="Sushi" formControlName="age" />
+        <input matInput placeholder="Age" formControlName="age" />
+        <span class="text-danger" 
+      *ngIf="(demoForm.get('age').touched || submitted) && demoForm.get('age').errors && demoForm.get('age').errors['min'] ">
+        Age must be greater than 0
+      </span>
+      <span class="text-danger" 
+      *ngIf="(demoForm.get('age').touched || submitted) && demoForm.get('age').errors && demoForm.get('age').errors['max'] ">
+        Age must be less than 120
+      </span>
+      <span class="text-danger" 
+      *ngIf="(demoForm.get('age').touched || submitted) && demoForm.get('age').errors && demoForm.get('age').errors['customeAgeValidator'] ">
+        Please insert a valid Age
+      </span>
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
         <mat-label>Email</mat-label>
-        <input matInput placeholder="Email" value="Sushi" formControlName="email" />
+        <input matInput placeholder="Email" formControlName="email" />
+        <span class="text-danger" 
+      *ngIf="(demoForm.get('email').touched || submitted) && demoForm.get('email').errors && demoForm.get('email').errors['email'] ">
+        Please insert a valid email
+      </span>
       </mat-form-field>
 
       <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled"> {{ saveButtonLabel }} </button>
@@ -82,6 +104,8 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>  
+    
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
   </div>
 </div>
 
