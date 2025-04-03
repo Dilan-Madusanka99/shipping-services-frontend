@@ -106,8 +106,8 @@ const NavigationItems = [
   },
 
   {
-    id: 'Registration',
-    title: 'Registration',
+    id: 'registration',
+    title: 'Employee',
     type: 'group',
     icon: 'icon-navigation',
     auth: authenticationEnum.Home,
@@ -116,18 +116,47 @@ const NavigationItems = [
         id: 'EmployeeDet',
         title: 'Employee',
         type: 'item',
-        url: '/registration/employee',
+        url: '/register/employee',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      }
+    ]
+  },
+
+  {
+    id: 'Seafarers',
+    title: 'Seafarers',
+    type: 'group',
+    icon: 'icon-navigation',
+    auth: authenticationEnum.Home,
+    children: [
+      {
+        id: 'SeafarersRegistrationDet',
+        title: 'Personal Details',
+        type: 'item',
+        url: '/seafarers/seafarersRegistration',
         icon: 'feather icon-home',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
       },
-
       {
-        id: 'SeafarersDet',
-        title: 'Seafarers',
+        id: 'SeafarersRegistrationDet',
+        title: 'Other Details',
         type: 'item',
-        url: '/registration/seafarers',
+        url: '/seafarers/otherDetailsRegistration',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
+      {
+        id: 'SeafarersRegistrationDet',
+        title: 'Certificates Details',
+        type: 'item',
+        url: '/seafarers/CertificateDetails',
         icon: 'feather icon-home',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
@@ -135,6 +164,7 @@ const NavigationItems = [
       }
     ]
   }
+
    
   // {
   //   id: 'ui-element',

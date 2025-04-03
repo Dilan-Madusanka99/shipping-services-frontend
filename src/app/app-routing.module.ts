@@ -62,10 +62,13 @@ const routes: Routes = [
         loadChildren: () => import('./demo/pages/pages.module').then((m) => m.PagesModule) 
       },
       {
-        path: 'register',
+        path: 'register', // register/employee
         loadChildren: () => import('./registration/registration.module'). then((m) => m.RegistrationModule)
       },
-      
+      {
+        path: 'seafarers', // register/seafarers
+        loadChildren: () => import('./seafarers/seafarers.module'). then((m) => m.SeafarersModule)
+      },
     ]
   },
 

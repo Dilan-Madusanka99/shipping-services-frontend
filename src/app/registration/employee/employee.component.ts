@@ -36,7 +36,7 @@ export class EmployeeComponent implements OnInit{
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  selected: String ;
+  selected: String;
   saveButtonLabel = 'Save';
   mode = 'add';
   selectedData;
@@ -54,8 +54,8 @@ export class EmployeeComponent implements OnInit{
       contactNo: new FormControl(''),
       email: new FormControl(''),
       address: new FormControl(''),
-      emgContactName: new FormControl(''),
-      emgContactNo: new FormControl(''),
+      emergencyContactName: new FormControl(''),
+      emergencyContactNo: new FormControl(''),
     });
   }
 
@@ -141,7 +141,7 @@ export class EmployeeComponent implements OnInit{
       this.employeeForm.reset();
       this.saveButtonLabel = 'Save';
       this.employeeForm.enable();
-      this.isButtonDisabled = true;
+      this.isButtonDisabled = false;
     }
 
     public editData(data: any): void {

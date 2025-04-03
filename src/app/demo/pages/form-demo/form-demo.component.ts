@@ -133,7 +133,7 @@ demoForm: FormGroup;
     this.demoForm.patchValue(data);
     this.saveButtonLabel = 'Edit';
     this.mode = 'edit';
-    this.selectedData = 'data'; 
+    this.selectedData = data; 
   }
   public deleteData(data: any): void {
     const id = data.id;

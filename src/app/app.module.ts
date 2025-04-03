@@ -30,6 +30,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { RegistrationModule } from './registration/registration.module';
+import { SeafarersModule } from './seafarers/seafarers.module';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { RegistrationModule } from './registration/registration.module';
     BrowserAnimationsModule,
     MaterialModule,
     ToastrModule.forRoot(),
-    RegistrationModule   
+    RegistrationModule,   
+    SeafarersModule
   ],
   providers: [
     NavigationItem,

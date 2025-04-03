@@ -5,11 +5,10 @@ import { RegistrationRoutes } from './registration.routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EmployeeComponent } from './employee/employee.component';
 import { MaterialModule } from '../material.module';
-import { SeafarersComponent } from './seafarers/seafarers.component';
 
 
 @NgModule({
-  declarations: [ EmployeeComponent, SeafarersComponent ],
+  declarations: [ EmployeeComponent ],
   imports: [ CommonModule, RouterModule.forChild(RegistrationRoutes), ReactiveFormsModule, MaterialModule ]
 })
 export class RegistrationModule { }
