@@ -1,80 +1,60 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.service';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
+import { CertificatesRegistrationService } from 'src/app/services/seafarers/certificates-registration.service';
 
 export interface PeriodicElement {
-  sidno: String;
-  position: string;
-  surname: string;
-  mobile: string;
-  availableDate: Date;
+  ecName: string;
+  cIssuedDate: Date;
+  cExpiredDate: Date;
 }
 
 const ELEMENT_DATA: any[] = [ 
-  {sidno: '100', position: 'AB', surname: 'Fernando', mobile: '076', availableDate: '07/04/2025'},
+  {cName: 'AFF', cIssuedDate: '07/04/2025', cExpiredDate: '07/04/2030'},
 ];
 
 @Component({
-  selector: 'app-seafarers-registration',
+  selector: 'app-certificates-registration',
   standalone: false,
-  templateUrl: './seafarers-registration.component.html',
-  styleUrl: './seafarers-registration.component.scss',
+  templateUrl: './certificates-registration.component.html',
+  styleUrl: './certificates-registration.component.scss',
   providers: [provideNativeDateAdapter()],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SeafarersRegistrationComponent {
+export class CertificatesRegistrationComponent {
 
-  seafarersForm : FormGroup;
-
-  displayedColumns: string[] = ['sidNo' ,'position', 'surname', 'mobile', 'availableDate', 'actions'];
-  dataSource: MatTableDataSource<any>;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  selected: string;
-  isButtonDisabled = false;
-  saveButtonLabel = 'Save';
-  mode = 'add';
-  selectedData;
-  submitted: boolean;
-
-  constructor(private fb: FormBuilder, private seafarersService: SeafarersServiceService, private messageService: MessageServiceService) {
-      this.seafarersForm = this.fb.group({
-        sidNo: new FormControl('', [Validators.required]),
-        position: new FormControl(''),
-        appliedDate: new FormControl(''),
-        availableDate: new FormControl(''),
-        surname: new FormControl(''),
-        otherNames: new FormControl(''),
-        dob: new FormControl(''),
-        birthPlace: new FormControl(''),
-        nic: new FormControl(''),
-        religion: new FormControl(''),
-        marriedStatus: new FormControl(''),
-        gender: new FormControl(''),
-        noOfChildren: new FormControl(''),
-        address: new FormControl(''),
-        home: new FormControl(''),
-        mobile: new FormControl(''),
-        email: new FormControl(''),
-        kinName: new FormControl(''),
-        kinRelationship: new FormControl(''),
-        kinAddress: new FormControl(''),
-        kinMobile: new FormControl(''),
-        kinEmail: new FormControl(''),
-        englishLanguage: new FormControl(''),
+  certificatesRegistrationForm : FormGroup;
+    
+    displayedColumns: string[] = ['cName', 'cIssuedDate', 'cExpiredDate', 'actions'];
+    dataSource: MatTableDataSource<any>;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
+    selected: String;
+    saveButtonLabel = 'Save';
+    mode = 'add';
+    selectedData;
+    isButtonDisabled = false;
+  
+    constructor(private fb: FormBuilder, private seafarersService: CertificatesRegistrationService, private messageService: MessageServiceService) {
+      this.certificatesRegistrationForm = this.fb.group({
+        sidNo: new FormControl(''),
+        cName: new FormControl(''),
+        cNo: new FormControl(''),
+        cIssuedPlace: new FormControl(''),
+        cIssuedDate: new FormControl(''),
+        cExpiredDate: new FormControl(''),        
       });
-  }
-
-  ngOnInit(): void{
-    this.populateData();
-  }
-
-  applyFilter(event: Event) {
+    }
+  
+    ngOnInit(): void{
+      this.populateData();
+    }
+  
+    applyFilter(event: Event) {
       const filterValue = (event.target as HTMLInputElement).value;
       this.dataSource.filter = filterValue.trim().toLowerCase();
   
@@ -108,10 +88,10 @@ export class SeafarersRegistrationComponent {
         try {
           console.log('mode' + this.mode);
           console.log('Form Submitted');
-          console.log(this.seafarersForm.value);
+          console.log(this.certificatesRegistrationForm.value);
   
           if (this.mode === 'add'){
-            this.seafarersService.serviceCall(this.seafarersForm.value).subscribe({
+            this.seafarersService.serviceCall(this.certificatesRegistrationForm.value).subscribe({
               next: (response: any) => {
                 if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {
                   this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
@@ -127,7 +107,7 @@ export class SeafarersRegistrationComponent {
             });
           }
           else if (this.mode === 'edit'){
-            this.seafarersService.editData(this.selectedData?.id, this.seafarersForm.value).subscribe ({
+            this.seafarersService.editData(this.selectedData?.id, this.certificatesRegistrationForm.value).subscribe ({
               next: (response: any) => {
                 let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
                 this.dataSource.data[elementIndex] = response;
@@ -140,7 +120,7 @@ export class SeafarersRegistrationComponent {
             });
           }
           this.mode = 'add';
-          this.seafarersForm.disable();
+          this.certificatesRegistrationForm.disable();
           this.isButtonDisabled = true;
         } catch (error) {
           console.log(error);
@@ -149,14 +129,14 @@ export class SeafarersRegistrationComponent {
       }
   
       public resetData(): void {
-        this.seafarersForm.reset();
+        this.certificatesRegistrationForm.reset();
         this.saveButtonLabel = 'Save';
-        this.seafarersForm.enable();
+        this.certificatesRegistrationForm.enable();
         this.isButtonDisabled = false;
       }
   
       public editData(data: any): void {
-        this.seafarersForm.patchValue(data);
+        this.certificatesRegistrationForm.patchValue(data);
         this.saveButtonLabel = 'Edit';
         this.mode = 'edit';
         this.selectedData = data;
@@ -189,5 +169,5 @@ export class SeafarersRegistrationComponent {
       public refreshData(): void {
         this.populateData();
       }
-      
+
 }

@@ -156,7 +156,17 @@ const NavigationItems = [
         id: 'SeafarersRegistrationDet',
         title: 'Certificates Details',
         type: 'item',
-        url: '/seafarers/CertificateDetails',
+        url: '/seafarers/certificatesRegistration',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
+      {
+        id: 'SeafarersRegistrationDet',
+        title: 'Sea Services',
+        type: 'item',
+        url: '/seafarers/seaServices',
         icon: 'feather icon-home',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,

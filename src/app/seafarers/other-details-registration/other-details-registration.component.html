@@ -9,13 +9,11 @@
         <mat-form-field>
           <mat-label> SID No </mat-label>
           <mat-select formControlName="sidNo">
-            <mat-option value="AB Trainee">AB Trainee</mat-option>
+            <mat-option value="001">001</mat-option>
+            <mat-option value="002">002</mat-option>
+            <mat-option value="003">003</mat-option>
           </mat-select>
         </mat-form-field> 
-        <!-- <mat-form-field class="example-full-width">
-          <mat-label> SID NO </mat-label>
-          <input matInput placeholder="sidNo" formControlName="sidNo" >
-        </mat-form-field> -->
         <br>
 
         <mat-form-field>
@@ -162,19 +160,6 @@
             <mat-icon>refresh</mat-icon>
           </button>
         </div>
-
-        <!-- <div class="dropdown">
-          <input type="text" [(ngModel)]="searchText" placeholder="Search..." class="search-box">
-        
-          <div class="dropdown-content">
-            <ul>
-              <li *ngFor="let item of filteredItems" (click)="filteredItems(item)">
-                {{ item }}
-              </li>
-            </ul>
-          </div>
-        </div> -->
-
 
         <mat-form-field class="filter">
           <mat-label>Filter</mat-label>

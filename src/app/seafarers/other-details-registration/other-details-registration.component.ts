@@ -5,7 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
-import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.service';
+import { OtherDetailsRegistrationService } from 'src/app/services/seafarers/other-details-registration.service';
 
 export interface PeriodicElement {
   sidNo: String;
@@ -41,7 +41,7 @@ export class OtherDetailsRegistrationComponent {
   selectedData;
   
 
-  constructor(private fb: FormBuilder, private seafarersService: SeafarersServiceService, private messageService: MessageServiceService) {
+  constructor(private fb: FormBuilder, private seafarersService: OtherDetailsRegistrationService, private messageService: MessageServiceService) {
     this.otherDetailsRegistrationForm = this.fb.group({
       sidNo: new FormControl(''),
       sidIssuedPlace: new FormControl(''),
@@ -63,11 +63,6 @@ export class OtherDetailsRegistrationComponent {
 
   }
 
-  // get filteredItems() {
-  //   return this.items.filter(item =>
-  //     item.toLowerCase().includes(this.searchText.toLowerCase())
-  //   );
-  // }
 
   ngOnInit(): void{
     this.populateData();

@@ -7,12 +7,12 @@ import { RegistrationRoutes } from './seafarers.routing.module';
 import { MatRadioModule } from '@angular/material/radio';
 import { SeafarersRegistrationComponent } from './seafarers-registration/seafarers-registration.component';
 import { OtherDetailsRegistrationComponent } from './other-details-registration/other-details-registration.component';
-import { CertificateDetailsComponent } from './certificate-details/certificate-details.component';
-
+import { CertificatesRegistrationComponent } from './certificates-registration/certificates-registration.component';
+import { SeaServicesComponent } from './sea-services/sea-services.component';
 
 
 @NgModule({
-  declarations: [ SeafarersRegistrationComponent, OtherDetailsRegistrationComponent, CertificateDetailsComponent],
+  declarations: [ SeafarersRegistrationComponent, OtherDetailsRegistrationComponent, CertificatesRegistrationComponent, SeaServicesComponent],
   imports: [CommonModule, RouterModule.forChild(RegistrationRoutes), ReactiveFormsModule, MaterialModule, MatRadioModule ]
 })
 export class SeafarersModule { }

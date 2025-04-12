@@ -60,7 +60,7 @@ import { SeafarersModule } from './seafarers/seafarers.module';
     BrowserAnimationsModule,
     MaterialModule,
     ToastrModule.forRoot(),
-    RegistrationModule,   
+    RegistrationModule, 
     SeafarersModule
   ],
   providers: [

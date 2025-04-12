@@ -1,0 +1,133 @@
+<div class="container">
+     <div class="form-section">
+
+        <form [formGroup]="certificatesRegistrationForm" class="certificatesRegistrationForm" (ngSubmit)="onSubmit()">
+
+        <h5>Certificate Details</h5>
+
+            <!-- sid dropdown filter -->
+            <mat-form-field class="w-100">
+                <mat-label> SID No </mat-label>
+                <mat-select formControlName="sidNo">
+                  <mat-option value="001">001</mat-option>
+                </mat-select>
+            </mat-form-field> 
+            <br>
+
+            <mat-form-field>
+                <mat-label> Certificate Name </mat-label>
+                <mat-select formControlName="cName">
+                  <mat-option value="Advanced Fire Fighting">Advanced Fire Fighting</mat-option>
+                  <mat-option value="Medical First Aid">Medical First Aid</mat-option>
+                  <mat-option value="Surival Craft & Rescue Boat">Surival Craft & Rescue Boat</mat-option>
+                  <mat-option value="Refresher Certificates">Refresher Certificates</mat-option>
+                  <mat-option value="Designated Security Duties">Security Training & Designated Security Duties</mat-option>
+                  <mat-option value="Oil & Chemical Tanker">Oil & Chemical Tanker</mat-option>
+                  <mat-option value="Tanker Endorsement">Tanker Endorsement</mat-option>
+                  <mat-option value="Basic Endorsement">Basic Endorsement</mat-option>
+                  <mat-option value="II-4 (Deck)">Certificate of Proficiency (II-4)</mat-option>
+                  <mat-option value="II-5 (Deck)">Certificate of Proficiency (II-5)</mat-option>
+                  <mat-option value="III-4 (Engine)">Certificate of Proficiency (III-4)</mat-option>
+                  <mat-option value="III-5 (Engine)">Certificate of Proficiency (III-5)</mat-option>
+                  <mat-option value="III-7 (ETR)">Certificate of Proficiency (ETR-7)</mat-option>
+                  <mat-option value="MLC">Certificate of Proficiency (MLC)</mat-option>
+                  <mat-option value="6G">Fitter (6G)</mat-option>
+                  <mat-option value="LR">Lloyd Certificate (LR)</mat-option>
+                </mat-select>
+            </mat-form-field> 
+            <br>   
+            
+            <mat-form-field class="example-full-width">
+                <mat-label> Certificate No </mat-label>
+                <input matInput placeholder="Certificate No" formControlName="cNo" >
+              </mat-form-field> 
+            <br>
+            
+            <mat-form-field>
+                <mat-label> Issued Place </mat-label>
+                <mat-select formControlName="cIssuedPlace">
+                  <mat-option value="Colombo">Cinec Campus (Pvt) Ltd</mat-option>
+                  <mat-option value="Colombo">Lanka Academy of Technological Studies</mat-option>
+                  <mat-option value="Colombo">Southern Maritime Training Institiute (SMTI)</mat-option>
+                  <mat-option value="Colombo">MSTI Maritime Academy</mat-option>
+                  <mat-option value="Colombo">UNK Global Maritime Institiute</mat-option>
+                </mat-select>
+            </mat-form-field>  
+            <br>
+
+            <mat-form-field>
+                <mat-label> Issued Date </mat-label>
+                <input matInput [matDatepicker]="cIssuedDate" formControlName="cIssuedDate"/>
+                <mat-hint> MM/DD/YYYY </mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="cIssuedDate"></mat-datepicker-toggle>
+                <mat-datepicker #cIssuedDate></mat-datepicker>
+            </mat-form-field>
+            <br>
+
+            <mat-form-field>
+                <mat-label> Expired Date </mat-label>
+                <input matInput [matDatepicker]="cExpiredDate" formControlName="cExpiredDate"/>
+                <mat-hint> MM/DD/YYYY </mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="cExpiredDate"></mat-datepicker-toggle>
+                <mat-datepicker #cExpiredDate></mat-datepicker>
+            </mat-form-field>
+            <br><br>
+
+            <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled"> {{saveButtonLabel}} </button>
+            <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()"> Reset </button>
+
+        </form>
+    </div>
+
+    <div class="table-section">
+
+        <div class="refresh-filter-section">
+            <div class="refresh-button">
+              <button mat-raised-button color="primary" (click)="refreshData()">
+                <mat-icon>refresh</mat-icon>
+              </button>
+            </div>
+
+            <mat-form-field class="filter">
+                <mat-label>Filter</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+              </mat-form-field>
+            </div>
+
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                <ng-container matColumnDef="cName">
+                    <th mat-header-cell *matHeaderCellDef> Certificate Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.cName}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="cIssuedDate">
+                    <th mat-header-cell *matHeaderCellDef> Issued Date </th>
+                    <td mat-cell *matCellDef="let element"> {{element.cIssuedDate | date: 'dd/MM/yyyy'}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="cExpiredDate">
+                    <th mat-header-cell *matHeaderCellDef> Expire Date </th>
+                    <td mat-cell *matCellDef="let element"> {{element.cExpiredDate | date: 'dd/MM/yyyy'}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <td mat-cell *matCellDef="let element"> 
+                      <button mat-icon-button color="warn" (click)="editData(element)" matTooltip="edit">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button color="warn" (click)="deleteData(element)" matTooltip="delete">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </ng-container>
+          
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>  
+                  
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+
+    </div>
+</div>
