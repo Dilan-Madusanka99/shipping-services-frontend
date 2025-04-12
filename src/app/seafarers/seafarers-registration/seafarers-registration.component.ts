@@ -41,9 +41,14 @@ export class SeafarersRegistrationComponent {
   mode = 'add';
   selectedData;
   submitted: boolean;
+  // Photo upload
+  selectedFile: File | null = null;
+  previewUrl: string | ArrayBuffer | null = null;
+
 
   constructor(private fb: FormBuilder, private seafarersService: SeafarersServiceService, private messageService: MessageServiceService) {
       this.seafarersForm = this.fb.group({
+        img: new FormControl(''),
         sidNo: new FormControl('', [Validators.required]),
         position: new FormControl(''),
         appliedDate: new FormControl(''),
@@ -101,6 +106,21 @@ export class SeafarersRegistrationComponent {
         });
       } catch (error) {
         this.messageService.showError('Action Failed With Error ' + error);
+      }
+    }
+
+    // Photo upload
+    onFileSelected(event: Event): void {
+      const input = event.target as HTMLInputElement;
+  
+      if (input.files && input.files.length > 0) {
+        this.selectedFile = input.files[0];
+  
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.previewUrl = reader.result;
+        };
+        reader.readAsDataURL(this.selectedFile);
       }
     }
   

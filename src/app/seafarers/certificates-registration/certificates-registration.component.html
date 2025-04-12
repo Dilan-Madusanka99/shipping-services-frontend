@@ -6,7 +6,7 @@
         <h5>Certificate Details</h5>
 
             <!-- sid dropdown filter -->
-            <mat-form-field class="w-100">
+            <mat-form-field class="example-full-width">
                 <mat-label> SID No </mat-label>
                 <mat-select formControlName="sidNo">
                   <mat-option value="001">001</mat-option>
@@ -14,7 +14,7 @@
             </mat-form-field> 
             <br>
 
-            <mat-form-field>
+            <mat-form-field class="example-full-width">
                 <mat-label> Certificate Name </mat-label>
                 <mat-select formControlName="cName">
                   <mat-option value="Advanced Fire Fighting">Advanced Fire Fighting</mat-option>
@@ -43,9 +43,9 @@
               </mat-form-field> 
             <br>
             
-            <mat-form-field>
+            <mat-form-field class="example-full-width">
                 <mat-label> Issued Place </mat-label>
-                <mat-select formControlName="cIssuedPlace">
+                <mat-select formControlName="cIssuedPlace" class="example-full-width">
                   <mat-option value="Colombo">Cinec Campus (Pvt) Ltd</mat-option>
                   <mat-option value="Colombo">Lanka Academy of Technological Studies</mat-option>
                   <mat-option value="Colombo">Southern Maritime Training Institiute (SMTI)</mat-option>
@@ -55,16 +55,16 @@
             </mat-form-field>  
             <br>
 
-            <mat-form-field>
+            <mat-form-field class="example-full-width">
                 <mat-label> Issued Date </mat-label>
-                <input matInput [matDatepicker]="cIssuedDate" formControlName="cIssuedDate"/>
+                <input matInput [matDatepicker]="cIssuedDate" formControlName="cIssuedDate" class="example-full-width"/>
                 <mat-hint> MM/DD/YYYY </mat-hint>
                 <mat-datepicker-toggle matIconSuffix [for]="cIssuedDate"></mat-datepicker-toggle>
                 <mat-datepicker #cIssuedDate></mat-datepicker>
             </mat-form-field>
             <br>
 
-            <mat-form-field>
+            <mat-form-field class="example-full-width">
                 <mat-label> Expired Date </mat-label>
                 <input matInput [matDatepicker]="cExpiredDate" formControlName="cExpiredDate"/>
                 <mat-hint> MM/DD/YYYY </mat-hint>

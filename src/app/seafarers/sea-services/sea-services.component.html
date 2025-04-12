@@ -20,7 +20,7 @@
             </mat-form-field>
             <br>
 
-            <mat-form-field>
+            <mat-form-field class="example-full-width">
                 <mat-label> Position </mat-label>
                 <mat-select formControlName="position">
                   <mat-option>None</mat-option>
@@ -34,16 +34,16 @@
                   <mat-option value="Cook">Cook</mat-option>
                 </mat-select>
               </mat-form-field>
-              <br>
+              <br><br>
 
-            <mat-label> Vessel Type </mat-label>
-                <mat-radio-group name="Vessel Type" formControlName="vesselType">
+            <mat-label > Vessel Type </mat-label> <br>
+                <mat-radio-group name="Vessel Type" formControlName="vesselType" >
                 <mat-radio-button value="Tanker" checked="true">Tanker</mat-radio-button>
                 <mat-radio-button value="Bulk">Bulk</mat-radio-button>
                 <mat-radio-button value="Cargo">Cargo</mat-radio-button>
                 <mat-radio-button value="Container">Container</mat-radio-button>
             </mat-radio-group> 
-            <br>
+            <br><br>
 
             <mat-form-field class="example-full-width">
                 <mat-label>Flag</mat-label>
@@ -63,7 +63,7 @@
             </mat-form-field>
             <br>
 
-            <mat-form-field>
+            <mat-form-field class="example-full-width">
                 <mat-label> Sign On Date </mat-label>
                 <input matInput [matDatepicker]="signOn" formControlName="signOn"/>
                 <mat-hint> MM/DD/YYYY </mat-hint>
@@ -72,7 +72,7 @@
             </mat-form-field>
             <br>
 
-            <mat-form-field>
+            <mat-form-field class="example-full-width">
                 <mat-label> Sign Off Date </mat-label>
                 <input matInput [matDatepicker]="signOff" formControlName="signOff"/>
                 <mat-hint> MM/DD/YYYY </mat-hint>
@@ -87,7 +87,7 @@
             </mat-form-field>
             <br>
 
-            <mat-form-field>
+            <mat-form-field class="example-full-width">
                 <mat-label> Sign Off Reason </mat-label>
                 <mat-select formControlName="reason">
                   <mat-option>None</mat-option>
