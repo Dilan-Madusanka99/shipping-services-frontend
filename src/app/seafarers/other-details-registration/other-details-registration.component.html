@@ -4,6 +4,16 @@
 
         <h5>Seaman ID (SID)</h5>
 
+        <div class="form-field">
+          <label for="image">Upload Image</label>
+          <input type="file" (change)="onFileSelected($event)" accept="image/*" formControlName="sidImage"/>
+         </div>
+          
+        <div *ngIf="previewUrl">
+          <p>Image Preview:</p>
+          <img [src]="previewUrl" alt="Image preview" width="200" />
+        </div>
+        <br>
 
         <!-- Dropdown sid no -->
         <mat-form-field class="example-full-width">
@@ -40,10 +50,21 @@
             <mat-datepicker-toggle matIconSuffix [for]="sidExpireDate"></mat-datepicker-toggle>
             <mat-datepicker #sidExpireDate></mat-datepicker>
           </mat-form-field>
-          <br><br>
+          <br><br><br>
 
 
           <h5>National Passport</h5>
+
+          <div class="form-field">
+            <label for="image">Upload Image</label>
+            <input type="file" (change)="onFileSelected($event)" accept="image/*" formControlName="ppImage"/>
+          </div>
+          
+          <div *ngIf="previewUrl">
+            <p>Image Preview:</p>
+            <img [src]="previewUrl" alt="Image preview" width="200" />
+          </div>
+          <br>
 
           <mat-form-field class="example-full-width">
             <mat-label> Passport NO </mat-label>
@@ -75,9 +96,20 @@
             <mat-datepicker-toggle matIconSuffix [for]="ppExpireDate"></mat-datepicker-toggle>
             <mat-datepicker #ppExpireDate></mat-datepicker>
           </mat-form-field>
-          <br><br>
+          <br><br><br>
 
           <h5>Seaman Book (CDC)</h5>
+
+          <div class="form-field">
+            <label for="image">Upload Image</label>
+            <input type="file" (change)="onFileSelected($event)" accept="image/*" formControlName="cdcImage"/>
+          </div>
+          
+          <div *ngIf="previewUrl">
+            <p>Image Preview:</p>
+            <img [src]="previewUrl" alt="Image preview" width="200" />
+          </div>
+          <br>
 
           <mat-form-field class="example-full-width">
             <mat-label> CDC NO </mat-label>
@@ -109,9 +141,20 @@
             <mat-datepicker-toggle matIconSuffix [for]="cdcExpireDate"></mat-datepicker-toggle>
             <mat-datepicker #cdcExpireDate></mat-datepicker>
           </mat-form-field>
-          <br><br>
+          <br><br><br>
 
           <h5>Yellow Fever Vaccination</h5>
+
+          <div class="form-field">
+            <label for="image">Upload Image</label>
+            <input type="file" (change)="onFileSelected($event)" accept="image/*" formControlName="yellowFeverImage"/>
+          </div>
+          
+          <div *ngIf="previewUrl">
+            <p>Image Preview:</p>
+            <img [src]="previewUrl" alt="Image preview" width="200" />
+          </div>
+          <br>
 
           <mat-form-field class="example-full-width">
             <mat-label> Yello Fever NO </mat-label>

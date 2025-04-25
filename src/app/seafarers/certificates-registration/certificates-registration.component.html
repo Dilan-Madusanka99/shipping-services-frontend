@@ -5,6 +5,17 @@
 
         <h5>Certificate Details</h5>
 
+        <div class="form-field">
+          <label for="image">Upload Image</label>
+          <input type="file" (change)="onFileSelected($event)" accept="image/*" formControlName="certificateImage"/>
+         </div>
+          
+        <div *ngIf="previewUrl">
+          <p>Image Preview:</p>
+          <img [src]="previewUrl" alt="Image preview" width="200" />
+        </div>
+        <br>
+
             <!-- sid dropdown filter -->
             <mat-form-field class="example-full-width">
                 <mat-label> SID No </mat-label>
@@ -71,7 +82,16 @@
                 <mat-datepicker-toggle matIconSuffix [for]="cExpiredDate"></mat-datepicker-toggle>
                 <mat-datepicker #cExpiredDate></mat-datepicker>
             </mat-form-field>
-            <br><br>
+            <br>
+            
+            <mat-form-field class="example-full-width">
+              <mat-label> Verification Status </mat-label>
+              <mat-select formControlName="verificationStatus">
+                <mat-option value="waitingForConfirmation">Waiting For Confirmation</mat-option>
+                <mat-option value="verified">Verified</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br>
 
             <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled"> {{saveButtonLabel}} </button>
             <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()"> Reset </button>
@@ -108,6 +128,11 @@
                   <ng-container matColumnDef="cExpiredDate">
                     <th mat-header-cell *matHeaderCellDef> Expire Date </th>
                     <td mat-cell *matCellDef="let element"> {{element.cExpiredDate | date: 'dd/MM/yyyy'}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="verificationStatus">
+                    <th mat-header-cell *matHeaderCellDef> Verification Status </th>
+                    <td mat-cell *matCellDef="let element"> {{element.verificationStatus}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="actions">

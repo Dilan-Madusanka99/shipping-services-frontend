@@ -11,10 +11,11 @@ export interface PeriodicElement {
   ecName: string;
   cIssuedDate: Date;
   cExpiredDate: Date;
+  verificationStatus: String;
 }
 
 const ELEMENT_DATA: any[] = [ 
-  {cName: 'AFF', cIssuedDate: '07/04/2025', cExpiredDate: '07/04/2030'},
+  {cName: 'AFF', cIssuedDate: '07/04/2025', cExpiredDate: '07/04/2030', verificationStatus: 'verified'},
 ];
 
 @Component({
@@ -29,7 +30,7 @@ export class CertificatesRegistrationComponent {
 
   certificatesRegistrationForm : FormGroup;
     
-    displayedColumns: string[] = ['cName', 'cIssuedDate', 'cExpiredDate', 'actions'];
+    displayedColumns: string[] = ['cName', 'cIssuedDate', 'cExpiredDate', 'verificationStatus', 'actions'];
     dataSource: MatTableDataSource<any>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
@@ -38,15 +39,19 @@ export class CertificatesRegistrationComponent {
     mode = 'add';
     selectedData;
     isButtonDisabled = false;
+    selectedFile: File | null = null;
+    previewUrl: string | ArrayBuffer | null = null;
   
     constructor(private fb: FormBuilder, private seafarersService: CertificatesRegistrationService, private messageService: MessageServiceService) {
       this.certificatesRegistrationForm = this.fb.group({
+        certificateImage: new FormControl(''),
         sidNo: new FormControl(''),
         cName: new FormControl(''),
         cNo: new FormControl(''),
         cIssuedPlace: new FormControl(''),
         cIssuedDate: new FormControl(''),
-        cExpiredDate: new FormControl(''),        
+        cExpiredDate: new FormControl(''),
+        verificationStatus: new FormControl('')    
       });
     }
   
@@ -81,6 +86,20 @@ export class CertificatesRegistrationComponent {
         });
       } catch (error) {
         this.messageService.showError('Action Failed With Error ' + error);
+      }
+    }
+
+    onFileSelected(event: Event): void {
+      const input = event.target as HTMLInputElement;
+  
+      if (input.files && input.files.length > 0) {
+        this.selectedFile = input.files[0];
+  
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.previewUrl = reader.result;
+        };
+        reader.readAsDataURL(this.selectedFile);
       }
     }
   

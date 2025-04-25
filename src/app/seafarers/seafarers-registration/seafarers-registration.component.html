@@ -2,13 +2,12 @@
   <div class="form-section">
     <form [formGroup]="seafarersForm" class="seafarersForm" (ngSubmit)="onSubmit()">
 
-  
       <h5>Personal Details</h5>
 
       <!-- Photo upload -->
        <div class="form-field">
         <label for="image">Upload Image</label>
-        <input type="file" (change)="onFileSelected($event)" accept="image/*" formControlName="img"/>
+        <input type="file" (change)="onFileSelected($event)" accept="image/*" formControlName="profileImage"/>
        </div>
         
       <div *ngIf="previewUrl">

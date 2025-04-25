@@ -48,7 +48,7 @@ export class SeafarersRegistrationComponent {
 
   constructor(private fb: FormBuilder, private seafarersService: SeafarersServiceService, private messageService: MessageServiceService) {
       this.seafarersForm = this.fb.group({
-        img: new FormControl(''),
+        profileImage: new FormControl(''),
         sidNo: new FormControl('', [Validators.required]),
         position: new FormControl(''),
         appliedDate: new FormControl(''),

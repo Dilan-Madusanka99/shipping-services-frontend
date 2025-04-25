@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="form-section">
+    <form [formGroup]="jobPostingForm" class="jobPostingForm" (ngSubmit)="onSubmit()">
+    
+    <h5>Job Postings</h5>
+        <div class="form-field">
+            <label for="image">Upload Image</label>
+            <input type="file" (change)="onFileSelected($event)" accept="image/*" formControlName="jobPost"/>
+        </div>
+    
+        <div *ngIf="previewUrl">
+            <p>Image Preview:</p>
+            <img [src]="previewUrl" alt="Image preview" width="200" />
+        </div>
+        <br>
+
+        <mat-form-field class="example-full-width">
+            <mat-label> Description </mat-label>
+            <input matInput placeholder="Description" formControlName="jobDescription" >
+        </mat-form-field>
+        <br><br>
+
+        <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled"> {{saveButtonLabel}} </button>
+        <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()"> Reset </button>
+    </form>
+  </div>    
+
+
+<div class="table-section">
+    <div class="refresh-filter-section">
+      <div class="refresh-button">
+        <button mat-raised-button color="primary" (click)="refreshData()">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </div>
+      <mat-form-field class="filter">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+      </mat-form-field>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="jobDescription">
+        <th mat-header-cell *matHeaderCellDef> Job Description </th>
+        <td mat-cell *matCellDef="let element"> {{element.jobDescription}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="jobPostingDate">
+        <th mat-header-cell *matHeaderCellDef> Job Posting Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.jobPostingDate | date: 'dd/MM/yyyy'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element"> 
+          <button mat-icon-button color="warn" (click)="editData(element)" matTooltip="edit">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteData(element)" matTooltip="delete">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+</div>
+
+</div>
+
+

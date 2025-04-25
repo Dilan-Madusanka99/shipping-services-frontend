@@ -171,6 +171,16 @@ const NavigationItems = [
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
+      },
+      {
+        id: 'SeafarersRegistrationDet',
+        title: 'Job Posting',
+        type: 'item',
+        url: '/seafarers/jobPosting',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
       }
     ]
   }

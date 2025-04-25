@@ -39,22 +39,28 @@ export class OtherDetailsRegistrationComponent {
   saveButtonLabel = 'Save';
   mode = 'add';
   selectedData;
+  selectedFile: File | null = null;
+  previewUrl: string | ArrayBuffer | null = null;
   
 
   constructor(private fb: FormBuilder, private seafarersService: OtherDetailsRegistrationService, private messageService: MessageServiceService) {
     this.otherDetailsRegistrationForm = this.fb.group({
+      sidImage: new FormControl(''),
       sidNo: new FormControl(''),
       sidIssuedPlace: new FormControl(''),
       sidIssuedDate: new FormControl(''),
       sidExpireDate: new FormControl(''),
+      ppImage: new FormControl(''), 
       ppNo: new FormControl(''),
       ppIssuedPlace: new FormControl(''),
       ppIssuedDate: new FormControl(''),
       ppExpireDate: new FormControl(''),
+      cdcImage: new FormControl(''),
       cdcNo: new FormControl(''),
       cdcIssuedPlace: new FormControl(''),
       cdcIssuedDate: new FormControl(''),
       cdcExpireDate: new FormControl(''),
+      yellowFeverImage: new FormControl(''),
       yellowFeverNo: new FormControl(''),
       yellowFeverIssuedPlace: new FormControl(''), 
       yellowFeverIssuedDate: new FormControl(''),
@@ -95,6 +101,20 @@ export class OtherDetailsRegistrationComponent {
           });
         } catch (error) {
           this.messageService.showError('Action Failed With Error ' + error);
+        }
+      }
+
+      onFileSelected(event: Event): void {
+        const input = event.target as HTMLInputElement;
+    
+        if (input.files && input.files.length > 0) {
+          this.selectedFile = input.files[0];
+    
+          const reader = new FileReader();
+          reader.onload = () => {
+            this.previewUrl = reader.result;
+          };
+          reader.readAsDataURL(this.selectedFile);
         }
       }
     
