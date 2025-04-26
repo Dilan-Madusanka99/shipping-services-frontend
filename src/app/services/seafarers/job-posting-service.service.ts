@@ -13,7 +13,7 @@ export class JobPostingServiceService {
   serviceCall(form_details: any) {
             console.log('In the Service');
         
-            const requestUrl = environment.baseUrl + '/jobPosting';
+            const requestUrl = environment.baseUrl + '/job_posting';
             
             let headers = {};
         
@@ -27,7 +27,7 @@ export class JobPostingServiceService {
           }
         
           getData() {
-            const requestUrl = environment.baseUrl + '/jobPosting';
+            const requestUrl = environment.baseUrl + '/job_posting';
         
             let headers = {};
         
@@ -43,7 +43,7 @@ export class JobPostingServiceService {
           editData(id: number, form_details: any) {
             console.log('In edit data');
         
-            const requestUrl = environment.baseUrl + '/jobPosting/' + id.toString();
+            const requestUrl = environment.baseUrl + '/job_posting/' + id.toString();
             
             let headers = {};
         
@@ -59,7 +59,7 @@ export class JobPostingServiceService {
           deleteData(id: number) {
             console.log('In delete data');
         
-            const requestUrl = environment.baseUrl + '/jobPosting/' + id.toString();
+            const requestUrl = environment.baseUrl + '/job_posting/' + id.toString();
             
             let headers = {};
         

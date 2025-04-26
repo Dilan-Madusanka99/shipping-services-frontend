@@ -45,6 +45,7 @@ export class JobPostingComponent {
   constructor(private fb: FormBuilder, private seafarersService: JobPostingServiceService, private messageService: MessageServiceService) {
         this.jobPostingForm = this.fb.group({
           jobPost: new FormControl(''),
+          jobPostingDate: new FormControl(''),
           jobDescription: new FormControl(''),
         });
   }
