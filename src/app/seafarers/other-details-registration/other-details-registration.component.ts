@@ -4,6 +4,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { OtherDetailsRegistrationService } from 'src/app/services/seafarers/other-details-registration.service';
 
@@ -40,35 +41,42 @@ export class OtherDetailsRegistrationComponent {
   mode = 'add';
   selectedData;
   selectedFile: File | null = null;
-  previewUrl: string | ArrayBuffer | null = null;
+  previewUrl: SafeUrl | null;
+  isFileSelected = false;
   
 
-  constructor(private fb: FormBuilder, private seafarersService: OtherDetailsRegistrationService, private messageService: MessageServiceService) {
+  constructor(private fb: FormBuilder, private seafarersService: OtherDetailsRegistrationService, private messageService: MessageServiceService, private sanitizer: DomSanitizer) {
     this.otherDetailsRegistrationForm = this.fb.group({
       sidImage: new FormControl(''),
+      sidImageName: new FormControl(''),
+      sidImageType: new FormControl(''),
       sidNo: new FormControl(''),
       sidIssuedPlace: new FormControl(''),
       sidIssuedDate: new FormControl(''),
       sidExpireDate: new FormControl(''),
       ppImage: new FormControl(''), 
+      ppImageName: new FormControl(''),
+      ppImageType: new FormControl(''),
       ppNo: new FormControl(''),
       ppIssuedPlace: new FormControl(''),
       ppIssuedDate: new FormControl(''),
       ppExpireDate: new FormControl(''),
       cdcImage: new FormControl(''),
+      cdcImageName: new FormControl(''),
+      cdcImageType: new FormControl(''),
       cdcNo: new FormControl(''),
       cdcIssuedPlace: new FormControl(''),
       cdcIssuedDate: new FormControl(''),
       cdcExpireDate: new FormControl(''),
       yellowFeverImage: new FormControl(''),
+      yellowFeverImageName: new FormControl(''),
+      yellowFeverImageType: new FormControl(''),
       yellowFeverNo: new FormControl(''),
       yellowFeverIssuedPlace: new FormControl(''), 
       yellowFeverIssuedDate: new FormControl(''),
       yellowFeverExpireDate: new FormControl('')
     });
-
   }
-
 
   ngOnInit(): void{
     this.populateData();
@@ -104,17 +112,143 @@ export class OtherDetailsRegistrationComponent {
         }
       }
 
-      onFileSelected(event: Event): void {
-        const input = event.target as HTMLInputElement;
-    
-        if (input.files && input.files.length > 0) {
-          this.selectedFile = input.files[0];
-    
-          const reader = new FileReader();
-          reader.onload = () => {
-            this.previewUrl = reader.result;
-          };
-          reader.readAsDataURL(this.selectedFile);
+      public prepareSeafarerData(): FormData {
+        const otherDetailsRegistrationFormData = new FormData();
+        otherDetailsRegistrationFormData.append(
+          'otherDetailsRegistrationForm',
+          new Blob([JSON.stringify(this.otherDetailsRegistrationForm.value)], {
+            type: 'application/json',
+          })
+        );
+      // SID upload
+        if (this.isFileSelected) {
+          otherDetailsRegistrationFormData.append(
+            'sidImage',
+            this.otherDetailsRegistrationForm.get('sidImage')?.value,
+            this.otherDetailsRegistrationForm.get('sidImage')?.value.name
+          );
+        } else {
+          const imageBlob = this.base64ToBlob(
+            this.otherDetailsRegistrationForm.get('sidImage')?.value,
+            this.otherDetailsRegistrationForm.get('sidImageImageType')?.value
+          );
+          const file = new File(
+            [imageBlob],
+            this.otherDetailsRegistrationForm.get('sidImageImageName')?.value,
+            { type: this.otherDetailsRegistrationForm.get('sidImageImageType')?.value }
+          );
+          otherDetailsRegistrationFormData.append('sidImage', file, file.name);
+        }
+
+        // Passport upload
+        if (this.isFileSelected) {
+          otherDetailsRegistrationFormData.append(
+            'ppImage',
+            this.otherDetailsRegistrationForm.get('ppImage')?.value,
+            this.otherDetailsRegistrationForm.get('ppImage')?.value.name
+          );
+        } else {
+          const imageBlob = this.base64ToBlob(
+            this.otherDetailsRegistrationForm.get('ppImage')?.value,
+            this.otherDetailsRegistrationForm.get('ppImageImageType')?.value
+          );
+          const file = new File(
+            [imageBlob],
+            this.otherDetailsRegistrationForm.get('ppImageImageName')?.value,
+            { type: this.otherDetailsRegistrationForm.get('ppImageImageType')?.value }
+          );
+          otherDetailsRegistrationFormData.append('ppImage', file, file.name);
+        }
+
+        // CDC upload
+        if (this.isFileSelected) {
+          otherDetailsRegistrationFormData.append(
+            'cdcImage',
+            this.otherDetailsRegistrationForm.get('cdcImage')?.value,
+            this.otherDetailsRegistrationForm.get('cdcImage')?.value.name
+          );
+        } else {
+          const imageBlob = this.base64ToBlob(
+            this.otherDetailsRegistrationForm.get('cdcImage')?.value,
+            this.otherDetailsRegistrationForm.get('cdcImageImageType')?.value
+          );
+          const file = new File(
+            [imageBlob],
+            this.otherDetailsRegistrationForm.get('cdcImageImageName')?.value,
+            { type: this.otherDetailsRegistrationForm.get('cdcImageImageType')?.value }
+          );
+          otherDetailsRegistrationFormData.append('cdcImage', file, file.name);
+        }
+
+        // Yellow Fever upload
+        if (this.isFileSelected) {
+          otherDetailsRegistrationFormData.append(
+            'yellowFeverImage',
+            this.otherDetailsRegistrationForm.get('yellowFeverImage')?.value,
+            this.otherDetailsRegistrationForm.get('yellowFeverImage')?.value.name
+          );
+        } else {
+          const imageBlob = this.base64ToBlob(
+            this.otherDetailsRegistrationForm.get('yellowFeverImage')?.value,
+            this.otherDetailsRegistrationForm.get('yellowFeverImageImageType')?.value
+          );
+          const file = new File(
+            [imageBlob],
+            this.otherDetailsRegistrationForm.get('yellowFeverImageImageName')?.value,
+            { type: this.otherDetailsRegistrationForm.get('yellowFeverImageImageType')?.value }
+          );
+          otherDetailsRegistrationFormData.append('yellowFeverImage', file, file.name);
+        }
+        return otherDetailsRegistrationFormData;
+      }
+  
+      base64ToBlob(base64: string, mimeType: string): Blob {
+        const byteCharacters = atob(base64);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        return new Blob([byteArray], { type: mimeType });
+      }
+  
+      onFileSelected(event: any): void {
+  
+        if (event.target.files) {
+          const file = event.target.files[0];
+          const url = this.sanitizer.bypassSecurityTrustUrl(
+            window.URL.createObjectURL(file)
+          );
+          this.previewUrl = url;
+          this.isFileSelected = true;
+          this.otherDetailsRegistrationForm.get('sidImage')?.setValue(file); 
+        }
+        if (event.target.files) {
+          const file = event.target.files[0];
+          const url = this.sanitizer.bypassSecurityTrustUrl(
+            window.URL.createObjectURL(file)
+          );
+          this.previewUrl = url;
+          this.isFileSelected = true;
+          this.otherDetailsRegistrationForm.get('ppImage')?.setValue(file); 
+        }
+        if (event.target.files) {
+          const file = event.target.files[0];
+          const url = this.sanitizer.bypassSecurityTrustUrl(
+            window.URL.createObjectURL(file)
+          );
+          this.previewUrl = url;
+          this.isFileSelected = true;
+          this.otherDetailsRegistrationForm.get('cdcImage')?.setValue(file); 
+        }
+        if (event.target.files) {
+          const file = event.target.files[0];
+          const url = this.sanitizer.bypassSecurityTrustUrl(
+            window.URL.createObjectURL(file)
+          );
+          this.previewUrl = url;
+          this.isFileSelected = true;
+          this.otherDetailsRegistrationForm.get('yellowFeverImage')?.setValue(file); 
         }
       }
     
@@ -125,7 +259,7 @@ export class OtherDetailsRegistrationComponent {
             console.log(this.otherDetailsRegistrationForm.value);
     
             if (this.mode === 'add'){
-              this.seafarersService.serviceCall(this.otherDetailsRegistrationForm.value).subscribe({
+              this.seafarersService.serviceCall(this.prepareSeafarerData()).subscribe({
                 next: (response: any) => {
                   if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {
                     this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
@@ -141,7 +275,7 @@ export class OtherDetailsRegistrationComponent {
               });
             }
             else if (this.mode === 'edit'){
-              this.seafarersService.editData(this.selectedData?.id, this.otherDetailsRegistrationForm.value).subscribe ({
+              this.seafarersService.editData(this.selectedData?.id, this.prepareSeafarerData()).subscribe ({
                 next: (response: any) => {
                   let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
                   this.dataSource.data[elementIndex] = response;

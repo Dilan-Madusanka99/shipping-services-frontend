@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.service';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 export interface PeriodicElement {
   sidno: String;
@@ -41,14 +42,21 @@ export class SeafarersRegistrationComponent {
   mode = 'add';
   selectedData;
   submitted: boolean;
-  // Photo upload
+  // Photo upload [start]
   selectedFile: File | null = null;
-  previewUrl: string | ArrayBuffer | null = null;
+  previewUrl!: SafeUrl | null; // : string | ArrayBuffer | null = null;
+  isFileSelected = false;
+  // Photo upload [end]
 
-
-  constructor(private fb: FormBuilder, private seafarersService: SeafarersServiceService, private messageService: MessageServiceService) {
+  constructor(private fb: FormBuilder, private seafarersService: SeafarersServiceService, private messageService: MessageServiceService, 
+    private sanitizer: DomSanitizer // Photo upload [start]
+  ) {
       this.seafarersForm = this.fb.group({
+          // Photo upload [start]
         profileImage: new FormControl(''),
+        profileImageName: new FormControl(''),
+        profileImageType: new FormControl(''),
+          // Photo upload [end]
         sidNo: new FormControl('', [Validators.required]),
         position: new FormControl(''),
         appliedDate: new FormControl(''),
@@ -109,20 +117,60 @@ export class SeafarersRegistrationComponent {
       }
     }
 
-    // Photo upload
-    onFileSelected(event: Event): void {
-      const input = event.target as HTMLInputElement;
+      // Photo upload [start]
+    public prepareSeafarerData(): FormData {
+      const seafarersFormData = new FormData();
+      seafarersFormData.append(
+        'seafarersForm',
+        new Blob([JSON.stringify(this.seafarersForm.value)], {
+          type: 'application/json',
+        })
+      );
   
-      if (input.files && input.files.length > 0) {
-        this.selectedFile = input.files[0];
-  
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.previewUrl = reader.result;
-        };
-        reader.readAsDataURL(this.selectedFile);
+      if (this.isFileSelected) {
+        seafarersFormData.append(
+          'profileImage',
+          this.seafarersForm.get('profileImage')?.value,
+          this.seafarersForm.get('profileImage')?.value.name
+        );
+      } else {
+        const imageBlob = this.base64ToBlob(
+          this.seafarersForm.get('profileImage')?.value,
+          this.seafarersForm.get('profileImageImageType')?.value
+        );
+        const file = new File(
+          [imageBlob],
+          this.seafarersForm.get('profileImageImageName')?.value,
+          { type: this.seafarersForm.get('profileImageImageType')?.value }
+        );
+        seafarersFormData.append('profileImage', file, file.name);
+      }
+      return seafarersFormData;
+    }
+
+    base64ToBlob(base64: string, mimeType: string): Blob {
+      const byteCharacters = atob(base64);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      return new Blob([byteArray], { type: mimeType });
+    }
+
+    onFileSelected(event: any): void {
+
+      if (event.target.files) {
+        const file = event.target.files[0];
+        const url = this.sanitizer.bypassSecurityTrustUrl(
+          window.URL.createObjectURL(file)
+        );
+        this.previewUrl = url;
+        this.isFileSelected = true;
+        this.seafarersForm.get('profileImage')?.setValue(file);
       }
     }
+    // Photo upload [end]
   
     onSubmit() {
         try {
@@ -131,7 +179,9 @@ export class SeafarersRegistrationComponent {
           console.log(this.seafarersForm.value);
   
           if (this.mode === 'add'){
-            this.seafarersService.serviceCall(this.seafarersForm.value).subscribe({
+            this.seafarersService.serviceCall(
+              this.prepareSeafarerData()   // Photo upload [start]
+            ).subscribe({
               next: (response: any) => {
                 if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {
                   this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
@@ -147,7 +197,9 @@ export class SeafarersRegistrationComponent {
             });
           }
           else if (this.mode === 'edit'){
-            this.seafarersService.editData(this.selectedData?.id, this.seafarersForm.value).subscribe ({
+            this.seafarersService.editData(
+              this.selectedData?.id, this.prepareSeafarerData()   // Photo upload [start]
+            ).subscribe ({
               next: (response: any) => {
                 let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
                 this.dataSource.data[elementIndex] = response;
@@ -210,4 +262,4 @@ export class SeafarersRegistrationComponent {
         this.populateData();
       }
       
-}
+} 

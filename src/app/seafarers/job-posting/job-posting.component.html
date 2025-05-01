@@ -5,7 +5,7 @@
     <h5>Job Postings</h5>
         <div class="form-field">
             <label for="image">Upload Image</label>
-            <input type="file" (change)="onFileSelected($event)" accept="image/*" formControlName="jobPost"/>
+            <input type="file" (change)="onFileSelected($event)" accept="image/*"/>
         </div>
     
         <div *ngIf="previewUrl">

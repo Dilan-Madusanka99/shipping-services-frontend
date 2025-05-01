@@ -4,6 +4,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { CertificatesRegistrationService } from 'src/app/services/seafarers/certificates-registration.service';
 
@@ -40,11 +41,14 @@ export class CertificatesRegistrationComponent {
     selectedData;
     isButtonDisabled = false;
     selectedFile: File | null = null;
-    previewUrl: string | ArrayBuffer | null = null;
+    previewUrl!: SafeUrl | null;
+    isFileSelected = false;
   
-    constructor(private fb: FormBuilder, private seafarersService: CertificatesRegistrationService, private messageService: MessageServiceService) {
+    constructor(private fb: FormBuilder, private seafarersService: CertificatesRegistrationService, private messageService: MessageServiceService, private sanitizer: DomSanitizer) {
       this.certificatesRegistrationForm = this.fb.group({
         certificateImage: new FormControl(''),
+        certificateImageName: new FormControl(''),
+        certificateImageType: new FormControl(''),
         sidNo: new FormControl(''),
         cName: new FormControl(''),
         cNo: new FormControl(''),
@@ -89,17 +93,56 @@ export class CertificatesRegistrationComponent {
       }
     }
 
-    onFileSelected(event: Event): void {
-      const input = event.target as HTMLInputElement;
+    public prepareSeafarerData(): FormData {
+      const certificatesRegistrationFormData = new FormData();
+      certificatesRegistrationFormData.append(
+        'certificatesRegistrationForm',
+        new Blob([JSON.stringify(this.certificatesRegistrationForm.value)], {
+          type: 'application/json',
+        })
+      );
   
-      if (input.files && input.files.length > 0) {
-        this.selectedFile = input.files[0];
-  
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.previewUrl = reader.result;
-        };
-        reader.readAsDataURL(this.selectedFile);
+      if (this.isFileSelected) {
+        certificatesRegistrationFormData.append(
+          'certificateImage',
+          this.certificatesRegistrationForm.get('certificateImage')?.value,
+          this.certificatesRegistrationForm.get('certificateImage')?.value.name
+        );
+      } else {
+        const imageBlob = this.base64ToBlob(
+          this.certificatesRegistrationForm.get('certificateImage')?.value,
+          this.certificatesRegistrationForm.get('certificateImageImageType')?.value
+        );
+        const file = new File(
+          [imageBlob],
+          this.certificatesRegistrationForm.get('certificateImageImageName')?.value,
+          { type: this.certificatesRegistrationForm.get('certificateImageImageType')?.value }
+        );
+        certificatesRegistrationFormData.append('certificateImage', file, file.name);
+      }
+      return certificatesRegistrationFormData;
+    }
+
+    base64ToBlob(base64: string, mimeType: string): Blob {
+      const byteCharacters = atob(base64);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      return new Blob([byteArray], { type: mimeType });
+    }
+
+    onFileSelected(event: any): void {
+
+      if (event.target.files) {
+        const file = event.target.files[0];
+        const url = this.sanitizer.bypassSecurityTrustUrl(
+          window.URL.createObjectURL(file)
+        );
+        this.previewUrl = url;
+        this.isFileSelected = true;
+        this.certificatesRegistrationForm.get('certificateImage')?.setValue(file);
       }
     }
   
@@ -110,7 +153,7 @@ export class CertificatesRegistrationComponent {
           console.log(this.certificatesRegistrationForm.value);
   
           if (this.mode === 'add'){
-            this.seafarersService.serviceCall(this.certificatesRegistrationForm.value).subscribe({
+            this.seafarersService.serviceCall(this.prepareSeafarerData()).subscribe({
               next: (response: any) => {
                 if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {
                   this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
@@ -126,7 +169,7 @@ export class CertificatesRegistrationComponent {
             });
           }
           else if (this.mode === 'edit'){
-            this.seafarersService.editData(this.selectedData?.id, this.certificatesRegistrationForm.value).subscribe ({
+            this.seafarersService.editData(this.selectedData?.id, this.prepareSeafarerData()).subscribe ({
               next: (response: any) => {
                 let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
                 this.dataSource.data[elementIndex] = response;

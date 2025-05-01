@@ -4,10 +4,10 @@
 
       <h5>Personal Details</h5>
 
-      <!-- Photo upload -->
+      <!-- Photo upload - Start -->
        <div class="form-field">
         <label for="image">Upload Image</label>
-        <input type="file" (change)="onFileSelected($event)" accept="image/*" formControlName="profileImage"/>
+        <input type="file" (change)="onFileSelected($event)" accept="image/*"/>
        </div>
         
       <div *ngIf="previewUrl">
@@ -15,6 +15,7 @@
         <img [src]="previewUrl" alt="Image preview" width="200" />
       </div>
       <br>
+      <!-- Photo upload - End -->
 
       <mat-form-field class="example-full-width">
         <mat-label> SID No </mat-label>

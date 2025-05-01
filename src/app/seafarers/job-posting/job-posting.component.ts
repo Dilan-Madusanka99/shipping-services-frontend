@@ -4,6 +4,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { JobPostingServiceService } from 'src/app/services/seafarers/job-posting-service.service';
 
@@ -38,12 +39,16 @@ export class JobPostingComponent {
   selectedData;
   selected: string;
   submitted: boolean;
-
   selectedFile: File | null = null;
-  previewUrl: string | ArrayBuffer | null = null;
+  previewUrl: SafeUrl | null;
+  isFileSelected = false;
 
-  constructor(private fb: FormBuilder, private seafarersService: JobPostingServiceService, private messageService: MessageServiceService) {
+
+  constructor(private fb: FormBuilder, private seafarersService: JobPostingServiceService, private messageService: MessageServiceService, private sanitizer: DomSanitizer) {
         this.jobPostingForm = this.fb.group({
+          jobPostImage: new FormControl(''),
+          jobPostImageName: new FormControl(''),
+          jobPostImageType: new FormControl(''),
           jobPost: new FormControl(''),
           jobPostingDate: new FormControl(''),
           jobDescription: new FormControl(''),
@@ -84,18 +89,56 @@ export class JobPostingComponent {
       }
     }
 
-    // Photo upload
-    onFileSelected(event: Event): void {
-      const input = event.target as HTMLInputElement;
+    public prepareSeafarerData(): FormData {
+      const jobPostingFormData = new FormData();
+      jobPostingFormData.append(
+        'jobPostingForm',
+        new Blob([JSON.stringify(this.jobPostingForm.value)], {
+          type: 'application/json',
+        })
+      );
   
-      if (input.files && input.files.length > 0) {
-        this.selectedFile = input.files[0];
-  
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.previewUrl = reader.result;
-        };
-        reader.readAsDataURL(this.selectedFile);
+      if (this.isFileSelected) {
+        jobPostingFormData.append(
+          'jobPostImage',
+          this.jobPostingForm.get('jobPostImage')?.value,
+          this.jobPostingForm.get('jobPostImage')?.value.name
+        );
+      } else {
+        const imageBlob = this.base64ToBlob(
+          this.jobPostingForm.get('jobPostImage')?.value,
+          this.jobPostingForm.get('jobPostImageImageType')?.value
+        );
+        const file = new File(
+          [imageBlob],
+          this.jobPostingForm.get('jobPostImageImageName')?.value,
+          { type: this.jobPostingForm.get('jobPostImageImageType')?.value }
+        );
+        jobPostingFormData.append('jobPostImage', file, file.name);
+      }
+      return jobPostingFormData;
+    }
+
+    base64ToBlob(base64: string, mimeType: string): Blob {
+      const byteCharacters = atob(base64);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      return new Blob([byteArray], { type: mimeType });
+    }
+
+    onFileSelected(event: any): void {
+
+      if (event.target.files) {
+        const file = event.target.files[0];
+        const url = this.sanitizer.bypassSecurityTrustUrl(
+          window.URL.createObjectURL(file)
+        );
+        this.previewUrl = url;
+        this.isFileSelected = true;
+        this.jobPostingForm.get('jobPostImage')?.setValue(file);
       }
     }
 
@@ -106,7 +149,7 @@ export class JobPostingComponent {
         console.log(this.jobPostingForm.value);
 
         if (this.mode === 'add'){
-          this.seafarersService.serviceCall(this.jobPostingForm.value).subscribe({
+          this.seafarersService.serviceCall(this.prepareSeafarerData()).subscribe({
             next: (response: any) => {
               if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {
                 this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
@@ -122,7 +165,7 @@ export class JobPostingComponent {
           });
         }
         else if (this.mode === 'edit'){
-          this.seafarersService.editData(this.selectedData?.id, this.jobPostingForm.value).subscribe ({
+          this.seafarersService.editData(this.selectedData?.id, this.prepareSeafarerData()).subscribe ({
             next: (response: any) => {
               let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
               this.dataSource.data[elementIndex] = response;
