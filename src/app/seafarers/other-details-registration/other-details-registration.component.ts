@@ -120,7 +120,7 @@ export class OtherDetailsRegistrationComponent {
             type: 'application/json',
           })
         );
-      // SID upload
+      // SID upload 
         if (this.isFileSelected) {
           otherDetailsRegistrationFormData.append(
             'sidImage',
