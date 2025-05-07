@@ -31,7 +31,7 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { RegistrationModule } from './registration/registration.module';
 import { SeafarersModule } from './seafarers/seafarers.module';
-
+import { UserModule } from './user/user.module';
 
 @NgModule({
   declarations: [
@@ -61,7 +61,8 @@ import { SeafarersModule } from './seafarers/seafarers.module';
     MaterialModule,
     ToastrModule.forRoot(),
     RegistrationModule, 
-    SeafarersModule
+    SeafarersModule,
+    UserModule
   ],
   providers: [
     NavigationItem,

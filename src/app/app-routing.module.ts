@@ -66,9 +66,13 @@ const routes: Routes = [
         loadChildren: () => import('./registration/registration.module'). then((m) => m.RegistrationModule)
       },
       {
-        path: 'seafarers', // register/seafarers
+        path: 'seafarers', // seafarers
         loadChildren: () => import('./seafarers/seafarers.module'). then((m) => m.SeafarersModule)
       },
+      {
+        path: 'user',
+        loadChildren: () => import('./user/user.module'). then((m) => m.UserModule)
+      }
     ]
   },
 

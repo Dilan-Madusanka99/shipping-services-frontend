@@ -4,21 +4,19 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { EmployeeServiceService } from 'src/app/services/employee/employee-service.service';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
-
+import { EmployeeServiceService } from 'src/app/services/employee/employee-service.service';
 
 export interface PeriodicElement {
   empNo: number;
-  lastName: string;
+  firstName: string;
   nic: number;
   roles: string;
 }
 
 const ELEMENT_DATA: any[] = [ 
-  {empNo: 1, lastName: 'Hydrogen', nic: 1, roles: 'manager'},
+  {empNo: 1, firstName: 'Hydrogen', nic: 1, roles: 'manager'},
 ];
-
 
 @Component({
   selector: 'app-employee',
@@ -32,7 +30,7 @@ export class EmployeeComponent implements OnInit{
 
   employeeForm : FormGroup;
   
-  displayedColumns: string[] = ['empNo', 'lastName', 'nic', 'roles', 'actions'];
+  displayedColumns: string[] = ['empNo', 'firstName', 'nic', 'roles', 'actions'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

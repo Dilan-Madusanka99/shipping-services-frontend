@@ -1,0 +1,77 @@
+<div class="container">
+    <div class="main-body">
+        <form [formGroup]="userProfileForm" class="userProfileForm" (ngSubmit)="onSubmit()">
+
+        <div class="row">
+            <h3>User Profile</h3>
+
+            <div class="card-section">
+                <div id="card">
+                  <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                  <h5>John Doe</h5>
+                  <p class="text-secondary mb-1">Full Stack Developer</p>
+                  <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
+                  <button class="btn btn-primary">Follow</button>
+                  <button class="btn btn-outline-primary">Message</button>  
+                </div>                
+            </div>
+
+            <div class="form-section">
+                <!-- <div class="form-field">
+                <label for="image">Upload Image</label>
+                <input type="file" (change)="onFileSelected($event)" accept="image/*"/>
+                </div>
+           
+                <div *ngIf="previewUrl">
+                    <p>Image Preview:</p>
+                    <img [src]="previewUrl" alt="Image preview" width="200" />
+                </div>
+                <br> -->
+
+            <mat-form-field class="example-full-width">
+                <mat-label> First Name </mat-label>
+                <input matInput placeholder="firstName" formControlName="firstName" >
+            </mat-form-field>
+            <br>
+
+            <mat-form-field class="example-full-width">
+                <mat-label> Last Name </mat-label>
+                <input matInput placeholder="lastName" formControlName="lastName" >
+            </mat-form-field>
+            <br>
+
+            <mat-form-field class="example-full-width">
+                <mat-label> Email </mat-label>
+                <input matInput placeholder="email" formControlName="email" >
+            </mat-form-field>
+            <br>
+
+            <mat-form-field class="example-full-width">
+                <mat-label> Phone </mat-label>
+                <input matInput placeholder="phone" formControlName="phone" >
+            </mat-form-field>
+            <br>
+
+            <mat-form-field class="example-full-width">
+                <mat-label> Mobile </mat-label>
+                <input matInput placeholder="mobile" formControlName="mobile" >
+            </mat-form-field>
+            <br>
+
+            <mat-form-field class="example-full-width">
+                <mat-label> Address </mat-label>
+                <input matInput placeholder="address" formControlName="address" >
+            </mat-form-field>
+            <br><br>
+    
+            <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled"> {{saveButtonLabel}} </button>
+            <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()"> Reset </button>
+            <br>
+            </div>
+            
+        </div>
+        </form>
+            
+    </div>
+
+</div>

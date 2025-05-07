@@ -183,7 +183,29 @@ const NavigationItems = [
         breadcrumbs: false
       }
     ]
+  },
+
+  {
+    id: 'user',
+    title: 'User',
+    type: 'group',
+    icon: 'icon-navigation',
+    auth: authenticationEnum.Home,
+    children: [
+      {
+        id: 'UserProfileDet',
+        title: 'User Profile',
+        type: 'item',
+        url: '/user/userProfile',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
+    ]
   }
+
+  
 
    
   // {
