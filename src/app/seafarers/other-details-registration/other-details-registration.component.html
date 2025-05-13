@@ -1,254 +1,258 @@
 <div class="container">
-    <div class="form-section">
-        <form [formGroup]="otherDetailsRegistrationForm" class="otherDetailsRegistrationForm" (ngSubmit)="onSubmit()">
+  <div class="form-section">
+    <form [formGroup]="otherDetailsRegistrationForm" class="otherDetailsRegistrationForm" (ngSubmit)="onSubmit()">
+      <h5>Seaman ID (SID)</h5>
 
-        <h5>Seaman ID (SID)</h5>
-
-        <div class="form-field">
-          <label for="image">Upload Image</label>
-          <input type="file" (change)="onFileSelected($event)" accept="image/*"/>
-         </div>
-          
-        <div *ngIf="previewUrl">
-          <p>Image Preview:</p>
-          <img [src]="previewUrl" alt="Image preview" width="200" />
-        </div>
-        <br>
-
-        <!-- Dropdown sid no -->
-        <mat-form-field class="example-full-width">
-          <mat-label> SID No </mat-label>
-          <mat-select formControlName="sidNo">
-            <mat-option value="001">001</mat-option>
-            <mat-option value="002">002</mat-option>
-            <mat-option value="003">003</mat-option>
-          </mat-select>
-        </mat-form-field> 
-        <br>
-
-        <mat-form-field class="example-full-width">
-            <mat-label> Issued Place </mat-label>
-            <mat-select formControlName="sidIssuedPlace">
-              <mat-option value="Colombo">Colombo</mat-option>
-            </mat-select>
-          </mat-form-field>  
-          <br>
-
-          <mat-form-field class="example-full-width">
-            <mat-label> Issued Date </mat-label>
-            <input matInput [matDatepicker]="sidIssuedDate" formControlName="sidIssuedDate"/>
-            <mat-hint> MM/DD/YYYY </mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="sidIssuedDate"></mat-datepicker-toggle>
-            <mat-datepicker #sidIssuedDate></mat-datepicker>
-          </mat-form-field>
-          <br>
-
-          <mat-form-field class="example-full-width">
-            <mat-label> Expired Date </mat-label>
-            <input matInput [matDatepicker]="sidExpireDate" formControlName="sidExpireDate"/>
-            <mat-hint> MM/DD/YYYY </mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="sidExpireDate"></mat-datepicker-toggle>
-            <mat-datepicker #sidExpireDate></mat-datepicker>
-          </mat-form-field>
-          <br><br><br>
-
-
-          <h5>National Passport</h5>
-
-          <div class="form-field">
-            <label for="image">Upload Image</label>
-            <input type="file" (change)="onFileSelected($event)" accept="image/*"/>
-          </div>
-          
-          <div *ngIf="previewUrl">
-            <p>Image Preview:</p>
-            <img [src]="previewUrl" alt="Image preview" width="200" />
-          </div>
-          <br>
-
-          <mat-form-field class="example-full-width">
-            <mat-label> Passport NO </mat-label>
-            <input matInput placeholder="ppNo" formControlName="ppNo" >
-          </mat-form-field>
-          <br>
-
-        <mat-form-field class="example-full-width">
-            <mat-label> Issued Place </mat-label>
-            <mat-select formControlName="ppIssuedPlace">
-              <mat-option value="Colombo">Colombo</mat-option>
-            </mat-select>
-          </mat-form-field>  
-          <br>
-
-          <mat-form-field class="example-full-width">
-            <mat-label> Issued Date </mat-label>
-            <input matInput [matDatepicker]="ppIssuedDate" formControlName="ppIssuedDate"/>
-            <mat-hint> MM/DD/YYYY </mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="ppIssuedDate"></mat-datepicker-toggle>
-            <mat-datepicker #ppIssuedDate></mat-datepicker>
-          </mat-form-field>
-          <br>
-
-          <mat-form-field class="example-full-width">
-            <mat-label> Expired Date </mat-label>
-            <input matInput [matDatepicker]="ppExpireDate" formControlName="ppExpireDate"/>
-            <mat-hint> MM/DD/YYYY </mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="ppExpireDate"></mat-datepicker-toggle>
-            <mat-datepicker #ppExpireDate></mat-datepicker>
-          </mat-form-field>
-          <br><br><br>
-
-          <h5>Seaman Book (CDC)</h5>
-
-          <div class="form-field">
-            <label for="image">Upload Image</label>
-            <input type="file" (change)="onFileSelected($event)" accept="image/*"/>
-          </div>
-          
-          <div *ngIf="previewUrl">
-            <p>Image Preview:</p>
-            <img [src]="previewUrl" alt="Image preview" width="200" />
-          </div>
-          <br>
-
-          <mat-form-field class="example-full-width">
-            <mat-label> CDC NO </mat-label>
-            <input matInput placeholder="cdcNo" formControlName="cdcNo" >
-          </mat-form-field>
-          <br>
-
-        <mat-form-field class="example-full-width">
-            <mat-label> Issued Place </mat-label>
-            <mat-select formControlName="cdcIssuedPlace">
-              <mat-option value="Colombo">Colombo</mat-option>
-            </mat-select>
-          </mat-form-field>  
-          <br>
-
-          <mat-form-field class="example-full-width">
-            <mat-label> Issued Date </mat-label>
-            <input matInput [matDatepicker]="cdcIssuedDate" formControlName="cdcIssuedDate"/>
-            <mat-hint> MM/DD/YYYY </mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="cdcIssuedDate"></mat-datepicker-toggle>
-            <mat-datepicker #cdcIssuedDate></mat-datepicker>
-          </mat-form-field>
-          <br>
-
-          <mat-form-field class="example-full-width">
-            <mat-label> Expired Date </mat-label>
-            <input matInput [matDatepicker]="cdcExpireDate" formControlName="cdcExpireDate"/>
-            <mat-hint> MM/DD/YYYY </mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="cdcExpireDate"></mat-datepicker-toggle>
-            <mat-datepicker #cdcExpireDate></mat-datepicker>
-          </mat-form-field>
-          <br><br><br>
-
-          <h5>Yellow Fever Vaccination</h5>
-
-          <div class="form-field">
-            <label for="image">Upload Image</label>
-            <input type="file" (change)="onFileSelected($event)" accept="image/*"/>
-          </div>
-          
-          <div *ngIf="previewUrl">
-            <p>Image Preview:</p>
-            <img [src]="previewUrl" alt="Image preview" width="200" />
-          </div>
-          <br>
-
-          <mat-form-field class="example-full-width">
-            <mat-label> Yello Fever NO </mat-label>
-            <input matInput placeholder="yellowFeverNo" formControlName="yellowFeverNo" >
-          </mat-form-field>
-          <br>
-
-        <mat-form-field class="example-full-width">
-            <mat-label> Issued Place </mat-label>
-            <mat-select formControlName="yellowFeverIssuedPlace">
-              <mat-option value="Colombo">Colombo</mat-option>
-              <mat-option value="Other">Other</mat-option>
-            </mat-select>
-          </mat-form-field>  
-          <br>
-
-          <mat-form-field class="example-full-width">
-            <mat-label> Issued Date </mat-label>
-            <input matInput [matDatepicker]="yellowFeverIssuedDate" formControlName="yellowFeverIssuedDate"/>
-            <mat-hint> MM/DD/YYYY </mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="yellowFeverIssuedDate"></mat-datepicker-toggle>
-            <mat-datepicker #yellowFeverIssuedDate></mat-datepicker>
-          </mat-form-field>
-          <br>
-
-          <mat-form-field class="example-full-width">
-            <mat-label> Expired Date </mat-label>
-            <input matInput [matDatepicker]="yellowFeverExpireDate" formControlName="yellowFeverExpireDate"/>
-            <mat-hint> MM/DD/YYYY </mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="yellowFeverExpireDate"></mat-datepicker-toggle>
-            <mat-datepicker #yellowFeverExpireDate></mat-datepicker>
-          </mat-form-field>
-          <br><br><br>
-
-          <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled"> {{saveButtonLabel}} </button>
-          <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()"> Reset </button>
-
-        </form>
-    </div>
-
-    <div class="table-section">
-
-      <div class="refresh-filter-section">
-        <div class="refresh-button">
-          <button mat-raised-button color="primary" (click)="refreshData()">
-            <mat-icon>refresh</mat-icon>
-          </button>
-        </div>
-
-        <mat-form-field class="filter">
-          <mat-label>Filter</mat-label>
-          <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
-        </mat-form-field>
+      <div class="form-field">
+        <label for="image">Upload Image</label>
+        <input type="file" (change)="onSidFileSelected($event, 'sidImage')" accept="image/*" />
       </div>
-  
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  
-        <ng-container matColumnDef="sidNo">
-          <th mat-header-cell *matHeaderCellDef> SID </th>
-          <td mat-cell *matCellDef="let element"> {{element.sidNo}} </td>
-        </ng-container>
-        
-        <ng-container matColumnDef="ppNo">
-          <th mat-header-cell *matHeaderCellDef> Passport NO </th>
-          <td mat-cell *matCellDef="let element"> {{element.ppNo}} </td>
-        </ng-container>
 
-        <ng-container matColumnDef="cdcNo">
-          <th mat-header-cell *matHeaderCellDef> CDC NO </th>
-          <td mat-cell *matCellDef="let element"> {{element.cdcNo}} </td>
-        </ng-container>
+      <div *ngIf="previewUrlSid">
+        <p>Image Preview:</p>
+        <img [src]="previewUrlSid" alt="Image preview" width="200" />
+      </div>
+      <br />
 
-        <ng-container matColumnDef="yellowFeverNo">
-          <th mat-header-cell *matHeaderCellDef> Yellow Fever NO </th>
-          <td mat-cell *matCellDef="let element"> {{element.yellowFeverNo}} </td>
-        </ng-container>
+      <!-- Dropdown sid no -->
+      <mat-form-field class="example-full-width">
+        <mat-label>SID No</mat-label>
+        <mat-select formControlName="sidNo">
+          <mat-option value="001">001</mat-option>
+          <mat-option value="002">002</mat-option>
+          <mat-option value="003">003</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br />
 
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef> Action </th>
-          <td mat-cell *matCellDef="let element"> 
-            <button mat-icon-button color="warn" (click)="editData(element)" matTooltip="edit">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" (click)="deleteData(element)" matTooltip="delete">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </td>
-        </ng-container>
+      <mat-form-field class="example-full-width">
+        <mat-label>Issued Place</mat-label>
+        <mat-select formControlName="sidIssuedPlace">
+          <mat-option value="Colombo">Colombo</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br />
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+      <mat-form-field class="example-full-width">
+        <mat-label>Issued Date</mat-label>
+        <input matInput [matDatepicker]="sidIssuedDate" formControlName="sidIssuedDate" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="sidIssuedDate"></mat-datepicker-toggle>
+        <mat-datepicker #sidIssuedDate></mat-datepicker>
+      </mat-form-field>
+      <br />
 
-      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+      <mat-form-field class="example-full-width">
+        <mat-label>Expired Date</mat-label>
+        <input matInput [matDatepicker]="sidExpireDate" formControlName="sidExpireDate" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="sidExpireDate"></mat-datepicker-toggle>
+        <mat-datepicker #sidExpireDate></mat-datepicker>
+      </mat-form-field>
+      <br />
+      <br />
+      <br />
 
+      <h5>National Passport</h5>
+
+      <div class="form-field">
+        <label for="image">Upload Image</label>
+        <input type="file" (change)="onPpFileSelected($event, 'ppImage')" accept="image/*" />
+      </div>
+
+      <div *ngIf="previewUrlPp">
+        <p>Image Preview:</p>
+        <img [src]="previewUrlPp" alt="Image preview" width="200" />
+      </div>
+      <br />
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Passport NO</mat-label>
+        <input matInput placeholder="ppNo" formControlName="ppNo" />
+      </mat-form-field>
+      <br />
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Issued Place</mat-label>
+        <mat-select formControlName="ppIssuedPlace">
+          <mat-option value="Colombo">Colombo</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br />
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Issued Date</mat-label>
+        <input matInput [matDatepicker]="ppIssuedDate" formControlName="ppIssuedDate" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="ppIssuedDate"></mat-datepicker-toggle>
+        <mat-datepicker #ppIssuedDate></mat-datepicker>
+      </mat-form-field>
+      <br />
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Expired Date</mat-label>
+        <input matInput [matDatepicker]="ppExpireDate" formControlName="ppExpireDate" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="ppExpireDate"></mat-datepicker-toggle>
+        <mat-datepicker #ppExpireDate></mat-datepicker>
+      </mat-form-field>
+      <br />
+      <br />
+      <br />
+
+      <h5>Seaman Book (CDC)</h5>
+
+      <div class="form-field">
+        <label for="image">Upload Image</label>
+        <input type="file" (change)="onCdcFileSelected($event, 'cdcImage')" accept="image/*" />
+      </div>
+
+      <div *ngIf="previewUrlCdc">
+        <p>Image Preview:</p>
+        <img [src]="previewUrlCdc" alt="Image preview" width="200" />
+      </div>
+      <br />
+
+      <mat-form-field class="example-full-width">
+        <mat-label>CDC NO</mat-label>
+        <input matInput placeholder="cdcNo" formControlName="cdcNo" />
+      </mat-form-field>
+      <br />
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Issued Place</mat-label>
+        <mat-select formControlName="cdcIssuedPlace">
+          <mat-option value="Colombo">Colombo</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br />
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Issued Date</mat-label>
+        <input matInput [matDatepicker]="cdcIssuedDate" formControlName="cdcIssuedDate" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="cdcIssuedDate"></mat-datepicker-toggle>
+        <mat-datepicker #cdcIssuedDate></mat-datepicker>
+      </mat-form-field>
+      <br />
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Expired Date</mat-label>
+        <input matInput [matDatepicker]="cdcExpireDate" formControlName="cdcExpireDate" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="cdcExpireDate"></mat-datepicker-toggle>
+        <mat-datepicker #cdcExpireDate></mat-datepicker>
+      </mat-form-field>
+      <br />
+      <br />
+      <br />
+
+      <h5>Yellow Fever Vaccination</h5>
+
+      <div class="form-field">
+        <label for="image">Upload Image</label>
+        <input type="file" (change)="onYfFileSelected($event, 'yellowFeverImage')" accept="image/*" />
+      </div>
+
+      <div *ngIf="previewUrlYf">
+        <p>Image Preview:</p>
+        <img [src]="previewUrlYf" alt="Image preview" width="200" />
+      </div>
+      <br />
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Yello Fever NO</mat-label>
+        <input matInput placeholder="yellowFeverNo" formControlName="yellowFeverNo" />
+      </mat-form-field>
+      <br />
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Issued Place</mat-label>
+        <mat-select formControlName="yellowFeverIssuedPlace">
+          <mat-option value="Colombo">Colombo</mat-option>
+          <mat-option value="Other">Other</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br />
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Issued Date</mat-label>
+        <input matInput [matDatepicker]="yellowFeverIssuedDate" formControlName="yellowFeverIssuedDate" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="yellowFeverIssuedDate"></mat-datepicker-toggle>
+        <mat-datepicker #yellowFeverIssuedDate></mat-datepicker>
+      </mat-form-field>
+      <br />
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Expired Date</mat-label>
+        <input matInput [matDatepicker]="yellowFeverExpireDate" formControlName="yellowFeverExpireDate" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="yellowFeverExpireDate"></mat-datepicker-toggle>
+        <mat-datepicker #yellowFeverExpireDate></mat-datepicker>
+      </mat-form-field>
+      <br />
+      <br />
+      <br />
+
+      <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled">
+        {{ saveButtonLabel }}
+      </button>
+      <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()">Reset</button>
+    </form>
+  </div>
+
+  <div class="table-section">
+    <div class="refresh-filter-section">
+      <div class="refresh-button">
+        <button mat-raised-button color="primary" (click)="refreshData()">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </div>
+
+      <mat-form-field class="filter">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input />
+      </mat-form-field>
     </div>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="sidNo">
+        <th mat-header-cell *matHeaderCellDef>SID</th>
+        <td mat-cell *matCellDef="let element">{{ element.sidNo }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="ppNo">
+        <th mat-header-cell *matHeaderCellDef>Passport NO</th>
+        <td mat-cell *matCellDef="let element">{{ element.ppNo }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="cdcNo">
+        <th mat-header-cell *matHeaderCellDef>CDC NO</th>
+        <td mat-cell *matCellDef="let element">{{ element.cdcNo }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="yellowFeverNo">
+        <th mat-header-cell *matHeaderCellDef>Yellow Fever NO</th>
+        <td mat-cell *matCellDef="let element">{{ element.yellowFeverNo }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button color="warn" (click)="editData(element)" matTooltip="edit">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteData(element)" matTooltip="delete">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
 </div>
