@@ -1,0 +1,50 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.form-section{
+  flex: 1px;
+  padding: 5px;
+  border-right: 1px solid #ccc;
+}
+
+.example-full-width{
+    width: 50%;
+}
+
+.form-button{
+  margin-right: 2%;
+}
+
+.refresh-filter-section{
+  display: flex;
+  flex-direction: row;
+}
+
+.refresh-button{
+  margin: 1%;
+}
+
+.filter{
+  width: 100%;
+}
+
+.refresh-filter-section{
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+}
+
+.refresh-button{
+  margin: 1%;
+}
+
+.filter{
+  width: 100%;
+}
+
+
+
+

@@ -32,6 +32,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { RegistrationModule } from './registration/registration.module';
 import { SeafarersModule } from './seafarers/seafarers.module';
 import { UserModule } from './user/user.module';
+import { LoginModule } from './login/login.module';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { UserModule } from './user/user.module';
     ToastrModule.forRoot(),
     RegistrationModule, 
     SeafarersModule,
-    UserModule
+    UserModule,
+    LoginModule
   ],
   providers: [
     NavigationItem,

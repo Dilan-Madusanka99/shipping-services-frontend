@@ -203,6 +203,26 @@ const NavigationItems = [
         breadcrumbs: false
       },
     ]
+  },
+
+  {
+    id: 'login',
+    title: 'Login',
+    type: 'group',
+    icon: 'icon-navigation',
+    auth: authenticationEnum.Home,
+    children: [
+      {
+        id: 'LoginDet',
+        title: 'Login',
+        type: 'item',
+        url: '/login/login',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
+    ]
   }
 
   

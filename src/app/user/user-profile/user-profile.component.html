@@ -32,13 +32,11 @@
                 <mat-label> First Name </mat-label>
                 <input matInput placeholder="firstName" formControlName="firstName" >
             </mat-form-field>
-            <br>
 
             <mat-form-field class="example-full-width">
                 <mat-label> Last Name </mat-label>
                 <input matInput placeholder="lastName" formControlName="lastName" >
             </mat-form-field>
-            <br>
 
             <mat-form-field class="example-full-width">
                 <mat-label> Email </mat-label>
@@ -50,20 +48,19 @@
                 <mat-label> Phone </mat-label>
                 <input matInput placeholder="phone" formControlName="phone" >
             </mat-form-field>
-            <br>
 
             <mat-form-field class="example-full-width">
                 <mat-label> Mobile </mat-label>
                 <input matInput placeholder="mobile" formControlName="mobile" >
             </mat-form-field>
-            <br>
 
             <mat-form-field class="example-full-width">
                 <mat-label> Address </mat-label>
                 <input matInput placeholder="address" formControlName="address" >
             </mat-form-field>
-            <br><br>
-    
+            <br>
+            
+            <hr>
             <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled"> {{saveButtonLabel}} </button>
             <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()"> Reset </button>
             <br>

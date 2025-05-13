@@ -1,36 +1,35 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { LogInServiceService } from 'src/app/services/LogIn/log-in-service.service';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
-import { SeaServicesService } from 'src/app/services/seafarers/sea-services.service';
 
 export interface PeriodicElement {
-  sidNo: string;
-  vesselName: string;
-  vesselType: string;
-  position: string;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  password: string;
+  role: string;
 }
 
 const ELEMENT_DATA: any[] = [ 
-  {sidNo: 'S123', vesselName: 'souselas', vesselType: 'bulk', position: 'AB'},
+  {firstName: 'Dilan', lastName: 'Fernando', userName: 'Dilan', password: 'Abc123', role: 'Managing Director'},
 ];
 
 @Component({
-  selector: 'app-sea-services',
+  selector: 'app-login',
   standalone: false,
-  templateUrl: './sea-services.component.html',
-  styleUrl: './sea-services.component.scss',
-  providers: [provideNativeDateAdapter()],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.scss',
 })
-export class SeaServicesComponent implements OnInit{
+export class LoginComponent implements OnInit{
 
-  seaServicesForm : FormGroup;
+  LoginForm : FormGroup;
 
-    displayedColumns: string[] = ['sidNo', 'vesselName', 'vesselType', 'position', 'actions'];
+    displayedColumns: string[] = ['firstName', 'lastName', 'userName', 'password', 'role', 'actions'];
+    users = [{password: 'secret123' },];
     dataSource: MatTableDataSource<any>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
@@ -39,21 +38,18 @@ export class SeaServicesComponent implements OnInit{
     mode = 'add';
     selectedData;
     isButtonDisabled = false;
+    hide = true;
+    showPassword: boolean[] = this.users.map(() => false);
 
-    constructor(private fb: FormBuilder, private seaServicesService: SeaServicesService, private messageService: MessageServiceService) {
-      this.seaServicesForm = this.fb.group({
-        sidNo: new FormControl(''),
-        companyName: new FormControl(''),
-        vesselName: new FormControl(''),
-        position: new FormControl(''),
-        vesselType: new FormControl(''),
-        flag: new FormControl(''),
-        grt: new FormControl(''),
-        bhp: new FormControl(''),
-        signOn: new FormControl(''),
-        signOff: new FormControl(''),
-        totalMonths: new FormControl(''),
-        reason: new FormControl('')
+
+    constructor(private fb: FormBuilder, private loginService: LogInServiceService, private messageService: MessageServiceService) {
+      this.LoginForm = this.fb.group({
+        users: new FormControl(''),
+        firstName: new FormControl(''),
+        lastName: new FormControl(''),
+        userName: new FormControl(''),
+        password: new FormControl('', [Validators.required]),
+        role: new FormControl('')
       });
     }
 
@@ -72,7 +68,7 @@ export class SeaServicesComponent implements OnInit{
   
     public populateData(): void {
       try {
-        this.seaServicesService.getData().subscribe({
+        this.loginService.getData().subscribe({
           next: (dataList: any[]) => {
             if (dataList.length <=0) {
               return;
@@ -95,10 +91,10 @@ export class SeaServicesComponent implements OnInit{
         try {
           console.log('mode' + this.mode);
           console.log('Form Submitted');
-          console.log(this.seaServicesForm.value);
+          console.log(this.LoginForm.value);
   
           if (this.mode === 'add'){
-            this.seaServicesService.serviceCall(this.seaServicesForm.value).subscribe({
+            this.loginService.serviceCall(this.LoginForm.value).subscribe({
               next: (response: any) => {
                 if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {
                   this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
@@ -114,7 +110,7 @@ export class SeaServicesComponent implements OnInit{
             });
           }
           else if (this.mode === 'edit'){
-            this.seaServicesService.editData(this.selectedData?.id, this.seaServicesForm.value).subscribe ({
+            this.loginService.editData(this.selectedData?.id, this.LoginForm.value).subscribe ({
               next: (response: any) => {
                 let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
                 this.dataSource.data[elementIndex] = response;
@@ -127,7 +123,7 @@ export class SeaServicesComponent implements OnInit{
             });
           }
           this.mode = 'add';
-          this.seaServicesForm.disable();
+          this.LoginForm.disable();
           this.isButtonDisabled = true;
         } catch (error) {
           console.log(error);
@@ -136,14 +132,14 @@ export class SeaServicesComponent implements OnInit{
       }
   
       public resetData(): void {
-        this.seaServicesForm.reset();
+        this.LoginForm.reset();
         this.saveButtonLabel = 'Save';
-        this.seaServicesForm.enable();
+        this.LoginForm.enable();
         this.isButtonDisabled = false;
       }
   
       public editData(data: any): void {
-        this.seaServicesForm.patchValue(data);
+        this.LoginForm.patchValue(data);
         this.saveButtonLabel = 'Edit';
         this.mode = 'edit';
         this.selectedData = data;
@@ -153,7 +149,7 @@ export class SeaServicesComponent implements OnInit{
         const id = data.id;
         
         try {
-          this.seaServicesService.deleteData(id).subscribe ({
+          this.loginService.deleteData(id).subscribe ({
             next: (response: any) => {
               const index = this.dataSource.data.findIndex((element) => element.id === id);
     
@@ -171,6 +167,10 @@ export class SeaServicesComponent implements OnInit{
           console.log(error);
           this.messageService.showError('Action Failed With Error' + error);
         }
+      }
+
+      togglePassword(index: number): void {
+      this.showPassword[index] = !this.showPassword[index];
       }
   
       public refreshData(): void {

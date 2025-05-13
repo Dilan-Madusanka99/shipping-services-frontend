@@ -27,13 +27,19 @@ h3{
   width: 100%;
   align-content: center;
 }
-.form-section{
-  float: left;
+.form-section{ 
   width: 73%;
   background-color: white;
   padding: 20px;
   margin-top: 0px;
 }
 .form-button{
-  margin-right: 1%;
+  display: flex;
+  justify-content: center;   /* center horizontally */
+  align-items: center;       /* optional: center vertically */
+  width: 100%;               
+  margin-top: 20px; 
+}
+.example-full-width{
+  padding: 20px;
 }
