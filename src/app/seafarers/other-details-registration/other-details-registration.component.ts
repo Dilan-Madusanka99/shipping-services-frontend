@@ -211,18 +211,6 @@ export class OtherDetailsRegistrationComponent {
     return new Blob([byteArray], { type: mimeType });
   }
 
-  onYfFileSelected(event: any, imageType: string): void {
-    if ((imageType = 'yellowFeverImage')) {
-      if (event.target.files) {
-        const file = event.target.files[0];
-        const url = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(file));
-        this.previewUrlYf = url;
-        this.isYfFileSelected = true;
-        this.otherDetailsRegistrationForm.get('yellowFeverImage')?.setValue(file);
-      }
-    }
-  }
-
   onSidFileSelected(event: any, imageType: string): void {
     if ((imageType = 'sidImage')) {
       if (event.target.files) {
@@ -255,6 +243,18 @@ export class OtherDetailsRegistrationComponent {
         this.previewUrlCdc = url;
         this.isCdcFileSelected = true;
         this.otherDetailsRegistrationForm.get('cdcImage')?.setValue(file);
+      }
+    }
+  }
+
+  onYfFileSelected(event: any, imageType: string): void {
+    if ((imageType = 'yellowFeverImage')) {
+      if (event.target.files) {
+        const file = event.target.files[0];
+        const url = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(file));
+        this.previewUrlYf = url;
+        this.isYfFileSelected = true;
+        this.otherDetailsRegistrationForm.get('yellowFeverImage')?.setValue(file);
       }
     }
   }
