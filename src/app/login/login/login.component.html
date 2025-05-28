@@ -1,138 +1,143 @@
 <div class="container">
-    <div class="form-section">
-        <form [formGroup]="LoginForm" class="LoginForm" (ngSubmit)="onSubmit()">
+  <div class="form-section">
+    <form [formGroup]="LoginForm" class="LoginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="example-full-width">
+        <mat-label>Users</mat-label>
+        <mat-select [(ngModel)]="selectedEmployee" formControlName="users" (valueChange)="onEmployeeSelect($event)">
+          <mat-form-field class="w-100">
+            <input matInput placeholder="Search for employee..." (keyup)="onKey($event.target)" />
+          </mat-form-field>
+          <mat-option *ngFor="let emp of employeeDropdown" [value]="emp.id">{{ emp.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br />
 
-            <mat-form-field class="example-full-width">
-                <mat-label> Users </mat-label>
-                <mat-select formControlName="users">
-                    <mat-option value="001">Mr.Vijith</mat-option>
-                    <mat-option value="002">Mr.Rasheeth</mat-option>
-                    <mat-option value="003">Mr.Dilan</mat-option>
-                    <mat-option value="004">Ms.Thashmila</mat-option>
-                    <mat-option value="005">Mr.Oshan</mat-option>
-            </mat-select>
-            </mat-form-field>  
-            <br>
+      <mat-form-field class="example-full-width">
+        <mat-label>First Name</mat-label>
+        <input matInput placeholder="First Name" formControlName="firstName" />
+      </mat-form-field>
+      <br />
 
-            <mat-form-field class="example-full-width">
-            <mat-label> First Name </mat-label>
-            <input matInput placeholder="First Name" formControlName="firstName" >
-            </mat-form-field>
-            <br>
+      <mat-form-field class="example-full-width">
+        <mat-label>Last Name</mat-label>
+        <input matInput placeholder="Last Name" formControlName="lastName" />
+      </mat-form-field>
+      <br />
 
-            <mat-form-field class="example-full-width">
-            <mat-label> Last Name </mat-label>
-            <input matInput placeholder="Last Name" formControlName="lastName" >
-            </mat-form-field>
-            <br>
+      <mat-form-field class="example-full-width">
+        <mat-label>User Name</mat-label>
+        <input matInput placeholder="User Name" formControlName="userName" />
+      </mat-form-field>
+      <br />
 
-            <mat-form-field class="example-full-width">
-            <mat-label> User Name </mat-label>
-            <input matInput placeholder="User Name" formControlName="userName" >
-            </mat-form-field>
-            <br>
-
-            <!-- <mat-form-field class="example-full-width">
+      <!-- <mat-form-field class="example-full-width">
             <mat-label> Password </mat-label>
             <input matInput placeholder="Password" formControlName="password" >
             </mat-form-field>
             <br> -->
 
-            <!-- password -->
-            <mat-form-field appearance="outline" class="example-full-width">
-                <mat-label>Password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" placeholder="Enter password" formControlName="password">
-                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-            </mat-form-field>
-            <br>
+      <!-- password -->
+      <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label>Password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" placeholder="Enter password" formControlName="password" />
+        <button
+          type="button"
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
+      <br />
 
-            <mat-form-field class="example-full-width">
-                <mat-label> Roles </mat-label>
-                <mat-select formControlName="role">
-                    <mat-option value="Managing Director">Managing Director</mat-option>
-                    <mat-option value="Crew Manager">Crew Manager</mat-option>
-                    <mat-option value="Assistant Crew Manager">Assistant Crew Manager</mat-option>
-                    <mat-option value="Accounts & HR Executive">Accounts & HR Executive</mat-option>
-                    <mat-option value="Shipping Executive">Shipping Executive</mat-option>
-            </mat-select>
-            </mat-form-field>  
-            <br>
+      <mat-form-field class="example-full-width">
+        <mat-label>Roles</mat-label>
+        <mat-select formControlName="role">
+          <mat-option value="Managing Director">Managing Director</mat-option>
+          <mat-option value="Crew Manager">Crew Manager</mat-option>
+          <mat-option value="Assistant Crew Manager">Assistant Crew Manager</mat-option>
+          <mat-option value="Accounts & HR Executive">Accounts & HR Executive</mat-option>
+          <mat-option value="Shipping Executive">Shipping Executive</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br />
 
-            <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled"> {{saveButtonLabel}} </button>
-            <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()"> Reset </button>
+      <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled">
+        {{ saveButtonLabel }}
+      </button>
+      <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()">Reset</button>
+    </form>
+  </div>
 
-        </form>
+  <div class="table-section">
+    <div class="refresh-filter-section">
+      <div class="refresh-button">
+        <button mat-raised-button color="primary" (click)="refreshData()">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </div>
+      <mat-form-field class="filter">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input />
+      </mat-form-field>
     </div>
 
-    <div class="table-section">
-        <div class="refresh-filter-section">
-            <div class="refresh-button">
-                <button mat-raised-button color="primary" (click)="refreshData()">
-                <mat-icon>refresh</mat-icon>
-                </button>
-            </div>
-            <mat-form-field class="filter">
-            <mat-label>Filter</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
-            </mat-form-field>    
-        </div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef>First Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.firstName }}</td>
+      </ng-container>
 
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef>Last Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
+      </ng-container>
 
-        <ng-container matColumnDef="firstName">
-            <th mat-header-cell *matHeaderCellDef> First Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
-        </ng-container>
+      <ng-container matColumnDef="userName">
+        <th mat-header-cell *matHeaderCellDef>User Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.userName }}</td>
+      </ng-container>
 
-        <ng-container matColumnDef="lastName">
-            <th mat-header-cell *matHeaderCellDef> Last Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="userName">
-            <th mat-header-cell *matHeaderCellDef> User Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
-        </ng-container>
-
-        <!-- <ng-container matColumnDef="password">
+      <!-- <ng-container matColumnDef="password">
             <th mat-header-cell *matHeaderCellDef> Password </th>
             <td mat-cell *matCellDef="let element"> {{element.password}} </td>
         </ng-container> -->
 
-        <!-- password -->
-        <ng-container matColumnDef="password">
-            <th mat-header-cell *matHeaderCellDef> Password </th>
-            <td mat-cell *matCellDef="let user; let i = index">
-                <span>{{ showPassword[i] ? user.password : '••••••••' }}</span>
-                <button mat-icon-button (click)="togglePassword(i)">
-                     <mat-icon>{{ showPassword[i] ? 'visibility_off' : 'visibility' }}</mat-icon>
-                </button>
-            </td>
-        </ng-container>
+      <!-- password -->
+      <ng-container matColumnDef="password">
+        <th mat-header-cell *matHeaderCellDef>Password</th>
+        <td mat-cell *matCellDef="let user; let i = index">
+          <span>{{ showPassword[i] ? user.password : '••••••••' }}</span>
+          <button mat-icon-button (click)="togglePassword(i)">
+            <mat-icon>{{ showPassword[i] ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </td>
+      </ng-container>
 
-        <ng-container matColumnDef="role">
-            <th mat-header-cell *matHeaderCellDef> Role </th>
-            <td mat-cell *matCellDef="let element"> {{element.role}} </td>
-        </ng-container>
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef>Role</th>
+        <td mat-cell *matCellDef="let element">{{ element.role }}</td>
+      </ng-container>
 
-        <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> Action </th>
-            <td mat-cell *matCellDef="let element"> 
-                <button mat-icon-button color="warn" (click)="editData(element)" matTooltip="edit">
-                    <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button color="warn" (click)="deleteData(element)" matTooltip="delete">
-                    <mat-icon>delete</mat-icon>
-                </button>
-            </td>
-            </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button color="warn" (click)="editData(element)" matTooltip="edit">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteData(element)" matTooltip="delete">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
 
-        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
-    </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
 </div>
