@@ -85,25 +85,6 @@ const NavigationItems = [
       }
     ]
   },
-  {
-    id: 'FormDemo',
-    title: 'Form Demo',
-    type: 'group',
-    icon: 'icon-navigation',
-    auth: authenticationEnum.Home,
-    children: [
-      {
-        id: 'FormDemoDet',
-        title: 'Form Demo',
-        type: 'item',
-        url: '/pages/form-demo',
-        icon: 'feather icon-home',
-        classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
-        breadcrumbs: false
-      }
-    ]
-  },
 
   {
     id: 'registration',

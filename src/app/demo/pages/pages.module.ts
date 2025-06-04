@@ -6,11 +6,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { TestComponent } from './test/test.component';
 import { MaterialModule } from 'src/app/material.module';
-import { FormDemoComponent } from './form-demo/form-demo.component';
 
 
 @NgModule({
-  declarations: [TestComponent, FormDemoComponent ],
+  declarations: [TestComponent,],
   imports: [CommonModule, FormsModule, NgApexchartsModule, RouterModule.forChild(PagesRoutes), MaterialModule, ReactiveFormsModule],
   exports: []
 })
