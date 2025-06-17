@@ -26,8 +26,8 @@
             <br>
 
             <mat-form-field class="example-full-width">
-              <mat-label> Rank </mat-label>
-              <mat-select formControlName="rank">
+              <mat-label> Position </mat-label>
+              <mat-select formControlName="position">
               <mat-option value="AB Trainee">AB Trainee</mat-option>
               <mat-option value="OS">OS</mat-option>
               <mat-option value="AB">AB</mat-option>
@@ -61,7 +61,11 @@
             <mat-form-field class="example-full-width"> 
               <mat-label> Appointment Time </mat-label>
               <mat-select formControlName="appointmentTime">
-                <mat-option value="10.00-11.00">10.00 - 11.00</mat-option>
+                <mat-option value="10.00 - 10.30">10.00 - 10.30</mat-option>
+                <mat-option value="10.45 - 11.15">10.45 - 11.15</mat-option>
+                <mat-option value="11.30 - 12.00">11.30 - 12.00</mat-option>
+                <mat-option value="12.15 - 12.45">12.15 - 12.45</mat-option>
+                <mat-option value="13.00 - 13.30">13.00 - 13.30</mat-option>
               </mat-select>
             </mat-form-field>
             <br>
@@ -98,9 +102,9 @@
               <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="rank">
-              <th mat-header-cell *matHeaderCellDef> Rank </th>
-              <td mat-cell *matCellDef="let element"> {{element.rank}} </td>
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef> Position </th>
+              <td mat-cell *matCellDef="let element"> {{element.position}} </td>
             </ng-container>
 
             <ng-container matColumnDef="appointmentDate">

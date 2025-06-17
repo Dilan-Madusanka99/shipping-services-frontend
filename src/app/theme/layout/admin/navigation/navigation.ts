@@ -191,6 +191,16 @@ const NavigationItems = [
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
+      },
+      {
+        id: 'SeafarersRegistrationDet',
+        title: 'My Appointments',
+        type: 'item',
+        url: '/seafarers/myAppointment',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
       }
     ]
   },

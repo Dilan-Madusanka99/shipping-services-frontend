@@ -230,14 +230,5 @@ export class LoginComponent implements OnInit {
         });
       }
     });
-    // let filteredEmployee = this.allEmployeeListDetails.find((emp: any) => (emp.id = empId));
-    // console.log(this.allEmployeeListDetails);
-    // console.log(filteredEmployee);
-
-    // this.LoginForm.patchValue({
-    //   firstName: filteredEmployee.firstName,
-    //   lastName: filteredEmployee.lastName,
-    //   userName: filteredEmployee.callingName
-    // });
   }
 }

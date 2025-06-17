@@ -10,13 +10,13 @@ import { AppointmentService } from 'src/app/services/seafarers/appointment.servi
 export interface PeriodicElement {
   firstName: String;
   lastName: String;
-  rank: String;
+  position: String;
   appointmentDate: Date;
   appointmentTime: string;
 }
 
 const ELEMENT_DATA: any[] = [ 
-  {firstName: 'Chamil', lastName: 'Madushan', rank: 'Fitter', appointmentDate: '2025-06-08', appointmentTime: '10.00'},
+  {firstName: 'Chamil', lastName: 'Madushan', position: 'Fitter', appointmentDate: '2025-06-08', appointmentTime: '10.00'},
 ];
 
 @Component({
@@ -31,7 +31,7 @@ export class AppointmentComponent implements OnInit{
 
   appointmentForm : FormGroup;
 
-    displayedColumns: string[] = ['firstName', 'lastName', 'rank', 'appointmentDate', 'appointmentTime'];
+    displayedColumns: string[] = ['firstName', 'lastName', 'position', 'appointmentDate', 'appointmentTime'];
     dataSource: MatTableDataSource<any>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
@@ -47,7 +47,7 @@ export class AppointmentComponent implements OnInit{
         sid: new FormControl(''),
         firstName: new FormControl(''),
         lastName: new FormControl(''),
-        rank: new FormControl(''),
+        position: new FormControl(''),
         appointmentDate: new FormControl(''),
         appointmentTime: new FormControl(''),
       });
