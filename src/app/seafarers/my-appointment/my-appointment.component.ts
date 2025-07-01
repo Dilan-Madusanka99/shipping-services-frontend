@@ -18,6 +18,7 @@ const ELEMENT_DATA: any[] = [
   {firstName: 'Chamil', lastName: 'Madushan', position: 'Fitter', appointmentDate: '2025-06-08', appointmentTime: '10.00'},
 ];
 
+
 @Component({
   selector: 'app-my-appointment',
   standalone: false,
@@ -38,6 +39,7 @@ export class MyAppointmentComponent {
     selectedData;
     isButtonDisabled = false;
     submitted: boolean;
+    
 
   constructor(private fb: FormBuilder, private myAppointmentService: MyAppointmentService, private messageService: MessageServiceService) {
         this.myAppointmentForm = this.fb.group({
@@ -47,6 +49,7 @@ export class MyAppointmentComponent {
           position: new FormControl(''),
           appointmentDate: new FormControl(''),
           appointmentTime: new FormControl(''),
+          data: new FormControl(''),
         });
       }
   

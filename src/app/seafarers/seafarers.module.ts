@@ -12,10 +12,11 @@ import { SeaServicesComponent } from './sea-services/sea-services.component';
 import { JobPostingComponent } from './job-posting/job-posting.component';
 import { AppointmentComponent } from './appointment/appointment.component';
 import { MyAppointmentComponent } from './my-appointment/my-appointment.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [ SeafarersRegistrationComponent, OtherDetailsRegistrationComponent, CertificatesRegistrationComponent, SeaServicesComponent, JobPostingComponent, AppointmentComponent, MyAppointmentComponent],
-  imports: [CommonModule, RouterModule.forChild(RegistrationRoutes), ReactiveFormsModule, MaterialModule, MatRadioModule, ]
+  imports: [CommonModule, RouterModule.forChild(RegistrationRoutes), ReactiveFormsModule, MaterialModule, MatRadioModule, FormsModule  ]
 })
 export class SeafarersModule { }
