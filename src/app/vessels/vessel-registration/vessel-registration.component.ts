@@ -1,63 +1,55 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
-import { SeaServicesService } from 'src/app/services/seafarers/sea-services.service';
+import { VesselRegistrationService } from 'src/app/services/vessels/vessel-registration.service';
 
 export interface PeriodicElement {
-  sidNo: string;
   vesselName: string;
+  imoNo: String;
   vesselType: string;
-  position: string;
+  flag: string;
 }
 
 const ELEMENT_DATA: any[] = [ 
-  {sidNo: 'S123', vesselName: 'souselas', vesselType: 'bulk', position: 'AB'},
+  {vesselName: 'Dacil', imoNo: 'souselas', vesselType: 'bulk', flag: 'portugal'},
 ];
 
 @Component({
-  selector: 'app-sea-services',
+  selector: 'app-vessel-registration',
   standalone: false,
-  templateUrl: './sea-services.component.html',
-  styleUrl: './sea-services.component.scss',
-  providers: [provideNativeDateAdapter()],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './vessel-registration.component.html',
+  styleUrl: './vessel-registration.component.scss'
 }) 
-export class SeaServicesComponent implements OnInit{
+export class VesselRegistrationComponent implements OnInit {
 
-  seaServicesForm : FormGroup;
+  vesselRegistrationForm : FormGroup;
 
-    displayedColumns: string[] = ['sidNo', 'vesselName', 'vesselType', 'position', 'actions'];
-    dataSource: MatTableDataSource<any>;
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-    @ViewChild(MatSort) sort: MatSort;
-    selected: String;
-    saveButtonLabel = 'Save';
-    mode = 'add';
-    selectedData;
-    isButtonDisabled = false;
+  displayedColumns: string[] = ['vesselName', 'imoNo', 'vesselType', 'Flag', 'actions'];
+      dataSource: MatTableDataSource<any>;
+      @ViewChild(MatPaginator) paginator: MatPaginator;
+      @ViewChild(MatSort) sort: MatSort;
+      selected: String;
+      saveButtonLabel = 'Save';
+      mode = 'add';
+      selectedData;
+      isButtonDisabled = false;
 
-    constructor(private fb: FormBuilder, private seaServicesService: SeaServicesService, private messageService: MessageServiceService) {
-      this.seaServicesForm = this.fb.group({
-        sidNo: new FormControl(''),
-        companyName: new FormControl(''),
-        vesselName: new FormControl(''),
-        position: new FormControl(''),
-        vesselType: new FormControl(''),
-        flag: new FormControl(''),
-        grt: new FormControl(''),
-        bhp: new FormControl(''),
-        signOn: new FormControl(''),
-        signOff: new FormControl(''),
-        totalMonths: new FormControl(''),
-        reason: new FormControl('')
-      });
-    }
+      constructor(private fb: FormBuilder, private vesselRegistrationService: VesselRegistrationService, private messageService: MessageServiceService) {
+            this.vesselRegistrationForm = this.fb.group({
+              vesselName: new FormControl(''),
+              imoNo: new FormControl(''),
+              vesselType: new FormControl(''),
+              flag: new FormControl(''),
+              yob: new FormControl(''),
+              grt: new FormControl(''),
+              bhp: new FormControl('')
+            });
+          }
 
-    ngOnInit(): void{
+      ngOnInit(): void{
       this.populateData();
     }
   
@@ -72,7 +64,7 @@ export class SeaServicesComponent implements OnInit{
   
     public populateData(): void {
       try {
-        this.seaServicesService.getData().subscribe({
+        this.vesselRegistrationService.getData().subscribe({
           next: (dataList: any[]) => {
             if (dataList.length <=0) {
               return;
@@ -95,10 +87,10 @@ export class SeaServicesComponent implements OnInit{
         try {
           console.log('mode' + this.mode);
           console.log('Form Submitted');
-          console.log(this.seaServicesForm.value);
+          console.log(this.vesselRegistrationForm.value);
   
           if (this.mode === 'add'){
-            this.seaServicesService.serviceCall(this.seaServicesForm.value).subscribe({
+            this.vesselRegistrationService.serviceCall(this.vesselRegistrationForm.value).subscribe({
               next: (response: any) => {
                 if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {
                   this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
@@ -114,7 +106,7 @@ export class SeaServicesComponent implements OnInit{
             });
           }
           else if (this.mode === 'edit'){
-            this.seaServicesService.editData(this.selectedData?.id, this.seaServicesForm.value).subscribe ({
+            this.vesselRegistrationService.editData(this.selectedData?.id, this.vesselRegistrationForm.value).subscribe ({
               next: (response: any) => {
                 let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
                 this.dataSource.data[elementIndex] = response;
@@ -127,7 +119,7 @@ export class SeaServicesComponent implements OnInit{
             });
           }
           this.mode = 'add';
-          this.seaServicesForm.disable();
+          this.vesselRegistrationForm.disable();
           this.isButtonDisabled = true;
         } catch (error) {
           console.log(error);
@@ -136,14 +128,14 @@ export class SeaServicesComponent implements OnInit{
       }
   
       public resetData(): void {
-        this.seaServicesForm.reset();
+        this.vesselRegistrationForm.reset();
         this.saveButtonLabel = 'Save';
-        this.seaServicesForm.enable();
+        this.vesselRegistrationForm.enable();
         this.isButtonDisabled = false;
       }
   
       public editData(data: any): void {
-        this.seaServicesForm.patchValue(data);
+        this.vesselRegistrationForm.patchValue(data);
         this.saveButtonLabel = 'Edit';
         this.mode = 'edit';
         this.selectedData = data;
@@ -153,7 +145,7 @@ export class SeaServicesComponent implements OnInit{
         const id = data.id;
         
         try {
-          this.seaServicesService.deleteData(id).subscribe ({
+          this.vesselRegistrationService.deleteData(id).subscribe ({
             next: (response: any) => {
               const index = this.dataSource.data.findIndex((element) => element.id === id);
     
@@ -175,6 +167,6 @@ export class SeaServicesComponent implements OnInit{
   
       public refreshData(): void {
         this.populateData();
-      }
+      } 
 
 }

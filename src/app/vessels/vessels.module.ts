@@ -1,0 +1,18 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { VesselRegistrationComponent } from './vessel-registration/vessel-registration.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatRadioModule } from '@angular/material/radio';
+import { MaterialModule } from '../material.module';
+import { RegistrationRoutes } from './vessels-routing.module';
+import { RouterModule } from '@angular/router';
+
+
+
+@NgModule({
+  declarations: [ VesselRegistrationComponent ],
+  imports: [
+    CommonModule, RouterModule.forChild(RegistrationRoutes), ReactiveFormsModule, MaterialModule, MatRadioModule, FormsModule
+  ]
+})
+export class VesselsModule { }

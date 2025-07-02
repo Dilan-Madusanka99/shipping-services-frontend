@@ -84,10 +84,7 @@ const NavigationItems = [
         ]
       }
     ]
-<<<<<<< HEAD
   }, 
-=======
-  },
   
   {
     id: 'login',
@@ -108,7 +105,6 @@ const NavigationItems = [
       },
     ]
   },
->>>>>>> 775bd900959b379ace55f949af4413312d276763
 
   {
     id: 'user',
@@ -162,6 +158,26 @@ const NavigationItems = [
         title: 'Employee',
         type: 'item',
         url: '/register/employee',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      }
+    ]
+  },
+
+  {
+    id: 'vessels',
+    title: 'vessels',
+    type: 'group',
+    icon: 'icon-navigation',
+    auth: authenticationEnum.Home,
+    children: [
+      {
+        id: 'VesselRegistrationDet',
+        title: 'VesselRegistration',
+        type: 'item',
+        url: '/vessels/vesselRegistration',
         icon: 'feather icon-home',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,

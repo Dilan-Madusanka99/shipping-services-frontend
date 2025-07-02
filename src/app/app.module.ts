@@ -33,6 +33,7 @@ import { RegistrationModule } from './registration/registration.module';
 import { SeafarersModule } from './seafarers/seafarers.module';
 import { UserModule } from './user/user.module';
 import { LoginModule } from './login/login.module';
+import { VesselsModule } from './vessels/vessels.module';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { LoginModule } from './login/login.module';
     RegistrationModule, 
     SeafarersModule,
     UserModule,
-    LoginModule
+    LoginModule,
+    VesselsModule
   ],
   providers: [
     NavigationItem,
