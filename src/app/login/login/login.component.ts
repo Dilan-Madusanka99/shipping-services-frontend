@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
     this.populateData();
     this.getEmployeeList();
   }
-
+ 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

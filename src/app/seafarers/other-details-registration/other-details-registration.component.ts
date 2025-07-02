@@ -93,8 +93,9 @@ export class OtherDetailsRegistrationComponent {
 
   ngOnInit(): void {
     this.populateData();
+    this.getSeafarersList();
   }
-
+ 
   public getSeafarersList(): void {
     this.otherDetailsService.getData().subscribe((response: any) => {
       if (response && response.length > 0) {
@@ -333,7 +334,11 @@ export class OtherDetailsRegistrationComponent {
   }
 
   public editData(data: any): void {
+    console.log(data);
     this.otherDetailsRegistrationForm.patchValue(data);
+    this.otherDetailsRegistrationForm.patchValue({
+      users: +data.users
+    });
     this.saveButtonLabel = 'Edit';
     this.mode = 'edit';
     this.selectedData = data;
