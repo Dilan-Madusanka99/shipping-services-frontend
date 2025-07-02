@@ -1,6 +1,21 @@
 <div class="container">
   <div class="form-section">
     <form [formGroup]="employeeForm" class="employeeForm" (ngSubmit)="onSubmit()">
+
+      <!-- Photo upload - Start -->
+       <div class="form-field">
+        <label for="image">Upload Image</label>
+        <input type="file" (change)="onFileSelected($event)" accept="image/*"/>
+       </div>
+        
+      <div *ngIf="previewUrl">
+        <p>Image Preview:</p>
+        <img [src]="previewUrl" alt="Image preview" width="200" />
+      </div>
+      <br>
+      <!-- Photo upload - End -->
+
+
       <mat-form-field class="example-full-width">
         <mat-label>Emp No.</mat-label>
         <input matInput placeholder="Emp No." formControlName="empNo" >

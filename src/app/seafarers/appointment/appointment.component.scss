@@ -11,7 +11,7 @@
 }
 
 .table-section{
-    flex: 1px;
+    flex: 1px;  
 }
 
 .example-full-width{
@@ -38,6 +38,7 @@
 .refresh-filter-section{
     display: flex;
     flex-direction: row;
+    width: 50%;
 }
 
 .refresh-button{
@@ -48,18 +49,40 @@
     width: 100%;
 }
 
-// Photo upload
-.form-field {
-    max-width: 300px;
-    margin-bottom: 1rem;
-  }
 
-  input[type="file"] {
-    width: 100%;
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 200px;
   }
   
-  img {
-    margin-top: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  .search-box {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
   }
+  
+  .dropdown-content {
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    width: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  li {
+    padding: 8px;
+    cursor: pointer;
+  }
+  
+  li:hover {
+    background: #f0f0f0;
+  }
+  

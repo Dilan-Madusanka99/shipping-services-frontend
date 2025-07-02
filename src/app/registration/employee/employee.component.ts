@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { EmployeeServiceService } from 'src/app/services/employee/employee-service.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 export interface PeriodicElement {
   empNo: number;
@@ -39,9 +40,20 @@ export class EmployeeComponent implements OnInit{
   mode = 'add';
   selectedData;
   isButtonDisabled = false;
+  // Photo upload [start]
+    selectedFile: File | null = null;
+    previewUrl!: SafeUrl | null; // : string | ArrayBuffer | null = null;
+    isFileSelected = false;
+    // Photo upload [end]
 
-  constructor(private fb: FormBuilder, private employeeService: EmployeeServiceService, private messageService: MessageServiceService) {
+  constructor(private fb: FormBuilder, private employeeService: EmployeeServiceService, private messageService: MessageServiceService, private sanitizer: DomSanitizer // Photo upload [start]
+    ) {
     this.employeeForm = this.fb.group({
+        // Photo upload [start]
+        profileImage: new FormControl(''),
+        profileImageName: new FormControl(''),
+        profileImageType: new FormControl(''),
+          // Photo upload [end]
       empNo: new FormControl(''),
       firstName: new FormControl(''),
       lastName: new FormControl(''),
@@ -91,6 +103,61 @@ export class EmployeeComponent implements OnInit{
     }
   }
 
+    // Photo upload [start]
+    public prepareEmployeeData(): FormData {
+      const employeeFormData = new FormData();
+      employeeFormData.append(
+        'employeeForm',
+        new Blob([JSON.stringify(this.employeeForm.value)], {
+          type: 'application/json',
+        })
+      );
+  
+      if (this.isFileSelected) {
+        employeeFormData.append(
+          'profileImage',
+          this.employeeForm.get('profileImage')?.value,
+          this.employeeForm.get('profileImage')?.value.name
+        );
+      } else {
+        const imageBlob = this.base64ToBlob(
+          this.employeeForm.get('profileImage')?.value,
+          this.employeeForm.get('profileImageImageType')?.value
+        );
+        const file = new File(
+          [imageBlob],
+          this.employeeForm.get('profileImageImageName')?.value,
+          { type: this.employeeForm.get('profileImageImageType')?.value }
+        );
+        employeeFormData.append('profileImage', file, file.name);
+      }
+      return employeeFormData;
+    }
+
+    base64ToBlob(base64: string, mimeType: string): Blob {
+      const byteCharacters = atob(base64);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      return new Blob([byteArray], { type: mimeType });
+    }
+
+    onFileSelected(event: any): void {
+
+      if (event.target.files) {
+        const file = event.target.files[0];
+        const url = this.sanitizer.bypassSecurityTrustUrl(
+          window.URL.createObjectURL(file)
+        );
+        this.previewUrl = url;
+        this.isFileSelected = true;
+        this.employeeForm.get('profileImage')?.setValue(file);
+      }
+    }
+    // Photo upload [end]
+
   onSubmit() {
       try {
         console.log('mode' + this.mode);
@@ -98,7 +165,9 @@ export class EmployeeComponent implements OnInit{
         console.log(this.employeeForm.value);
 
         if (this.mode === 'add'){
-          this.employeeService.serviceCall(this.employeeForm.value).subscribe({
+          this.employeeService.serviceCall(
+            this.prepareEmployeeData() // Photo upload [start]
+          ).subscribe({
             next: (response: any) => {
               if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {
                 this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
@@ -114,7 +183,9 @@ export class EmployeeComponent implements OnInit{
           });
         }
         else if (this.mode === 'edit'){
-          this.employeeService.editData(this.selectedData?.id, this.employeeForm.value).subscribe ({
+          this.employeeService.editData(
+            this.selectedData?.id, this.prepareEmployeeData() // Photo upload [start]
+          ).subscribe ({
             next: (response: any) => {
               let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
               this.dataSource.data[elementIndex] = response;

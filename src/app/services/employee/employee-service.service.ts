@@ -73,18 +73,4 @@ export class EmployeeServiceService {
 
     return this.http.delete(requestUrl, { headers: headers });
   }
-
-  // getEmployeeList() {
-  //   const requestUrl = environment.baseUrl + '/employee/get-employee-list';
-
-  //   let headers = {};
-
-  //   if (this.httpservice.getAuthToken() !== null) {
-  //     headers = {
-  //       Authorization: 'Bearer ' + this.httpservice.getAuthToken()
-  //     };
-  //   }
-
-  //   return this.http.get(requestUrl, headers);
-  // }
 }

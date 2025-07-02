@@ -11,12 +11,11 @@ export interface PeriodicElement {
   firstName: string;
   lastName: string;
   userName: string;
-  password: string;
   role: string;
 }
 
 const ELEMENT_DATA: any[] = [
-  { firstName: 'Dilan', lastName: 'Fernando', userName: 'Dilan', password: 'Abc123', role: 'Managing Director' }
+  { firstName: 'Dilan', lastName: 'Fernando', userName: 'Dilan', role: 'Managing Director' }
 ];
 
 @Component({
@@ -28,7 +27,7 @@ const ELEMENT_DATA: any[] = [
 export class LoginComponent implements OnInit {
   LoginForm: FormGroup;
 
-  displayedColumns: string[] = ['firstName', 'lastName', 'userName', 'password', 'role', 'actions'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'userName', 'role', 'actions'];
   users = [{ password: 'secret123' }];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -55,7 +54,7 @@ export class LoginComponent implements OnInit {
       users: new FormControl(''),
       firstName: new FormControl(''),
       lastName: new FormControl(''),
-      userName: new FormControl(''),
+      userName: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
       role: new FormControl('')
     });
@@ -231,14 +230,5 @@ export class LoginComponent implements OnInit {
         });
       }
     });
-    // let filteredEmployee = this.allEmployeeListDetails.find((emp: any) => (emp.id = empId));
-    // console.log(this.allEmployeeListDetails);
-    // console.log(filteredEmployee);
-
-    // this.LoginForm.patchValue({
-    //   firstName: filteredEmployee.firstName,
-    //   lastName: filteredEmployee.lastName,
-    //   userName: filteredEmployee.callingName
-    // });
   }
 }

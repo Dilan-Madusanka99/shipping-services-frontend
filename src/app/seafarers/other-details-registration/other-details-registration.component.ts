@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { OtherDetailsRegistrationService } from 'src/app/services/seafarers/other-details-registration.service';
+import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.service';
 
 export interface PeriodicElement {
   sidNo: String;
@@ -46,12 +47,17 @@ export class OtherDetailsRegistrationComponent {
   isSPpFileSelected = false;
   isCdcFileSelected = false;
   isYfFileSelected = false;
+  selectedSeafarers: string = '';
+  allSeafarersDropdown: any = [];
+  seafarersDropdown: any = [];
+  allSeafarersListDetails: any;
 
   constructor(
     private fb: FormBuilder,
     private seafarersService: OtherDetailsRegistrationService,
     private messageService: MessageServiceService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private otherDetailsService: SeafarersServiceService // link
   ) {
     this.otherDetailsRegistrationForm = this.fb.group({
       sidImage: new FormControl(''),
@@ -88,6 +94,23 @@ export class OtherDetailsRegistrationComponent {
   ngOnInit(): void {
     this.populateData();
   }
+
+  public getSeafarersList(): void {
+    this.otherDetailsService.getData().subscribe((response: any) => {
+      if (response && response.length > 0) {
+        this.allSeafarersListDetails = response;
+        response.forEach((seafarers: any) => {
+          const seafarersData = {
+            id: seafarers.id,
+            name: seafarers.sidNo
+          };
+          this.allSeafarersDropdown.push(seafarersData);
+        });
+      }
+      this.seafarersDropdown = this.allSeafarersDropdown;
+    });
+  }
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -342,5 +365,30 @@ export class OtherDetailsRegistrationComponent {
 
   public refreshData(): void {
     this.populateData();
+  }
+
+  onKey(eventTarget: any) {
+    this.seafarersDropdown = this.search(eventTarget.value);
+  }
+
+  search(value: string) {
+    let filter = value.toLowerCase();
+    return this.allSeafarersDropdown.filter((option: any) => option.name.toLowerCase().startsWith(filter));
+  }
+
+  public onSeafarersSelect(event): void {
+    let selectedSeafarersId = event;
+
+    this.patchFormSeafarersValues(selectedSeafarersId);
+  }
+
+  public patchFormSeafarersValues(seafarersId: number): void {
+    this.allSeafarersListDetails.forEach((seafarers) => {
+      if (seafarers.id === seafarersId) {
+        this.otherDetailsRegistrationForm.patchValue({
+          sidNo: seafarers.sidNo
+        });
+      }
+    });
   }
 }
