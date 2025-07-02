@@ -84,7 +84,7 @@ const NavigationItems = [
         ]
       }
     ]
-  },
+  }, 
 
   {
     id: 'registration',
