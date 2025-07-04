@@ -175,7 +175,7 @@ const NavigationItems = [
     children: [
       {
         id: 'VesselRegistrationDet',
-        title: 'VesselRegistration',
+        title: 'Vessels',
         type: 'item',
         url: '/vessels/vesselRegistration',
         icon: 'feather icon-home',

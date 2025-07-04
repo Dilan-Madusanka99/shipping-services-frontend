@@ -4,6 +4,17 @@
 
           <h5>Vessels Details</h5>
 
+          <div class="form-field">
+            <label for="image">Upload Image</label>
+            <input type="file" (change)="onFileSelected($event)" accept="image/*"/>
+          </div>
+        
+          <div *ngIf="previewUrl">
+            <p>Image Preview:</p>
+            <img [src]="previewUrl" alt="Image preview" width="200" />
+          </div>
+          <br>
+
             <mat-form-field class="example-full-width">
              <mat-label>Vessel Name</mat-label>
              <input matInput placeholder="Vessel Name" formControlName="vesselName">
@@ -29,7 +40,7 @@
                   <mat-option value="AHTS">AHTS</mat-option>
                 </mat-select>
               </mat-form-field>
-              <br><br>
+              <br>
 
             <mat-form-field class="example-full-width">
                 <mat-label>Flag</mat-label>

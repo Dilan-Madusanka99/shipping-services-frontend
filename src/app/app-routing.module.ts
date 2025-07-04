@@ -78,7 +78,7 @@ const routes: Routes = [
         loadChildren: () => import('./login/login.module'). then((m) => m.LoginModule)
       },
       {
-        path: 'login',
+        path: 'vessels',
         loadChildren: () => import('./vessels/vessels.module'). then((m) => m.VesselsModule)
       }
     ]

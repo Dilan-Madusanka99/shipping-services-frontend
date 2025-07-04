@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { VesselRegistrationService } from 'src/app/services/vessels/vessel-registration.service';
 
@@ -27,7 +28,7 @@ export class VesselRegistrationComponent implements OnInit {
 
   vesselRegistrationForm : FormGroup;
 
-  displayedColumns: string[] = ['vesselName', 'imoNo', 'vesselType', 'Flag', 'actions'];
+      displayedColumns: string[] = ['vesselName', 'imoNo', 'vesselType', 'Flag', 'actions'];
       dataSource: MatTableDataSource<any>;
       @ViewChild(MatPaginator) paginator: MatPaginator;
       @ViewChild(MatSort) sort: MatSort;
@@ -36,9 +37,15 @@ export class VesselRegistrationComponent implements OnInit {
       mode = 'add';
       selectedData;
       isButtonDisabled = false;
+      selectedFile: File | null = null;
+      previewUrl!: SafeUrl | null;
+      isFileSelected = false;
 
-      constructor(private fb: FormBuilder, private vesselRegistrationService: VesselRegistrationService, private messageService: MessageServiceService) {
+      constructor(private fb: FormBuilder, private vesselRegistrationService: VesselRegistrationService, private messageService: MessageServiceService, private sanitizer: DomSanitizer) {
             this.vesselRegistrationForm = this.fb.group({
+              profileImage: new FormControl(''),
+              profileImageName: new FormControl(''),
+              profileImageType: new FormControl(''),
               vesselName: new FormControl(''),
               imoNo: new FormControl(''),
               vesselType: new FormControl(''),
@@ -80,6 +87,59 @@ export class VesselRegistrationComponent implements OnInit {
         });
       } catch (error) {
         this.messageService.showError('Action Failed With Error ' + error);
+      }
+    }
+
+    public prepareVesselsData(): FormData {
+      const vesselRegistrationFormData = new FormData();
+      vesselRegistrationFormData.append(
+        'vesselRegistrationForm',
+        new Blob([JSON.stringify(this.vesselRegistrationForm.value)], {
+          type: 'application/json',
+        })
+      );
+  
+      if (this.isFileSelected) {
+        vesselRegistrationFormData.append(
+          'profileImage',
+          this.vesselRegistrationForm.get('profileImage')?.value,
+          this.vesselRegistrationForm.get('profileImage')?.value.name
+        );
+      } else {
+        const imageBlob = this.base64ToBlob(
+          this.vesselRegistrationForm.get('profileImage')?.value,
+          this.vesselRegistrationForm.get('profileImageImageType')?.value
+        );
+        const file = new File(
+          [imageBlob],
+          this.vesselRegistrationForm.get('profileImageImageName')?.value,
+          { type: this.vesselRegistrationForm.get('profileImageImageType')?.value }
+        );
+        vesselRegistrationFormData.append('profileImage', file, file.name);
+      }
+      return vesselRegistrationFormData;
+    }
+
+    base64ToBlob(base64: string, mimeType: string): Blob {
+      const byteCharacters = atob(base64);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      return new Blob([byteArray], { type: mimeType });
+    }
+
+    onFileSelected(event: any): void {
+
+      if (event.target.files) {
+        const file = event.target.files[0];
+        const url = this.sanitizer.bypassSecurityTrustUrl(
+          window.URL.createObjectURL(file)
+        );
+        this.previewUrl = url;
+        this.isFileSelected = true;
+        this.vesselRegistrationForm.get('profileImage')?.setValue(file);
       }
     }
   
