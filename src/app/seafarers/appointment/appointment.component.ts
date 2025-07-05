@@ -16,7 +16,7 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: any[] = [ 
-  {firstName: 'Chamil', lastName: 'Madushan', position: 'Fitter', appointmentDate: '2025-06-08', appointmentTime: '10.00'},
+  {firstName: 'Chamil', lastName: 'Madushan', position: 'Fitter', appointmentDate: '2025-06-08', appointmentTime: '10.00', appointmentStatus: 'cancelled'},
 ];
 
 @Component({
@@ -31,7 +31,7 @@ export class AppointmentComponent implements OnInit{
 
   appointmentForm : FormGroup;
 
-    displayedColumns: string[] = ['firstName', 'lastName', 'position', 'appointmentDate', 'appointmentTime'];
+    displayedColumns: string[] = ['firstName', 'lastName', 'position', 'appointmentDate', 'appointmentTime', 'appointmentStatus'];
     dataSource: MatTableDataSource<any>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
@@ -48,8 +48,11 @@ export class AppointmentComponent implements OnInit{
         firstName: new FormControl(''),
         lastName: new FormControl(''),
         position: new FormControl(''),
+        mobile: new FormControl(''),
+        email: new FormControl(''),
         appointmentDate: new FormControl(''),
         appointmentTime: new FormControl(''),
+        appointmentStatus: new FormControl(''),
       });
     }
 
