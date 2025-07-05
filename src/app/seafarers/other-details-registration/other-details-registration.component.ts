@@ -95,7 +95,7 @@ export class OtherDetailsRegistrationComponent {
     this.populateData();
     this.getSeafarersList();
   }
- 
+
   public getSeafarersList(): void {
     this.otherDetailsService.getData().subscribe((response: any) => {
       if (response && response.length > 0) {
@@ -103,7 +103,7 @@ export class OtherDetailsRegistrationComponent {
         response.forEach((seafarers: any) => {
           const seafarersData = {
             id: seafarers.id,
-            name: seafarers.sidNo
+            sidNo: seafarers.sidNo
           };
           this.allSeafarersDropdown.push(seafarersData);
         });
@@ -111,7 +111,6 @@ export class OtherDetailsRegistrationComponent {
       this.seafarersDropdown = this.allSeafarersDropdown;
     });
   }
-
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -388,12 +387,16 @@ export class OtherDetailsRegistrationComponent {
   }
 
   public patchFormSeafarersValues(seafarersId: number): void {
-    this.allSeafarersListDetails.forEach((seafarers) => {
-      if (seafarers.id === seafarersId) {
-        this.otherDetailsRegistrationForm.patchValue({
-          sidNo: seafarers.sidNo
-        });
-      }
+    // this.allSeafarersListDetails.forEach((seafarers) => {
+    //   if (seafarers.id === seafarersId) {
+    //     this.otherDetailsRegistrationForm.patchValue({
+    //       sidNo: seafarers.sidNo
+    //     });
+    //   }
+    // });
+
+    this.otherDetailsRegistrationForm.patchValue({
+      sidNo: seafarersId
     });
   }
 }
