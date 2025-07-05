@@ -1,66 +1,56 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
-import { VesselRegistrationService } from 'src/app/services/vessels/vessel-registration.service';
-
-export interface PeriodicElement {
-  vesselName: string;
-  imoNo: String;
-  vesselType: string;
-  flag: string;
-}
-
-const ELEMENT_DATA: any[] = [ 
-  {vesselName: 'Dacil', imoNo: 'souselas', vesselType: 'bulk', flag: 'portugal'},
-];
+import { CertificateVerificationService } from 'src/app/services/seafarers/certificate-verification.service';
 
 @Component({
-  selector: 'app-vessel-registration',
+  selector: 'app-certificate-verification',
   standalone: false,
-  templateUrl: './vessel-registration.component.html',
-  styleUrl: './vessel-registration.component.scss'
-}) 
-export class VesselRegistrationComponent implements OnInit {
+  templateUrl: './certificate-verification.component.html',
+  styleUrl: './certificate-verification.component.scss',
+  providers: [provideNativeDateAdapter()],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class CertificateVerificationComponent {
 
-  vesselRegistrationForm : FormGroup;
+  certificateVerificationForm : FormGroup;
 
-      displayedColumns: string[] = ['vesselName', 'imoNo', 'vesselType', 'flag', 'actions'];
-      dataSource: MatTableDataSource<any>;
-      @ViewChild(MatPaginator) paginator: MatPaginator;
-      @ViewChild(MatSort) sort: MatSort;
-      selected: String;
-      saveButtonLabel = 'Save';
-      mode = 'add';
-      selectedData;
-      isButtonDisabled = false;
-      selectedFile: File | null = null;
-      previewUrl!: SafeUrl | null;
-      isFileSelected = false;
-
-      constructor(private fb: FormBuilder, private vesselRegistrationService: VesselRegistrationService, private messageService: MessageServiceService, private sanitizer: DomSanitizer) {
-            this.vesselRegistrationForm = this.fb.group({
-              profileImage: new FormControl(''),
-              profileImageName: new FormControl(''),
-              profileImageType: new FormControl(''),
-              vesselName: new FormControl(''),
-              imoNo: new FormControl(''),
-              vesselType: new FormControl(''),
-              flag: new FormControl(''),
-              yob: new FormControl(''),
-              grt: new FormControl(''),
-              bhp: new FormControl('')
-            });
-          }
-
-      ngOnInit(): void{
-      this.populateData();
-    }
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  dataSource: MatTableDataSource<any>;
+  selected: string;
+  isButtonDisabled = false;
+  saveButtonLabel = 'Save';
+  mode = 'add';
+  selectedData;
+  submitted: boolean;
+  selectedFile: File | null = null;
+  previewUrl!: SafeUrl | null;
+  isFileSelected = false;
   
-    applyFilter(event: Event) {
+constructor(private fb: FormBuilder, private certificateVerificationService: CertificateVerificationService, private messageService: MessageServiceService, 
+    private sanitizer: DomSanitizer ) {
+      this.certificateVerificationForm = this.fb.group({
+        
+        sidNo: new FormControl (''),
+        certificateName: new FormControl(''),
+        profileImage: new FormControl(''),
+        profileImageName: new FormControl(''),
+        profileImageType: new FormControl(''),
+        verificationStatus: new FormControl(''),
+      });
+    }
+
+  ngOnInit(): void{
+   this.populateData();
+  }
+
+  applyFilter(event: Event) {
       const filterValue = (event.target as HTMLInputElement).value;
       this.dataSource.filter = filterValue.trim().toLowerCase();
   
@@ -71,7 +61,7 @@ export class VesselRegistrationComponent implements OnInit {
   
     public populateData(): void {
       try {
-        this.vesselRegistrationService.getData().subscribe({
+        this.certificateVerificationService.getData(). subscribe({
           next: (dataList: any[]) => {
             if (dataList.length <=0) {
               return;
@@ -90,34 +80,34 @@ export class VesselRegistrationComponent implements OnInit {
       }
     }
 
-    public prepareVesselsData(): FormData {
-      const vesselRegistrationFormData = new FormData();
-      vesselRegistrationFormData.append(
-        'vesselRegistrationForm',
-        new Blob([JSON.stringify(this.vesselRegistrationForm.value)], {
+    public prepareSeafarerData(): FormData {
+      const certificateVerificationFormData = new FormData();
+      certificateVerificationFormData.append(
+        'certificateVerificationForm',
+        new Blob([JSON.stringify(this.certificateVerificationForm.value)], {
           type: 'application/json',
         })
       );
   
       if (this.isFileSelected) {
-        vesselRegistrationFormData.append(
+        certificateVerificationFormData.append(
           'profileImage',
-          this.vesselRegistrationForm.get('profileImage')?.value,
-          this.vesselRegistrationForm.get('profileImage')?.value.name
+          this.certificateVerificationForm.get('profileImage')?.value,
+          this.certificateVerificationForm.get('profileImage')?.value.name
         );
       } else {
         const imageBlob = this.base64ToBlob(
-          this.vesselRegistrationForm.get('profileImage')?.value,
-          this.vesselRegistrationForm.get('profileImageImageType')?.value
+          this.certificateVerificationForm.get('profileImage')?.value,
+          this.certificateVerificationForm.get('profileImageImageType')?.value
         );
         const file = new File(
           [imageBlob],
-          this.vesselRegistrationForm.get('profileImageImageName')?.value,
-          { type: this.vesselRegistrationForm.get('profileImageImageType')?.value }
+          this.certificateVerificationForm.get('profileImageImageName')?.value,
+          { type: this.certificateVerificationForm.get('profileImageImageType')?.value }
         );
-        vesselRegistrationFormData.append('profileImage', file, file.name);
+        certificateVerificationFormData.append('profileImage', file, file.name);
       }
-      return vesselRegistrationFormData;
+      return certificateVerificationFormData;
     }
 
     base64ToBlob(base64: string, mimeType: string): Blob {
@@ -139,7 +129,7 @@ export class VesselRegistrationComponent implements OnInit {
         );
         this.previewUrl = url;
         this.isFileSelected = true;
-        this.vesselRegistrationForm.get('profileImage')?.setValue(file);
+        this.certificateVerificationForm.get('profileImage')?.setValue(file);
       }
     }
   
@@ -147,10 +137,12 @@ export class VesselRegistrationComponent implements OnInit {
         try {
           console.log('mode' + this.mode);
           console.log('Form Submitted');
-          console.log(this.vesselRegistrationForm.value);
+          console.log(this.certificateVerificationForm.value);
   
           if (this.mode === 'add'){
-            this.vesselRegistrationService.serviceCall(this.vesselRegistrationForm.value).subscribe({
+            this.certificateVerificationService.serviceCall(
+              this.prepareSeafarerData()   // Photo upload [start]
+            ).subscribe({
               next: (response: any) => {
                 if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {
                   this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
@@ -166,7 +158,9 @@ export class VesselRegistrationComponent implements OnInit {
             });
           }
           else if (this.mode === 'edit'){
-            this.vesselRegistrationService.editData(this.selectedData?.id, this.vesselRegistrationForm.value).subscribe ({
+            this.certificateVerificationService.editData(
+              this.selectedData?.id, this.prepareSeafarerData()
+            ).subscribe ({
               next: (response: any) => {
                 let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
                 this.dataSource.data[elementIndex] = response;
@@ -179,7 +173,7 @@ export class VesselRegistrationComponent implements OnInit {
             });
           }
           this.mode = 'add';
-          this.vesselRegistrationForm.disable();
+          this.certificateVerificationForm.disable();
           this.isButtonDisabled = true;
         } catch (error) {
           console.log(error);
@@ -188,14 +182,14 @@ export class VesselRegistrationComponent implements OnInit {
       }
   
       public resetData(): void {
-        this.vesselRegistrationForm.reset();
+        this.certificateVerificationForm.reset();
         this.saveButtonLabel = 'Save';
-        this.vesselRegistrationForm.enable();
+        this.certificateVerificationForm.enable();
         this.isButtonDisabled = false;
       }
   
       public editData(data: any): void {
-        this.vesselRegistrationForm.patchValue(data);
+        this.certificateVerificationForm.patchValue(data);
         this.saveButtonLabel = 'Edit';
         this.mode = 'edit';
         this.selectedData = data;
@@ -205,7 +199,7 @@ export class VesselRegistrationComponent implements OnInit {
         const id = data.id;
         
         try {
-          this.vesselRegistrationService.deleteData(id).subscribe ({
+          this.certificateVerificationService.deleteData(id).subscribe ({
             next: (response: any) => {
               const index = this.dataSource.data.findIndex((element) => element.id === id);
     
@@ -227,6 +221,7 @@ export class VesselRegistrationComponent implements OnInit {
   
       public refreshData(): void {
         this.populateData();
-      } 
-
+      }
+          
 }
+

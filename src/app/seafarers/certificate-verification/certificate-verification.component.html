@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="form-section">
+    <form [formGroup]="certificateVerificationForm" class="certificateVerificationForm" (ngSubmit)="onSubmit()">
+
+      <h5>Certificate Verification</h5>
+
+        <mat-form-field class="example-full-width">
+        <mat-label> Sid No </mat-label>
+        <mat-select formControlName="sidNo">
+          <mat-option value="sid">sid</mat-option>
+        </mat-select>
+      </mat-form-field>  
+      <br>
+
+      <mat-form-field class="example-full-width">
+        <mat-label> Certificate Name </mat-label>
+            <mat-select formControlName="certificateName">
+            <mat-option value="Advanced Fire Fighting">Advanced Fire Fighting</mat-option>
+            <mat-option value="Medical First Aid">Medical First Aid</mat-option>
+            <mat-option value="Surival Craft & Rescue Boat">Surival Craft & Rescue Boat</mat-option>
+            <mat-option value="Refresher Certificates">Refresher Certificates</mat-option>
+            <mat-option value="Designated Security Duties">Security Training & Designated Security Duties</mat-option>
+            <mat-option value="Oil & Chemical Tanker">Oil & Chemical Tanker</mat-option>
+            <mat-option value="Tanker Endorsement">Tanker Endorsement</mat-option>
+            <mat-option value="Basic Endorsement">Basic Endorsement</mat-option>
+            <mat-option value="II-4 (Deck)">Certificate of Proficiency (II-4)</mat-option>
+            <mat-option value="II-5 (Deck)">Certificate of Proficiency (II-5)</mat-option>
+            <mat-option value="III-4 (Engine)">Certificate of Proficiency (III-4)</mat-option>
+            <mat-option value="III-5 (Engine)">Certificate of Proficiency (III-5)</mat-option>      
+            <mat-option value="III-7 (ETR)">Certificate of Proficiency (ETR-7)</mat-option>
+            <mat-option value="MLC">Certificate of Proficiency (MLC)</mat-option>
+            <mat-option value="6G">Fitter (6G)</mat-option>      
+            <mat-option value="LR">Lloyd Certificate (LR)</mat-option>
+        </mat-select>
+       </mat-form-field> 
+       <br>
+
+       <div class="form-field">
+        <label for="image">Upload Certificate Image</label>
+        <input type="file" (change)="onFileSelected($event)" accept="image/*"/>
+       </div>
+        
+      <div *ngIf="previewUrl">
+        <p>Image Preview:</p>
+        <img [src]="previewUrl" alt="Image preview" width="200" />
+      </div>
+      <br>
+
+      <mat-form-field class="example-full-width">
+        <mat-label> Verification Status </mat-label>
+        <mat-select formControlName="verificationStatus">
+          <mat-option value="valid">Valid</mat-option>
+          <mat-option value="invalid">Invalid</mat-option>
+          <mat-option value="expired">Expired</mat-option>
+        </mat-select>
+      </mat-form-field>  
+      <br>
+
+      <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled"> {{saveButtonLabel}} </button>
+      <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()"> Reset </button>
+
+      <br><br><br>
+    
+    </form>
+
+  </div>

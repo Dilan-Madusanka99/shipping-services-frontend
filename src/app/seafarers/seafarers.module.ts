@@ -13,10 +13,11 @@ import { JobPostingComponent } from './job-posting/job-posting.component';
 import { AppointmentComponent } from './appointment/appointment.component';
 import { MyAppointmentComponent } from './my-appointment/my-appointment.component';
 import { FormsModule } from '@angular/forms';
+import { CertificateVerificationComponent } from './certificate-verification/certificate-verification.component';
 
 
 @NgModule({
-  declarations: [ SeafarersRegistrationComponent, OtherDetailsRegistrationComponent, CertificatesRegistrationComponent, SeaServicesComponent, JobPostingComponent, AppointmentComponent, MyAppointmentComponent],
+  declarations: [ SeafarersRegistrationComponent, OtherDetailsRegistrationComponent, CertificatesRegistrationComponent, SeaServicesComponent, JobPostingComponent, AppointmentComponent, MyAppointmentComponent, CertificateVerificationComponent],
   imports: [CommonModule, RouterModule.forChild(RegistrationRoutes), ReactiveFormsModule, MaterialModule, MatRadioModule, FormsModule  ]
 })
 export class SeafarersModule { }

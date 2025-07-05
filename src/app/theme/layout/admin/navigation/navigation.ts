@@ -245,6 +245,16 @@ const NavigationItems = [
       },
       {
         id: 'SeafarersRegistrationDet',
+        title: 'Certificates Verfication',
+        type: 'item',
+        url: '/seafarers/certificateVerification',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
+      {
+        id: 'SeafarersRegistrationDet',
         title: 'Appointment',
         type: 'item',
         url: '/seafarers/appointment',
