@@ -80,7 +80,11 @@ const routes: Routes = [
       {
         path: 'vessels',
         loadChildren: () => import('./vessels/vessels.module'). then((m) => m.VesselsModule)
-      }
+      },
+      {
+        path: 'inventory',
+        loadChildren: () => import('./inventory/inventory.module'). then((m) => m.InventoryModule)
+      },
     ]
   },
 

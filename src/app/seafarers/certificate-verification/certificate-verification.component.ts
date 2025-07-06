@@ -8,6 +8,16 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { CertificateVerificationService } from 'src/app/services/seafarers/certificate-verification.service';
 
+export interface PeriodicElement {
+  sidNo: string;
+  certificateName: String;
+  verificationStatus: String;
+}
+
+const ELEMENT_DATA: any[] = [ 
+  {sidNo: 'S123', certificateName: 'SDSD', verificationStatus: 'cancelled'},
+];
+
 @Component({
   selector: 'app-certificate-verification',
   standalone: false,
@@ -20,6 +30,7 @@ export class CertificateVerificationComponent {
 
   certificateVerificationForm : FormGroup;
 
+  displayedColumns: string[] = ['sidNo', 'certificateName', 'verificationStatus', 'actions'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource: MatTableDataSource<any>;

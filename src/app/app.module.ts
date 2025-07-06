@@ -34,6 +34,7 @@ import { SeafarersModule } from './seafarers/seafarers.module';
 import { UserModule } from './user/user.module';
 import { LoginModule } from './login/login.module';
 import { VesselsModule } from './vessels/vessels.module';
+import { InventoryModule } from './inventory/inventory.module';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { VesselsModule } from './vessels/vessels.module';
     SeafarersModule,
     UserModule,
     LoginModule,
-    VesselsModule
+    VesselsModule,
+    InventoryModule,
   ],
   providers: [
     NavigationItem,
