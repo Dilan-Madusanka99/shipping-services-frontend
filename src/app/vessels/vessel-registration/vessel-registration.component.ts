@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -47,12 +47,12 @@ export class VesselRegistrationComponent implements OnInit {
               profileImageName: new FormControl(''),
               profileImageType: new FormControl(''),
               vesselName: new FormControl(''),
-              imoNo: new FormControl(''),
-              vesselType: new FormControl(''),
-              flag: new FormControl(''),
-              yob: new FormControl(''),
-              grt: new FormControl(''),
-              bhp: new FormControl('')
+              imoNo: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]+$/)]),
+              vesselType: new FormControl('', [Validators.required]),
+              flag: new FormControl('', [Validators.pattern(/^[A-Za-z]+$/)]),
+              yob: new FormControl('', [Validators.pattern(/^\d{4}$/)]),
+              grt: new FormControl('', [Validators.pattern(/^[0-9]+$/)]),
+              bhp: new FormControl('', [Validators.required])
             });
           }
 

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -54,18 +54,18 @@ export class EmployeeComponent implements OnInit{
         profileImageName: new FormControl(''),
         profileImageType: new FormControl(''),
           // Photo upload [end]
-      empNo: new FormControl(''),
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
-      callingName: new FormControl(''),
-      nic: new FormControl(''),
+      empNo: new FormControl('', [Validators.required]),
+      firstName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]),
+      lastName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]),
+      callingName: new FormControl('', [Validators.pattern(/^[A-Za-z]+$/)]),
+      nic: new FormControl('', [Validators.required, Validators.pattern(/^([0-9]{9}[vVxX]|[0-9]{12})$/)]),
       dob: new FormControl(''),
-      roles: new FormControl(''),
-      contactNo: new FormControl(''),
-      email: new FormControl(''),
+      roles: new FormControl('', [Validators.required]),
+      contactNo: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]),
+      email: new FormControl('', [Validators.required, Validators.email]),
       address: new FormControl(''),
-      emergencyContactName: new FormControl(''),
-      emergencyContactNo: new FormControl(''),
+      emergencyContactName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]),
+      emergencyContactNo: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]),
     });
   }
 
