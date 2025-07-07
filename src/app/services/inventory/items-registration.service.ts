@@ -6,14 +6,14 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ItemsRegistratinService {
+export class ItemsRegistrationService {
 
   constructor(private http: HttpClient, private httpService: HttpService) { }
 
   serviceCall(form_details: any) {
               console.log('In the Service');
           
-              const requestUrl = environment.baseUrl + '/itemsRegistration';
+              const requestUrl = environment.baseUrl + '/items_Registration';
               
               let headers = {};
           
@@ -27,7 +27,7 @@ export class ItemsRegistratinService {
             }
           
             getData() {
-              const requestUrl = environment.baseUrl + '/itemsRegistration';
+              const requestUrl = environment.baseUrl + '/items_Registration';
           
               let headers = {};
           
@@ -43,7 +43,7 @@ export class ItemsRegistratinService {
             editData(id: number, form_details: any) {
               console.log('In edit data');
           
-              const requestUrl = environment.baseUrl + '/itemsRegistration/' + id.toString();
+              const requestUrl = environment.baseUrl + '/items_Registration/' + id.toString();
               
               let headers = {};
           
@@ -59,7 +59,7 @@ export class ItemsRegistratinService {
             deleteData(id: number) {
               console.log('In delete data');
           
-              const requestUrl = environment.baseUrl + '/itemsRegistration/' + id.toString();
+              const requestUrl = environment.baseUrl + '/items_Registration/' + id.toString();
               
               let headers = {};
           

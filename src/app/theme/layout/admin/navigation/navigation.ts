@@ -276,6 +276,36 @@ const NavigationItems = [
     ]
   },
 
+  {
+    id: 'inventory',
+    title: 'Inventory',
+    type: 'group',
+    icon: 'icon-navigation',
+    auth: authenticationEnum.Home,
+    children: [
+      {
+        id: 'InventoryDet',
+        title: 'Items Registration',
+        type: 'item',
+        url: '/inventory/itemsRegistration',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
+      {
+        id: 'InventoryDet',
+        title: 'Supplier Registration',
+        type: 'item',
+        url: '/inventory/supplierRegistration',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
+    ]
+  },
+
   
 
   

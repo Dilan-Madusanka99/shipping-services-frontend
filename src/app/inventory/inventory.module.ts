@@ -6,11 +6,12 @@ import { RegistrationRoutes } from '../registration/registration.routing.module'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { MatRadioModule } from '@angular/material/radio';
+import { SupplierRegistrationComponent } from './supplier-registration/supplier-registration.component';
 
 
 
 @NgModule({
-  declarations: [ItemsRegistrationComponent],
+  declarations: [ItemsRegistrationComponent, SupplierRegistrationComponent],
   imports: [
     CommonModule, RouterModule.forChild(RegistrationRoutes), ReactiveFormsModule, MaterialModule, MatRadioModule, FormsModule
   ]

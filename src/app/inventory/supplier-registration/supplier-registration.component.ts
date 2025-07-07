@@ -1,36 +1,33 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
-import { EmployeeServiceService } from 'src/app/services/employee/employee-service.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { SupplierRegistrationService } from 'src/app/services/inventory/supplier-registration.service';
+import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 
 export interface PeriodicElement {
-  empNo: number;
-  firstName: string;
-  nic: number;
-  roles: string;
+  supplierNo: String;
+  supplierName: string;
+  supplierCategory: String;
+  supplierContactNo: String;
 }
- 
+
 const ELEMENT_DATA: any[] = [ 
-  {empNo: 1, firstName: 'Hydrogen', nic: 1, roles: 'manager'},
+  {supplierNo: 'S01', supplierName: 'Fish City', supplierCategory: 'Foods', supplierContactNo: '0112674644'},
 ];
 
 @Component({
-  selector: 'app-employee',
+  selector: 'app-supplier-registration',
   standalone: false,
-  templateUrl: './employee.component.html',
-  styleUrl: './employee.component.scss',
-  providers: [provideNativeDateAdapter()],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './supplier-registration.component.html',
+  styleUrl: './supplier-registration.component.scss'
 })
-export class EmployeeComponent implements OnInit{
+export class SupplierRegistrationComponent {
 
-  employeeForm : FormGroup;
-  
+  supplierRegistrationForm : FormGroup;
+
   displayedColumns: string[] = ['empNo', 'firstName', 'nic', 'roles', 'actions'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -40,34 +37,28 @@ export class EmployeeComponent implements OnInit{
   mode = 'add';
   selectedData;
   isButtonDisabled = false;
-  // Photo upload [start]
-    selectedFile: File | null = null;
-    previewUrl!: SafeUrl | null; // : string | ArrayBuffer | null = null;
-    isFileSelected = false;
-    // Photo upload [end]
+  selectedFile: File | null = null;
+  previewUrl!: SafeUrl | null; 
+  isFileSelected = false;
 
-  constructor(private fb: FormBuilder, private employeeService: EmployeeServiceService, private messageService: MessageServiceService, private sanitizer: DomSanitizer // Photo upload [start]
-    ) {
-    this.employeeForm = this.fb.group({
-        // Photo upload [start]
+  constructor(private fb: FormBuilder, private supplierRegistrationService: SupplierRegistrationService, private messageService: MessageServiceService, private sanitizer: DomSanitizer
+      ) {
+      this.supplierRegistrationForm = this.fb.group({
         profileImage: new FormControl(''),
         profileImageName: new FormControl(''),
         profileImageType: new FormControl(''),
-          // Photo upload [end]
-      empNo: new FormControl(''),
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
-      callingName: new FormControl(''),
-      nic: new FormControl(''),
-      dob: new FormControl(''),
-      roles: new FormControl(''),
-      contactNo: new FormControl(''),
-      email: new FormControl(''),
-      address: new FormControl(''),
-      emergencyContactName: new FormControl(''),
-      emergencyContactNo: new FormControl(''),
-    });
-  }
+        supplierNo: new FormControl(''),
+        supplierName: new FormControl(''),
+        supplierCategory: new FormControl(''),
+        supplierSubCategory: new FormControl(''),
+        supplierContactNo: new FormControl(''),
+        supplierEmail: new FormControl(''),
+        supplierAccName: new FormControl(''),
+        supplierAccNo: new FormControl(''),
+        supplierBank: new FormControl(''),
+        supplierBranch: new FormControl(''),
+      });
+    }
 
   ngOnInit(): void{
     this.populateData();
@@ -84,7 +75,7 @@ export class EmployeeComponent implements OnInit{
 
   public populateData(): void {
     try {
-      this.employeeService.getData(). subscribe({
+      this.supplierRegistrationService.getData(). subscribe({
         next: (dataList: any[]) => {
           if (dataList.length <=0) {
             return;
@@ -103,35 +94,34 @@ export class EmployeeComponent implements OnInit{
     }
   }
 
-    // Photo upload [start]
-    public prepareEmployeeData(): FormData {
-      const employeeFormData = new FormData();
-      employeeFormData.append(
-        'employeeForm',
-        new Blob([JSON.stringify(this.employeeForm.value)], {
+    public prepareSupplierData(): FormData {
+      const supplierRegistrationFormData = new FormData();
+      supplierRegistrationFormData.append(
+        'supplierRegistrationForm',
+        new Blob([JSON.stringify(this.supplierRegistrationForm.value)], {
           type: 'application/json',
         })
       );
   
       if (this.isFileSelected) {
-        employeeFormData.append(
+        supplierRegistrationFormData.append(
           'profileImage',
-          this.employeeForm.get('profileImage')?.value,
-          this.employeeForm.get('profileImage')?.value.name
+          this.supplierRegistrationForm.get('profileImage')?.value,
+          this.supplierRegistrationForm.get('profileImage')?.value.name
         );
       } else {
         const imageBlob = this.base64ToBlob(
-          this.employeeForm.get('profileImage')?.value,
-          this.employeeForm.get('profileImageImageType')?.value
+          this.supplierRegistrationForm.get('profileImage')?.value,
+          this.supplierRegistrationForm.get('profileImageImageType')?.value
         );
         const file = new File(
           [imageBlob],
-          this.employeeForm.get('profileImageImageName')?.value,
-          { type: this.employeeForm.get('profileImageImageType')?.value }
+          this.supplierRegistrationForm.get('profileImageImageName')?.value,
+          { type: this.supplierRegistrationForm.get('profileImageImageType')?.value }
         );
-        employeeFormData.append('profileImage', file, file.name);
+        supplierRegistrationFormData.append('profileImage', file, file.name);
       }
-      return employeeFormData;
+      return supplierRegistrationFormData;
     }
 
     base64ToBlob(base64: string, mimeType: string): Blob {
@@ -153,20 +143,19 @@ export class EmployeeComponent implements OnInit{
         );
         this.previewUrl = url;
         this.isFileSelected = true;
-        this.employeeForm.get('profileImage')?.setValue(file);
+        this.supplierRegistrationForm.get('profileImage')?.setValue(file);
       }
     }
-    // Photo upload [end]
 
   onSubmit() {
       try {
         console.log('mode' + this.mode);
         console.log('Form Submitted');
-        console.log(this.employeeForm.value);
+        console.log(this.supplierRegistrationForm.value);
 
         if (this.mode === 'add'){
-          this.employeeService.serviceCall(
-            this.prepareEmployeeData() // Photo upload [start]
+          this.supplierRegistrationService.serviceCall(
+            this.prepareSupplierData()
           ).subscribe({
             next: (response: any) => {
               if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {
@@ -183,8 +172,8 @@ export class EmployeeComponent implements OnInit{
           });
         }
         else if (this.mode === 'edit'){
-          this.employeeService.editData(
-            this.selectedData?.id, this.prepareEmployeeData() // Photo upload [start]
+          this.supplierRegistrationService.editData(
+            this.selectedData?.id, this.prepareSupplierData() 
           ).subscribe ({
             next: (response: any) => {
               let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
@@ -198,7 +187,7 @@ export class EmployeeComponent implements OnInit{
           });
         }
         this.mode = 'add';
-        this.employeeForm.disable();
+        this.supplierRegistrationForm.disable();
         this.isButtonDisabled = true;
       } catch (error) {
         console.log(error);
@@ -207,14 +196,14 @@ export class EmployeeComponent implements OnInit{
     }
 
     public resetData(): void {
-      this.employeeForm.reset();
+      this.supplierRegistrationForm.reset();
       this.saveButtonLabel = 'Save';
-      this.employeeForm.enable();
+      this.supplierRegistrationForm.enable();
       this.isButtonDisabled = false;
     }
 
     public editData(data: any): void {
-      this.employeeForm.patchValue(data);
+      this.supplierRegistrationForm.patchValue(data);
       this.saveButtonLabel = 'Edit';
       this.mode = 'edit';
       this.selectedData = data;
@@ -224,7 +213,7 @@ export class EmployeeComponent implements OnInit{
       const id = data.id;
       
       try {
-        this.employeeService.deleteData(id).subscribe ({
+        this.supplierRegistrationService.deleteData(id).subscribe ({
           next: (response: any) => {
             const index = this.dataSource.data.findIndex((element) => element.id === id);
   
@@ -247,4 +236,5 @@ export class EmployeeComponent implements OnInit{
     public refreshData(): void {
       this.populateData();
     }
+  
 }
