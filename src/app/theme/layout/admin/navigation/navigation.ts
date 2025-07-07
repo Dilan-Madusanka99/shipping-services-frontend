@@ -277,7 +277,7 @@ const NavigationItems = [
   },
 
   {
-    id: 'inventory',
+    id: 'Inventory',
     title: 'Inventory',
     type: 'group',
     icon: 'icon-navigation',

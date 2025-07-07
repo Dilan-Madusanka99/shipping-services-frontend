@@ -28,7 +28,7 @@ export class SupplierRegistrationComponent {
 
   supplierRegistrationForm : FormGroup;
 
-  displayedColumns: string[] = ['empNo', 'firstName', 'nic', 'roles', 'actions'];
+  displayedColumns: string[] = ['supplierNo', 'supplierName', 'supplierCategory', 'supplierContactNo', 'actions'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

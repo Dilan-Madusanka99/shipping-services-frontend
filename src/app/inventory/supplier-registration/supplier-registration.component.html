@@ -2,6 +2,8 @@
   <div class="form-section">
     <form [formGroup]="supplierRegistrationForm" class="supplierRegistrationForm" (ngSubmit)="onSubmit()">
 
+      <h5>Supplier Details</h5>
+
       <!-- Photo upload - Start -->
        <div class="form-field">
         <label for="image">Upload Image</label>
@@ -31,7 +33,6 @@
         <mat-form-field class="example-full-width">
           <mat-label>Supplier Category</mat-label>
           <mat-select [(value)]="selected" formControlName="supplierCategory">
-            <mat-option>None</mat-option>
             <mat-option value="Deck Stores">Deck Stores</mat-option>
             <mat-option value="Engine Stores">Engine Stores</mat-option>
             <mat-option value="Foods">Foods</mat-option>
@@ -56,9 +57,9 @@
           <mat-label>Supplier Email</mat-label>
           <input matInput placeholder="Supplier Email" formControlName="Supplier Email">
         </mat-form-field>
-        <br>
+        <br><br>
 
-        <h5>Supplier Account Details</h5>
+        <h5>Supplier Bank Details</h5>
 
         <mat-form-field class="example-full-width">
           <mat-label>Bank Account Name</mat-label>
