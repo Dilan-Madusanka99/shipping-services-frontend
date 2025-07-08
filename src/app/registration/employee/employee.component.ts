@@ -14,10 +14,8 @@ export interface PeriodicElement {
   nic: number;
   roles: string;
 }
- 
-const ELEMENT_DATA: any[] = [ 
-  {empNo: 1, firstName: 'Hydrogen', nic: 1, roles: 'manager'},
-];
+
+const ELEMENT_DATA: any[] = [{ empNo: 1, firstName: 'Hydrogen', nic: 1, roles: 'manager' }];
 
 @Component({
   selector: 'app-employee',
@@ -27,10 +25,9 @@ const ELEMENT_DATA: any[] = [
   providers: [provideNativeDateAdapter()],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EmployeeComponent implements OnInit{
+export class EmployeeComponent implements OnInit {
+  employeeForm: FormGroup;
 
-  employeeForm : FormGroup;
-  
   displayedColumns: string[] = ['empNo', 'firstName', 'nic', 'roles', 'actions'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -41,19 +38,23 @@ export class EmployeeComponent implements OnInit{
   selectedData;
   isButtonDisabled = false;
   // Photo upload [start]
-    selectedFile: File | null = null;
-    previewUrl!: SafeUrl | null; // : string | ArrayBuffer | null = null;
-    isFileSelected = false;
-    // Photo upload [end]
+  selectedFile: File | null = null;
+  previewUrl!: SafeUrl | null; // : string | ArrayBuffer | null = null;
+  isFileSelected = false;
+  // Photo upload [end]
 
-  constructor(private fb: FormBuilder, private employeeService: EmployeeServiceService, private messageService: MessageServiceService, private sanitizer: DomSanitizer // Photo upload [start]
-    ) {
+  constructor(
+    private fb: FormBuilder,
+    private employeeService: EmployeeServiceService,
+    private messageService: MessageServiceService,
+    private sanitizer: DomSanitizer // Photo upload [start]
+  ) {
     this.employeeForm = this.fb.group({
-        // Photo upload [start]
-        profileImage: new FormControl(''),
-        profileImageName: new FormControl(''),
-        profileImageType: new FormControl(''),
-          // Photo upload [end]
+      // Photo upload [start]
+      profileImage: new FormControl(''),
+      profileImageName: new FormControl(''),
+      profileImageType: new FormControl(''),
+      // Photo upload [end]
       empNo: new FormControl('', [Validators.required]),
       firstName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]),
       lastName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]),
@@ -65,11 +66,11 @@ export class EmployeeComponent implements OnInit{
       email: new FormControl('', [Validators.required, Validators.email]),
       address: new FormControl(''),
       emergencyContactName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]),
-      emergencyContactNo: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]),
+      emergencyContactNo: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)])
     });
   }
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.populateData();
   }
 
@@ -84,12 +85,12 @@ export class EmployeeComponent implements OnInit{
 
   public populateData(): void {
     try {
-      this.employeeService.getData(). subscribe({
+      this.employeeService.getData().subscribe({
         next: (dataList: any[]) => {
-          if (dataList.length <=0) {
+          if (dataList.length <= 0) {
             return;
           }
-          
+
           this.dataSource = new MatTableDataSource(dataList);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
@@ -103,89 +104,88 @@ export class EmployeeComponent implements OnInit{
     }
   }
 
-    // Photo upload [start]
-    public prepareEmployeeData(): FormData {
-      const employeeFormData = new FormData();
+  // Photo upload [start]
+  public prepareEmployeeData(): FormData {
+    const employeeFormData = new FormData();
+    employeeFormData.append(
+      'employeeForm',
+      new Blob([JSON.stringify(this.employeeForm.value)], {
+        type: 'application/json'
+      })
+    );
+
+    if (this.isFileSelected) {
       employeeFormData.append(
-        'employeeForm',
-        new Blob([JSON.stringify(this.employeeForm.value)], {
-          type: 'application/json',
-        })
+        'profileImage',
+        this.employeeForm.get('profileImage')?.value,
+        this.employeeForm.get('profileImage')?.value.name
       );
-  
-      if (this.isFileSelected) {
-        employeeFormData.append(
-          'profileImage',
-          this.employeeForm.get('profileImage')?.value,
-          this.employeeForm.get('profileImage')?.value.name
-        );
-      } else {
-        const imageBlob = this.base64ToBlob(
-          this.employeeForm.get('profileImage')?.value,
-          this.employeeForm.get('profileImageImageType')?.value
-        );
-        const file = new File(
-          [imageBlob],
-          this.employeeForm.get('profileImageImageName')?.value,
-          { type: this.employeeForm.get('profileImageImageType')?.value }
-        );
-        employeeFormData.append('profileImage', file, file.name);
-      }
-      return employeeFormData;
+    } else {
+      const imageBlob = this.base64ToBlob(
+        this.employeeForm.get('profileImage')?.value,
+        this.employeeForm.get('profileImageImageType')?.value
+      );
+      const file = new File([imageBlob], this.employeeForm.get('profileImageImageName')?.value, {
+        type: this.employeeForm.get('profileImageImageType')?.value
+      });
+      employeeFormData.append('profileImage', file, file.name);
     }
+    return employeeFormData;
+  }
 
-    base64ToBlob(base64: string, mimeType: string): Blob {
-      const byteCharacters = atob(base64);
-      const byteNumbers = new Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-      }
-      const byteArray = new Uint8Array(byteNumbers);
-      return new Blob([byteArray], { type: mimeType });
+  base64ToBlob(base64: string, mimeType: string): Blob {
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
     }
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: mimeType });
+  }
 
-    onFileSelected(event: any): void {
-
-      if (event.target.files) {
-        const file = event.target.files[0];
-        const url = this.sanitizer.bypassSecurityTrustUrl(
-          window.URL.createObjectURL(file)
-        );
-        this.previewUrl = url;
-        this.isFileSelected = true;
-        this.employeeForm.get('profileImage')?.setValue(file);
-      }
+  onFileSelected(event: any): void {
+    if (event.target.files) {
+      const file = event.target.files[0];
+      const url = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(file));
+      this.previewUrl = url;
+      this.isFileSelected = true;
+      this.employeeForm.get('profileImage')?.setValue(file);
     }
-    // Photo upload [end]
+  }
+  // Photo upload [end]
 
   onSubmit() {
-      try {
-        console.log('mode' + this.mode);
-        console.log('Form Submitted');
-        console.log(this.employeeForm.value);
+    try {
+      console.log('mode' + this.mode);
+      console.log('Form Submitted');
+      console.log(this.employeeForm.value);
 
-        if (this.mode === 'add'){
-          this.employeeService.serviceCall(
+      if (this.mode === 'add') {
+        this.employeeService
+          .serviceCall(
             this.prepareEmployeeData() // Photo upload [start]
-          ).subscribe({
+          )
+          .subscribe({
             next: (response: any) => {
               if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {
                 this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
               } else {
-                  this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
-              }        
-      
-              this.messageService.showSuccess('Data Saved Successfully!');  
+                this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
+              }
+
+              this.messageService.showSuccess('Data Saved Successfully!');
             },
             error: (error) => {
               this.messageService.showError('Action Failed With Error' + error);
             }
           });
-        }
-        else if (this.mode === 'edit'){
-          this.employeeService.editData(
-            this.selectedData?.id, this.prepareEmployeeData() // Photo upload [start]
-          ).subscribe ({
+      } else if (this.mode === 'edit') {
+        this.employeeService
+          .editData(
+            this.selectedData?.id,
+            this.prepareEmployeeData() // Photo upload [start]
+          )
+          .subscribe({
             next: (response: any) => {
               let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
               this.dataSource.data[elementIndex] = response;
@@ -196,55 +196,61 @@ export class EmployeeComponent implements OnInit{
               this.messageService.showError('Action Failed With Error' + error);
             }
           });
-        }
-        this.mode = 'add';
-        this.employeeForm.disable();
-        this.isButtonDisabled = true;
-      } catch (error) {
-        console.log(error);
-        this.messageService.showError('Action Failed With Error' + error);
       }
+      this.mode = 'add';
+      this.employeeForm.disable();
+      this.isButtonDisabled = true;
+    } catch (error) {
+      console.log(error);
+      this.messageService.showError('Action Failed With Error' + error);
     }
+  }
 
-    public resetData(): void {
-      this.employeeForm.reset();
-      this.saveButtonLabel = 'Save';
-      this.employeeForm.enable();
-      this.isButtonDisabled = false;
-    }
+  public resetData(): void {
+    this.employeeForm.reset();
+    this.saveButtonLabel = 'Save';
+    this.employeeForm.enable();
+    this.isButtonDisabled = false;
 
-    public editData(data: any): void {
-      this.employeeForm.patchValue(data);
-      this.saveButtonLabel = 'Edit';
-      this.mode = 'edit';
-      this.selectedData = data;
-    }
+    /* Remove image on reset */
+    this.previewUrl = null;
+    this.isFileSelected = false;
+    this.employeeForm.setErrors = null!;
+    this.employeeForm.updateValueAndValidity();
+  }
 
-    public deleteData(data: any): void {
-      const id = data.id;
-      
-      try {
-        this.employeeService.deleteData(id).subscribe ({
-          next: (response: any) => {
-            const index = this.dataSource.data.findIndex((element) => element.id === id);
-  
+  public editData(data: any): void {
+    this.employeeForm.patchValue(data);
+    this.saveButtonLabel = 'Edit';
+    this.mode = 'edit';
+    this.selectedData = data;
+  }
+
+  public deleteData(data: any): void {
+    const id = data.id;
+
+    try {
+      this.employeeService.deleteData(id).subscribe({
+        next: (response: any) => {
+          const index = this.dataSource.data.findIndex((element) => element.id === id);
+
           if (index !== -1) {
             this.dataSource.data.splice(index, 1);
           }
-          this.dataSource = new MatTableDataSource (this.dataSource.data);
+          this.dataSource = new MatTableDataSource(this.dataSource.data);
           this.messageService.showSuccess('Data Deleted Successfully!');
-          },
-          error: (error: any) => {
-            this.messageService.showError('Action Failed With Error' + error);
-          }
-        });
-      } catch (error) {
-        console.log(error);
-        this.messageService.showError('Action Failed With Error' + error);
-      }
+        },
+        error: (error: any) => {
+          this.messageService.showError('Action Failed With Error' + error);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      this.messageService.showError('Action Failed With Error' + error);
     }
+  }
 
-    public refreshData(): void {
-      this.populateData();
-    }
+  public refreshData(): void {
+    this.populateData();
+  }
 }
