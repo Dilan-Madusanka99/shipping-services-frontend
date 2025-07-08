@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './theme/layout/admin/admin.component';
 import { GuestComponent } from './theme/layout/guest/guest.component';
 import { AuthGuard } from './guards/auth.guard';
+import { FirstPageComponent } from './first/first-page/first-page.component';
 
 const routes: Routes = [
   {
@@ -10,8 +11,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/auth/signin',
-        pathMatch: 'full'
+        component: FirstPageComponent
       },
       {
         path: 'auth',
@@ -59,37 +59,34 @@ const routes: Routes = [
       },
       {
         path: 'pages',
-        loadChildren: () => import('./demo/pages/pages.module').then((m) => m.PagesModule) 
+        loadChildren: () => import('./demo/pages/pages.module').then((m) => m.PagesModule)
       },
       {
         path: 'register', // register/employee
-        loadChildren: () => import('./registration/registration.module'). then((m) => m.RegistrationModule)
+        loadChildren: () => import('./registration/registration.module').then((m) => m.RegistrationModule)
       },
       {
         path: 'seafarers', // seafarers
-        loadChildren: () => import('./seafarers/seafarers.module'). then((m) => m.SeafarersModule)
+        loadChildren: () => import('./seafarers/seafarers.module').then((m) => m.SeafarersModule)
       },
       {
         path: 'user',
-        loadChildren: () => import('./user/user.module'). then((m) => m.UserModule)
+        loadChildren: () => import('./user/user.module').then((m) => m.UserModule)
       },
       {
         path: 'login',
-        loadChildren: () => import('./login/login.module'). then((m) => m.LoginModule)
+        loadChildren: () => import('./login/login.module').then((m) => m.LoginModule)
       },
       {
         path: 'vessels',
-        loadChildren: () => import('./vessels/vessels.module'). then((m) => m.VesselsModule)
+        loadChildren: () => import('./vessels/vessels.module').then((m) => m.VesselsModule)
       },
       {
         path: 'inventory',
-        loadChildren: () => import('./inventory/inventory.module'). then((m) => m.InventoryModule)
-      },
+        loadChildren: () => import('./inventory/inventory.module').then((m) => m.InventoryModule)
+      }
     ]
-  },
-
-
-
+  }
 ];
 
 @NgModule({

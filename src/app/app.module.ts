@@ -35,6 +35,7 @@ import { UserModule } from './user/user.module';
 import { LoginModule } from './login/login.module';
 import { VesselsModule } from './vessels/vessels.module';
 import { InventoryModule } from './inventory/inventory.module';
+import { FirstPageComponent } from './first/first-page/first-page.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { InventoryModule } from './inventory/inventory.module';
     NavGroupComponent,
     NavItemComponent,
     NavSearchComponent,
-    ToggleFullScreenDirective
+    ToggleFullScreenDirective,
+    FirstPageComponent
   ],
   imports: [
     BrowserModule,
@@ -63,12 +65,12 @@ import { InventoryModule } from './inventory/inventory.module';
     BrowserAnimationsModule,
     MaterialModule,
     ToastrModule.forRoot(),
-    RegistrationModule, 
+    RegistrationModule,
     SeafarersModule,
     UserModule,
     LoginModule,
     VesselsModule,
-    InventoryModule,
+    InventoryModule
   ],
   providers: [
     NavigationItem,

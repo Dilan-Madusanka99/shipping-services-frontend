@@ -1,0 +1,264 @@
+<!-- Appointment Modal -->
+<div class="modal-overlay" *ngIf="showAppointmentModal" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Book Your Consultation</h2>
+      <button class="modal-close" (click)="closeModal()">&times;</button>
+    </div>
+    <form class="appointment-form" (ngSubmit)="submitAppointment()" #appointmentForm="ngForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Full Name *</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            [(ngModel)]="appointment.name"
+            required
+            #name="ngModel"
+            class="form-control"
+            [class.error]="name.invalid && name.touched"
+          />
+          <div class="error-message" *ngIf="name.invalid && name.touched">Name is required</div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="appointment.email"
+            required
+            email
+            #email="ngModel"
+            class="form-control"
+            [class.error]="email.invalid && email.touched"
+          />
+          <div class="error-message" *ngIf="email.invalid && email.touched">
+            <span *ngIf="email.errors?.['required']">Email is required</span>
+            <span *ngIf="email.errors?.['email']">Please enter a valid email</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="phone">Phone Number *</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            [(ngModel)]="appointment.phone"
+            required
+            #phone="ngModel"
+            class="form-control"
+            [class.error]="phone.invalid && phone.touched"
+            placeholder="(555) 123-4567"
+          />
+          <div class="error-message" *ngIf="phone.invalid && phone.touched">Phone number is required</div>
+        </div>
+        <div class="form-group">
+          <label for="service">Service Type *</label>
+          <select
+            id="service"
+            name="service"
+            [(ngModel)]="appointment.service"
+            required
+            #service="ngModel"
+            class="form-control"
+            [class.error]="service.invalid && service.touched"
+          >
+            <option value="">Select a service</option>
+            <option value="career-counseling">Career Counseling</option>
+            <option value="resume-review">Resume Review</option>
+            <option value="interview-prep">Interview Preparation</option>
+            <option value="job-placement">Job Placement Assistance</option>
+            <option value="salary-negotiation">Salary Negotiation</option>
+          </select>
+          <div class="error-message" *ngIf="service.invalid && service.touched">Please select a service</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="date">Preferred Date *</label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            [(ngModel)]="appointment.date"
+            required
+            #date="ngModel"
+            class="form-control"
+            [class.error]="date.invalid && date.touched"
+            [min]="minDate"
+          />
+          <div class="error-message" *ngIf="date.invalid && date.touched">Please select a date</div>
+        </div>
+        <div class="form-group">
+          <label for="time">Preferred Time *</label>
+          <select
+            id="time"
+            name="time"
+            [(ngModel)]="appointment.time"
+            required
+            #time="ngModel"
+            class="form-control"
+            [class.error]="time.invalid && time.touched"
+          >
+            <option value="">Select a time</option>
+            <option value="09:00">9:00 AM</option>
+            <option value="10:00">10:00 AM</option>
+            <option value="11:00">11:00 AM</option>
+            <option value="12:00">12:00 PM</option>
+            <option value="13:00">1:00 PM</option>
+            <option value="14:00">2:00 PM</option>
+            <option value="15:00">3:00 PM</option>
+            <option value="16:00">4:00 PM</option>
+            <option value="17:00">5:00 PM</option>
+          </select>
+          <div class="error-message" *ngIf="time.invalid && time.touched">Please select a time</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Additional Message (Optional)</label>
+        <textarea
+          id="message"
+          name="message"
+          [(ngModel)]="appointment.message"
+          class="form-control"
+          rows="4"
+          placeholder="Tell us about your career goals or any specific questions you have..."
+        ></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!appointmentForm.form.valid || isSubmitting">
+          <span *ngIf="isSubmitting">Booking...</span>
+          <span *ngIf="!isSubmitting">Book Appointment</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Success Message Modal -->
+<div class="modal-overlay" *ngIf="showSuccessModal" (click)="closeSuccessModal()">
+  <div class="modal-content success-modal" (click)="$event.stopPropagation()">
+    <div class="success-icon">✓</div>
+    <h2>Appointment Booked Successfully!</h2>
+    <p>Thank you, {{ submittedAppointment?.name }}! We've received your appointment request.</p>
+    <div class="appointment-details">
+      <p>
+        <strong>Service:</strong>
+        {{ getServiceName(submittedAppointment?.service) }}
+      </p>
+      <p>
+        <strong>Date:</strong>
+        {{ formatDate(submittedAppointment?.date) }}
+      </p>
+      <p>
+        <strong>Time:</strong>
+        {{ formatTime(submittedAppointment?.time) }}
+      </p>
+    </div>
+    <p class="confirmation-text">
+      A confirmation email has been sent to {{ submittedAppointment?.email }}. Our team will contact you within 24 hours to confirm your
+      appointment.
+    </p>
+    <button class="btn btn-primary" (click)="closeSuccessModal()">Close</button>
+  </div>
+</div>
+<!-- Header -->
+<header class="header">
+  <nav class="nav container">
+    <div class="logo">JobHub</div>
+    <div class="nav-buttons">
+      <button class="btn btn-outline" (click)="signIn()">Sign In</button>
+      <button class="btn btn-primary" (click)="signUp()">Sign Up</button>
+    </div>
+  </nav>
+</header>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="container">
+    <h1>Add a title here</h1>
+    <p>Add a sub title here</p>
+    <button class="btn btn-primary" (click)="bookAppointment()">Book Consultation</button>
+  </div>
+</section>
+
+<!-- Jobs Section -->
+<section class="jobs-section">
+  <div class="container">
+    <h2 class="section-title">Latest Job Opportunities</h2>
+    <div class="carousel-container">
+      <div class="carousel-track" [style.transform]="'translateX(' + -currentSlide * 320 + 'px)'">
+        <div class="job-card" *ngFor="let job of jobs">
+          <h3 class="job-title">{{ job.title }}</h3>
+          <p class="job-company">{{ job.company }}</p>
+          <p class="job-location">📍 {{ job.location }}</p>
+          <p class="job-salary">{{ job.salary }}</p>
+          <p>{{ job.description }}</p>
+        </div>
+      </div>
+      <button class="carousel-nav prev" (click)="previousSlide()">‹</button>
+      <button class="carousel-nav next" (click)="nextSlide()">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- Appointment Section -->
+<section class="appointment-section">
+  <div class="container">
+    <div class="appointment-content">
+      <h2>Ready to Take the Next Step?</h2>
+      <p>Schedule a consultation with our career experts to discuss your goals and find the perfect job match.</p>
+      <button class="btn btn-primary" (click)="bookAppointment()">Book Appointment</button>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p>📞 +1 (555) 123-4567</p>
+        <p>✉️ infojobhub.com</p>
+        <p>
+          📍 123 Business Ave, Suite 100
+          <br />
+          New York, NY 10001
+        </p>
+      </div>
+      <div class="footer-section">
+        <h3>Office Hours</h3>
+        <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+        <p>Saturday: 10:00 AM - 4:00 PM</p>
+        <p>Sunday: Closed</p>
+      </div>
+      <div class="footer-section">
+        <h3>Services</h3>
+        <a href="#">Job Placement</a>
+        <a href="#">Career Counseling</a>
+        <a href="#">Resume Review</a>
+        <a href="#">Interview Preparation</a>
+      </div>
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <a href="#">LinkedIn</a>
+        <a href="#">Twitter</a>
+        <a href="#">Facebook</a>
+        <a href="#">Instagram</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 JobHub. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
