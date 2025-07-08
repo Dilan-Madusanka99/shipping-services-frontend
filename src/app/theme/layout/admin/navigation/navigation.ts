@@ -225,6 +225,16 @@ const NavigationItems = [
       },
       {
         id: 'SeafarersRegistrationDet',
+        title: 'Certificates Verfication',
+        type: 'item',
+        url: '/seafarers/certificateVerification',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
+      {
+        id: 'SeafarersRegistrationDet',
         title: 'Sea Services',
         type: 'item',
         url: '/seafarers/seaServices',
@@ -238,16 +248,6 @@ const NavigationItems = [
         title: 'Job Posting',
         type: 'item',
         url: '/seafarers/jobPosting',
-        icon: 'feather icon-home',
-        classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
-        breadcrumbs: false
-      },
-      {
-        id: 'SeafarersRegistrationDet',
-        title: 'Certificates Verfication',
-        type: 'item',
-        url: '/seafarers/certificateVerification',
         icon: 'feather icon-home',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
@@ -272,7 +272,7 @@ const NavigationItems = [
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
-      }
+      },
     ]
   },
 
@@ -298,6 +298,16 @@ const NavigationItems = [
         title: 'Supplier Registration',
         type: 'item',
         url: '/inventory/supplierRegistration',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
+      {
+        id: 'InventoryDet',
+        title: 'Payments',
+        type: 'item',
+        url: '/inventory/payments',
         icon: 'feather icon-home',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,

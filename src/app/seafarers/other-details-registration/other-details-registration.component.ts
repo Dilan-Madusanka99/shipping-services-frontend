@@ -48,7 +48,7 @@ export class OtherDetailsRegistrationComponent {
   isCdcFileSelected = false;
   isYfFileSelected = false;
   selectedSeafarers: string = '';
-  allSeafarersDropdown: any = [];
+  allSeafarersDropdown: any = [];  // sid link
   seafarersDropdown: any = [];
   allSeafarersListDetails: any;
 
@@ -57,7 +57,7 @@ export class OtherDetailsRegistrationComponent {
     private seafarersService: OtherDetailsRegistrationService,
     private messageService: MessageServiceService,
     private sanitizer: DomSanitizer,
-    private otherDetailsService: SeafarersServiceService // link
+    private otherDetailsService: SeafarersServiceService // sid link
   ) {
     this.otherDetailsRegistrationForm = this.fb.group({
       sidImage: new FormControl(''),
@@ -387,14 +387,6 @@ export class OtherDetailsRegistrationComponent {
   }
 
   public patchFormSeafarersValues(seafarersId: number): void {
-    // this.allSeafarersListDetails.forEach((seafarers) => {
-    //   if (seafarers.id === seafarersId) {
-    //     this.otherDetailsRegistrationForm.patchValue({
-    //       sidNo: seafarers.sidNo
-    //     });
-    //   }
-    // });
-
     this.otherDetailsRegistrationForm.patchValue({
       sidNo: seafarersId
     });

@@ -4,55 +4,60 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { ItemsRegistrationService } from 'src/app/services/inventory/items-registration.service';
+import { PaymentsService } from 'src/app/services/inventory/payments.service';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 
 export interface PeriodicElement {
-  itemNo: String;
-  itemName: string;
-  itemCategory: string;
-} 
+  paymentNo: String;
+  supplierName: string;
+  amount: string;
+  paymentDate: Date;
+  paymentStatus: String;
+}
 
 const ELEMENT_DATA: any[] = [ 
-  {itemNo: 1, itemName: 'bearing', itemCategory: 'engine stores'},
+  {itemNo: '001', supplierName: 'fish city', amount: '10000', paymentDate: '8/7/2025', paymentStatus: 'paid'},
 ];
 
 @Component({
-  selector: 'app-items-registration',
+  selector: 'app-payments',
   standalone: false,
-  templateUrl: './items-registration.component.html',
-  styleUrl: './items-registration.component.scss'
+  templateUrl: './payments.component.html',
+  styleUrl: './payments.component.scss'
 })
-export class ItemsRegistrationComponent {
+export class PaymentsComponent {
 
-  itemsRegistrationForm : FormGroup;
+  paymentsForm : FormGroup;
 
-  displayedColumns: string[] = ['itemNo', 'itemName', 'itemCategory', 'actions'];
-  dataSource: MatTableDataSource<any>;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  selected: String;
-  saveButtonLabel = 'Save';
-  mode = 'add';
-  selectedData;
-  isButtonDisabled = false;
-  selectedFile: File | null = null;
-  previewUrl!: SafeUrl | null; 
-  isFileSelected = false;
+    displayedColumns: string[] = ['paymentNo', 'supplierName', 'amount', 'paymentDate', 'paymentStatus', 'actions'];
+    dataSource: MatTableDataSource<any>;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
+    selected: String;
+    saveButtonLabel = 'Save';
+    mode = 'add';
+    selectedData;
+    isButtonDisabled = false;
+    selectedFile: File | null = null;
+    previewUrl!: SafeUrl | null; 
+    isFileSelected = false;
 
-  constructor(private fb: FormBuilder, private itemsRegistrationService: ItemsRegistrationService, private messageService: MessageServiceService, private sanitizer: DomSanitizer
-  ) {
-      this.itemsRegistrationForm = this.fb.group({
-        
-        itemNo: new FormControl(''),
-        emNo: new FormControl(''),
-        itemName: new FormControl(''),
-        itemCategory: new FormControl(''),
-        profileImage: new FormControl(''),
-        profileImageName: new FormControl(''),
-        profileImageType: new FormControl('')
-      });
-    }
+    constructor(private fb: FormBuilder, private paymentsService: PaymentsService, private messageService: MessageServiceService, private sanitizer: DomSanitizer
+      ) {
+        this.paymentsForm = this.fb.group({
+          paymentNo: new FormControl(''),
+          itemNo : new FormControl(''),
+          itemName: new FormControl(''),
+          supplierName : new FormControl(''),
+          quantity : new FormControl(''),
+          amount : new FormControl(''),
+          paymentDate: new FormControl(''),
+          paymentStatus : new FormControl(''),
+          paymentImage: new FormControl(''),
+          paymentImageName: new FormControl(''),
+          paymentImageType: new FormControl('')
+        });
+      }
 
     ngOnInit(): void{
     this.populateData();
@@ -69,7 +74,7 @@ export class ItemsRegistrationComponent {
 
   public populateData(): void {
     try {
-      this.itemsRegistrationService.getData(). subscribe({
+      this.paymentsService.getData(). subscribe({
         next: (dataList: any[]) => {
           if (dataList.length <=0) {
             return;
@@ -88,34 +93,34 @@ export class ItemsRegistrationComponent {
     }
   }
 
-    public prepareItemRegistrationData(): FormData {
-      const itemsRegistrationFormData = new FormData();
-      itemsRegistrationFormData.append(
-        'itemsRegistrationForm',
-        new Blob([JSON.stringify(this.itemsRegistrationForm.value)], {
+    public preparePaymentsData(): FormData {
+      const paymentsFormData = new FormData();
+      paymentsFormData.append(
+        'paymentsForm',
+        new Blob([JSON.stringify(this.paymentsForm.value)], {
           type: 'application/json',
         })
       );
   
       if (this.isFileSelected) {
-        itemsRegistrationFormData.append(
-          'profileImage',
-          this.itemsRegistrationForm.get('profileImage')?.value,
-          this.itemsRegistrationForm.get('profileImage')?.value.name
+        paymentsFormData.append(
+          'paymentImage',
+          this.paymentsForm.get('paymentImage')?.value,
+          this.paymentsForm.get('paymentImage')?.value.name
         );
       } else {
         const imageBlob = this.base64ToBlob(
-          this.itemsRegistrationForm.get('profileImage')?.value,
-          this.itemsRegistrationForm.get('profileImageImageType')?.value
+          this.paymentsForm.get('paymentImage')?.value,
+          this.paymentsForm.get('paymentImageImageType')?.value
         );
         const file = new File(
           [imageBlob],
-          this.itemsRegistrationForm.get('profileImageImageName')?.value,
-          { type: this.itemsRegistrationForm.get('profileImageImageType')?.value }
+          this.paymentsForm.get('paymentImageImageName')?.value,
+          { type: this.paymentsForm.get('paymentImageImageType')?.value }
         );
-        itemsRegistrationFormData.append('profileImage', file, file.name);
+        paymentsFormData.append('paymentImage', file, file.name);
       }
-      return itemsRegistrationFormData;
+      return paymentsFormData;
     }
 
     base64ToBlob(base64: string, mimeType: string): Blob {
@@ -137,7 +142,7 @@ export class ItemsRegistrationComponent {
         );
         this.previewUrl = url;
         this.isFileSelected = true;
-        this.itemsRegistrationForm.get('profileImage')?.setValue(file);
+        this.paymentsForm.get('paymentImage')?.setValue(file);
       }
     }
 
@@ -145,11 +150,11 @@ export class ItemsRegistrationComponent {
       try {
         console.log('mode' + this.mode);
         console.log('Form Submitted');
-        console.log(this.itemsRegistrationForm.value);
+        console.log(this.paymentsForm.value);
 
         if (this.mode === 'add'){
-          this.itemsRegistrationService.serviceCall(
-            this.prepareItemRegistrationData() 
+          this.paymentsService.serviceCall(
+            this.preparePaymentsData() 
           ).subscribe({
             next: (response: any) => {
               if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {
@@ -166,8 +171,8 @@ export class ItemsRegistrationComponent {
           });
         }
         else if (this.mode === 'edit'){
-          this.itemsRegistrationService.editData(
-            this.selectedData?.id, this.prepareItemRegistrationData() 
+          this.paymentsService.editData(
+            this.selectedData?.id, this.preparePaymentsData() 
           ).subscribe ({
             next: (response: any) => {
               let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
@@ -181,7 +186,7 @@ export class ItemsRegistrationComponent {
           });
         }
         this.mode = 'add';
-        this.itemsRegistrationForm.disable();
+        this.paymentsForm.disable();
         this.isButtonDisabled = true;
       } catch (error) {
         console.log(error);
@@ -190,14 +195,14 @@ export class ItemsRegistrationComponent {
     }
 
     public resetData(): void {
-      this.itemsRegistrationForm.reset();
+      this.paymentsForm.reset();
       this.saveButtonLabel = 'Save';
-      this.itemsRegistrationForm.enable();
+      this.paymentsForm.enable();
       this.isButtonDisabled = false;
     }
 
     public editData(data: any): void {
-      this.itemsRegistrationForm.patchValue(data);
+      this.paymentsForm.patchValue(data);
       this.saveButtonLabel = 'Edit';
       this.mode = 'edit';
       this.selectedData = data;
@@ -207,7 +212,7 @@ export class ItemsRegistrationComponent {
       const id = data.id;
       
       try {
-        this.itemsRegistrationService.deleteData(id).subscribe ({
+        this.paymentsService.deleteData(id).subscribe ({
           next: (response: any) => {
             const index = this.dataSource.data.findIndex((element) => element.id === id);
   
