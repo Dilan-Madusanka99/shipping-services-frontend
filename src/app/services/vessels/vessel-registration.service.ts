@@ -13,7 +13,7 @@ export class VesselRegistrationService {
   serviceCall(form_details: any) {
     console.log('In the Service');
  
-    const requestUrl = environment.baseUrl + '/vessel_registration';
+    const requestUrl = environment.baseUrl + '/vessel_Registration';
     
     let headers = {};
 
@@ -27,7 +27,7 @@ export class VesselRegistrationService {
   }
 
   getData() {
-    const requestUrl = environment.baseUrl + '/vessel_registration';
+    const requestUrl = environment.baseUrl + '/vessel_Registration';
 
     let headers = {};
 
@@ -43,7 +43,7 @@ export class VesselRegistrationService {
   editData(id: number, form_details: any) {
     console.log('In edit data');
 
-    const requestUrl = environment.baseUrl + '/vessel_registration/' + id.toString();
+    const requestUrl = environment.baseUrl + '/vessel_Registration/' + id.toString();
     
     let headers = {};
 
@@ -59,7 +59,7 @@ export class VesselRegistrationService {
   deleteData(id: number) {
     console.log('In delete data');
 
-    const requestUrl = environment.baseUrl + '/vessel_registration/' + id.toString();
+    const requestUrl = environment.baseUrl + '/vessel_Registration/' + id.toString();
     
     let headers = {};
 

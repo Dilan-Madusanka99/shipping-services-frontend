@@ -1,1 +1,133 @@
-<p>onboard-crew-registration works!</p>
+
+<div class="container">
+  <div class="form-section">
+    <form [formGroup]="onboardCrewRegistrationForm" class="onboardCrewRegistrationForm" (ngSubmit)="onSubmit()">
+
+        <!-- should be difined as link dropdown -->
+        <mat-form-field class="example-full-width">
+          <mat-label>SID</mat-label>
+          <mat-select [(value)]="selected" formControlName="sidNo">
+            <mat-option value="S001">S001</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+
+        <mat-form-field class="example-full-width">
+        <mat-label> Position </mat-label>
+        <mat-select formControlName="position">
+          <mat-option value="AB Trainee">AB Trainee</mat-option>
+          <mat-option value="OS">OS</mat-option>
+          <mat-option value="AB">AB</mat-option>
+          <mat-option value="Bosun">Bosun</mat-option>
+          <mat-option value="Pumpman">Pumpman</mat-option>
+          <mat-option value="Oiler">Oiler</mat-option>
+          <mat-option value="Fitter">Fitter</mat-option>
+          <mat-option value="Messman">Messman</mat-option>
+          <mat-option value="Cook">Cook</mat-option>
+          <mat-option value="Electrician">Electrician</mat-option>
+        </mat-select>
+      </mat-form-field>  
+      <br>
+
+      <!-- Should be defined as dropdown link -->
+        <mat-form-field class="example-full-width">
+          <mat-label>Imo No</mat-label>
+          <mat-select [(value)]="selected" formControlName="imoNo">
+            <mat-option value="S001">S001</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+
+        <!-- Should be defined as dropdown link -->
+        <mat-form-field class="example-full-width">
+          <mat-label>Vessel Name</mat-label>
+          <mat-select [(value)]="selected" formControlName="vesselName">
+            <mat-option value="S001">S001</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+
+        <mat-form-field class="example-full-width">
+            <mat-label> Signon Date </mat-label>
+                <input matInput [matDatepicker]="signOnDate" formControlName="signOnDate"/>
+            <mat-hint> MM/DD/YYYY </mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="signOnDate"></mat-datepicker-toggle>
+            <mat-datepicker #signOnDate></mat-datepicker>
+        </mat-form-field>
+        <br>
+
+        <mat-form-field class="example-full-width">
+            <mat-label> SignOff Date </mat-label>
+                <input matInput [matDatepicker]="signOffDate" formControlName="signOffDate"/>
+            <mat-hint> MM/DD/YYYY </mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="signOffDate"></mat-datepicker-toggle>
+            <mat-datepicker #signOffDate></mat-datepicker>
+        </mat-form-field>
+        <br><br>
+
+        <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled"> {{saveButtonLabel}} </button>
+        <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()"> Reset </button>
+      
+    </form>
+    
+  </div>
+  <div class="table-section">
+    <div class="refresh-filter-section">
+      <div class="refresh-button">
+        <button mat-raised-button color="primary" (click)="refreshData()">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </div>
+      <mat-form-field class="filter">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+      </mat-form-field>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="sidNo">
+        <th mat-header-cell *matHeaderCellDef> SID No </th>
+        <td mat-cell *matCellDef="let element"> {{element.sidNo}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> Position </th>
+        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="vesselName">
+        <th mat-header-cell *matHeaderCellDef> Vessel Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.vesselName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="signOnDate ">
+        <th mat-header-cell *matHeaderCellDef> Signon Date  </th>
+        <td mat-cell *matCellDef="let element"> {{element.signOnDate  | date: 'dd/MM/yyyy'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="signOffDate ">
+        <th mat-header-cell *matHeaderCellDef> SignOff Date  </th>
+        <td mat-cell *matCellDef="let element"> {{element.signOffDate  | date: 'dd/MM/yyyy'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element"> 
+          <button mat-icon-button color="warn" (click)="editData(element)" matTooltip="edit">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteData(element)" matTooltip="delete">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
+</div>  
+  

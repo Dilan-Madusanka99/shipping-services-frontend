@@ -31,7 +31,7 @@ export class AppointmentComponent implements OnInit{
 
   appointmentForm : FormGroup;
 
-    displayedColumns: string[] = ['firstName', 'lastName', 'position', 'appointmentDate', 'appointmentTime', 'appointmentStatus'];
+    displayedColumns: string[] = ['firstName', 'lastName', 'position', 'appointmentDate', 'appointmentTime', 'appointmentStatus', 'actions'];
     dataSource: MatTableDataSource<any>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;

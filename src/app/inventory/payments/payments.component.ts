@@ -1,5 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -23,7 +24,9 @@ const ELEMENT_DATA: any[] = [
   selector: 'app-payments',
   standalone: false,
   templateUrl: './payments.component.html',
-  styleUrl: './payments.component.scss'
+  styleUrl: './payments.component.scss',
+  providers: [provideNativeDateAdapter()],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PaymentsComponent {
 

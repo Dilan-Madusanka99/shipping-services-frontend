@@ -1,5 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -22,7 +23,9 @@ const ELEMENT_DATA: any[] = [
   selector: 'app-onboard-crew-registration',
   standalone: false,
   templateUrl: './onboard-crew-registration.component.html',
-  styleUrl: './onboard-crew-registration.component.scss'
+  styleUrl: './onboard-crew-registration.component.scss',
+  providers: [provideNativeDateAdapter()],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnboardCrewRegistrationComponent {
 
@@ -40,7 +43,7 @@ export class OnboardCrewRegistrationComponent {
   
       constructor(private fb: FormBuilder, private onboardCrewRegistrationService: OnboardCrewRegistrationService, private messageService: MessageServiceService) {
         this.onboardCrewRegistrationForm = this.fb.group({
-          sidNo: new FormControl(''),
+          sidNo: new FormControl(''), 
           position: new FormControl(''),
           imoNo: new FormControl(''),
           vesselName: new FormControl(''),

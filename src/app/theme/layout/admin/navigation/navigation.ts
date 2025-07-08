@@ -273,6 +273,16 @@ const NavigationItems = [
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
       },
+      {
+        id: 'SeafarersRegistrationDet',
+        title: 'Onboard Crew',
+        type: 'item',
+        url: '/seafarers/onboardCrewRegistration',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
     ]
   },
 
