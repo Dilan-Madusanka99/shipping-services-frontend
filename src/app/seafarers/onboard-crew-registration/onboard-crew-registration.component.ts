@@ -15,9 +15,7 @@ export interface PeriodicElement {
   signOffDate: Date;
 }
 
-const ELEMENT_DATA: any[] = [ 
-  {sidNo: 'S123', position: 'AB', vesselName: 'souselas', signOnDate: '8/7/2025', signOffDate: '8/5/2026'},
-];
+const ELEMENT_DATA: any[] = [{ sidNo: 'S123', position: 'AB', vesselName: 'souselas', signOnDate: '8/7/2025', signOffDate: '8/5/2026' }];
 
 @Component({
   selector: 'app-onboard-crew-registration',
@@ -28,33 +26,37 @@ const ELEMENT_DATA: any[] = [
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnboardCrewRegistrationComponent {
+  onboardCrewRegistrationForm: FormGroup;
 
-  onboardCrewRegistrationForm : FormGroup;
+  displayedColumns: string[] = ['sidNo', 'position', 'vesselName', 'signOnDate', 'signOffDate', 'actions'];
 
-      displayedColumns: string[] = ['sidNo', 'position', 'vesselName', 'signOnDate', 'signOffDate', 'actions'];
-      dataSource: MatTableDataSource<any>;
-      @ViewChild(MatPaginator) paginator: MatPaginator;
-      @ViewChild(MatSort) sort: MatSort;
-      selected: String;
-      saveButtonLabel = 'Save';
-      mode = 'add';
-      selectedData;
-      isButtonDisabled = false;
-  
-      constructor(private fb: FormBuilder, private onboardCrewRegistrationService: OnboardCrewRegistrationService, private messageService: MessageServiceService) {
-        this.onboardCrewRegistrationForm = this.fb.group({
-          sidNo: new FormControl(''), 
-          position: new FormControl(''),
-          imoNo: new FormControl(''),
-          vesselName: new FormControl(''),
-          signOnDate: new FormControl(''),
-          signOffDate: new FormControl(''),
-        });
-      }
+  dataSource: MatTableDataSource<any>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  selected: String;
+  saveButtonLabel = 'Save';
+  mode = 'add';
+  selectedData;
+  isButtonDisabled = false;
 
-    ngOnInit(): void{
+  constructor(
+    private fb: FormBuilder,
+    private onboardCrewRegistrationService: OnboardCrewRegistrationService,
+    private messageService: MessageServiceService
+  ) {
+    this.onboardCrewRegistrationForm = this.fb.group({
+      sidNo: new FormControl(''),
+      position: new FormControl(''),
+      imoNo: new FormControl(''),
+      vesselName: new FormControl(''),
+      signOnDate: new FormControl(''),
+      signOffDate: new FormControl('')
+    });
+  }
+
+  ngOnInit(): void {
     this.populateData();
-    }
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -67,12 +69,12 @@ export class OnboardCrewRegistrationComponent {
 
   public populateData(): void {
     try {
-      this.onboardCrewRegistrationService.getData(). subscribe({
+      this.onboardCrewRegistrationService.getData().subscribe({
         next: (dataList: any[]) => {
-          if (dataList.length <=0) {
+          if (dataList.length <= 0) {
             return;
           }
-          
+
           this.dataSource = new MatTableDataSource(dataList);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
@@ -86,91 +88,88 @@ export class OnboardCrewRegistrationComponent {
     }
   }
 
-
   onSubmit() {
-        try {
-          console.log('mode' + this.mode);
-          console.log('Form Submitted');
-          console.log(this.onboardCrewRegistrationForm.value);
-  
-          if (this.mode === 'add'){
-            this.onboardCrewRegistrationService.serviceCall(this.onboardCrewRegistrationForm.value).subscribe({
-              next: (response: any) => {
-                if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {
-                  this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
-                } else {
-                    this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
-                }        
-        
-                this.messageService.showSuccess('Data Saved Successfully!');  
-              },
-              error: (error) => {
-                this.messageService.showError('Action Failed With Error' + error);
-              }
-            });
-          }
-          else if (this.mode === 'edit'){
-            this.onboardCrewRegistrationService.editData(this.selectedData?.id, this.onboardCrewRegistrationForm.value).subscribe ({
-              next: (response: any) => {
-                let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
-                this.dataSource.data[elementIndex] = response;
-                this.dataSource = new MatTableDataSource(this.dataSource.data);
-                this.messageService.showSuccess('Data Edited Successfully!');
-              },
-              error: (error) => {
-                this.messageService.showError('Action Failed With Error' + error);
-              }
-            });
-          }
-          this.mode = 'add';
-          this.onboardCrewRegistrationForm.disable();
-          this.isButtonDisabled = true;
-        } catch (error) {
-          console.log(error);
-          this.messageService.showError('Action Failed With Error' + error);
-        }
-      }
+    try {
+      console.log('mode' + this.mode);
+      console.log('Form Submitted');
+      console.log(this.onboardCrewRegistrationForm.value);
 
-    public resetData(): void {
-        this.onboardCrewRegistrationForm.reset();
-        this.saveButtonLabel = 'Save';
-        this.onboardCrewRegistrationForm.enable();
-        this.isButtonDisabled = false;
-      }
-  
-      public editData(data: any): void {
-        this.onboardCrewRegistrationForm.patchValue(data);
-        this.saveButtonLabel = 'Edit';
-        this.mode = 'edit';
-        this.selectedData = data;
-      }
-  
-      public deleteData(data: any): void {
-        const id = data.id;
-        
-        try {
-          this.onboardCrewRegistrationService.deleteData(id).subscribe ({
-            next: (response: any) => {
-              const index = this.dataSource.data.findIndex((element) => element.id === id);
-    
-            if (index !== -1) {
-              this.dataSource.data.splice(index, 1);
+      if (this.mode === 'add') {
+        this.onboardCrewRegistrationService.serviceCall(this.onboardCrewRegistrationForm.value).subscribe({
+          next: (response: any) => {
+            if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {
+              this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
+            } else {
+              this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
             }
-            this.dataSource = new MatTableDataSource (this.dataSource.data);
-            this.messageService.showSuccess('Data Deleted Successfully!');
-            },
-            error: (error: any) => {
-              this.messageService.showError('Action Failed With Error' + error);
-            }
-          });
-        } catch (error) {
-          console.log(error);
-          this.messageService.showError('Action Failed With Error' + error);
-        }
-      }
 
-    public refreshData(): void {
-      this.populateData();
+            this.messageService.showSuccess('Data Saved Successfully!');
+          },
+          error: (error) => {
+            this.messageService.showError('Action Failed With Error' + error);
+          }
+        });
+      } else if (this.mode === 'edit') {
+        this.onboardCrewRegistrationService.editData(this.selectedData?.id, this.onboardCrewRegistrationForm.value).subscribe({
+          next: (response: any) => {
+            let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
+            this.dataSource.data[elementIndex] = response;
+            this.dataSource = new MatTableDataSource(this.dataSource.data);
+            this.messageService.showSuccess('Data Edited Successfully!');
+          },
+          error: (error) => {
+            this.messageService.showError('Action Failed With Error' + error);
+          }
+        });
+      }
+      this.mode = 'add';
+      this.onboardCrewRegistrationForm.disable();
+      this.isButtonDisabled = true;
+    } catch (error) {
+      console.log(error);
+      this.messageService.showError('Action Failed With Error' + error);
     }
+  }
 
+  public resetData(): void {
+    this.onboardCrewRegistrationForm.reset();
+    this.saveButtonLabel = 'Save';
+    this.onboardCrewRegistrationForm.enable();
+    this.isButtonDisabled = false;
+  }
+
+  public editData(data: any): void {
+    this.onboardCrewRegistrationForm.patchValue(data);
+    this.saveButtonLabel = 'Edit';
+    this.mode = 'edit';
+    this.selectedData = data;
+  }
+
+  public deleteData(data: any): void {
+    const id = data.id;
+
+    try {
+      this.onboardCrewRegistrationService.deleteData(id).subscribe({
+        next: (response: any) => {
+          const index = this.dataSource.data.findIndex((element) => element.id === id);
+
+          if (index !== -1) {
+            this.dataSource.data.splice(index, 1);
+          }
+          this.dataSource = new MatTableDataSource(this.dataSource.data);
+          this.messageService.showSuccess('Data Deleted Successfully!');
+        },
+        error: (error: any) => {
+          this.messageService.showError('Action Failed With Error' + error);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      this.messageService.showError('Action Failed With Error' + error);
+    }
+  }
+
+  public refreshData(): void {
+    this.populateData();
+  }
 }
