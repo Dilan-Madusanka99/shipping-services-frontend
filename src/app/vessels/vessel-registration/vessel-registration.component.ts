@@ -188,6 +188,11 @@ export class VesselRegistrationComponent implements OnInit {
     this.saveButtonLabel = 'Save';
     this.vesselRegistrationForm.enable();
     this.isButtonDisabled = false;
+
+    this.previewUrl = null;
+    this.isFileSelected = false;
+    this.vesselRegistrationForm.setErrors = null!;
+    this.vesselRegistrationForm.updateValueAndValidity();
   }
 
   public editData(data: any): void {
@@ -195,6 +200,10 @@ export class VesselRegistrationComponent implements OnInit {
     this.saveButtonLabel = 'Edit';
     this.mode = 'edit';
     this.selectedData = data;
+
+    const file = data.profileImage;
+    const imageType = data.profileImageType;
+    this.previewUrl = `data:${imageType};base64,${file}`;
   }
 
   public deleteData(data: any): void {
