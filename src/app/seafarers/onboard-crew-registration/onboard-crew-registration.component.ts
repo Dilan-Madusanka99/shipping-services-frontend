@@ -26,6 +26,7 @@ const ELEMENT_DATA: any[] = [{ sidNo: 'S123', position: 'AB', vesselName: 'souse
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnboardCrewRegistrationComponent {
+  
   onboardCrewRegistrationForm: FormGroup;
 
   displayedColumns: string[] = ['sidNo', 'position', 'vesselName', 'signOnDate', 'signOffDate', 'actions'];

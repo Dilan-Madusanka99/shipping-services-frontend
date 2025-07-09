@@ -27,6 +27,7 @@ const ELEMENT_DATA: any[] = [{ sidno: '123', ppNo: 'N123', cdcNo: 'C123', yellow
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OtherDetailsRegistrationComponent {
+
   otherDetailsRegistrationForm: FormGroup;
 
   displayedColumns: string[] = ['sidNo', 'ppNo', 'cdcNo', 'yellowFeverNo', 'actions'];
@@ -330,6 +331,26 @@ export class OtherDetailsRegistrationComponent {
     this.saveButtonLabel = 'Save';
     this.otherDetailsRegistrationForm.enable();
     this.isButtonDisabled = false;
+
+    this.previewUrlSid = null;
+    this.isSidFileSelected = false;
+    this.otherDetailsRegistrationForm.setErrors = null!;
+    this.otherDetailsRegistrationForm.updateValueAndValidity();
+
+    this.previewUrlPp = null;
+    this.isSPpFileSelected = false;
+    this.otherDetailsRegistrationForm.setErrors = null!;
+    this.otherDetailsRegistrationForm.updateValueAndValidity();
+
+    this.previewUrlCdc = null;
+    this.isCdcFileSelected = false;
+    this.otherDetailsRegistrationForm.setErrors = null!;
+    this.otherDetailsRegistrationForm.updateValueAndValidity();
+
+    this.previewUrlYf = null;
+    this.isYfFileSelected = false;
+    this.otherDetailsRegistrationForm.setErrors = null!;
+    this.otherDetailsRegistrationForm.updateValueAndValidity();
   }
 
   public editData(data: any): void {
@@ -341,6 +362,22 @@ export class OtherDetailsRegistrationComponent {
     this.saveButtonLabel = 'Edit';
     this.mode = 'edit';
     this.selectedData = data;
+
+    const sidImageFile = data.profileImage;
+    const sidImageType = data.sidImageImageType;
+    this.previewUrlSid = `data:${sidImageType};base64,${sidImageFile}`;
+
+    const ppImageFile = data.profileImage;
+    const ppImageType = data.ppImageImageType;
+    this.previewUrlPp = `data:${ppImageType};base64,${ppImageFile}`;
+
+    const cdcImageFile = data.profileImage;
+    const cdcImageType = data.cdcImageImageType;
+    this.previewUrlCdc = `data:${cdcImageType};base64,${cdcImageFile}`;
+
+    const yellowFeverImageFile = data.profileImage;
+    const yellowFeverImageType = data.yellowFeverImageImageType;
+    this.previewUrlYf = `data:${yellowFeverImageType};base64,${yellowFeverImageFile}`;
   }
 
   public deleteData(data: any): void {
