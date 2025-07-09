@@ -38,6 +38,14 @@
         </mat-form-field>
         <br>
 
+        <mat-label> Quantity Measurement </mat-label> <br>
+          <mat-radio-group name="qtyMeasure" formControlName="qtyMeasure">
+            <mat-radio-button value="Kg" checked="true">Kg</mat-radio-button>
+            <mat-radio-button value="G">G</mat-radio-button>
+            <mat-radio-button value="Psc">Pcs</mat-radio-button>
+          </mat-radio-group>
+        <br><br>
+
         <mat-form-field class="example-full-width">
           <mat-label> Amount (Rs:)  </mat-label>
           <input matInput placeholder="(Rs:)" formControlName="amount">

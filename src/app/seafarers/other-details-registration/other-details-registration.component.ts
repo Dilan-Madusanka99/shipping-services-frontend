@@ -50,8 +50,8 @@ export class OtherDetailsRegistrationComponent {
   isYfFileSelected = false;
   selectedSeafarers: string = '';
   allSeafarersDropdown: any = [];  // sid link
-  seafarersDropdown: any = [];
-  allSeafarersListDetails: any;
+  seafarersDropdown: any = []; 
+  allSeafarersListDetails: any; 
 
   constructor(
     private fb: FormBuilder,

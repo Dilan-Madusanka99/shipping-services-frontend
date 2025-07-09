@@ -6,7 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
-import { JobPostingServiceService } from 'src/app/services/seafarers/job-posting-service.service';
+import { JobPostingServiceService } from 'src/app/services/vessels/job-posting-service.service';
 
 export interface PeriodicElement {
   jobDescription: String;
@@ -14,7 +14,7 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: any[] = [ 
-  {jobDescription: 'ABCD', jobPostingDate: '25-04-2025'},
+  {vesselName: 'M/T Don Juan', position: 'AB', jobStatus: 'open'},
 ];
 
 @Component({
@@ -22,14 +22,12 @@ const ELEMENT_DATA: any[] = [
   standalone: false,
   templateUrl: './job-posting.component.html',
   styleUrl: './job-posting.component.scss',
-  providers: [provideNativeDateAdapter()],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JobPostingComponent {
 
   jobPostingForm : FormGroup;
 
-  displayedColumns: string[] = ['jobDescription' ,'jobPostingDate', 'actions'];
+  displayedColumns: string[] = ['vesselName' ,'position', 'jobStatus', 'actions'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -49,8 +47,9 @@ export class JobPostingComponent {
           jobPostImage: new FormControl(''),
           jobPostImageName: new FormControl(''),
           jobPostImageType: new FormControl(''),
-          jobPost: new FormControl(''),
-          jobPostingDate: new FormControl(''),
+          vesselName: new FormControl(''),
+          position: new FormControl(''),
+          jobStatus: new FormControl(''),
           jobDescription: new FormControl(''),
         });
   }

@@ -53,6 +53,7 @@ export class PaymentsComponent {
           itemName: new FormControl(''),
           supplierName : new FormControl(''),
           quantity : new FormControl(''),
+          qtyMeasure : new FormControl(''),
           amount : new FormControl(''),
           paymentDate: new FormControl(''),
           paymentStatus : new FormControl(''),

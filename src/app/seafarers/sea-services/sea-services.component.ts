@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { SeaServicesService } from 'src/app/services/seafarers/sea-services.service';
+import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.service';
 
 export interface PeriodicElement {
   sidNo: string;
@@ -39,8 +40,17 @@ export class SeaServicesComponent implements OnInit{
     mode = 'add';
     selectedData;
     isButtonDisabled = false;
+    selectedSeafarers: string = '';
+    allSeafarersDropdown: any = [];  // sid link
+    seafarersDropdown: any = []; 
+    allSeafarersListDetails: any;
 
-    constructor(private fb: FormBuilder, private seaServicesService: SeaServicesService, private messageService: MessageServiceService) {
+    constructor(
+      private fb: FormBuilder, 
+      private seaServicesService: SeaServicesService, 
+      private messageService: MessageServiceService,
+      private seaServiceServices: SeafarersServiceService
+    ) {
       this.seaServicesForm = this.fb.group({
         sidNo: new FormControl(''),
         companyName: new FormControl(''),
@@ -60,6 +70,22 @@ export class SeaServicesComponent implements OnInit{
     ngOnInit(): void{
       this.populateData();
     }
+
+    public getSeafarersList(): void {
+    this.seaServiceServices.getData().subscribe((response: any) => {
+      if (response && response.length > 0) {
+        this.allSeafarersListDetails = response;
+        response.forEach((seafarers: any) => {
+          const seafarersData = {
+            id: seafarers.id,
+            sidNo: seafarers.sidNo
+          };
+          this.allSeafarersDropdown.push(seafarersData);
+        });
+      }
+      this.seafarersDropdown = this.allSeafarersDropdown;
+    });
+  }
   
     applyFilter(event: Event) {
       const filterValue = (event.target as HTMLInputElement).value;
@@ -176,5 +202,26 @@ export class SeaServicesComponent implements OnInit{
       public refreshData(): void {
         this.populateData();
       }
+
+    onKey(eventTarget: any) {
+    this.seafarersDropdown = this.search(eventTarget.value);
+    }
+
+    search(value: string) {
+    let filter = value.toLowerCase();
+    return this.allSeafarersDropdown.filter((option: any) => option.name.toLowerCase().startsWith(filter));
+    }
+
+    public onSeafarersSelect(event): void {
+      let selectedSeafarersId = event;
+
+    this.patchFormSeafarersValues(selectedSeafarersId);
+    }
+
+    public patchFormSeafarersValues(seafarersId: number): void {
+      this.seaServicesForm.patchValue({
+        sidNo: seafarersId
+      });
+    }
 
 }

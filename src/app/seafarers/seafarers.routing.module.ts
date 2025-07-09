@@ -3,7 +3,6 @@ import { SeafarersRegistrationComponent } from './seafarers-registration/seafare
 import { OtherDetailsRegistrationComponent } from './other-details-registration/other-details-registration.component'
 import { CertificatesRegistrationComponent } from './certificates-registration/certificates-registration.component'
 import { SeaServicesComponent } from './sea-services/sea-services.component'
-import { JobPostingComponent } from './job-posting/job-posting.component'
 import { AppointmentComponent } from './appointment/appointment.component'
 import { MyAppointmentComponent } from './my-appointment/my-appointment.component'
 import { CertificateVerificationComponent } from './certificate-verification/certificate-verification.component'
@@ -14,7 +13,6 @@ export const RegistrationRoutes: Routes = [
     { path: 'otherDetailsRegistration', component: OtherDetailsRegistrationComponent },
     { path: 'certificatesRegistration', component: CertificatesRegistrationComponent },
     { path: 'seaServices', component: SeaServicesComponent },
-    { path: 'jobPosting', component: JobPostingComponent },
     { path: 'appointment', component: AppointmentComponent },
     { path: 'myAppointment', component: MyAppointmentComponent },
     { path: 'certificateVerification', component: CertificateVerificationComponent },

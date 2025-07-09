@@ -6,11 +6,12 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MaterialModule } from '../material.module';
 import { RegistrationRoutes } from './vessels-routing.module';
 import { RouterModule } from '@angular/router';
+import { JobPostingComponent } from './job-posting/job-posting.component';
 
 
 
 @NgModule({
-  declarations: [ VesselRegistrationComponent ],
+  declarations: [ VesselRegistrationComponent, JobPostingComponent, ],
   imports: [
     CommonModule, RouterModule.forChild(RegistrationRoutes), ReactiveFormsModule, MaterialModule, MatRadioModule, FormsModule
   ]

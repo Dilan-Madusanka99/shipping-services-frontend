@@ -234,7 +234,7 @@ export class CertificatesRegistrationComponent {
         this.mode = 'edit';
         this.selectedData = data;
 
-        const file = data.profileImage;
+        const file = data.certificateImage;
         const imageType = data.certificateImageType;
         this.previewUrl = `data:${imageType};base64,${file}`;
       }

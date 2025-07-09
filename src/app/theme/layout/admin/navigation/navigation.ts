@@ -182,7 +182,17 @@ const NavigationItems = [
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
-      }
+      },
+      {
+        id: 'VesselRegistrationDet',
+        title: 'Job Posting',
+        type: 'item',
+        url: '/vessels/jobPosting',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
     ]
   },
 
@@ -255,16 +265,6 @@ const NavigationItems = [
       },
       {
         id: 'SeafarersRegistrationDet',
-        title: 'Certificates Verfication',
-        type: 'item',
-        url: '/seafarers/certificateVerification',
-        icon: 'feather icon-home',
-        classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
-        breadcrumbs: false
-      },
-      {
-        id: 'SeafarersRegistrationDet',
         title: 'Sea Services',
         type: 'item',
         url: '/seafarers/seaServices',
@@ -275,9 +275,9 @@ const NavigationItems = [
       },
       {
         id: 'SeafarersRegistrationDet',
-        title: 'Job Posting',
+        title: 'Certificates Verfication',
         type: 'item',
-        url: '/seafarers/jobPosting',
+        url: '/seafarers/certificateVerification',
         icon: 'feather icon-home',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
@@ -295,7 +295,7 @@ const NavigationItems = [
       },
       {
         id: 'SeafarersRegistrationDet',
-        title: 'My Appointments',
+        title: 'Appointment List',
         type: 'item',
         url: '/seafarers/myAppointment',
         icon: 'feather icon-home',
