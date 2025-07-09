@@ -71,7 +71,7 @@ export class SeafarersRegistrationComponent {
         gender: new FormControl('', [Validators.required]),
         noOfChildren: new FormControl(''),
         address: new FormControl('', [Validators.required]),
-        home: new FormControl('', [Validators.pattern(/^07[0-9]{8}$/)]),
+        home: new FormControl('', [ Validators.pattern(/^07[0-9]{8}$/)]),
         mobile: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]),
         email: new FormControl('', [Validators.required, Validators.email]),
         kinName: new FormControl('',[Validators.required, Validators.pattern(/^[A-Za-z]+$/)]),
