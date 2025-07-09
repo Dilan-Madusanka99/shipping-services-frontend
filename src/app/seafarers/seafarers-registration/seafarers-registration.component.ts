@@ -225,6 +225,11 @@ export class SeafarersRegistrationComponent {
         this.saveButtonLabel = 'Save';
         this.seafarersForm.enable();
         this.isButtonDisabled = false;
+
+        this.previewUrl = null;
+        this.isFileSelected = false;
+        this.seafarersForm.setErrors = null!;
+        this.seafarersForm.updateValueAndValidity();
       }
   
       public editData(data: any): void {
@@ -232,6 +237,10 @@ export class SeafarersRegistrationComponent {
         this.saveButtonLabel = 'Edit';
         this.mode = 'edit';
         this.selectedData = data;
+
+        const file = data.profileImage;
+        const imageType = data.profileImageType;
+        this.previewUrl = `data:${imageType};base64,${file}`;
       }
   
       public deleteData(data: any): void {

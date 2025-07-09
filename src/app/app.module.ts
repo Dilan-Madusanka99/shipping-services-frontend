@@ -36,6 +36,7 @@ import { LoginModule } from './login/login.module';
 import { VesselsModule } from './vessels/vessels.module';
 import { InventoryModule } from './inventory/inventory.module';
 import { FirstPageComponent } from './first/first-page/first-page.component';
+import { OnboardModule } from './onboard/onboard.module';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { FirstPageComponent } from './first/first-page/first-page.component';
     UserModule,
     LoginModule,
     VesselsModule,
-    InventoryModule
+    InventoryModule,
+    OnboardModule,
   ],
   providers: [
     NavigationItem,

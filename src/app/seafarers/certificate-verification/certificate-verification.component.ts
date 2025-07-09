@@ -197,6 +197,11 @@ constructor(private fb: FormBuilder, private certificateVerificationService: Cer
         this.saveButtonLabel = 'Save';
         this.certificateVerificationForm.enable();
         this.isButtonDisabled = false;
+
+        this.previewUrl = null;
+        this.isFileSelected = false;
+        this.certificateVerificationForm.setErrors = null!;
+        this.certificateVerificationForm.updateValueAndValidity();
       }
   
       public editData(data: any): void {
@@ -204,6 +209,10 @@ constructor(private fb: FormBuilder, private certificateVerificationService: Cer
         this.saveButtonLabel = 'Edit';
         this.mode = 'edit';
         this.selectedData = data;
+
+        const file = data.profileImage;
+        const imageType = data.profileImageType;
+        this.previewUrl = `data:${imageType};base64,${file}`;
       }
   
       public deleteData(data: any): void {

@@ -191,6 +191,11 @@ export class JobPostingComponent {
       this.saveButtonLabel = 'Save';
       this.jobPostingForm.enable();
       this.isButtonDisabled = false;
+
+      this.previewUrl = null;
+      this.isFileSelected = false;
+      this.jobPostingForm.setErrors = null!;
+      this.jobPostingForm.updateValueAndValidity();
     }
 
     public editData(data: any): void {
@@ -198,6 +203,10 @@ export class JobPostingComponent {
       this.saveButtonLabel = 'Edit';
       this.mode = 'edit';
       this.selectedData = data;
+
+      const file = data.profileImage;
+      const imageType = data.jobPostImageType;
+      this.previewUrl = `data:${imageType};base64,${file}`;
     }
 
     public deleteData(data: any): void {

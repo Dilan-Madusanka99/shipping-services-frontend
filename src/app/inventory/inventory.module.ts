@@ -10,7 +10,6 @@ import { InventoryRoutes } from './inventoty.routing.module';
 import { PaymentsComponent } from './payments/payments.component';
 
 
-
 @NgModule({
   declarations: [ItemsRegistrationComponent, SupplierRegistrationComponent, PaymentsComponent],
   imports: [

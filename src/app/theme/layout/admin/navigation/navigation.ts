@@ -187,6 +187,26 @@ const NavigationItems = [
   },
 
   {
+    id: 'Onboard',
+    title: 'Onboard Crew',
+    type: 'group',
+    icon: 'icon-navigation',
+    auth: authenticationEnum.Home,
+    children: [
+      {
+        id: 'OnboardDet',
+        title: 'Crew Complaints',
+        type: 'item',
+        url: '/onboard/crewComplaints',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      }
+    ]
+  },
+
+  {
     id: 'Seafarers',
     title: 'Seafarers',
     type: 'group',

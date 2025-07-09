@@ -20,6 +20,4 @@ export const RegistrationRoutes: Routes = [
     { path: 'myAppointment', component: MyAppointmentComponent },
     { path: 'certificateVerification', component: CertificateVerificationComponent },
     { path: 'onboardCrewRegistration', component: OnboardCrewRegistrationComponent },
-
-
 ]

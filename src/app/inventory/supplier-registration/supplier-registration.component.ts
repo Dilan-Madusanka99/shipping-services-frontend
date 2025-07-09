@@ -200,6 +200,11 @@ export class SupplierRegistrationComponent {
       this.saveButtonLabel = 'Save';
       this.supplierRegistrationForm.enable();
       this.isButtonDisabled = false;
+
+      this.previewUrl = null;
+      this.isFileSelected = false;
+      this.supplierRegistrationForm.setErrors = null!;
+      this.supplierRegistrationForm.updateValueAndValidity();
     }
 
     public editData(data: any): void {
@@ -207,6 +212,10 @@ export class SupplierRegistrationComponent {
       this.saveButtonLabel = 'Edit';
       this.mode = 'edit';
       this.selectedData = data;
+
+      const file = data.profileImage;
+      const imageType = data.profileImageType;
+      this.previewUrl = `data:${imageType};base64,${file}`;
     }
 
     public deleteData(data: any): void {

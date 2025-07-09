@@ -212,7 +212,7 @@ export class EmployeeComponent implements OnInit {
     this.employeeForm.enable();
     this.isButtonDisabled = false;
 
-    /* Remove image on reset [DILAN] */
+    /* Remove image on reset */
     this.previewUrl = null;
     this.isFileSelected = false;
     this.employeeForm.setErrors = null!;
@@ -225,7 +225,7 @@ export class EmployeeComponent implements OnInit {
     this.mode = 'edit';
     this.selectedData = data;
 
-    /* Preview image on edit [DILAN] */
+    /* Preview image on edit */
     const file = data.profileImage;
     const imageType = data.profileImageType;
     this.previewUrl = `data:${imageType};base64,${file}`;
