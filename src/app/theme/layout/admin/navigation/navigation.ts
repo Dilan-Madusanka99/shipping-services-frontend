@@ -195,6 +195,16 @@ const NavigationItems = [
     children: [
       {
         id: 'OnboardDet',
+        title: 'Onboard Crew Details',
+        type: 'item',
+        url: '/onboard/onboardCrewRegistration',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
+      {
+        id: 'OnboardDet',
         title: 'Crew Complaints',
         type: 'item',
         url: '/onboard/crewComplaints',
@@ -202,7 +212,7 @@ const NavigationItems = [
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
-      }
+      },
     ]
   },
 
@@ -293,29 +303,20 @@ const NavigationItems = [
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
       },
-      {
-        id: 'SeafarersRegistrationDet',
-        title: 'Onboard Crew',
-        type: 'item',
-        url: '/seafarers/onboardCrewRegistration',
-        icon: 'feather icon-home',
-        classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
-        breadcrumbs: false
-      },
+      
     ]
   },
 
   {
     id: 'Inventory',
-    title: 'Inventory',
+    title: 'Inventory & Supplier & Payment',
     type: 'group',
     icon: 'icon-navigation',
     auth: authenticationEnum.Home,
     children: [
       {
         id: 'InventoryDet',
-        title: 'Items Registration',
+        title: 'Items Details',
         type: 'item',
         url: '/inventory/itemsRegistration',
         icon: 'feather icon-home',
@@ -325,7 +326,7 @@ const NavigationItems = [
       },
       {
         id: 'InventoryDet',
-        title: 'Supplier Registration',
+        title: 'Supplier Details',
         type: 'item',
         url: '/inventory/supplierRegistration',
         icon: 'feather icon-home',
@@ -335,7 +336,7 @@ const NavigationItems = [
       },
       {
         id: 'InventoryDet',
-        title: 'Payments',
+        title: 'Payment Details',
         type: 'item',
         url: '/inventory/payments',
         icon: 'feather icon-home',

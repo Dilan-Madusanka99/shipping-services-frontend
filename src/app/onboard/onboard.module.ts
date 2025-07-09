@@ -6,11 +6,12 @@ import { MaterialModule } from '../material.module';
 import { MatRadioModule } from '@angular/material/radio';
 import { RouterModule } from '@angular/router';
 import { CrewComplaintsComponent } from './crew-complaints/crew-complaints.component';
+import { OnboardCrewRegistrationComponent } from './onboard-crew-registration/onboard-crew-registration.component';
 
 
 
 @NgModule({
-  declarations: [CrewComplaintsComponent],
+  declarations: [CrewComplaintsComponent, OnboardCrewRegistrationComponent],
   imports: [
     CommonModule, RouterModule.forChild(OnboardRoutes), ReactiveFormsModule, MaterialModule, MatRadioModule, FormsModule
   ]

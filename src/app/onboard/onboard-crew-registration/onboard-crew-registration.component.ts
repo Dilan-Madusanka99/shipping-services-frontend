@@ -5,7 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
-import { OnboardCrewRegistrationService } from 'src/app/services/seafarers/onboard-crew-registration.service';
+import { OnboardCrewRegistrationService } from 'src/app/services/onboard/onboard-crew-registration.service';
 
 export interface PeriodicElement {
   sidNo: string;

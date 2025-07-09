@@ -17,7 +17,7 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: any[] = [ 
-  {itemNo: '001', supplierName: 'fish city', amount: '10000', paymentDate: '8/7/2025', paymentStatus: 'paid'},
+  {paymentNo: '001', supplierName: 'fish city', amount: '10000', paymentDate: '8/7/2025', paymentStatus: 'paid'},
 ];
 
 @Component({

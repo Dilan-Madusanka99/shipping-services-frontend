@@ -363,19 +363,19 @@ export class OtherDetailsRegistrationComponent {
     this.mode = 'edit';
     this.selectedData = data;
 
-    const sidImageFile = data.profileImage;
+    const sidImageFile = data.sidImage;
     const sidImageType = data.sidImageImageType;
     this.previewUrlSid = `data:${sidImageType};base64,${sidImageFile}`;
 
-    const ppImageFile = data.profileImage;
+    const ppImageFile = data.ppImage;
     const ppImageType = data.ppImageImageType;
     this.previewUrlPp = `data:${ppImageType};base64,${ppImageFile}`;
 
-    const cdcImageFile = data.profileImage;
+    const cdcImageFile = data.cdcImage;
     const cdcImageType = data.cdcImageImageType;
     this.previewUrlCdc = `data:${cdcImageType};base64,${cdcImageFile}`;
 
-    const yellowFeverImageFile = data.profileImage;
+    const yellowFeverImageFile = data.yellowFeverImage ;
     const yellowFeverImageType = data.yellowFeverImageImageType;
     this.previewUrlYf = `data:${yellowFeverImageType};base64,${yellowFeverImageFile}`;
   }

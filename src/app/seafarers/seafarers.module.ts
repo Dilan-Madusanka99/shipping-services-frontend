@@ -14,10 +14,9 @@ import { AppointmentComponent } from './appointment/appointment.component';
 import { MyAppointmentComponent } from './my-appointment/my-appointment.component';
 import { FormsModule } from '@angular/forms';
 import { CertificateVerificationComponent } from './certificate-verification/certificate-verification.component';
-import { OnboardCrewRegistrationComponent } from './onboard-crew-registration/onboard-crew-registration.component';
 
 @NgModule({
-  declarations: [ SeafarersRegistrationComponent, OtherDetailsRegistrationComponent, CertificatesRegistrationComponent, SeaServicesComponent, JobPostingComponent, AppointmentComponent, MyAppointmentComponent, CertificateVerificationComponent, OnboardCrewRegistrationComponent],
+  declarations: [ SeafarersRegistrationComponent, OtherDetailsRegistrationComponent, CertificatesRegistrationComponent, SeaServicesComponent, JobPostingComponent, AppointmentComponent, MyAppointmentComponent, CertificateVerificationComponent],
   imports: [CommonModule, RouterModule.forChild(RegistrationRoutes), ReactiveFormsModule, MaterialModule, MatRadioModule, FormsModule  ]
 })
 export class SeafarersModule { }
