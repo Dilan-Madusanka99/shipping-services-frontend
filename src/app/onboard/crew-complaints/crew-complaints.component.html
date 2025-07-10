@@ -6,18 +6,23 @@
         <mat-label>SID No</mat-label>
           <mat-select [(ngModel)]="selectedSeafarers" formControlName="sidNo" (valueChange)="onSeafarersSelect($event)">
           <mat-form-field class="w-100">
-           <input matInput placeholder="Search for Seafarers..." (keyup)="onKey($event.target)" />
+           <input matInput placeholder="Search for Seafarers..." (keyup)="onSeafarersKey($event.target)" />
           </mat-form-field>
           <mat-option *ngFor="let seafarers of seafarersDropdown" [value]="seafarers.id">{{ seafarers.sidNo }}</mat-option>
           </mat-select>
       </mat-form-field>
       <br>
 
-      <mat-form-field class="example-full-width">
+        <mat-form-field class="example-full-width">
           <mat-label>IMO No</mat-label>
-          <input matInput placeholder="IMO No" formControlName="imoNo">
-        </mat-form-field>
-        <br>
+            <mat-select [(ngModel)]="selectedVessel" formControlName="imoNo" (valueChange)="onVesselSelect($event)">
+            <mat-form-field class="w-100">
+            <input matInput placeholder="Search for Vessel..." (keyup)="onVesselKey($event.target)" />
+      </mat-form-field>
+          <mat-option *ngFor="let vessel of vesselDropdown" [value]="vessel.id">{{ vessel.imoNo }}</mat-option>
+            </mat-select>
+            </mat-form-field>
+            <br>
 
         <mat-form-field class="example-full-width">
           <mat-label>Vessel Name</mat-label>
