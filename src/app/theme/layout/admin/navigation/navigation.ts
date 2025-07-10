@@ -336,6 +336,16 @@ const NavigationItems = [
       },
       {
         id: 'InventoryDet',
+        title: 'Stocks',
+        type: 'item',
+        url: '/inventory/stocks',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
+      {
+        id: 'InventoryDet',
         title: 'Supplier Details',
         type: 'item',
         url: '/inventory/supplierRegistration',
