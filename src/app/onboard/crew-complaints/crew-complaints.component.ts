@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { CrewComplaintsService } from 'src/app/services/onboard/crew-complaints.service';
 import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.service';
+import { VesselRegistrationService } from 'src/app/services/vessels/vessel-registration.service';
 
 export interface PeriodicElement {
   sidNo: string;
@@ -38,16 +39,22 @@ export class CrewComplaintsComponent {
   mode = 'add';
   selectedData;
   isButtonDisabled = false;
-  selectedSeafarers: string = '';
-  allSeafarersDropdown: any = [];  // sid link
+  selectedSeafarers: string = ''; // sid link
+  allSeafarersDropdown: any = [];  
   seafarersDropdown: any = []; 
   allSeafarersListDetails: any;
+  selectedVessel: string = ''; // vessel link
+  allVesselDropdown: any = [];
+  vesselDropdown: any = [];
+  allVesselListDetails: any;
+
 
   constructor(
     private fb: FormBuilder, 
     private crewComplaintsService: CrewComplaintsService, 
     private messageService: MessageServiceService,
-    private seafarerService: SeafarersServiceService
+    private seafarerService: SeafarersServiceService,
+    private vesselRegistrationService: VesselRegistrationService
   ) {
         this.crewComplaintsForm = this.fb.group({
           sidNo: new FormControl(''),
@@ -63,6 +70,7 @@ export class CrewComplaintsComponent {
       ngOnInit(): void{
       this.populateData();
       this.getSeafarersList();
+      this.getVesselList();
     }
 
     public getSeafarersList(): void {
@@ -78,6 +86,22 @@ export class CrewComplaintsComponent {
         });
       }
       this.seafarersDropdown = this.allSeafarersDropdown;
+    });
+  }
+
+  public getVesselList(): void {
+    this.vesselRegistrationService.getData().subscribe((response: any) => {
+      if (response && response.length > 0) {
+        this.allVesselListDetails = response;
+        response.forEach((vessel: any) => {
+          const vesselData = {
+            id: vessel.id,
+            imoNo: vessel.imoNo
+          };
+          this.allVesselDropdown.push(vesselData);
+        });
+      }
+      this.vesselDropdown = this.allVesselDropdown;
     });
   }
   
@@ -197,11 +221,11 @@ export class CrewComplaintsComponent {
         this.populateData();
       }
 
-      onKey(eventTarget: any) {
-    this.seafarersDropdown = this.search(eventTarget.value);
+    onSeafarersKey(eventTarget: any) {
+    this.seafarersDropdown = this.seafarersSearch(eventTarget.value);
     }
 
-    search(value: string) {
+    seafarersSearch(value: string) {
     let filter = value.toLowerCase();
     return this.allSeafarersDropdown.filter((option: any) => option.name.toLowerCase().startsWith(filter));
     }
@@ -217,5 +241,31 @@ export class CrewComplaintsComponent {
         sidNo: seafarersId
       });
     }
+
+    // vessel link
+    onVesselKey(eventTarget: any) {
+    this.vesselDropdown = this.vesselSearch(eventTarget.value);
+  }
+
+  vesselSearch(value: string) {
+    let filter = value.toLowerCase();
+    return this.allVesselDropdown.filter((option: any) => option.name.toLowerCase().startsWith(filter));
+  }
+
+  public onVesselSelect(event): void {
+    let selectedVesselId = event;
+
+    this.patchFormVesselValues(selectedVesselId);
+  }
+
+  public patchFormVesselValues(vesselId: number): void {
+    this.allVesselListDetails.forEach((vessel) => {
+      if (vessel.id === vesselId) {
+        this.crewComplaintsForm.patchValue({
+          vesselName: vessel.vesselName
+        });
+      }
+    });
+  }
 
 }
