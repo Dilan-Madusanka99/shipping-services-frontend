@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { OnboardCrewRegistrationService } from 'src/app/services/onboard/onboard-crew-registration.service';
+import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.service';
 
 export interface PeriodicElement {
   sidNo: string;
@@ -39,11 +40,16 @@ export class OnboardCrewRegistrationComponent {
   mode = 'add';
   selectedData;
   isButtonDisabled = false;
+  selectedSeafarers: string = '';
+  allSeafarersDropdown: any = [];  // sid link
+  seafarersDropdown: any = []; 
+  allSeafarersListDetails: any;
 
   constructor(
     private fb: FormBuilder,
     private onboardCrewRegistrationService: OnboardCrewRegistrationService,
-    private messageService: MessageServiceService
+    private messageService: MessageServiceService,
+    private seafarerService: SeafarersServiceService
   ) {
     this.onboardCrewRegistrationForm = this.fb.group({
       sidNo: new FormControl(''),
@@ -57,6 +63,23 @@ export class OnboardCrewRegistrationComponent {
 
   ngOnInit(): void {
     this.populateData();
+    this.getSeafarersList();
+  }
+
+  public getSeafarersList(): void {
+    this.seafarerService.getData().subscribe((response: any) => {
+      if (response && response.length > 0) {
+        this.allSeafarersListDetails = response;
+        response.forEach((seafarers: any) => {
+          const seafarersData = {
+            id: seafarers.id,
+            sidNo: seafarers.sidNo
+          };
+          this.allSeafarersDropdown.push(seafarersData);
+        });
+      }
+      this.seafarersDropdown = this.allSeafarersDropdown;
+    });
   }
 
   applyFilter(event: Event) {
@@ -173,4 +196,25 @@ export class OnboardCrewRegistrationComponent {
   public refreshData(): void {
     this.populateData();
   }
+
+  onKey(eventTarget: any) {
+    this.seafarersDropdown = this.search(eventTarget.value);
+    }
+
+    search(value: string) {
+    let filter = value.toLowerCase();
+    return this.allSeafarersDropdown.filter((option: any) => option.name.toLowerCase().startsWith(filter));
+    }
+
+    public onSeafarersSelect(event): void {
+      let selectedSeafarersId = event;
+
+    this.patchFormSeafarersValues(selectedSeafarersId);
+    }
+
+    public patchFormSeafarersValues(seafarersId: number): void {
+      this.onboardCrewRegistrationForm.patchValue({
+        sidNo: seafarersId
+      });
+    }
 }

@@ -71,6 +71,7 @@ export class CertificatesRegistrationComponent {
   
     ngOnInit(): void{
       this.populateData();
+      this.getSeafarersList();
     }
 
     public getSeafarersList(): void {

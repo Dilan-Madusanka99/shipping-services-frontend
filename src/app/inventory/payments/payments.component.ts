@@ -5,7 +5,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { ItemsRegistrationService } from 'src/app/services/inventory/items-registration.service';
 import { PaymentsService } from 'src/app/services/inventory/payments.service';
+import { SupplierRegistrationService } from 'src/app/services/inventory/supplier-registration.service';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 
 export interface PeriodicElement {
@@ -43,9 +45,25 @@ export class PaymentsComponent {
     isButtonDisabled = false;
     selectedFile: File | null = null;
     previewUrl!: SafeUrl | null; 
-    isFileSelected = false;
+    isFileSelected = false; 
+    // item list
+    selectedItem: string = '';
+    allItemDropdown: any = [];
+    itemDropdown: any = [];
+    allItemListDetails: any;
+    // supplier list
+    selectedSupplier: string = '';
+    allSupplierDropdown: any = [];
+    supplierDropdown: any = [];
+    allSupplierListDetails: any;
 
-    constructor(private fb: FormBuilder, private paymentsService: PaymentsService, private messageService: MessageServiceService, private sanitizer: DomSanitizer
+    constructor(
+      private fb: FormBuilder, 
+      private paymentsService: PaymentsService, 
+      private messageService: MessageServiceService, 
+      private sanitizer: DomSanitizer,
+      private itemRegistrationService: ItemsRegistrationService,
+      private supplierRegistrationService: SupplierRegistrationService
       ) {
         this.paymentsForm = this.fb.group({
           paymentNo: new FormControl(''),
@@ -65,7 +83,44 @@ export class PaymentsComponent {
 
     ngOnInit(): void{
     this.populateData();
+    this.getItemList();
+    this.getSupplierList();
     }
+
+    // item list - dropdown list
+    public getItemList(): void {
+    this.itemRegistrationService.getData().subscribe((response: any) => {
+      if (response && response.length > 0) {
+        this.allItemListDetails = response;
+        response.forEach((itm: any) => {
+          const itemData = {
+            id: itm.id,
+            no: itm.itemNo
+          };
+          this.allItemDropdown.push(itemData);
+        });
+      }
+      this.itemDropdown = this.allItemDropdown;
+    });
+  }
+
+  // supplier list - dropdown list
+  public getSupplierList(): void {
+    this.supplierRegistrationService.getData().subscribe((response: any) => {
+      if (response && response.length > 0) {
+        this.allSupplierListDetails = response;
+        response.forEach((sup: any) => {
+          const supplierData = {
+            id: sup.id,
+            supplierName: sup.supplierName
+          };
+          this.allSupplierDropdown.push(supplierData);
+        });
+      }
+      this.supplierDropdown = this.allSupplierDropdown;
+    });
+  }
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -248,5 +303,53 @@ export class PaymentsComponent {
     public refreshData(): void {
       this.populateData();
     }
+
+    // Item Dropdown list
+    onItemKey(eventTarget: any) {
+    this.itemDropdown = this.itemSearch(eventTarget.value);
+    }
+
+    itemSearch(value: string) {
+      let filter = value.toLowerCase();
+       return this.allItemDropdown.filter((option: any) => option.name.toLowerCase().startsWith(filter));
+    }
+
+    public onItemSelect(event): void {
+      let selectItmId = event;
+
+      this.patchFormItmValues(selectItmId);
+    }
+
+  public patchFormItmValues(itemId: number): void {
+    this.allItemListDetails.forEach((itm) => {
+      if (itm.id === itemId) {
+        this.paymentsForm.patchValue({
+          itemName: itm.itemName
+        });
+      }
+    });
+  }
+
+    // Supplier Dropdown list
+      onSupplierKey(eventTarget: any) {
+      this.supplierDropdown = this.supplierSearch(eventTarget.value);
+      }
+
+      supplierSearch(value: string) {
+      let filter = value.toLowerCase();
+      return this.allSupplierDropdown.filter((option: any) => option.name.toLowerCase().startsWith(filter));
+      }
+
+      public onSupplierSelect(event): void {
+      let selectedSupplierId = event;
+
+      this.patchFormSupplierValues(selectedSupplierId);
+      }
+
+      public patchFormSupplierValues(supplierId: string): void {
+        this.paymentsForm.patchValue({
+        supplierName: supplierId
+        });
+      }
 
 }

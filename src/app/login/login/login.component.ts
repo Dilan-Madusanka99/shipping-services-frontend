@@ -163,7 +163,6 @@ export class LoginComponent implements OnInit {
 
   public editData(data: any): void {
     console.log(data);
-    // this.selectedEmployee = data.id;
     this.LoginForm.patchValue(data);
     this.LoginForm.patchValue({
       users: +data.users

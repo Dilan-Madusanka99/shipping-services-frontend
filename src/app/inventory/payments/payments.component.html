@@ -8,14 +8,16 @@
         </mat-form-field>
         <br>
 
-        <!--  should be link with item registration -->
       <mat-form-field class="example-full-width">
-          <mat-label>Item No </mat-label>
-          <mat-select [(value)]="selected" formControlName="itemNo">
-            <mat-option value="Deck Stores">Deck Stores</mat-option>     
-          </mat-select>
-        </mat-form-field>
-        <br>
+        <mat-label>Item No</mat-label>
+        <mat-select [(ngModel)]="selectedItem" formControlName="itemNo" (valueChange)="onItemSelect($event)">
+          <mat-form-field class="w-100">
+            <input matInput placeholder="Search for item..." (keyup)="onItemKey($event.target)" />
+          </mat-form-field>
+          <mat-option *ngFor="let itm of itemDropdown" [value]="itm.id">{{ itm.no }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br />
 
         <mat-form-field class="example-full-width">
           <mat-label>Item Name </mat-label>
@@ -23,14 +25,16 @@
         </mat-form-field>
         <br>
 
-        <!-- Should be link with supplier registration -->
         <mat-form-field class="example-full-width">
-          <mat-label>Supplier Name  </mat-label>
-          <mat-select [(value)]="selected" formControlName="supplierName">
-            <mat-option value="Deck Stores">Deck Stores</mat-option>     
+          <mat-label>Supplier Name</mat-label>
+          <mat-select [(ngModel)]="selectedSupplier" formControlName="supplierName" (valueChange)="onSupplierSelect($event)">
+            <mat-form-field class="w-100">
+              <input matInput placeholder="Search for supplier..." (keyup)="onSupplierKey($event.target)" />
+            </mat-form-field>
+            <mat-option *ngFor="let sup of supplierDropdown" [value]="sup.id">{{ sup.name }}</mat-option>
           </mat-select>
         </mat-form-field>
-        <br> 
+        <br />
 
         <mat-form-field class="example-full-width">
           <mat-label> Quantity </mat-label>
@@ -135,9 +139,6 @@
           </button>
           <button mat-icon-button color="warn" (click)="deleteData(element)" matTooltip="delete">
             <mat-icon>delete</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="deleteData(element)" matTooltip="delete">
-            <mat-icon>camera_alt</mat-icon>
           </button>
         </td>
       </ng-container>

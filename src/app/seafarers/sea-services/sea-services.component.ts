@@ -49,7 +49,7 @@ export class SeaServicesComponent implements OnInit{
       private fb: FormBuilder, 
       private seaServicesService: SeaServicesService, 
       private messageService: MessageServiceService,
-      private seaServiceServices: SeafarersServiceService
+      private seafarerService: SeafarersServiceService
     ) {
       this.seaServicesForm = this.fb.group({
         sidNo: new FormControl(''),
@@ -69,10 +69,11 @@ export class SeaServicesComponent implements OnInit{
 
     ngOnInit(): void{
       this.populateData();
+      this.getSeafarersList();
     }
 
     public getSeafarersList(): void {
-    this.seaServiceServices.getData().subscribe((response: any) => {
+    this.seafarerService.getData().subscribe((response: any) => {
       if (response && response.length > 0) {
         this.allSeafarersListDetails = response;
         response.forEach((seafarers: any) => {

@@ -1,1 +1,92 @@
-<p>employee-attendence works!</p>
+<div class="container">
+    <div class="form-section">
+        <form [formGroup]="employeeAttendenceForm" class="employeeAttendenceForm" (ngSubmit)="onSubmit()">
+
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Users</mat-label>
+            <mat-select [(ngModel)]="selectedEmployee" formControlName="users" (valueChange)="onEmployeeSelect($event)">
+            <mat-form-field class="w-100">
+              <input matInput placeholder="Search for employee..." (keyup)="onKey($event.target)" />
+            </mat-form-field>
+            <mat-option *ngFor="let emp of employeeDropdown" [value]="emp.id">{{ emp.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <br />
+
+            <mat-form-field class="example-full-width">
+              <mat-label> Attendence Status </mat-label>
+              <mat-select formControlName="attendenceStatus">
+                <mat-option value="Present">Present</mat-option>
+                <mat-option value="Absent">Absent</mat-option>
+                <mat-option value="Pending">Pending</mat-option>
+              </mat-select>
+          </mat-form-field>
+            <br><br>
+
+            
+            <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled"> {{saveButtonLabel}} </button>
+            <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()"> Reset </button>
+      
+        </form>
+    </div>
+
+    <div class="table-section">
+        <div class="refresh-filter-section">
+            <div class="refresh-button">
+              <button mat-raised-button color="primary" (click)="refreshData()">
+                <mat-icon>refresh</mat-icon>
+              </button>
+            </div>
+    
+            <mat-form-field class="filter">
+              <mat-label>Filter</mat-label>
+              <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+            </mat-form-field>
+          </div>
+      
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      
+            <ng-container matColumnDef="attandenceDate">
+                <th mat-header-cell *matHeaderCellDef> Date </th>
+                <td mat-cell *matCellDef="let element"> {{element.attandenceDate | date: 'dd/MM/yyyy'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="userName">
+                <th mat-header-cell *matHeaderCellDef> User Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="attendenceStatus">
+                <th mat-header-cell *matHeaderCellDef> Status </th>
+                <td mat-cell *matCellDef="let element"> {{element.attendenceStatus}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element"> 
+                  <button mat-icon-button color="warn" (click)="editData(element)" matTooltip="edit">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" (click)="deleteData(element)" matTooltip="delete">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                  
+                  <!-- Add in index.html or angular.json -->
+                <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+                  <!-- Button with QR icon -->
+                <button mat-icon-button (click)="generateQRCode()">
+                  <span class="material-symbols-outlined">qr_code_2</span>
+                </button>
+
+                </td>
+              </ng-container>
+      
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>  
+
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </div>
+</div>

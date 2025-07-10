@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { CertificateVerificationService } from 'src/app/services/seafarers/certificate-verification.service';
+import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.service';
 
 export interface PeriodicElement {
   sidNo: string;
@@ -43,9 +44,18 @@ export class CertificateVerificationComponent {
   selectedFile: File | null = null;
   previewUrl!: SafeUrl | null;
   isFileSelected = false;
+  selectedSeafarers: string = '';
+  allSeafarersDropdown: any = [];  // sid link
+  seafarersDropdown: any = []; 
+  allSeafarersListDetails: any;  
   
-constructor(private fb: FormBuilder, private certificateVerificationService: CertificateVerificationService, private messageService: MessageServiceService, 
-    private sanitizer: DomSanitizer ) {
+constructor(
+  private fb: FormBuilder, 
+  private certificateVerificationService: CertificateVerificationService,
+  private messageService: MessageServiceService, 
+  private sanitizer: DomSanitizer,
+  private seafarerService: SeafarersServiceService
+) {
       this.certificateVerificationForm = this.fb.group({
         
         sidNo: new FormControl (''),
@@ -59,6 +69,23 @@ constructor(private fb: FormBuilder, private certificateVerificationService: Cer
 
   ngOnInit(): void{
    this.populateData();
+   this.getSeafarersList();
+  }
+  
+  public getSeafarersList(): void {
+    this.seafarerService.getData().subscribe((response: any) => {
+      if (response && response.length > 0) {
+        this.allSeafarersListDetails = response;
+        response.forEach((seafarers: any) => {
+          const seafarersData = {
+            id: seafarers.id,
+            sidNo: seafarers.sidNo
+          };
+          this.allSeafarersDropdown.push(seafarersData);
+        });
+      }
+      this.seafarersDropdown = this.allSeafarersDropdown;
+    });
   }
 
   applyFilter(event: Event) {
@@ -242,6 +269,27 @@ constructor(private fb: FormBuilder, private certificateVerificationService: Cer
       public refreshData(): void {
         this.populateData();
       }
+
+      onKey(eventTarget: any) {
+    this.seafarersDropdown = this.search(eventTarget.value);
+    }
+
+    search(value: string) {
+    let filter = value.toLowerCase();
+    return this.allSeafarersDropdown.filter((option: any) => option.name.toLowerCase().startsWith(filter));
+    }
+
+    public onSeafarersSelect(event): void {
+      let selectedSeafarersId = event;
+
+    this.patchFormSeafarersValues(selectedSeafarersId);
+    }
+
+    public patchFormSeafarersValues(seafarersId: number): void {
+      this.certificateVerificationForm.patchValue({
+        sidNo: seafarersId
+      });
+    }
           
 }
 

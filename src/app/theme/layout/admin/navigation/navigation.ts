@@ -155,9 +155,19 @@ const NavigationItems = [
     children: [
       {
         id: 'EmployeeDet',
-        title: 'Employee',
+        title: 'Employee Details',
         type: 'item',
         url: '/register/employee',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
+      {
+        id: 'EmployeeDet',
+        title: 'Employee Attendence',
+        type: 'item',
+        url: '/register/employeeAttendence',
         icon: 'feather icon-home',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
@@ -175,7 +185,7 @@ const NavigationItems = [
     children: [
       {
         id: 'VesselRegistrationDet',
-        title: 'Vessels',
+        title: 'Vessel Details',
         type: 'item',
         url: '/vessels/vesselRegistration',
         icon: 'feather icon-home',
@@ -185,7 +195,7 @@ const NavigationItems = [
       },
       {
         id: 'VesselRegistrationDet',
-        title: 'Job Posting',
+        title: 'Job Vacancies',
         type: 'item',
         url: '/vessels/jobPosting',
         icon: 'feather icon-home',
@@ -245,7 +255,7 @@ const NavigationItems = [
       },
       {
         id: 'SeafarersRegistrationDet',
-        title: 'Other Details',
+        title: 'Document Details',
         type: 'item',
         url: '/seafarers/otherDetailsRegistration',
         icon: 'feather icon-home',
