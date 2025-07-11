@@ -123,18 +123,10 @@
       <br><br>
 
       <mat-form-field class="example-full-width">
-        <mat-label> No of Childern </mat-label>
-        <mat-select formControlName="noOfChildren">
-          <mat-option>None</mat-option>
-          <mat-option value="01">01</mat-option>
-          <mat-option value="02">02</mat-option>
-          <mat-option value="03">03</mat-option>
-          <mat-option value="04">04</mat-option>
-          <mat-option value="05">05</mat-option>
-          <mat-option value="05+">05+</mat-option>
-        </mat-select>
+        <mat-label> No Of Childern </mat-label>
+        <input matInput type="number" matInput placeholder="No Of Children" formControlName="noOfChildren" [min]="1" [max]="10">
       </mat-form-field>
-      <br>
+      <br>      
 
       <mat-form-field class="example-full-width">
         <mat-label> Address </mat-label>

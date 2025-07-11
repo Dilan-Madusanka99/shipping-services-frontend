@@ -16,7 +16,7 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: any[] = [ 
-  {sidNo: 'S123', vesselName: 'souselas', vesselType: 'bulk', position: 'AB'},
+  {sidNo: 'S123', vesselName: 'souselas', vesselType: 'bulk', position: 'AB', totalMonths:'09'},
 ];
 
 @Component({
@@ -31,7 +31,7 @@ export class SeaServicesComponent implements OnInit{
 
   seaServicesForm : FormGroup;
 
-    displayedColumns: string[] = ['sidNo', 'vesselName', 'vesselType', 'position', 'actions'];
+    displayedColumns: string[] = ['sidNo', 'vesselName', 'vesselType', 'position', 'totalMonths','actions'];
     dataSource: MatTableDataSource<any>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
