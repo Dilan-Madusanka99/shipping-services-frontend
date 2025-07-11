@@ -88,6 +88,10 @@ const routes: Routes = [
       {
         path: 'onboard',
         loadChildren: () => import('./onboard/onboard.module').then((m) => m.OnboardModule)
+      },
+      {
+        path: 'reports',
+        loadChildren: () => import('./reports/reports.module').then((m) => m.ReportsModule)
       }
     ]
   }

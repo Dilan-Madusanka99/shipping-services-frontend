@@ -84,8 +84,8 @@ const NavigationItems = [
         ]
       }
     ]
-  }, 
-  
+  },
+
   {
     id: 'login',
     title: 'Login',
@@ -102,7 +102,7 @@ const NavigationItems = [
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
-      },
+      }
     ]
   },
 
@@ -122,7 +122,7 @@ const NavigationItems = [
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
-      },
+      }
     ]
   },
 
@@ -202,7 +202,7 @@ const NavigationItems = [
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
-      },
+      }
     ]
   },
 
@@ -232,7 +232,7 @@ const NavigationItems = [
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
-      },
+      }
     ]
   },
 
@@ -312,8 +312,7 @@ const NavigationItems = [
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
-      },
-      
+      }
     ]
   },
 
@@ -363,13 +362,28 @@ const NavigationItems = [
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
-      },
+      }
     ]
   },
-
-  
-
-  
+  {
+    id: 'reports',
+    title: 'Reports',
+    type: 'group',
+    icon: 'icon-navigation',
+    auth: authenticationEnum.Home,
+    children: [
+      {
+        id: 'employeeList',
+        title: 'Employee List',
+        type: 'item',
+        url: '/reports/employee-list',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      }
+    ]
+  }
 ];
 
 @Injectable()
