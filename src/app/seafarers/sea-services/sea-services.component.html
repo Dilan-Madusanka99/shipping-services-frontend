@@ -36,8 +36,8 @@
                   <mat-option value="Bosun">Bosun</mat-option>
                   <mat-option value="Pumpman">Pumpman</mat-option>
                   <mat-option value="Oiler">Oiler</mat-option>
-                  <mat-option value="Fitter">Fitter+</mat-option>
-                  <mat-option value="Messman">Messman+</mat-option>
+                  <mat-option value="Fitter">Fitter</mat-option>
+                  <mat-option value="Messman">Messman</mat-option>
                   <mat-option value="Cook">Cook</mat-option>
                 </mat-select>
               </mat-form-field>
@@ -49,6 +49,7 @@
                 <mat-radio-button value="Bulk">Bulk</mat-radio-button>
                 <mat-radio-button value="Cargo">Cargo</mat-radio-button>
                 <mat-radio-button value="Container">Container</mat-radio-button>
+                <mat-radio-button value="Passenger">Passenger</mat-radio-button>
             </mat-radio-group> 
             <br><br>
 
@@ -90,14 +91,13 @@
 
             <mat-form-field class="example-full-width">
                 <mat-label>Total Months</mat-label>
-                <input matInput placeholder="Total Months" formControlName="totalMonths">
+                <input matInput type="number" matInput placeholder="Total Months" formControlName="totalMonths" [min]="1" [max]="100">
             </mat-form-field>
             <br>
 
             <mat-form-field class="example-full-width">
                 <mat-label> Sign Off Reason </mat-label>
                 <mat-select formControlName="reason">
-                  <mat-option>None</mat-option>
                   <mat-option value="Completed Contract">Completed Contract</mat-option>
                   <mat-option value="Transfer">Transfer</mat-option>
                   <mat-option value="Management Chance">Management Chance</mat-option>
@@ -146,6 +146,11 @@
               <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef> Position </th>
                 <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="totalMonths">
+                <th mat-header-cell *matHeaderCellDef> Months </th>
+                <td mat-cell *matCellDef="let element"> {{element.totalMonths}} </td>
               </ng-container>
 
               <ng-container matColumnDef="actions">

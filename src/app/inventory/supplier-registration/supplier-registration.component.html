@@ -42,8 +42,8 @@
         <br>
 
         <mat-form-field class="example-full-width">
-          <mat-label>Supplier Sub Category</mat-label>
-          <input matInput placeholder="Supplier Sub Category" formControlName="supplierSubCategory">
+          <mat-label>Supplier Sub Category (Optional)</mat-label>
+          <input matInput placeholder="Supplier Sub Category (optional)" formControlName="supplierSubCategory">
         </mat-form-field>
         <br>
 
@@ -75,7 +75,7 @@
 
         <mat-form-field class="example-full-width">
           <mat-label>Bank</mat-label>
-          <mat-select [(value)]="selected" formControlName="supplierBank">
+          <mat-select formControlName="supplierBank">
             <mat-option value="Bank of Ceylon">Bank of Ceylon</mat-option>
             <mat-option value="Peoples Bank">Peoples Bank</mat-option>
             <mat-option value="Commercial Bank of Ceylon">Commercial Bank</mat-option>
@@ -122,7 +122,7 @@
       </mat-form-field>
     </div>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" >
 
       <ng-container matColumnDef="supplierNo">
         <th mat-header-cell *matHeaderCellDef> Supplier No </th>

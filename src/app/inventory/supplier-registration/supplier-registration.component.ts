@@ -41,7 +41,11 @@ export class SupplierRegistrationComponent {
   previewUrl!: SafeUrl | null; 
   isFileSelected = false;
 
-  constructor(private fb: FormBuilder, private supplierRegistrationService: SupplierRegistrationService, private messageService: MessageServiceService, private sanitizer: DomSanitizer
+  constructor(
+    private fb: FormBuilder, 
+    private supplierRegistrationService: SupplierRegistrationService, 
+    private messageService: MessageServiceService, 
+    private sanitizer: DomSanitizer
       ) {
       this.supplierRegistrationForm = this.fb.group({
         profileImage: new FormControl(''),

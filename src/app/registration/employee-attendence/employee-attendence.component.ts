@@ -11,10 +11,11 @@ import { MessageServiceService } from 'src/app/services/message-service/message-
 export interface PeriodicElement {
   attandenceDate: Date;
   userName: string;
-  attendenceStatus: number;
+  roles: String;
+  attendenceStatus: String;
 }
 
-const ELEMENT_DATA: any[] = [{ attandenceDate: '8/7/2025', userName: 'dilan', attendenceStatus: 'present'}];
+const ELEMENT_DATA: any[] = [{ attandenceDate: '8/7/2025', userName: 'dilan', roles: 'Assistant Crew Manager', attendenceStatus: 'present'}];
 
 @Component({
   selector: 'app-employee-attendence',
@@ -28,7 +29,7 @@ export class EmployeeAttendenceComponent {
 
   employeeAttendenceForm: FormGroup;
 
-  displayedColumns: string[] = ['attandenceDate', 'userName', 'attendenceStatus', 'actions'];
+  displayedColumns: string[] = ['attandenceDate', 'userName', 'roles', 'attendenceStatus', 'actions'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -51,13 +52,31 @@ export class EmployeeAttendenceComponent {
         this.employeeAttendenceForm = this.fb.group({
           users: new FormControl(''),
           attendenceStatus: new FormControl(''),
-          userName: new FormControl('')
+          userName: new FormControl(''),
+          roles: new FormControl('')
         });
       }
 
     ngOnInit(): void{
       this.populateData();
       this.getEmployeeList();
+    }
+
+    public getEmployeeList(): void {
+      this.employeeService.getData().subscribe((response: any) => {
+        if (response && response.length > 0) {
+          this.allEmployeeListDetails = response;
+          response.forEach((emp: any) => {
+            const employeeData = {
+              id: emp.id,
+              name: emp.firstName + '_' + emp.lastName,
+              role: emp.roles
+        };
+          this.allEmployeeDropdown.push(employeeData);
+      });
+    }
+      this.employeeDropdown = this.allEmployeeDropdown;
+      });
     }
 
     applyFilter(event: Event) {
@@ -88,22 +107,6 @@ export class EmployeeAttendenceComponent {
       } catch (error) {
         this.messageService.showError('Action Failed With Error ' + error);
       }
-    }
-
-    public getEmployeeList(): void {
-      this.employeeService.getData().subscribe((response: any) => {
-        if (response && response.length > 0) {
-          this.allEmployeeListDetails = response;
-          response.forEach((emp: any) => {
-            const employeeData = {
-              id: emp.id,
-              name: emp.firstName + '_' + emp.lastName
-        };
-          this.allEmployeeDropdown.push(employeeData);
-      });
-    }
-      this.employeeDropdown = this.allEmployeeDropdown;
-      });
     }
   
     onSubmit() {
@@ -211,9 +214,8 @@ export class EmployeeAttendenceComponent {
         this.allEmployeeListDetails.forEach((emp) => {
           if (emp.id === empId) {
             this.employeeAttendenceForm.patchValue({
-              firstName: emp.firstName,
-              lastName: emp.lastName,
-              userName: emp.callingName
+              userName: emp.callingName,
+              roles: emp.roles
         });
       }
     });

@@ -4,15 +4,17 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { SafeUrl } from '@angular/platform-browser';
+import { ItemsRegistrationService } from 'src/app/services/inventory/items-registration.service';
 import { PaymentsService } from 'src/app/services/inventory/payments.service';
 import { StocksService } from 'src/app/services/inventory/stocks.service';
+import { SupplierRegistrationService } from 'src/app/services/inventory/supplier-registration.service';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 
 export interface PeriodicElement {
   itemNo: String;
   itemName: string;
   supplierName: string;
-  quantity: Date;
+  quantity: Number;
   qtyMeasure: String;
 }
 
@@ -57,7 +59,8 @@ export class StocksComponent {
     private fb: FormBuilder, 
     private stocksService: StocksService, 
     private messageService: MessageServiceService,
-    private paymentService: PaymentsService
+    private itemsRegistrationService : ItemsRegistrationService,
+    private supplierRegistrationService : SupplierRegistrationService
     ) {
       this.stocksForm = this.fb.group({
         itemNo : new FormControl(''),
@@ -76,7 +79,7 @@ export class StocksComponent {
 
   // item list - dropdown list from payment
     public getItemList(): void {
-    this.paymentService.getData().subscribe((response: any) => {
+    this.itemsRegistrationService.getData().subscribe((response: any) => {
       if (response && response.length > 0) {
         this.allItemListDetails = response;
         response.forEach((itm: any) => {
@@ -93,13 +96,13 @@ export class StocksComponent {
 
   // supplier list - dropdown list
   public getSupplierList(): void {
-    this.paymentService.getData().subscribe((response: any) => {
+    this.supplierRegistrationService.getData().subscribe((response: any) => {
       if (response && response.length > 0) {
         this.allSupplierListDetails = response;
-        response.forEach((sup: any) => {
+        response.forEach((supplier: any) => {
           const supplierData = {
-            id: sup.id,
-            supplierName: sup.supplierName
+            id: supplier.id,
+            supplierName: supplier.supplierName
           };
           this.allSupplierDropdown.push(supplierData);
         });
@@ -266,7 +269,7 @@ export class StocksComponent {
       this.patchFormSupplierValues(selectedSupplierId);
       }
 
-      public patchFormSupplierValues(supplierId: string): void {
+      public patchFormSupplierValues(supplierId: number): void {
         this.stocksForm.patchValue({
         supplierName: supplierId
         });

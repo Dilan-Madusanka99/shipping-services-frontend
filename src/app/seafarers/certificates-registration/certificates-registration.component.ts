@@ -10,14 +10,15 @@ import { CertificatesRegistrationService } from 'src/app/services/seafarers/cert
 import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.service';
 
 export interface PeriodicElement {
-  ecName: string;
+  sidNo: String;
+  cName: String;
   cIssuedDate: Date;
   cExpiredDate: Date;
   verificationStatus: String;
 }
 
 const ELEMENT_DATA: any[] = [ 
-  {cName: 'AFF', cIssuedDate: '07/04/2025', cExpiredDate: '07/04/2030', verificationStatus: 'verified'},
+  {sidNo: 'S001', cName: 'AFF', cIssuedDate: '07/04/2025', cExpiredDate: '07/04/2030', verificationStatus: 'verified'},
 ];
 
 @Component({
@@ -32,7 +33,7 @@ export class CertificatesRegistrationComponent {
 
   certificatesRegistrationForm : FormGroup;
     
-    displayedColumns: string[] = ['cName', 'cIssuedDate', 'cExpiredDate', 'verificationStatus', 'actions'];
+    displayedColumns: string[] = ['sidNo', 'cName', 'cIssuedDate', 'cExpiredDate', 'verificationStatus', 'actions'];
     dataSource: MatTableDataSource<any>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;

@@ -109,10 +109,10 @@ export class PaymentsComponent {
     this.supplierRegistrationService.getData().subscribe((response: any) => {
       if (response && response.length > 0) {
         this.allSupplierListDetails = response;
-        response.forEach((sup: any) => {
+        response.forEach((supplier: any) => {
           const supplierData = {
-            id: sup.id,
-            supplierName: sup.supplierName
+            id: supplier.id,
+            supplierName: supplier.supplierName
           };
           this.allSupplierDropdown.push(supplierData);
         });
@@ -346,10 +346,11 @@ export class PaymentsComponent {
       this.patchFormSupplierValues(selectedSupplierId);
       }
 
-      public patchFormSupplierValues(supplierId: string): void {
+      public patchFormSupplierValues(supplierId: number): void {
         this.paymentsForm.patchValue({
         supplierName: supplierId
         });
       }
+
 
 }
