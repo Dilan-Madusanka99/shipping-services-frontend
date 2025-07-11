@@ -14,9 +14,7 @@ export interface PeriodicElement {
   role: string;
 }
 
-const ELEMENT_DATA: any[] = [
-  { firstName: 'Dilan', lastName: 'Fernando', userName: 'Dilan', role: 'Managing Director' }
-];
+const ELEMENT_DATA: any[] = [{ firstName: 'Dilan', lastName: 'Fernando', userName: 'Dilan', role: 'Managing Director' }];
 
 @Component({
   selector: 'app-login',
@@ -51,12 +49,12 @@ export class LoginComponent implements OnInit {
     private employeeService: EmployeeServiceService
   ) {
     this.LoginForm = this.fb.group({
-      users: new FormControl(''),
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
+      users: new FormControl(),
+      firstName: new FormControl({ value: '', disabled: true }),
+      lastName: new FormControl({ value: '', disabled: true }),
       userName: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
-      role: new FormControl('')
+      role: new FormControl({ value: '', disabled: true })
     });
   }
 
@@ -64,7 +62,7 @@ export class LoginComponent implements OnInit {
     this.populateData();
     this.getEmployeeList();
   }
- 
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -118,7 +116,7 @@ export class LoginComponent implements OnInit {
       console.log(this.LoginForm.value);
 
       if (this.mode === 'add') {
-        this.loginService.serviceCall(this.LoginForm.value).subscribe({
+        this.loginService.serviceCall(this.LoginForm.getRawValue()).subscribe({
           next: (response: any) => {
             if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {
               this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
@@ -133,7 +131,7 @@ export class LoginComponent implements OnInit {
           }
         });
       } else if (this.mode === 'edit') {
-        this.loginService.editData(this.selectedData?.id, this.LoginForm.value).subscribe({
+        this.loginService.editData(this.selectedData?.id, this.LoginForm.getRawValue()).subscribe({
           next: (response: any) => {
             let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
             this.dataSource.data[elementIndex] = response;
@@ -159,6 +157,7 @@ export class LoginComponent implements OnInit {
     this.saveButtonLabel = 'Save';
     this.LoginForm.enable();
     this.isButtonDisabled = false;
+    this.mode = 'edit';
   }
 
   public editData(data: any): void {
@@ -170,6 +169,8 @@ export class LoginComponent implements OnInit {
     this.saveButtonLabel = 'Edit';
     this.mode = 'edit';
     this.selectedData = data;
+    this.LoginForm.disable();
+    this.LoginForm.get('password').enable();
   }
 
   public deleteData(data: any): void {
@@ -221,11 +222,12 @@ export class LoginComponent implements OnInit {
 
   public patchFormEmpValues(empId: number): void {
     this.allEmployeeListDetails.forEach((emp) => {
-      if (emp.id === empId) {
+      if (emp.id == empId) {
         this.LoginForm.patchValue({
           firstName: emp.firstName,
           lastName: emp.lastName,
-          userName: emp.callingName
+          userName: emp.callingName,
+          role: emp.roles
         });
       }
     });
