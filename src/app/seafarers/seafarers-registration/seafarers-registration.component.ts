@@ -13,11 +13,11 @@ export interface PeriodicElement {
   position: string;
   surname: string;
   mobile: string;
-  availableDate: Date;
+  appliedDate: Date;
 }
 
 const ELEMENT_DATA: any[] = [ 
-  {sidno: '100', position: 'AB', surname: 'Fernando', mobile: '076', availableDate: '07/04/2025'},
+  {sidno: '100', position: 'AB', surname: 'Fernando', mobile: '076', appliedDate: '07/04/2025'},
 ];
 
 @Component({
@@ -32,7 +32,7 @@ export class SeafarersRegistrationComponent {
 
   seafarersForm : FormGroup;
 
-  displayedColumns: string[] = ['sidNo' ,'position', 'surname', 'mobile', 'availableDate', 'actions'];
+  displayedColumns: string[] = ['sidNo' ,'position', 'surname', 'mobile', 'appliedDate', 'actions'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -44,7 +44,7 @@ export class SeafarersRegistrationComponent {
   submitted: boolean;
   // Photo upload [start]
   selectedFile: File | null = null;
-  previewUrl!: SafeUrl | null; // : string | ArrayBuffer | null = null;
+  previewUrl!: SafeUrl | null;
   isFileSelected = false;
   // Photo upload [end]
 
@@ -59,17 +59,17 @@ export class SeafarersRegistrationComponent {
           // Photo upload [end]
         sidNo: new FormControl('', [Validators.required]),
         position: new FormControl('', [Validators.required]),
-        appliedDate: new FormControl(''),
-        availableDate: new FormControl(''),
+        appliedDate: new FormControl('', [Validators.required]),
+        availableDate: new FormControl('', [Validators.required]),
         surname: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]),
         otherNames: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]),
         dob: new FormControl('', [Validators.required]),
-        birthPlace: new FormControl(''),
+        birthPlace: new FormControl('', [Validators.required]),
         nic: new FormControl('', [Validators.required, Validators.pattern(/^([0-9]{9}[vVxX]|[0-9]{12})$/)]),
         religion: new FormControl('', [Validators.required]),
-        marriedStatus: new FormControl(''),
+        marriedStatus: new FormControl('', [Validators.required]),
         gender: new FormControl('', [Validators.required]),
-        noOfChildren: new FormControl(''),
+        noOfChildren: new FormControl('', [Validators.required]),
         address: new FormControl('', [Validators.required]),
         home: new FormControl('', [ Validators.pattern(/^07[0-9]{8}$/)]),
         mobile: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]),
