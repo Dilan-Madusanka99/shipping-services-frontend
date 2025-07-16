@@ -381,6 +381,16 @@ const NavigationItems = [
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
+      },
+      {
+        id: 'vesselList',
+        title: 'Vessel List',
+        type: 'item',
+        url: '/reports/vessel-list',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
       }
     ]
   }

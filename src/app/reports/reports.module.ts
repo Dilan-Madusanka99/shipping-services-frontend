@@ -6,9 +6,10 @@ import { MatRadioModule } from '@angular/material/radio';
 import { RouterModule } from '@angular/router';
 import { EmployeeListComponent } from './Static Report/app/components/employee-list/employee-list.component';
 import { ReportsRoutes } from './reports.routing.module';
+import { vesselListComponent } from './Static Report/app/components/vessel-list/vessel-list.component';
 
 @NgModule({
-  declarations: [EmployeeListComponent],
+  declarations: [EmployeeListComponent, vesselListComponent],
   imports: [CommonModule, RouterModule.forChild(ReportsRoutes), ReactiveFormsModule, MaterialModule, MatRadioModule, FormsModule]
 })
 export class ReportsModule {}
