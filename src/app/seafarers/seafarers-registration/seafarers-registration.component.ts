@@ -53,30 +53,30 @@ export class SeafarersRegistrationComponent {
   ) {
       this.seafarersForm = this.fb.group({
           // Photo upload [start]
-        profileImage: new FormControl(''),
+        profileImage: new FormControl('', [Validators.required]),
         profileImageName: new FormControl(''),
         profileImageType: new FormControl(''),
           // Photo upload [end]
-        sidNo: new FormControl('', [Validators.required]),
+        sidNo: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]), // letters and numbers only
         position: new FormControl('', [Validators.required]),
-        appliedDate: new FormControl('', [Validators.required]),
-        availableDate: new FormControl('', [Validators.required]),
-        surname: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]),
-        otherNames: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]),
-        dob: new FormControl('', [Validators.required]),
-        birthPlace: new FormControl('', [Validators.required]),
+        appliedDate: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)]), // Month: 01 to 12 , Day: 01 to 31, Year: 4 digits
+        availableDate: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)]),
+        surname: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern(/^[A-Za-z]+$/)]), // letters only
+        otherNames: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern(/^[A-Za-z]+$/)]), // letter only
+        dob: new FormControl('', [Validators.required,]),
+        birthPlace: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15), Validators.pattern(/^[A-Za-z]+$/)]), // letters only
         nic: new FormControl('', [Validators.required, Validators.pattern(/^([0-9]{9}[vVxX]|[0-9]{12})$/)]),
-        religion: new FormControl('', [Validators.required]),
-        marriedStatus: new FormControl('', [Validators.required]),
+        religion: new FormControl('', [Validators.required]), 
+        marriedStatus: new FormControl('', [Validators.required]), 
         gender: new FormControl('', [Validators.required]),
-        noOfChildren: new FormControl('', [Validators.required]),
-        address: new FormControl('', [Validators.required]),
+        noOfChildren: new FormControl('', [Validators.required, Validators.min(0), Validators.max(10), Validators.pattern(/^\d+$/)]), //min & max & only digits (whole digit)
+        address: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern(/^[a-zA-Z0-9\s,.'-]*$/)]), // letters, numbers, spaces, commas, periods, apostrophes, and dashes
         home: new FormControl('', [ Validators.pattern(/^07[0-9]{8}$/)]),
         mobile: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]),
         email: new FormControl('', [Validators.required, Validators.email]),
-        kinName: new FormControl('',[Validators.required, Validators.pattern(/^[A-Za-z]+$/)]),
-        kinRelationship: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]),
-        kinAddress: new FormControl(''),
+        kinName: new FormControl('',[Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern(/^[A-Za-z]+$/)]), // letters only
+        kinRelationship: new FormControl('', [Validators.required]),
+        kinAddress: new FormControl('', [Validators.required, Validators.min(0), Validators.max(10), Validators.pattern(/^\d+$/)]),
         kinMobile: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]),
         kinEmail: new FormControl('', [Validators.email]),
         englishLanguage: new FormControl(''),

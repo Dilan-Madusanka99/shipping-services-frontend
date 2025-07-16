@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -44,11 +44,11 @@ export class ItemsRegistrationComponent {
   ) {
       this.itemsRegistrationForm = this.fb.group({
         
-        itemNo: new FormControl(''),
-        emNo: new FormControl(''),
-        itemName: new FormControl(''),
-        itemCategory: new FormControl(''),
-        profileImage: new FormControl(''),
+        itemNo: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
+        emNo: new FormControl('', [Validators.minLength(5), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
+        itemName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(20), Validators.pattern(/^[A-Za-z0-9]+$/)]),
+        itemCategory: new FormControl('', [Validators.required]),
+        profileImage: new FormControl('', [Validators.required]),
         profileImageName: new FormControl(''),
         profileImageType: new FormControl('')
       });

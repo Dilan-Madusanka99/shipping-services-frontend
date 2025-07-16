@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -57,13 +57,13 @@ export class CrewComplaintsComponent {
     private vesselRegistrationService: VesselRegistrationService
   ) {
         this.crewComplaintsForm = this.fb.group({
-          sidNo: new FormControl(''),
-          imoNo: new FormControl(''),
+          sidNo: new FormControl('', [Validators.required]),
+          imoNo: new FormControl('', [Validators.required]),
           vesselName: new FormControl(''),
-          complaintorName: new FormControl(''),
-          complaintDate: new FormControl(''),
-          complaintType : new FormControl(''),
-          complaint: new FormControl('')
+          complaintorName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z.]+$/)]), // letters & .
+          complaintDate: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)]),
+          complaintType : new FormControl('', [Validators.required]),
+          complaint: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(255)])
         });
       }
 

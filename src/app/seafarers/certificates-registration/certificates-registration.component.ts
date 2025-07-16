@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -57,16 +57,16 @@ export class CertificatesRegistrationComponent {
        private certificatesDetailsService: SeafarersServiceService
       ) {
       this.certificatesRegistrationForm = this.fb.group({
-        certificateImage: new FormControl(''),
+        certificateImage: new FormControl('', [Validators.required]),
         certificateImageName: new FormControl(''),
         certificateImageType: new FormControl(''),
-        sidNo: new FormControl(''),
-        cName: new FormControl(''),
-        cNo: new FormControl(''),
-        cIssuedPlace: new FormControl(''),
-        cIssuedDate: new FormControl(''),
-        cExpiredDate: new FormControl(''),
-        verificationStatus: new FormControl('')    
+        sidNo: new FormControl('', [Validators.required]),
+        cName: new FormControl('', [Validators.required]),
+        cNo: new FormControl('', [Validators.required]), // difficult for validate
+        cIssuedPlace: new FormControl('', [Validators.required]),
+        cIssuedDate: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)]),
+        cExpiredDate: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)]),
+        verificationStatus: new FormControl('', [Validators.required])    
       });
     }
   

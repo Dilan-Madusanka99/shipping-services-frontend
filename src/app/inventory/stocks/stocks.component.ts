@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -63,11 +63,11 @@ export class StocksComponent {
     private supplierRegistrationService : SupplierRegistrationService
     ) {
       this.stocksForm = this.fb.group({
-        itemNo : new FormControl(''),
-        itemName: new FormControl(''),
-        supplierName : new FormControl(''),
-        quantity : new FormControl(''),
-        qtyMeasure : new FormControl(''),
+        itemNo : new FormControl('', [Validators.required]),
+        itemName: new FormControl('', [Validators.required]),
+        supplierName : new FormControl('', [Validators.required]),
+        quantity : new FormControl('', [Validators.required, Validators.pattern(/^[0-9]+$/)]),
+        qtyMeasure : new FormControl('', [Validators.required]),
       });
     }
 

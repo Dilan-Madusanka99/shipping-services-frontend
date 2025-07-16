@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -44,13 +44,13 @@ export class JobPostingComponent {
 
   constructor(private fb: FormBuilder, private seafarersService: JobPostingServiceService, private messageService: MessageServiceService, private sanitizer: DomSanitizer) {
         this.jobPostingForm = this.fb.group({
-          jobPostImage: new FormControl(''),
+          jobPostImage: new FormControl('', [Validators.required]),
           jobPostImageName: new FormControl(''),
           jobPostImageType: new FormControl(''),
-          vesselName: new FormControl(''),
-          position: new FormControl(''),
-          jobStatus: new FormControl(''),
-          jobDescription: new FormControl(''),
+          vesselName: new FormControl('', [Validators.required]),
+          position: new FormControl('', [Validators.required]),
+          jobStatus: new FormControl('', [Validators.required]),
+          jobDescription: new FormControl('', [Validators.minLength(1), Validators.maxLength(255)]),
         });
   }
 

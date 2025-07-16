@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -50,8 +50,8 @@ export class EmployeeAttendenceComponent {
         private employeeService: EmployeeServiceService
       ) {
         this.employeeAttendenceForm = this.fb.group({
-          users: new FormControl(''),
-          attendenceStatus: new FormControl(''),
+          users: new FormControl('', [Validators.required]),
+          attendenceStatus: new FormControl('', [Validators.required]),
           userName: new FormControl(''),
           roles: new FormControl('')
         });

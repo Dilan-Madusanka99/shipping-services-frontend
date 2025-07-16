@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -66,16 +66,16 @@ export class PaymentsComponent {
       private supplierRegistrationService: SupplierRegistrationService
       ) {
         this.paymentsForm = this.fb.group({
-          paymentNo: new FormControl(''),
-          itemNo : new FormControl(''),
-          itemName: new FormControl(''),
-          supplierName : new FormControl(''),
-          quantity : new FormControl(''),
-          qtyMeasure : new FormControl(''),
-          amount : new FormControl(''),
-          paymentDate: new FormControl(''),
-          paymentStatus : new FormControl(''),
-          paymentImage: new FormControl(''),
+          paymentNo: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
+          itemNo : new FormControl('', [Validators.required]),
+          itemName: new FormControl('', [Validators.required]),
+          supplierName : new FormControl('', [Validators.required]),
+          quantity : new FormControl('', [Validators.required, Validators.min(1)]),
+          qtyMeasure : new FormControl('', [Validators.required]),
+          amount : new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]), // numbers & .
+          paymentDate: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)]),
+          paymentStatus : new FormControl('', [Validators.required]),
+          paymentImage: new FormControl('', [Validators.required]),
           paymentImageName: new FormControl(''),
           paymentImageType: new FormControl('')
         });

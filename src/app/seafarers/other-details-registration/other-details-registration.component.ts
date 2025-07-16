@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -61,34 +61,34 @@ export class OtherDetailsRegistrationComponent {
     private otherDetailsService: SeafarersServiceService // sid link
   ) {
     this.otherDetailsRegistrationForm = this.fb.group({
-      sidImage: new FormControl(''),
+      sidImage: new FormControl('', [Validators.required]),
       sidImageName: new FormControl(''),
       sidImageType: new FormControl(''),
-      sidNo: new FormControl(''),
-      sidIssuedPlace: new FormControl(''),
-      sidIssuedDate: new FormControl(''),
-      sidExpireDate: new FormControl(''),
-      ppImage: new FormControl(''),
+      sidNo: new FormControl('', [Validators.required]),
+      sidIssuedPlace: new FormControl('', [Validators.required]),
+      sidIssuedDate: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)]),
+      sidExpireDate: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)]),
+      ppImage: new FormControl('', [Validators.required]),
       ppImageName: new FormControl(''),
       ppImageType: new FormControl(''),
-      ppNo: new FormControl(''),
-      ppIssuedPlace: new FormControl(''),
-      ppIssuedDate: new FormControl(''),
-      ppExpireDate: new FormControl(''),
-      cdcImage: new FormControl(''),
+      ppNo: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
+      ppIssuedPlace: new FormControl('', [Validators.required]),
+      ppIssuedDate: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)]),
+      ppExpireDate: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)]),
+      cdcImage: new FormControl('', [Validators.required]),
       cdcImageName: new FormControl(''),
       cdcImageType: new FormControl(''),
-      cdcNo: new FormControl(''),
-      cdcIssuedPlace: new FormControl(''),
-      cdcIssuedDate: new FormControl(''),
-      cdcExpireDate: new FormControl(''),
-      yellowFeverImage: new FormControl(''),
+      cdcNo: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
+      cdcIssuedPlace: new FormControl('', [Validators.required]),
+      cdcIssuedDate: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)]),
+      cdcExpireDate: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)]),
+      yellowFeverImage: new FormControl('', [Validators.required]),
       yellowFeverImageName: new FormControl(''),
       yellowFeverImageType: new FormControl(''),
-      yellowFeverNo: new FormControl(''),
-      yellowFeverIssuedPlace: new FormControl(''),
-      yellowFeverIssuedDate: new FormControl(''),
-      yellowFeverExpireDate: new FormControl('')
+      yellowFeverNo: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
+      yellowFeverIssuedPlace: new FormControl('', [Validators.required]),
+      yellowFeverIssuedDate: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)]),
+      yellowFeverExpireDate: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)])
     });
   }
 

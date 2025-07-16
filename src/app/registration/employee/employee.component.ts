@@ -51,20 +51,20 @@ export class EmployeeComponent implements OnInit {
   ) {
     this.employeeForm = this.fb.group({
       // Photo upload [start]
-      profileImage: new FormControl(''),
+      profileImage: new FormControl('', [Validators.required]),
       profileImageName: new FormControl(''),
       profileImageType: new FormControl(''),
       // Photo upload [end]
-      empNo: new FormControl('', [Validators.required]),
-      firstName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]),
-      lastName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]),
+      empNo: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(10), Validators.pattern(/^[a-zA-Z0-9]*$/)]), // letter & numbers only
+      firstName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern(/^[A-Za-z]+$/)]),
+      lastName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern(/^[A-Za-z]+$/)]),
       callingName: new FormControl('', [Validators.pattern(/^[A-Za-z]+$/)]),
       nic: new FormControl('', [Validators.required, Validators.pattern(/^([0-9]{9}[vVxX]|[0-9]{12})$/)]),
       dob: new FormControl(''),
       roles: new FormControl('', [Validators.required]),
       contactNo: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      address: new FormControl(''),
+      address: new FormControl('', [Validators.required , Validators.minLength(5), Validators.maxLength(100), Validators.pattern(/^[a-zA-Z0-9\s,.'-]*$/)]),
       emergencyContactName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]),
       emergencyContactNo: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)])
     });

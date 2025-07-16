@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -44,20 +44,20 @@ export class AppointmentComponent implements OnInit{
 
     constructor(private fb: FormBuilder, private appointmentService: AppointmentService, private messageService: MessageServiceService) {
       this.appointmentForm = this.fb.group({
-        sid: new FormControl(''),
-        firstName: new FormControl(''),
-        lastName: new FormControl(''),
-        position: new FormControl(''),
-        mobile: new FormControl(''),
-        email: new FormControl(''),
-        appointmentDate: new FormControl(''),
-        appointmentTime: new FormControl(''),
-        appointmentStatus: new FormControl(''),
+        sid: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
+        firstName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern(/^[A-Za-z]+$/)]),
+        lastName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern(/^[A-Za-z]+$/)]),
+        position: new FormControl('', [Validators.required]),
+        mobile: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]),
+        email: new FormControl('', [Validators.required, Validators.email]),
+        appointmentDate: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)]),
+        appointmentTime: new FormControl('', [ Validators.required]),
+        appointmentStatus: new FormControl('', [Validators.required]),
       });
     }
 
     ngOnInit(): void{
-      this.populateData();
+      this.populateData();  
     }
   
     applyFilter(event: Event) {

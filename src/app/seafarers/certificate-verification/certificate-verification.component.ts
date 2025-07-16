@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -58,12 +58,12 @@ constructor(
 ) {
       this.certificateVerificationForm = this.fb.group({
         
-        sidNo: new FormControl (''),
-        certificateName: new FormControl(''),
-        profileImage: new FormControl(''),
+        sidNo: new FormControl ('', [Validators.required]),
+        certificateName: new FormControl('', [Validators.required]),
+        profileImage: new FormControl('', [Validators.required]),
         profileImageName: new FormControl(''),
         profileImageType: new FormControl(''),
-        verificationStatus: new FormControl(''),
+        verificationStatus: new FormControl('', [Validators.required]),
       });
     }
 

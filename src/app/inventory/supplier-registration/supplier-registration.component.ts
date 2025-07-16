@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -48,19 +48,19 @@ export class SupplierRegistrationComponent {
     private sanitizer: DomSanitizer
       ) {
       this.supplierRegistrationForm = this.fb.group({
-        profileImage: new FormControl(''),
+        profileImage: new FormControl('', [Validators.required]),
         profileImageName: new FormControl(''),
         profileImageType: new FormControl(''),
-        supplierNo: new FormControl(''),
-        supplierName: new FormControl(''),
-        supplierCategory: new FormControl(''),
-        supplierSubCategory: new FormControl(''),
-        supplierContactNo: new FormControl(''),
-        supplierEmail: new FormControl(''),
-        supplierAccName: new FormControl(''),
-        supplierAccNo: new FormControl(''),
-        supplierBank: new FormControl(''),
-        supplierBranch: new FormControl(''),
+        supplierNo: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
+        supplierName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(20), Validators.pattern(/^[A-Za-z]+$/)]),
+        supplierCategory: new FormControl('', [Validators.required]),
+        supplierSubCategory: new FormControl('', [Validators.minLength(1), Validators.maxLength(15), Validators.pattern(/^[A-Za-z]+$/)]),
+        supplierContactNo: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]),
+        supplierEmail: new FormControl('', [Validators.required, Validators.email]),
+        supplierAccName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(25), Validators.pattern(/^[A-Za-z]+$/)]),
+        supplierAccNo: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(20), Validators.pattern(/^\d+$/)]),
+        supplierBank: new FormControl('', [Validators.required]),
+        supplierBranch: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]),
       });
     }
 

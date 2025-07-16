@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -52,18 +52,18 @@ export class SeaServicesComponent implements OnInit{
       private seafarerService: SeafarersServiceService
     ) {
       this.seaServicesForm = this.fb.group({
-        sidNo: new FormControl(''),
-        companyName: new FormControl(''),
-        vesselName: new FormControl(''),
-        position: new FormControl(''),
-        vesselType: new FormControl(''),
-        flag: new FormControl(''),
-        grt: new FormControl(''),
-        bhp: new FormControl(''),
-        signOn: new FormControl(''),
-        signOff: new FormControl(''),
-        totalMonths: new FormControl(''),
-        reason: new FormControl('')
+        sidNo: new FormControl('', [Validators.required]),
+        companyName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]),
+        vesselName: new FormControl('', [Validators.required]),
+        position: new FormControl('', [Validators.required,]),
+        vesselType: new FormControl('', [Validators.required,]),
+        flag: new FormControl('', [Validators.required, Validators.min(3), Validators.max(20), Validators.pattern(/^[A-Za-z]+$/)]),
+        grt: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(10), Validators.pattern(/^\d+$/)]), // whole numbers
+        bhp: new FormControl('', [Validators.minLength(3), Validators.maxLength(10), Validators.pattern(/^[A-Za-z0-9]+$/)]), // letters & numbers
+        signOn: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)]),
+        signOff: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)]),
+        totalMonths: new FormControl('', [Validators.required, Validators.min(1), Validators.max(100), Validators.pattern(/^\d+$/)]), // whole numbers
+        reason: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)])
       });
     }
 

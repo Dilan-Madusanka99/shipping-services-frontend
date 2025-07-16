@@ -45,16 +45,16 @@ export class VesselRegistrationComponent implements OnInit {
     private sanitizer: DomSanitizer
   ) {
     this.vesselRegistrationForm = this.fb.group({
-      profileImage: new FormControl(''),
+      profileImage: new FormControl('', [Validators.required]),
       profileImageName: new FormControl(''),
       profileImageType: new FormControl(''),
-      vesselName: new FormControl(''),
+      vesselName: new FormControl('', [Validators.required]), // difficult to validate
       imoNo: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]+$/)]),
       vesselType: new FormControl('', [Validators.required]),
-      flag: new FormControl('', [Validators.pattern(/^[A-Za-z]+$/)]),
-      yob: new FormControl('', [Validators.pattern(/^\d{4}$/)]),
-      grt: new FormControl('', [Validators.pattern(/^[0-9]+$/)]),
-      bhp: new FormControl('', [Validators.required])
+      flag: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), Validators.pattern(/^[A-Za-z]+$/)]),
+      yob: new FormControl('', [Validators.required, Validators.pattern(/^\d{4}$/)]),
+      grt: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(10), Validators.pattern(/^[0-9]+$/)]),
+      bhp: new FormControl('', [Validators.required,Validators.minLength(3), Validators.maxLength(10), Validators.pattern(/^[A-Za-z0-9]+$/)])
     });
   }
 
