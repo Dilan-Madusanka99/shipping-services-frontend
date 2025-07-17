@@ -9,7 +9,7 @@ import { ReportsRoutes } from './reports.routing.module';
 import { vesselListComponent } from './Static Report/app/components/vessel-list/vessel-list.component';
 
 @NgModule({
-  declarations: [EmployeeListComponent, vesselListComponent],
+  declarations: [EmployeeListComponent, vesselListComponent,],
   imports: [CommonModule, RouterModule.forChild(ReportsRoutes), ReactiveFormsModule, MaterialModule, MatRadioModule, FormsModule]
 })
 export class ReportsModule {}

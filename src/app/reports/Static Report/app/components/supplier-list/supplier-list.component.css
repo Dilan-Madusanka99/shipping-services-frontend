@@ -63,7 +63,7 @@
     border-radius: 4px;
   }
 
-.vessel-report-container {
+.supplier-report-container {
   padding: 2rem;
   background-color: #f9fafb;
   border-radius: 8px;
@@ -143,20 +143,20 @@ h1 {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
-.vessel-table {
+.supplier-table {
   width: 100%;
   border-collapse: collapse;
   background-color: white;
 }
 
-.vessel-table th, 
-.vessel-table td {
+.supplier-table th, 
+.supplier-table td {
   padding: 1rem;
   text-align: left;
   border-bottom: 1px solid #e5e7eb;
 }
 
-.vessel-table th {
+.supplier-table th {
   background-color: #f3f4f6;
   font-weight: 600;
   color: #4b5563;
@@ -172,11 +172,11 @@ h1 {
   background-color: #e5e7eb;
 }
 
-.vessel-row {
+.supplier-row {
   transition: background-color 0.2s ease;
 }
 
-.vessel-row:hover {
+.supplier-row:hover {
   background-color: #f9fafb;
 }
 
@@ -210,7 +210,7 @@ h1 {
 }
 
 @media (max-width: 768px) {
-  .vessel-report-container {
+  .supplier-report-container {
     padding: 1rem;
     margin: 1rem;
   }
@@ -224,8 +224,8 @@ h1 {
     margin-bottom: 1rem;
   }
   
-  .vessel-table th,
-  .vessel-table td {
+  .supplier-table th,
+  .supplier-table td {
     padding: 0.75rem 0.5rem;
     font-size: 0.875rem;
   }
@@ -236,12 +236,12 @@ h1 {
     visibility: hidden;
   }
   
-  .vessel-report-container,
-  .vessel-report-container * {
+  .supplier-report-container,
+  .supplier-report-container * {
     visibility: visible;
   }
   
-  .vessel-report-container {
+  .supplier-report-container {
     position: absolute;
     left: 0;
     top: 0;
@@ -257,16 +257,16 @@ h1 {
     display: none;
   }
   
-  .vessel-table {
+  .supplier-table {
     page-break-inside: auto;
   }
   
-  .vessel-table tr {
+  .supplier-table tr {
     page-break-inside: avoid;
     page-break-after: auto;
   }
   
-  .vessel-table th {
+  .supplier-table th {
     background-color: #f3f4f6 !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
