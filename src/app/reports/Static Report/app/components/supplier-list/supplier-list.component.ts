@@ -1,14 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Employee } from '../../models/employee.model';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { PrintService } from '../../services/print.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { EmployeeServiceService } from 'src/app/services/employee/employee-service.service';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
+import { Supplier } from '../../models/supplier.module';
+import { SupplierRegistrationService } from 'src/app/services/inventory/supplier-registration.service';
+import { SupplierPrintService } from '../../services/supplierPrintService';
 
 @Component({
   selector: 'app-supplier-list',
@@ -17,60 +18,42 @@ import { MessageServiceService } from 'src/app/services/message-service/message-
   styleUrls: ['./supplier-list.component.css']
 })
 export class SupplierListComponent implements OnInit {
-  employees: Employee[] = [];
-  filteredEmployees: Employee[] = [];
+  supplier: Supplier[] = [];
+  filteredSupplier: Supplier[] = [];
   searchTerm: string = '';
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
   loading: boolean = true;
   error: string | null = null;
 
-  displayedColumns: string[] = ['empNo', 'firstName', 'nic', 'roles'];
+  displayedColumns: string[] = ['supplierNo', 'supplierName', 'supplierCategory', 'supplierContactNo'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
-    private employeeService: EmployeeServiceService,
-    private printService: PrintService,
+    private supplierService: SupplierRegistrationService,
+    private printService: SupplierPrintService,
     private messageService: MessageServiceService
   ) {}
 
   ngOnInit(): void {
-    // this.loadEmployees();
     this.populateData();
   }
 
-  // loadEmployees(): void {
-  //   this.loading = true;
-  //   this.employeeService.getEmployees().subscribe({
-  //     next: (data) => {
-  //       this.employees = data;
-  //       this.filteredEmployees = data;
-  //       this.loading = false;
-  //     },
-  //     error: (err) => {
-  //       this.error = 'Failed to load employee data. Please try again later.';
-  //       this.loading = false;
-  //       console.error('Error fetching employees:', err);
-  //     }
-  //   });
-  // }
-
   search(): void {
     if (!this.searchTerm.trim()) {
-      this.filteredEmployees = this.employees;
+      this.filteredSupplier = this.supplier;
       return;
     }
 
     const term = this.searchTerm.toLowerCase();
-    this.filteredEmployees = this.employees.filter(
-      (employee) =>
-        employee.name.toLowerCase().includes(term) ||
-        employee.age.toString().includes(term) ||
-        employee.phoneNumber.toString().includes(term) ||
-        employee.salary.toString().includes(term) ||
-        employee.id.toString().includes(term)
+    this.filteredSupplier = this.supplier.filter(
+      (supplier) =>
+        supplier.supplierNo.toLowerCase().includes(term) ||
+        supplier.supplierName.toString().includes(term) ||
+        supplier.supplierCategory.toString().includes(term) ||
+        supplier.supplierContactNo.toString().includes(term)
     );
   }
 
@@ -82,7 +65,7 @@ export class SupplierListComponent implements OnInit {
       this.sortDirection = 'asc';
     }
 
-    this.filteredEmployees = [...this.filteredEmployees].sort((a: any, b: any) => {
+    this.filteredSupplier = [...this.filteredSupplier].sort((a: any, b: any) => {
       const valueA = a[column];
       const valueB = b[column];
 
@@ -103,7 +86,7 @@ export class SupplierListComponent implements OnInit {
   }
 
   printReport(): void {
-    this.printService.printEmployeeReport(this.dataSource.filteredData);
+    this.printService.printSupplierReport(this.dataSource.filteredData);
   }
 
   getDate(): string {
@@ -113,7 +96,7 @@ export class SupplierListComponent implements OnInit {
 
   public populateData(): void {
     try {
-      this.employeeService.getData().subscribe({
+      this.supplierService.getData().subscribe({
         next: (dataList: any[]) => {
           if (dataList.length <= 0) {
             return;

@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class SupplierPrintService {
   constructor() {}
 
-  printsupplierReport(supplier: any): void {
+  printSupplierReport(supplier: any): void {
     const printContent = `
       <!DOCTYPE html>
       <html>
