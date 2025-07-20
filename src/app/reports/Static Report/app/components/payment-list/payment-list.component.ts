@@ -3,33 +3,33 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
-import { Vessel } from '../../models/vessel.model';
-import { VesselRegistrationService } from 'src/app/services/vessels/vessel-registration.service';
-import { vesselPrintService } from '../../services/vesselPrintService';
+import { Payment } from '../../models/payment.module';
+import { PaymentPrintService } from '../../services/paymentPrintService';
+import { PaymentsService } from 'src/app/services/inventory/payments.service';
 
 @Component({
-  selector: 'app-vessel-list',
+  selector: 'app-payment-list',
   standalone: false,
-  templateUrl: './vessel-list.component.html',
-  styleUrls: ['./vessel-list.component.css']
+  templateUrl: './payment-list.component.html',
+  styleUrls: ['./payment-list.component.css']
 })
-export class VesselListComponent implements OnInit {
-  vessel: Vessel[] = [];
-  filteredVessel: Vessel[] = [];
+export class PaymentListComponent implements OnInit {
+  payment: Payment[] = [];
+  filteredPayment: Payment[] = [];
   searchTerm: string = '';
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
   loading: boolean = true;
   error: string | null = null;
 
-  displayedColumns: string[] = ['imoNo', 'vesselName', 'vesselType', 'flag', 'yob', 'grt', 'bhp'];
+  displayedColumns: string[] = ['paymentNo', 'itemName', 'supplierName', 'quantity', 'amount', 'paymentDate', 'paymentStatus'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
-    private vesselService: VesselRegistrationService,
-    private printService: vesselPrintService,
+    private paymentService: PaymentsService,
+    private printService: PaymentPrintService,
     private messageService: MessageServiceService
   ) {}
 
@@ -39,20 +39,21 @@ export class VesselListComponent implements OnInit {
 
   search(): void {
     if (!this.searchTerm.trim()) {
-      this.filteredVessel = this.vessel;
+      this.filteredPayment = this.payment;
       return;
     }
 
     const term = this.searchTerm.toLowerCase();
-    this.filteredVessel = this.vessel.filter(
-      (vessel) =>
-        vessel.imoNo.toLowerCase().includes(term) ||
-        vessel.vesselName.toString().includes(term) ||
-        vessel.vesselType.toString().includes(term) ||
-        vessel.flag.toString().includes(term) ||
-        vessel.yob.toString().includes(term) ||
-        vessel.grt.toString().includes(term) ||
-        vessel.bhp.toString().includes(term)
+    this.filteredPayment = this.payment.filter(
+      (payment) =>
+        payment.paymentNo.toLowerCase().includes(term) ||
+        payment.itemName.toString().includes(term) ||
+        payment.supplierName.toString().includes(term) ||
+        payment.quantity.toString().includes(term) ||
+        payment.qtyMeasure.toString().includes(term) ||
+        payment.amount.toString().includes(term) ||
+        payment.paymentDate.toString().includes(term) ||
+        payment.paymentStatus.toString().includes(term)
     );
   }
 
@@ -64,7 +65,7 @@ export class VesselListComponent implements OnInit {
       this.sortDirection = 'asc';
     }
 
-    this.filteredVessel = [...this.filteredVessel].sort((a: any, b: any) => {
+    this.filteredPayment = [...this.filteredPayment].sort((a: any, b: any) => {
       const valueA = a[column];
       const valueB = b[column];
 
@@ -85,7 +86,7 @@ export class VesselListComponent implements OnInit {
   }
 
   printReport(): void {
-    this.printService.printVesselReport(this.dataSource.filteredData);
+    this.printService.printPaymentReport(this.dataSource.filteredData);
   }
 
   getDate(): string {
@@ -95,7 +96,7 @@ export class VesselListComponent implements OnInit {
 
   public populateData(): void {
     try {
-      this.vesselService.getData().subscribe({
+      this.paymentService.getData().subscribe({
         next: (dataList: any[]) => {
           if (dataList.length <= 0) {
             return;

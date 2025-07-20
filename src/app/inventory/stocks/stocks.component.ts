@@ -13,13 +13,13 @@ import { MessageServiceService } from 'src/app/services/message-service/message-
 export interface PeriodicElement {
   itemNo: String;
   itemName: string;
-  supplierName: string;
-  quantity: Number;
+  supplierName: String;
+  quantity: String;
   qtyMeasure: String;
 }
 
 const ELEMENT_DATA: any[] = [ 
-  {itemNo: '001', itemName: 'fish', supplierName: 'fish city', quantity: 10, qtyMeasure: 'pcs'},
+  {itemNo: '001', itemName: 'fish', supplierName: 'fish city', quantity: '10',},
 ];
 
 @Component({
@@ -32,7 +32,7 @@ export class StocksComponent {
 
   stocksForm : FormGroup;
 
-    displayedColumns: string[] = ['itemNo', 'itemName', 'supplierName', 'quantity', 'qtyMeasure', 'actions'];
+    displayedColumns: string[] = ['itemNo', 'itemName', 'supplierName', 'quantity', 'actions'];
     dataSource: MatTableDataSource<any>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;

@@ -92,6 +92,10 @@ const routes: Routes = [
       {
         path: 'reports',
         loadChildren: () => import('./reports/reports.module').then((m) => m.ReportsModule)
+      },
+      {
+        path: 'charts',
+        loadChildren: () => import('./charts/charts.module').then((m) => m.ChartsModule)
       }
     ]
   }

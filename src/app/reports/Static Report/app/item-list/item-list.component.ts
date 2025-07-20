@@ -2,34 +2,35 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { EmployeeServiceService } from 'src/app/services/employee/employee-service.service';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
-import { Vessel } from '../../models/vessel.model';
-import { VesselRegistrationService } from 'src/app/services/vessels/vessel-registration.service';
-import { vesselPrintService } from '../../services/vesselPrintService';
+import { Item } from '../models/item.module';
+import { ItemsRegistrationService } from 'src/app/services/inventory/items-registration.service';
+import { ItemPrintService } from '../services/itemPrintService';
 
 @Component({
-  selector: 'app-vessel-list',
+  selector: 'app-item-list',
   standalone: false,
-  templateUrl: './vessel-list.component.html',
-  styleUrls: ['./vessel-list.component.css']
+  templateUrl: './item-list.component.html',
+  styleUrls: ['./item-list.component.css']
 })
-export class VesselListComponent implements OnInit {
-  vessel: Vessel[] = [];
-  filteredVessel: Vessel[] = [];
+export class ItemListComponent implements OnInit {
+  item: Item[] = [];
+  filteredItem: Item[] = [];
   searchTerm: string = '';
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
   loading: boolean = true;
   error: string | null = null;
 
-  displayedColumns: string[] = ['imoNo', 'vesselName', 'vesselType', 'flag', 'yob', 'grt', 'bhp'];
+  displayedColumns: string[] = ['itemNo', 'itemName', 'itemCategory'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
-    private vesselService: VesselRegistrationService,
-    private printService: vesselPrintService,
+    private itemService: ItemsRegistrationService,
+    private printService: ItemPrintService,
     private messageService: MessageServiceService
   ) {}
 
@@ -39,21 +40,17 @@ export class VesselListComponent implements OnInit {
 
   search(): void {
     if (!this.searchTerm.trim()) {
-      this.filteredVessel = this.vessel;
+      this.filteredItem = this.item;
       return;
     }
 
     const term = this.searchTerm.toLowerCase();
-    this.filteredVessel = this.vessel.filter(
-      (vessel) =>
-        vessel.imoNo.toLowerCase().includes(term) ||
-        vessel.vesselName.toString().includes(term) ||
-        vessel.vesselType.toString().includes(term) ||
-        vessel.flag.toString().includes(term) ||
-        vessel.yob.toString().includes(term) ||
-        vessel.grt.toString().includes(term) ||
-        vessel.bhp.toString().includes(term)
-    );
+    this.filteredItem = this.item.filter(
+      (Item) =>
+        Item.itemNo.toLowerCase().includes(term) ||
+        Item.itemName.toString().includes(term) ||
+        Item.itemCategory.toString().includes(term) 
+    );    
   }
 
   sortBy(column: string): void {
@@ -64,7 +61,7 @@ export class VesselListComponent implements OnInit {
       this.sortDirection = 'asc';
     }
 
-    this.filteredVessel = [...this.filteredVessel].sort((a: any, b: any) => {
+    this.filteredItem = [...this.filteredItem].sort((a: any, b: any) => {
       const valueA = a[column];
       const valueB = b[column];
 
@@ -85,7 +82,7 @@ export class VesselListComponent implements OnInit {
   }
 
   printReport(): void {
-    this.printService.printVesselReport(this.dataSource.filteredData);
+    this.printService.printItemReport(this.dataSource.filteredData);
   }
 
   getDate(): string {
@@ -95,7 +92,7 @@ export class VesselListComponent implements OnInit {
 
   public populateData(): void {
     try {
-      this.vesselService.getData().subscribe({
+      this.itemService.getData().subscribe({
         next: (dataList: any[]) => {
           if (dataList.length <= 0) {
             return;

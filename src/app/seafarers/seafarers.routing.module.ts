@@ -4,7 +4,6 @@ import { OtherDetailsRegistrationComponent } from './other-details-registration/
 import { CertificatesRegistrationComponent } from './certificates-registration/certificates-registration.component'
 import { SeaServicesComponent } from './sea-services/sea-services.component'
 import { AppointmentComponent } from './appointment/appointment.component'
-import { MyAppointmentComponent } from './my-appointment/my-appointment.component'
 import { CertificateVerificationComponent } from './certificate-verification/certificate-verification.component'
 
 
@@ -14,7 +13,6 @@ export const RegistrationRoutes: Routes = [
     { path: 'certificatesRegistration', component: CertificatesRegistrationComponent },
     { path: 'seaServices', component: SeaServicesComponent },
     { path: 'appointment', component: AppointmentComponent },
-    { path: 'myAppointment', component: MyAppointmentComponent },
     { path: 'certificateVerification', component: CertificateVerificationComponent },
     
 ]

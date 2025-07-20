@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable} from 'rxjs';
+import { Employee } from '../models/employee.model';
 import { HttpClient } from '@angular/common/http';
 import { HttpService } from 'src/app/services/http.service';
 import { environment } from 'src/app/environments/environment';
@@ -12,32 +13,32 @@ import { Vessel } from '../models/vessel.model';
 export class VesselService {
   private mockVessel: Vessel[] = [
     {
-      imoNo: '123456',
-      vesselName: 'souselas',
-      vesselType: 'bulk',
-      flag: 'portugal',
-      yob: '2007',
-      grt: '14116',
-      bhp: '2350kw',
+      imoNo: "9455265",
+      vesselName: "MV DonJuan",
+      vesselType: "Bulk",
+      flag: "Portugal",
+      yob: "2007",
+      grt: "6584",
+      bhp: "512",
     },
-     {
-      imoNo: '234567',
-      vesselName: 'donjuan',
-      vesselType: 'bulk',
-      flag: 'portugal',
-      yob: '2007',
-      grt: '14116',
-      bhp: '2350kw',
+    {
+      imoNo: "9455264",
+      vesselName: "MV Souselas",
+      vesselType: "Bulk",
+      flag: "Portugal",
+      yob: "2007",
+      grt: "6584",
+      bhp: "512",
     },
-      {
-      imoNo: '345678',
-      vesselName: 'narcea',
-      vesselType: 'tanker',
-      flag: 'portugal',
-      yob: '2006',
-      grt: '2995',
-      bhp: '2350kw',
-    }
+    {
+      imoNo: "9455267",
+      vesselName: "MT Narcea",
+      vesselType: "Tanker",
+      flag: "Portugal",
+      yob: "2007",
+      grt: "6584",
+      bhp: "512",
+    }     
   ];
 
   vesselList:Vessel[] = [];
@@ -59,7 +60,6 @@ export class VesselService {
     }
     return headers;
   }
-
 
     getVessel(): Observable<any> {
 

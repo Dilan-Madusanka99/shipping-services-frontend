@@ -24,40 +24,40 @@
     </div>
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-            <ng-container matColumnDef="vesselName">
-               <th mat-header-cell *matHeaderCellDef> Vessel Name </th>
-               <td mat-cell *matCellDef="let element"> {{element.vesselName}} </td>
-            </ng-container>
+      <ng-container matColumnDef="imoNo">
+        <th mat-header-cell *matHeaderCellDef> IMO No </th>
+          <td mat-cell *matCellDef="let element"> {{element.imoNo}} </td>
 
-            <ng-container matColumnDef="imoNo">
-               <th mat-header-cell *matHeaderCellDef> IMO No </th>
-               <td mat-cell *matCellDef="let element"> {{element.imoNo}} </td>
-            </ng-container>
+      </ng-container>
+      <ng-container matColumnDef="vesselName">
+        <th mat-header-cell *matHeaderCellDef> Vessel Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.vesselName}} </td>
+      </ng-container>
 
-            <ng-container matColumnDef="vesselType">
-               <th mat-header-cell *matHeaderCellDef> Vessel Type </th>
-               <td mat-cell *matCellDef="let element"> {{element.vesselType}} </td>
-            </ng-container>
+      <ng-container matColumnDef="vesselType">
+        <th mat-header-cell *matHeaderCellDef> Vessel Type </th>
+          <td mat-cell *matCellDef="let element"> {{element.vesselType}} </td>
+      </ng-container>
 
-            <ng-container matColumnDef="flag">
-               <th mat-header-cell *matHeaderCellDef> Flag </th>
-               <td mat-cell *matCellDef="let element"> {{element.flag}} </td>
-            </ng-container>
+      <ng-container matColumnDef="flag">
+        <th mat-header-cell *matHeaderCellDef> Flag </th>
+          <td mat-cell *matCellDef="let element"> {{element.flag}} </td>
+      </ng-container>
 
-            <ng-container matColumnDef="grt">
-               <th mat-header-cell *matHeaderCellDef> GRT </th>
-               <td mat-cell *matCellDef="let element"> {{element.grt}} </td>
-            </ng-container>
+      <ng-container matColumnDef="yob">
+        <th mat-header-cell *matHeaderCellDef> Build </th>
+          <td mat-cell *matCellDef="let element"> {{element.yob}} </td>
+      </ng-container>
 
-            <ng-container matColumnDef="bhp">
-               <th mat-header-cell *matHeaderCellDef> BHP </th>
-               <td mat-cell *matCellDef="let element"> {{element.bhp}} </td>
-            </ng-container>
+      <ng-container matColumnDef="grt">
+        <th mat-header-cell *matHeaderCellDef> GRT </th>
+          <td mat-cell *matCellDef="let element"> {{element.grt}} </td>
+      </ng-container>
 
-            <ng-container matColumnDef="yob">
-               <th mat-header-cell *matHeaderCellDef> Build </th>
-               <td mat-cell *matCellDef="let element"> {{element.yob}} </td>
-            </ng-container>
+      <ng-container matColumnDef="bhp">
+        <th mat-header-cell *matHeaderCellDef> BHP </th>
+          <td mat-cell *matCellDef="let element"> {{element.bhp}} </td>
+      </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>

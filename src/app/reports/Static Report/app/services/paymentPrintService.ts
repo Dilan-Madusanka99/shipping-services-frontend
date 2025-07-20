@@ -3,15 +3,15 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class vesselPrintService {
+export class PaymentPrintService {
   constructor() {}
 
-  printVesselReport(vessel: any): void {
+  printPaymentReport(payment: any): void {
     const printContent = `
       <!DOCTYPE html>
       <html>
       <head>
-        <title>Vessel Report</title>
+        <title>Payment Report</title>
         <style>
           body {
             font-family: Arial, sans-serif;
@@ -71,33 +71,29 @@ export class vesselPrintService {
         </style>
       </head>
       <body>
-        <h1>Vessel Report</h1>
+        <h1>Payment Report</h1>
         <div class="report-date">Generated on ${new Date().toLocaleDateString()}</div>
 
         <table>
           <thead>
             <tr>
-              <th>Imo</th>
-              <th>Vessel</th>
-              <th>Type</th>
-              <th>Flag</th>
-              <th>Build</th>
-              <th>GRT</th>
-              <th>BHP</th>
+              <th>Payment No</th>
+              <th>Supplier</th>
+              <th>Amount (Rs.)</th>
+              <th>Date</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            ${vessel
+            ${payment
               .map(
-                (vessel) => `
+                (payment) => `
               <tr>
-                <td>${vessel.imoNo}</td>
-                <td>${vessel.vesselName} </td>
-                <td>${vessel.vesselType}</td>
-                <td>${vessel.flag}</td>
-                <td>${vessel.yob}</td>
-                <td>${vessel.grt}</td>
-                <td>${vessel.bhp}</td>
+                <td>${payment.paymentNo}</td>
+                <td>${payment.supplierName}</td>
+                <td>${payment.amount}</td>
+                <td> ${new Date(payment.paymentDate).toLocaleDateString()}</td>
+                <td>${payment.paymentStatus}</td>
               </tr>
             `
               )
@@ -107,7 +103,7 @@ export class vesselPrintService {
 
         <div class="footer">
           <p>Confidential - For internal use only</p>
-          <p>Total Employees: ${vessel.length}</p>
+          <p>Total Payment: ${payment.length}</p>
         </div>
       </body>
       </html>

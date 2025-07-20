@@ -124,7 +124,9 @@ export class EmployeeAttendenceComponent {
                     this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
                 }        
         
+               
                 this.messageService.showSuccess('Data Saved Successfully!');  
+                this.populateData() //
               },
               error: (error) => {
                 this.messageService.showError('Action Failed With Error' + error);
@@ -138,6 +140,7 @@ export class EmployeeAttendenceComponent {
                 this.dataSource.data[elementIndex] = response;
                 this.dataSource = new MatTableDataSource(this.dataSource.data);
                 this.messageService.showSuccess('Data Edited Successfully!');
+                this.populateData() //
               },
               error: (error) => {
                 this.messageService.showError('Action Failed With Error' + error);

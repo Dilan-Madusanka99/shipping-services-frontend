@@ -1,0 +1,72 @@
+<div class="payment-report-container">
+  <div class="report-header">
+    <h1>Payment Report</h1>
+  </div>
+
+  <div class="actions-bar">
+    <button class="print-button" (click)="printReport()">
+      <span class="print-icon"></span>
+      Print Report
+    </button>
+  </div>
+
+  <div class="table-section">
+    <div class="refresh-filter-section">
+      <div class="refresh-button">
+        <button mat-raised-button color="primary" (click)="refreshData()">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </div>
+      <mat-form-field class="filter">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input />
+      </mat-form-field>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="paymentNo">
+        <th mat-header-cell *matHeaderCellDef> Payment No </th>
+        <td mat-cell *matCellDef="let element"> {{element.paymentNo}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="itemName">
+        <th mat-header-cell *matHeaderCellDef> Item Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.itemName}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="supplierName">
+        <th mat-header-cell *matHeaderCellDef> Supplier Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.supplierName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef> Quantity </th>
+        <td mat-cell *matCellDef="let element"> {{element.quantity + ' ' + element.qtyMeasure}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef> Amount </th>
+        <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="paymentDate">
+        <th mat-header-cell *matHeaderCellDef> Payment Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.paymentDate | date: 'dd/MM/yyyy'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="paymentStatus">
+        <th mat-header-cell *matHeaderCellDef> Payment Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.paymentStatus}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
+
+  <div class="report-footer">
+    <p>Generated on {{ getDate() }}</p>
+  </div>
+</div>

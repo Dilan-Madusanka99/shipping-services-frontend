@@ -3,33 +3,33 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
-import { Vessel } from '../../models/vessel.model';
-import { VesselRegistrationService } from 'src/app/services/vessels/vessel-registration.service';
-import { vesselPrintService } from '../../services/vesselPrintService';
+import { Stock } from '../../models/stock.model';
+import { StocksService } from 'src/app/services/inventory/stocks.service';
+import { StockPrintService } from '../../services/stockPrintService';
 
 @Component({
-  selector: 'app-vessel-list',
+  selector: 'app-stock-list',
   standalone: false,
-  templateUrl: './vessel-list.component.html',
-  styleUrls: ['./vessel-list.component.css']
+  templateUrl: './stock-list.component.html',
+  styleUrls: ['./stock-list.component.css']
 })
-export class VesselListComponent implements OnInit {
-  vessel: Vessel[] = [];
-  filteredVessel: Vessel[] = [];
+export class StockListComponent implements OnInit {
+  stock: Stock[] = [];
+  filteredStock: Stock[] = [];
   searchTerm: string = '';
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
   loading: boolean = true;
   error: string | null = null;
 
-  displayedColumns: string[] = ['imoNo', 'vesselName', 'vesselType', 'flag', 'yob', 'grt', 'bhp'];
+  displayedColumns: string[] = ['itemNo', 'itemName', 'supplierName', 'quantity', 'qtyMeasure'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
-    private vesselService: VesselRegistrationService,
-    private printService: vesselPrintService,
+    private stockService: StocksService,
+    private printService: StockPrintService,
     private messageService: MessageServiceService
   ) {}
 
@@ -37,22 +37,21 @@ export class VesselListComponent implements OnInit {
     this.populateData();
   }
 
+
   search(): void {
     if (!this.searchTerm.trim()) {
-      this.filteredVessel = this.vessel;
+      this.filteredStock = this.stock;
       return;
     }
 
     const term = this.searchTerm.toLowerCase();
-    this.filteredVessel = this.vessel.filter(
-      (vessel) =>
-        vessel.imoNo.toLowerCase().includes(term) ||
-        vessel.vesselName.toString().includes(term) ||
-        vessel.vesselType.toString().includes(term) ||
-        vessel.flag.toString().includes(term) ||
-        vessel.yob.toString().includes(term) ||
-        vessel.grt.toString().includes(term) ||
-        vessel.bhp.toString().includes(term)
+    this.filteredStock = this.stock.filter(
+      (stock) =>
+        stock.itemNo.toLowerCase().includes(term) ||
+        stock.itemName.toString().includes(term) ||
+        stock.supplierName.toString().includes(term) ||
+        stock.quantity.toString().includes(term) ||
+        stock.qtyMeasure.toString().includes(term)
     );
   }
 
@@ -64,7 +63,7 @@ export class VesselListComponent implements OnInit {
       this.sortDirection = 'asc';
     }
 
-    this.filteredVessel = [...this.filteredVessel].sort((a: any, b: any) => {
+    this.filteredStock = [...this.filteredStock].sort((a: any, b: any) => {
       const valueA = a[column];
       const valueB = b[column];
 
@@ -85,7 +84,7 @@ export class VesselListComponent implements OnInit {
   }
 
   printReport(): void {
-    this.printService.printVesselReport(this.dataSource.filteredData);
+    this.printService.printStockReport(this.dataSource.filteredData);
   }
 
   getDate(): string {
@@ -95,7 +94,7 @@ export class VesselListComponent implements OnInit {
 
   public populateData(): void {
     try {
-      this.vesselService.getData().subscribe({
+      this.stockService.getData().subscribe({
         next: (dataList: any[]) => {
           if (dataList.length <= 0) {
             return;

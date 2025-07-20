@@ -267,6 +267,11 @@ export class PaymentsComponent {
 
     public editData(data: any): void {
       this.paymentsForm.patchValue(data);
+
+      /* Diable Form */
+      this.paymentsForm.get('quantity').disable();
+      this.paymentsForm.get('quantity').updateValueAndValidity();
+
       this.saveButtonLabel = 'Edit';
       this.mode = 'edit';
       this.selectedData = data;

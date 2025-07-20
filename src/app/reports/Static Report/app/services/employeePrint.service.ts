@@ -3,15 +3,19 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class vesselPrintService {
+export class EmployeePrintService {
   constructor() {}
 
-  printVesselReport(vessel: any): void {
+  /**
+   * Print employee report
+   * This method creates a print-optimized version of the employee report
+   */
+  printEmployeeReport(employees: any): void {
     const printContent = `
       <!DOCTYPE html>
       <html>
       <head>
-        <title>Vessel Report</title>
+        <title>Employee Report</title>
         <style>
           body {
             font-family: Arial, sans-serif;
@@ -71,33 +75,29 @@ export class vesselPrintService {
         </style>
       </head>
       <body>
-        <h1>Vessel Report</h1>
+        <h1>Employee Report</h1>
         <div class="report-date">Generated on ${new Date().toLocaleDateString()}</div>
 
         <table>
           <thead>
             <tr>
-              <th>Imo</th>
-              <th>Vessel</th>
-              <th>Type</th>
-              <th>Flag</th>
-              <th>Build</th>
-              <th>GRT</th>
-              <th>BHP</th>
+              <th>NIC</th>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Phone Number</th>
+              <th>Address</th>
             </tr>
           </thead>
           <tbody>
-            ${vessel
+            ${employees
               .map(
-                (vessel) => `
+                (emp) => `
               <tr>
-                <td>${vessel.imoNo}</td>
-                <td>${vessel.vesselName} </td>
-                <td>${vessel.vesselType}</td>
-                <td>${vessel.flag}</td>
-                <td>${vessel.yob}</td>
-                <td>${vessel.grt}</td>
-                <td>${vessel.bhp}</td>
+                <td>${emp.nic}</td>
+                <td>${emp.firstName + ' ' + emp.lastName} </td>
+                <td>${emp.roles}</td>
+                <td>${emp.contactNo}</td>
+                <td>${emp.address}</td>
               </tr>
             `
               )
@@ -107,7 +107,7 @@ export class vesselPrintService {
 
         <div class="footer">
           <p>Confidential - For internal use only</p>
-          <p>Total Employees: ${vessel.length}</p>
+          <p>Total Employees: ${employees.length}</p>
         </div>
       </body>
       </html>

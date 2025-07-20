@@ -1,22 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Employee } from '../models/employee.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PrintService {
+export class StockPrintService {
   constructor() {}
 
-  /**
-   * Print employee report
-   * This method creates a print-optimized version of the employee report
-   */
-  printEmployeeReport(employees: any): void {
+  printStockReport(stock: any): void {
     const printContent = `
       <!DOCTYPE html>
       <html>
       <head>
-        <title>Employee Report</title>
+        <title>Stock Report</title>
         <style>
           body {
             font-family: Arial, sans-serif;
@@ -76,29 +71,28 @@ export class PrintService {
         </style>
       </head>
       <body>
-        <h1>Employee Report</h1>
+        <h1>Stock Report</h1>
         <div class="report-date">Generated on ${new Date().toLocaleDateString()}</div>
 
         <table>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Role</th>
-              <th>Phone Number</th>
-              <th>Address</th>
+              <th>Item No</th>
+              <th>Item</th>
+              <th>Supplier</th>
+              <th>Quantity</th>
+              <th>Measure</th>
             </tr>
           </thead>
           <tbody>
-            ${employees
+            ${stock
               .map(
-                (emp) => `
+                (stock) => `
               <tr>
-                <td>${emp.nic}</td>
-                <td>${emp.firstName + ' ' + emp.lastName} </td>
-                <td>${emp.roles}</td>
-                <td>${emp.contactNo}</td>
-                <td>${emp.address}</td>
+                <td>${stock.itemNo}</td>
+                <td>${stock.itemName} </td>
+                <td>${stock.supplierName}</td>
+                <td>${stock.quantity + " " + stock.qtyMeasure}</td>
               </tr>
             `
               )
@@ -108,7 +102,7 @@ export class PrintService {
 
         <div class="footer">
           <p>Confidential - For internal use only</p>
-          <p>Total Employees: ${employees.length}</p>
+          <p>Total Stock: ${stock.length}</p>
         </div>
       </body>
       </html>

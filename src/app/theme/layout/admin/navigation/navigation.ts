@@ -303,16 +303,6 @@ const NavigationItems = [
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
       },
-      {
-        id: 'SeafarersRegistrationDet',
-        title: 'Appointment List',
-        type: 'item',
-        url: '/seafarers/myAppointment',
-        icon: 'feather icon-home',
-        classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
-        breadcrumbs: false
-      }
     ]
   },
 
@@ -383,6 +373,16 @@ const NavigationItems = [
         breadcrumbs: false
       },
       {
+        id: 'appointmentList',
+        title: 'Appointment List',
+        type: 'item',
+        url: '/reports/appointment-list',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
+      {
         id: 'vesselList',
         title: 'Vessel List',
         type: 'item',
@@ -391,7 +391,67 @@ const NavigationItems = [
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
-      }
+      },
+      {
+        id: 'itemList',
+        title: 'Item List',
+        type: 'item',
+        url: '/reports/item-list',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
+      {
+        id: 'stockList',
+        title: 'Stock List',
+        type: 'item',
+        url: '/reports/stock-list',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
+      {
+        id: 'supplierList',
+        title: 'Supplier List',
+        type: 'item',
+        url: '/reports/supplier-list',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
+      {
+        id: 'paymentList',
+        title: 'Payment List',
+        type: 'item',
+        url: '/reports/payment-list',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
+    ]
+  },
+
+  {
+    id: 'charts',
+    title: 'Charts',
+    type: 'group',
+    icon: 'icon-navigation',
+    auth: authenticationEnum.Home,
+    children: [
+      {
+        id: 'seafarersMontlyRegistrationChart',
+        title: 'Seafarer Registration',
+        type: 'item',
+        url: '/charts/seafarersRegisteredByMonthly',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
     ]
   }
 ];

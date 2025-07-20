@@ -3,33 +3,33 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
-import { Vessel } from '../../models/vessel.model';
-import { VesselRegistrationService } from 'src/app/services/vessels/vessel-registration.service';
-import { vesselPrintService } from '../../services/vesselPrintService';
+import { Appointment } from '../../models/appointment.model';
+import { AppointmentPrintService } from '../../services/appointmentPrintService';
+import { AppointmentService } from 'src/app/services/seafarers/appointment.service';
 
 @Component({
-  selector: 'app-vessel-list',
+  selector: 'app-appointment-list',
   standalone: false,
-  templateUrl: './vessel-list.component.html',
-  styleUrls: ['./vessel-list.component.css']
+  templateUrl: './appointment-list.component.html',
+  styleUrls: ['./appointment-list.component.css']
 })
-export class VesselListComponent implements OnInit {
-  vessel: Vessel[] = [];
-  filteredVessel: Vessel[] = [];
+export class AppointmentListComponent implements OnInit {
+  appointment: Appointment[] = [];
+  filteredAppointment: Appointment[] = [];
   searchTerm: string = '';
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
   loading: boolean = true;
   error: string | null = null;
 
-  displayedColumns: string[] = ['imoNo', 'vesselName', 'vesselType', 'flag', 'yob', 'grt', 'bhp'];
+  displayedColumns: string[] = ['sidNo', 'firstName', 'lastName', 'position', 'appointmentDate', 'appointmentTime'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
-    private vesselService: VesselRegistrationService,
-    private printService: vesselPrintService,
+    private appointmentService: AppointmentService,
+    private printService: AppointmentPrintService,
     private messageService: MessageServiceService
   ) {}
 
@@ -39,20 +39,19 @@ export class VesselListComponent implements OnInit {
 
   search(): void {
     if (!this.searchTerm.trim()) {
-      this.filteredVessel = this.vessel;
+      this.filteredAppointment = this.appointment;
       return;
     }
 
     const term = this.searchTerm.toLowerCase();
-    this.filteredVessel = this.vessel.filter(
-      (vessel) =>
-        vessel.imoNo.toLowerCase().includes(term) ||
-        vessel.vesselName.toString().includes(term) ||
-        vessel.vesselType.toString().includes(term) ||
-        vessel.flag.toString().includes(term) ||
-        vessel.yob.toString().includes(term) ||
-        vessel.grt.toString().includes(term) ||
-        vessel.bhp.toString().includes(term)
+    this.filteredAppointment = this.appointment.filter(
+      (appointment) =>
+        appointment.sidNo.toLowerCase().includes(term) ||
+        appointment.firstName.toString().includes(term) ||
+        appointment.lastName.toString().includes(term) ||
+        appointment.position.toString().includes(term) ||
+        appointment.appointmentDate.toString().includes(term) ||
+        appointment.appointmentTime.toString().includes(term)
     );
   }
 
@@ -64,7 +63,7 @@ export class VesselListComponent implements OnInit {
       this.sortDirection = 'asc';
     }
 
-    this.filteredVessel = [...this.filteredVessel].sort((a: any, b: any) => {
+    this.filteredAppointment = [...this.filteredAppointment].sort((a: any, b: any) => {
       const valueA = a[column];
       const valueB = b[column];
 
@@ -85,7 +84,7 @@ export class VesselListComponent implements OnInit {
   }
 
   printReport(): void {
-    this.printService.printVesselReport(this.dataSource.filteredData);
+    this.printService.printAppointmentReport(this.dataSource.filteredData);
   }
 
   getDate(): string {
@@ -95,7 +94,7 @@ export class VesselListComponent implements OnInit {
 
   public populateData(): void {
     try {
-      this.vesselService.getData().subscribe({
+      this.appointmentService.getData().subscribe({
         next: (dataList: any[]) => {
           if (dataList.length <= 0) {
             return;

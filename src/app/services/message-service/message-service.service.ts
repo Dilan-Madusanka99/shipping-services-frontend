@@ -17,8 +17,14 @@ export class MessageServiceService {
   }
 
   showError(message: string, duration: number = 8000) {
-    this.toastrService.error(message, 'Major Error', {
-      timeOut: duration,
+    this.toastrService.error(this.extractUserMessage(message), 'Error', {
+      timeOut: duration
     });
+  }
+
+  extractUserMessage(fullMessage: string): string {
+    // Extract text after last colon (':')
+    const lastColonIndex = fullMessage.lastIndexOf(':');
+    return lastColonIndex !== -1 ? fullMessage.substring(lastColonIndex + 1).trim() : fullMessage;
   }
 }
