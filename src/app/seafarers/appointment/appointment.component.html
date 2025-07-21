@@ -85,9 +85,9 @@
       </mat-form-field>
       <br>
 
-      <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled">
+      <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" [disabled]="appointmentForm.invalid">
         {{saveButtonLabel}} </button>
-      <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()"> Reset
+      <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" [disabled]="appointmentForm.invalid"> Reset
       </button>
 
     </form>
@@ -106,35 +106,35 @@
       </mat-form-field>
     </div>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
       <ng-container matColumnDef="firstName">
-        <th mat-header-cell *matHeaderCellDef> First Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
         <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
       </ng-container>
 
       <ng-container matColumnDef="lastName">
-        <th mat-header-cell *matHeaderCellDef> Last Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
         <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
       </ng-container>
 
       <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> Position </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Position </th>
         <td mat-cell *matCellDef="let element"> {{element.position}} </td>
       </ng-container>
 
       <ng-container matColumnDef="appointmentDate">
-        <th mat-header-cell *matHeaderCellDef> Appointment Date </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Appointment Date </th>
         <td mat-cell *matCellDef="let element"> {{element.appointmentDate | date: 'dd/MM/yyyy'}} </td>
       </ng-container>
 
       <ng-container matColumnDef="appointmentTime">
-        <th mat-header-cell *matHeaderCellDef> Appointment Time </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Appointment Time </th>
         <td mat-cell *matCellDef="let element"> {{element.appointmentTime}} </td>
       </ng-container>
 
       <ng-container matColumnDef="appointmentStatus">
-        <th mat-header-cell *matHeaderCellDef> Appointment Status</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Appointment Status</th>
         <td mat-cell *matCellDef="let element"> {{element.appointmentStatus}} </td>
       </ng-container>
 

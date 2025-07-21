@@ -97,8 +97,8 @@
         </mat-form-field>
         <br><br>
 
-        <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled"> {{saveButtonLabel}} </button>
-        <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()"> Reset </button>
+        <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" [disabled]="employeeForm.invalid"> {{saveButtonLabel}} </button>
+        <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" [disabled]="employeeForm.invalid"> Reset </button>
       
     </form>
     
@@ -116,10 +116,10 @@
       </mat-form-field>
     </div>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
       <ng-container matColumnDef="empNo">
-        <th mat-header-cell *matHeaderCellDef> Employee No </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee No </th>
         <td mat-cell *matCellDef="let element"> {{element.empNo}} </td>
       </ng-container>
     

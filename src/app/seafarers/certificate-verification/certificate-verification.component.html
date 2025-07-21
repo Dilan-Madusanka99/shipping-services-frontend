@@ -59,13 +59,12 @@
       </mat-form-field>  
       <br>
 
-      <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled"> {{saveButtonLabel}} </button>
-      <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()"> Reset </button>
+      <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" [disabled]="certificateVerificationForm.invalid"> {{saveButtonLabel}} </button>
+      <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" [disabled]="certificateVerificationForm.invalid"> Reset </button>
 
       <br><br><br>
     
     </form>
-
   </div>
 
   <div class="table-section">
@@ -83,19 +82,19 @@
               </mat-form-field>
             </div>
 
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
                 <ng-container matColumnDef="sidNo">
-                    <th mat-header-cell *matHeaderCellDef> SID No </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> SID No </th>
                     <td mat-cell *matCellDef="let element"> {{element.sidNo}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="certificateName">
-                    <th mat-header-cell *matHeaderCellDef> Certificate Name </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Certificate Name </th>
                     <td mat-cell *matCellDef="let element"> {{element.certificateName}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="verificationStatus">
-                    <th mat-header-cell *matHeaderCellDef> Verification Status </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Verification Status </th>
                     <td mat-cell *matCellDef="let element"> {{element.verificationStatus}} </td>
                   </ng-container>
 

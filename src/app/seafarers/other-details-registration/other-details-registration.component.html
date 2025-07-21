@@ -195,10 +195,10 @@
       <br />
       <br />
 
-      <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled">
+      <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" [disabled]="otherDetailsRegistrationForm.invalid">
         {{ saveButtonLabel }}
       </button>
-      <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()">Reset</button>
+      <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" [disabled]="otherDetailsRegistrationForm.invalid">Reset</button>
     </form>
   </div>
 
@@ -216,19 +216,19 @@
       </mat-form-field>
     </div>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
       <ng-container matColumnDef="sidNo">
-        <th mat-header-cell *matHeaderCellDef>SID</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>SID</th>
         <td mat-cell *matCellDef="let element">{{ element.sidNo }}</td>
       </ng-container>
 
       <ng-container matColumnDef="ppNo">
-        <th mat-header-cell *matHeaderCellDef>Passport NO</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Passport NO</th>
         <td mat-cell *matCellDef="let element">{{ element.ppNo }}</td>
       </ng-container>
 
       <ng-container matColumnDef="cdcNo">
-        <th mat-header-cell *matHeaderCellDef>CDC NO</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>CDC NO</th>
         <td mat-cell *matCellDef="let element">{{ element.cdcNo }}</td>
       </ng-container>
 

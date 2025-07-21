@@ -55,8 +55,8 @@
         </mat-form-field>
         <br><br>
 
-        <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled"> {{saveButtonLabel}} </button>
-        <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()"> Reset </button>
+        <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" [disabled]="jobPostingForm.invalid"> {{saveButtonLabel}} </button>
+        <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" [disabled]="jobPostingForm.invalid"> Reset </button>
     </form>
   </div>    
 
@@ -74,20 +74,20 @@
       </mat-form-field>
     </div>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
       <ng-container matColumnDef="vesselName">
-        <th mat-header-cell *matHeaderCellDef> Vessel </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Vessel </th>
         <td mat-cell *matCellDef="let element"> {{element.vesselName}} </td>
       </ng-container>
 
       <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> Position </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Position </th>
         <td mat-cell *matCellDef="let element"> {{element.position}} </td>
       </ng-container>
 
       <ng-container matColumnDef="jobStatus">
-        <th mat-header-cell *matHeaderCellDef> Job Status </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Job Status </th>
         <td mat-cell *matCellDef="let element"> {{element.jobStatus}} </td>
       </ng-container>
 

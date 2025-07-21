@@ -23,19 +23,19 @@
       </mat-form-field>
     </div>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
       <ng-container matColumnDef="supplierNo">
-        <th mat-header-cell *matHeaderCellDef> Supplier No </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Supplier No </th>
         <td mat-cell *matCellDef="let element"> {{element.supplierNo}} </td>
       </ng-container>
     
       <ng-container matColumnDef="supplierName">
-        <th mat-header-cell *matHeaderCellDef> Supplier Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Supplier Name </th>
         <td mat-cell *matCellDef="let element"> {{element.supplierName}} </td>
       </ng-container>
     
       <ng-container matColumnDef="supplierCategory">
-        <th mat-header-cell *matHeaderCellDef> Supplier Category </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Supplier Category </th>
         <td mat-cell *matCellDef="let element"> {{element.supplierCategory}} </td>
       </ng-container>
     

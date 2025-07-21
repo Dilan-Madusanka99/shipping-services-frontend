@@ -2,7 +2,6 @@
     <div class="form-section">
         <form [formGroup]="employeeAttendenceForm" class="employeeAttendenceForm" (ngSubmit)="onSubmit()">
 
-
           <mat-form-field class="example-full-width">
             <mat-label>Users</mat-label>
             <mat-select [(ngModel)]="selectedEmployee" formControlName="users" (valueChange)="onEmployeeSelect($event)">
@@ -25,8 +24,8 @@
             <br><br>
 
             
-            <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled"> {{saveButtonLabel}} </button>
-            <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()"> Reset </button>
+            <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" [disabled]="employeeAttendenceForm.invalid"> {{saveButtonLabel}} </button>
+            <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" [disabled]="employeeAttendenceForm.invalid"> Reset </button>
       
         </form>
     </div>
@@ -45,15 +44,15 @@
             </mat-form-field>
           </div>
       
-          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
       
             <ng-container matColumnDef="attandenceDate">
-                <th mat-header-cell *matHeaderCellDef> Date </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
                 <td mat-cell *matCellDef="let element"> {{element.attandenceDate | date: 'dd/MM/yyyy'}} </td>
             </ng-container>
 
             <ng-container matColumnDef="userName">
-                <th mat-header-cell *matHeaderCellDef> User Name </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> User Name </th>
                 <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
               </ng-container>
 

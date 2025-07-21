@@ -67,10 +67,10 @@
       <br />
       <br />
 
-      <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled">
+      <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" [disabled]="onboardCrewRegistrationForm.invalid">
         {{ saveButtonLabel }}
       </button>
-      <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()">Reset</button>
+      <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" [disabled]="onboardCrewRegistrationForm.invalid">Reset</button>
     </form>
   </div>
   <div class="table-section">

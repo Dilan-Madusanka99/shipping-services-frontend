@@ -97,8 +97,8 @@
             </mat-form-field>
             <br>
 
-            <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled"> {{saveButtonLabel}} </button>
-            <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()"> Reset </button>
+            <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" [disabled]="certificatesRegistrationForm.invalid"> {{saveButtonLabel}} </button>
+            <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" [disabled]="certificatesRegistrationForm.invalid"> Reset </button>
 
         </form>
     </div>
@@ -118,25 +118,25 @@
               </mat-form-field>
             </div>
 
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
                 <ng-container matColumnDef="sidNo">
-                  <th mat-header-cell *matHeaderCellDef> SID </th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> SID </th>
                   <td mat-cell *matCellDef="let element"> {{element.sidNo}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="cName">
-                    <th mat-header-cell *matHeaderCellDef> Certificate Name </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Certificate Name </th>
                     <td mat-cell *matCellDef="let element"> {{element.cName}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="cIssuedDate">
-                    <th mat-header-cell *matHeaderCellDef> Issued Date </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Issued Date </th>
                     <td mat-cell *matCellDef="let element"> {{element.cIssuedDate | date: 'dd/MM/yyyy'}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="cExpiredDate">
-                    <th mat-header-cell *matHeaderCellDef> Expire Date </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Expire Date </th>
                     <td mat-cell *matCellDef="let element"> {{element.cExpiredDate | date: 'dd/MM/yyyy'}} </td>
                   </ng-container>
 

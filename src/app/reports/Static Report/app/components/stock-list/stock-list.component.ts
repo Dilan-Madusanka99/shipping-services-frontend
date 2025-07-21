@@ -22,7 +22,7 @@ export class StockListComponent implements OnInit {
   loading: boolean = true;
   error: string | null = null;
 
-  displayedColumns: string[] = ['itemNo', 'itemName', 'supplierName', 'quantity', 'qtyMeasure'];
+  displayedColumns: string[] = ['itemNo', 'itemName', 'supplierName', 'quantity'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
