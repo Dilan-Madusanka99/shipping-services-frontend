@@ -6,11 +6,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { MatRadioModule } from '@angular/material/radio';
 import { SeafarersRegisteredByMonthlyComponent } from './seafarers-registered-by-monthly/seafarers-registered-by-monthly.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   declarations: [SeafarersRegisteredByMonthlyComponent],
   imports: [
-    CommonModule, RouterModule.forChild(ChartsRoutes), ReactiveFormsModule, MaterialModule, MatRadioModule, FormsModule
+    CommonModule,
+    RouterModule.forChild(ChartsRoutes),
+    ReactiveFormsModule,
+    MaterialModule,
+    MatRadioModule,
+    FormsModule,
+    NgApexchartsModule
   ]
 })
-export class ChartsModule { }
+export class ChartsModule {}
