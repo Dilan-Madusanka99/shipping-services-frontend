@@ -4,9 +4,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { EmployeeServiceService } from 'src/app/services/employee/employee-service.service';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
-import { Item } from '../models/item.module';
 import { ItemsRegistrationService } from 'src/app/services/inventory/items-registration.service';
-import { ItemPrintService } from '../services/itemPrintService';
+import { Item } from '../../models/item.module';
+import { ItemPrintService } from '../../services/itemPrintService';
 
 @Component({
   selector: 'app-item-list',

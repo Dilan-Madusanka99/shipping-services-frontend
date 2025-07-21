@@ -9,9 +9,9 @@ import { ReportsRoutes } from './reports.routing.module';
 import { SupplierListComponent } from './Static Report/app/components/supplier-list/supplier-list.component';
 import { VesselListComponent } from './Static Report/app/components/vessel-list/vessel-list.component';
 import { AppointmentListComponent } from './Static Report/app/components/appointment-list/appointment-list.component';
-import { ItemListComponent } from './Static Report/app/item-list/item-list.component';
 import { StockListComponent } from './Static Report/app/components/stock-list/stock-list.component';
 import { PaymentListComponent } from './Static Report/app/components/payment-list/payment-list.component';
+import { ItemListComponent } from './Static Report/app/components/item-list/item-list.component';
 
 @NgModule({
   declarations: [

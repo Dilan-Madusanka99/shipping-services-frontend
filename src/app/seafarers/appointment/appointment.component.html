@@ -85,9 +85,9 @@
       </mat-form-field>
       <br>
 
-      <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" [disabled]="appointmentForm.invalid">
+      <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" >
         {{saveButtonLabel}} </button>
-      <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" [disabled]="appointmentForm.invalid"> Reset
+      <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" > Reset
       </button>
 
     </form>

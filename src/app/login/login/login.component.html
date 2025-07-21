@@ -59,10 +59,10 @@
       </mat-form-field>
       <br />
 
-      <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" [disabled]="LoginForm.invalid">
+      <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" >
         {{ saveButtonLabel }}
       </button>
-      <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" [disabled]="LoginForm.invalid">Reset</button>
+      <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" >Reset</button>
     </form>
   </div>
 
@@ -91,7 +91,7 @@
       </ng-container>
 
       <ng-container matColumnDef="userName">
-        <th mat-header-cell *matHeaderCellDef>User Name</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>User Name</th>
         <td mat-cell *matCellDef="let element">{{ element.userName }}</td>
       </ng-container>
 

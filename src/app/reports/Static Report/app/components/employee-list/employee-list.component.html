@@ -23,7 +23,7 @@
       </mat-form-field>
     </div>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matoSort>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
       <ng-container matColumnDef="empNo">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee No</th>
         <td mat-cell *matCellDef="let element">{{ element.empNo }}</td>
