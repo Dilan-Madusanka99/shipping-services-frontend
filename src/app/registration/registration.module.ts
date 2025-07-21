@@ -6,10 +6,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { EmployeeComponent } from './employee/employee.component';
 import { MaterialModule } from '../material.module';
 import { EmployeeAttendenceComponent } from './employee-attendence/employee-attendence.component';
-
+import { QrCodeComponent } from '../qr-container/qr-code/qr-code.component';
 
 @NgModule({
-  declarations: [ EmployeeComponent, EmployeeAttendenceComponent ],
-  imports: [ CommonModule, RouterModule.forChild(RegistrationRoutes), ReactiveFormsModule, MaterialModule ]
+  declarations: [EmployeeComponent, EmployeeAttendenceComponent, QrCodeComponent],
+  imports: [CommonModule, RouterModule.forChild(RegistrationRoutes), ReactiveFormsModule, MaterialModule]
 })
-export class RegistrationModule { }
+export class RegistrationModule {}

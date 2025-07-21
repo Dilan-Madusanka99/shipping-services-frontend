@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
@@ -7,6 +7,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { EmployeeServiceService } from 'src/app/services/employee/employee-service.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { QrCodeComponent } from 'src/app/qr-container/qr-code/qr-code.component';
+import { MatDialog } from '@angular/material/dialog';
 
 export interface PeriodicElement {
   empNo: number;
@@ -42,6 +44,7 @@ export class EmployeeComponent implements OnInit {
   previewUrl!: SafeUrl | null; // : string | ArrayBuffer | null = null;
   isFileSelected = false;
   // Photo upload [end]
+  readonly dialog = inject(MatDialog);
 
   constructor(
     private fb: FormBuilder,
@@ -55,16 +58,36 @@ export class EmployeeComponent implements OnInit {
       profileImageName: new FormControl(''),
       profileImageType: new FormControl(''),
       // Photo upload [end]
-      empNo: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(10), Validators.pattern(/^[a-zA-Z0-9]*$/)]), // letter & numbers only
-      firstName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern(/^[A-Za-z]+$/)]),
-      lastName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern(/^[A-Za-z]+$/)]),
+      empNo: new FormControl('', [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(10),
+        Validators.pattern(/^[a-zA-Z0-9]*$/)
+      ]), // letter & numbers only
+      firstName: new FormControl('', [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(100),
+        Validators.pattern(/^[A-Za-z]+$/)
+      ]),
+      lastName: new FormControl('', [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(100),
+        Validators.pattern(/^[A-Za-z]+$/)
+      ]),
       callingName: new FormControl('', [Validators.pattern(/^[A-Za-z]+$/)]),
       nic: new FormControl('', [Validators.required, Validators.pattern(/^([0-9]{9}[vVxX]|[0-9]{12})$/)]),
       dob: new FormControl(''),
       roles: new FormControl('', [Validators.required]),
       contactNo: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      address: new FormControl('', [Validators.required , Validators.minLength(5), Validators.maxLength(100), Validators.pattern(/^[a-zA-Z0-9\s,.'-]*$/)]),
+      address: new FormControl('', [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(100),
+        Validators.pattern(/^[a-zA-Z0-9\s,.'-]*$/)
+      ]),
       emergencyContactName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]),
       emergencyContactNo: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)])
     });
@@ -257,5 +280,13 @@ export class EmployeeComponent implements OnInit {
 
   public refreshData(): void {
     this.populateData();
+  }
+
+  generateQRCode(data) {
+    console.log(data);
+
+    this.dialog.open(QrCodeComponent, {
+      data: { value: data }
+    });
   }
 }
