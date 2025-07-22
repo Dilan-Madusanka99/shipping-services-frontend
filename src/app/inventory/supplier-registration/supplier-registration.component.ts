@@ -157,6 +157,7 @@ export class SupplierRegistrationComponent {
         console.log('Form Submitted');
         console.log(this.supplierRegistrationForm.value);
 
+        if(!this.supplierRegistrationForm.valid) return;
         if (this.mode === 'add'){
           this.supplierRegistrationService.serviceCall(
             this.prepareSupplierData()

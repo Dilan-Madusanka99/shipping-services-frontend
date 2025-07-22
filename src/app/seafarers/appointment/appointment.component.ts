@@ -96,6 +96,7 @@ export class AppointmentComponent implements OnInit{
           console.log('Form Submitted');
           console.log(this.appointmentForm.value);
   
+          if(!this.appointmentForm.valid) return;
           if (this.mode === 'add'){
             this.appointmentService.serviceCall(this.appointmentForm.value).subscribe({
               next: (response: any) => {

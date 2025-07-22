@@ -211,6 +211,7 @@ export class PaymentsComponent {
         console.log('Form Submitted');
         console.log(this.paymentsForm.value);
 
+        if(!this.paymentsForm.valid) return;
         if (this.mode === 'add'){
           this.paymentsService.serviceCall(
             this.preparePaymentsData() 

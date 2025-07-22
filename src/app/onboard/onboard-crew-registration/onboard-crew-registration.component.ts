@@ -118,6 +118,7 @@ export class OnboardCrewRegistrationComponent {
       console.log('Form Submitted');
       console.log(this.onboardCrewRegistrationForm.value);
 
+      if(!this.onboardCrewRegistrationForm.valid) return;
       if (this.mode === 'add') {
         this.onboardCrewRegistrationService.serviceCall(this.onboardCrewRegistrationForm.value).subscribe({
           next: (response: any) => {

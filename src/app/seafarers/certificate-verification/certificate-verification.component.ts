@@ -177,6 +177,7 @@ constructor(
           console.log('Form Submitted');
           console.log(this.certificateVerificationForm.value);
   
+          if(!this.certificateVerificationForm.valid) return;
           if (this.mode === 'add'){
             this.certificateVerificationService.serviceCall(
               this.prepareSeafarerData()   // Photo upload [start]

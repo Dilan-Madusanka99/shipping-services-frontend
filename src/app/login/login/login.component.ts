@@ -115,6 +115,7 @@ export class LoginComponent implements OnInit {
       console.log('Form Submitted');
       console.log(this.LoginForm.value);
 
+      if(!this.LoginForm.valid) return;
       if (this.mode === 'add') {
         this.loginService.serviceCall(this.LoginForm.getRawValue()).subscribe({
           next: (response: any) => {

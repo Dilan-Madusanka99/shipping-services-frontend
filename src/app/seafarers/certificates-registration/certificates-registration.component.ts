@@ -180,6 +180,7 @@ export class CertificatesRegistrationComponent {
           console.log('Form Submitted');
           console.log(this.certificatesRegistrationForm.value);
   
+          if(!this.certificatesRegistrationForm.valid) return;
           if (this.mode === 'add'){
             this.seafarersService.serviceCall(this.prepareSeafarerData()).subscribe({
               next: (response: any) => {

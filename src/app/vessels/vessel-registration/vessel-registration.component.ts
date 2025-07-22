@@ -146,6 +146,7 @@ export class VesselRegistrationComponent implements OnInit {
       console.log('Form Submitted');
       console.log(this.vesselRegistrationForm.value);
 
+      if(!this.vesselRegistrationForm.valid) return;
       if (this.mode === 'add') {
         this.vesselRegistrationService.serviceCall(this.prepareFormData()).subscribe({
           next: (response: any) => {

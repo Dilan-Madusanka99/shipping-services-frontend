@@ -147,6 +147,7 @@ export class StocksComponent {
           console.log('Form Submitted');
           console.log(this.stocksForm.value);
   
+          if(!this.stocksForm.valid) return;
           if (this.mode === 'add'){
             this.stocksService.serviceCall(this.stocksForm.value).subscribe({
               next: (response: any) => {

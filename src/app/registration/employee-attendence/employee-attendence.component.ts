@@ -119,6 +119,7 @@ export class EmployeeAttendenceComponent {
       console.log('Form Submitted');
       console.log(this.employeeAttendenceForm.value);
 
+      if(!this.employeeAttendenceForm.valid) return;
       if (this.mode === 'add') {
         this.employeeAttendenceService.serviceCall(this.employeeAttendenceForm.value).subscribe({
           next: (response: any) => {

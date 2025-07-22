@@ -289,6 +289,7 @@ export class OtherDetailsRegistrationComponent {
       console.log('Form Submitted');
       console.log(this.otherDetailsRegistrationForm.value);
 
+      if(!this.otherDetailsRegistrationForm.valid) return;
       if (this.mode === 'add') {
         this.seafarersService.serviceCall(this.prepareSeafarerData()).subscribe({
           next: (response: any) => {

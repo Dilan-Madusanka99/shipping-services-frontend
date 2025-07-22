@@ -147,6 +147,7 @@ export class ItemsRegistrationComponent {
         console.log('Form Submitted');
         console.log(this.itemsRegistrationForm.value);
 
+        if(!this.itemsRegistrationForm.valid) return;
         if (this.mode === 'add'){
           this.itemsRegistrationService.serviceCall(
             this.prepareItemRegistrationData() 

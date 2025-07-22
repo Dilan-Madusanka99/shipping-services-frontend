@@ -147,6 +147,7 @@ export class JobPostingComponent {
         console.log('Form Submitted');
         console.log(this.jobPostingForm.value);
 
+        if(!this.jobPostingForm.valid) return;
         if (this.mode === 'add'){
           this.seafarersService.serviceCall(this.prepareSeafarerData()).subscribe({
             next: (response: any) => {

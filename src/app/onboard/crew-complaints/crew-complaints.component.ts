@@ -141,6 +141,7 @@ export class CrewComplaintsComponent {
           console.log('Form Submitted');
           console.log(this.crewComplaintsForm.value);
   
+          if(!this.crewComplaintsForm.valid) return;
           if (this.mode === 'add'){
             this.crewComplaintsService.serviceCall(this.crewComplaintsForm.value).subscribe({
               next: (response: any) => {

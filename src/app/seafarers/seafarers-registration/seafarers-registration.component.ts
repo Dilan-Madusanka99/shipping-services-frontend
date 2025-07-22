@@ -178,6 +178,7 @@ export class SeafarersRegistrationComponent {
           console.log('Form Submitted');
           console.log(this.seafarersForm.value);
   
+          if(!this.seafarersForm.valid) return;
           if (this.mode === 'add'){
             this.seafarersService.serviceCall(
               this.prepareSeafarerData()   // Photo upload [start]

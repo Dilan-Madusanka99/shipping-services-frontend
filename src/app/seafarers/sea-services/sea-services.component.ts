@@ -124,6 +124,7 @@ export class SeaServicesComponent implements OnInit{
           console.log('Form Submitted');
           console.log(this.seaServicesForm.value);
   
+          if(!this.seaServicesForm.valid) return;
           if (this.mode === 'add'){
             this.seaServicesService.serviceCall(this.seaServicesForm.value).subscribe({
               next: (response: any) => {
