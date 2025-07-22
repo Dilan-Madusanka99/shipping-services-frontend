@@ -53,17 +53,17 @@ export class SeaServicesComponent implements OnInit{
     ) {
       this.seaServicesForm = this.fb.group({
         sidNo: new FormControl('', [Validators.required]),
-        companyName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]),
+        companyName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z .'-]+$/)]),
         vesselName: new FormControl('', [Validators.required]),
         position: new FormControl('', [Validators.required,]),
         vesselType: new FormControl('', [Validators.required,]),
-        flag: new FormControl('', [Validators.required, Validators.min(3), Validators.max(20), Validators.pattern(/^[A-Za-z]+$/)]),
+        flag: new FormControl('', [Validators.required, Validators.min(3), Validators.max(20), Validators.pattern(/^[A-Za-z ]+$/)]), // letters & spaces
         grt: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(10), Validators.pattern(/^\d+$/)]), // whole numbers
-        bhp: new FormControl('', [Validators.minLength(3), Validators.maxLength(10), Validators.pattern(/^[A-Za-z0-9]+$/)]), // letters & numbers
-        signOn: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)]),
-        signOff: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)]),
+        bhp: new FormControl('', [Validators.minLength(3), Validators.maxLength(10), Validators.pattern(/^\d+$/)]), 
+        signOn: new FormControl('', [Validators.required]),
+        signOff: new FormControl('', [Validators.required]),
         totalMonths: new FormControl('', [Validators.required, Validators.min(1), Validators.max(100), Validators.pattern(/^\d+$/)]), // whole numbers
-        reason: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)])
+        reason: new FormControl('', [Validators.required])
       });
     }
 

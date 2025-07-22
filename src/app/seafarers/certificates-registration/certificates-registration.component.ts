@@ -18,7 +18,7 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: any[] = [ 
-  {sidNo: 'S001', cName: 'AFF', cIssuedDate: '07/04/2025', cExpiredDate: '07/04/2030', verificationStatus: 'verified'},
+  {sidNo: 'S001', cName: 'AFF', cIssuedDate: '07/04/2025', cExpiredDate: '07/04/2030'},
 ];
 
 @Component({
@@ -33,7 +33,7 @@ export class CertificatesRegistrationComponent {
 
   certificatesRegistrationForm : FormGroup;
     
-    displayedColumns: string[] = ['sidNo', 'cName', 'cIssuedDate', 'cExpiredDate', 'verificationStatus', 'actions'];
+    displayedColumns: string[] = ['sidNo', 'cName', 'cIssuedDate', 'cExpiredDate', 'actions'];
     dataSource: MatTableDataSource<any>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
@@ -59,14 +59,13 @@ export class CertificatesRegistrationComponent {
       this.certificatesRegistrationForm = this.fb.group({
         certificateImage: new FormControl('', [Validators.required]),
         certificateImageName: new FormControl(''),
-        certificateImageType: new FormControl(''),
+        certificateImageType: new FormControl(''),  
         sidNo: new FormControl('', [Validators.required]),
         cName: new FormControl('', [Validators.required]),
         cNo: new FormControl('', [Validators.required]), // difficult for validate
         cIssuedPlace: new FormControl('', [Validators.required]),
-        cIssuedDate: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)]),
-        cExpiredDate: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)]),
-        verificationStatus: new FormControl('', [Validators.required])    
+        cIssuedDate: new FormControl('', [Validators.required, ]),
+        cExpiredDate: new FormControl('', [Validators.required])   
       });
     }
   

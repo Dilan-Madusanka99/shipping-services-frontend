@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
     private employeeService: EmployeeServiceService
   ) {
     this.LoginForm = this.fb.group({
-      users: new FormControl(),
+      users: new FormControl('', [Validators.required]),
       firstName: new FormControl({ value: '', disabled: true }),
       lastName: new FormControl({ value: '', disabled: true }),
       userName: new FormControl('', [Validators.required]),
