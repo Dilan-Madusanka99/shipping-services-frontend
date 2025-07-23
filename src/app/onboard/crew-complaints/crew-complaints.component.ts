@@ -29,7 +29,7 @@ const ELEMENT_DATA: any[] = [{ sidNo: 'S001', vesselName: 'M/T DonJuan', complai
 export class CrewComplaintsComponent {
   crewComplaintsForm: FormGroup;
 
-  displayedColumns: string[] = ['sidNo', 'sidName', 'vesselName', 'complaintDate', 'complaintType', 'actions'];
+  displayedColumns: string[] = [ 'sidNo', 'vesselName', 'complaintDate', 'complaintType', 'actions'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -147,7 +147,7 @@ export class CrewComplaintsComponent {
       console.log('Form Submitted');
       console.log(this.crewComplaintsForm.value);
 
-      // if(!this.crewComplaintsForm.valid) return;
+      if(!this.crewComplaintsForm.valid) return;
       if (this.mode === 'add') {
         this.crewComplaintsService.serviceCall(this.crewComplaintsForm.value).subscribe({
           next: (response: any) => {

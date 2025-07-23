@@ -29,7 +29,7 @@ const ELEMENT_DATA: any[] = [{ sidno: '123', ppNo: 'N123', cdcNo: 'C123', yellow
 export class OtherDetailsRegistrationComponent {
   otherDetailsRegistrationForm: FormGroup;
 
-  displayedColumns: string[] = ['sidNo', 'sidName', 'ppNo', 'cdcNo', 'yellowFeverNo', 'actions'];
+  displayedColumns: string[] = ['sidNo', 'ppNo', 'cdcNo', 'yellowFeverNo', 'actions'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

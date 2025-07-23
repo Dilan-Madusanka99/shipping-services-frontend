@@ -54,6 +54,8 @@ export class StocksComponent {
     allSupplierDropdown: any = [];
     supplierDropdown: any = [];
     allSupplierListDetails: any;
+    itemMap = new Map<number, string>();
+    supplierMap = new Map<number, string>();
 
   constructor(
     private fb: FormBuilder, 
@@ -75,7 +77,7 @@ export class StocksComponent {
     this.populateData();
     this.getItemList();
     this.getSupplierList();
-  }
+  } 
 
   // item list - dropdown list from payment
     public getItemList(): void {
@@ -91,7 +93,15 @@ export class StocksComponent {
         });
       }
       this.itemDropdown = this.allItemDropdown;
+      this.createItemMap();
     });
+  }
+
+  public createItemMap(): void {
+    this.allItemListDetails.forEach((item: any) => {
+      this.itemMap.set(item.id, item.itemNo);
+    });
+    this.populateData();
   }
 
   // supplier list - dropdown list
@@ -108,8 +118,16 @@ export class StocksComponent {
         });
       }
       this.supplierDropdown = this.allSupplierDropdown;
+      this.createSupplierMap();
     });
   }
+
+  public createSupplierMap(): void {
+    this.allSupplierListDetails.forEach((supplier: any) => {
+      this.supplierMap.set(supplier.id, supplier.supplierName);
+    });
+    this.populateData();
+  }  
 
   applyFilter(event: Event) {
       const filterValue = (event.target as HTMLInputElement).value;

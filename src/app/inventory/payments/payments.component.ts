@@ -55,7 +55,8 @@ export class PaymentsComponent {
     selectedSupplier: string = '';
     allSupplierDropdown: any = [];
     supplierDropdown: any = [];
-    allSupplierListDetails: any;
+    allSupplierListDetails: any; 
+    supplierMap = new Map<number, string>();
 
     constructor(
       private fb: FormBuilder, 
@@ -118,7 +119,15 @@ export class PaymentsComponent {
         });
       }
       this.supplierDropdown = this.allSupplierDropdown;
+      this.createSupplierMap();
     });
+  }
+
+  public createSupplierMap(): void {
+    this.allSupplierListDetails.forEach((supplier: any) => {
+      this.supplierMap.set(supplier.id, supplier.supplierName);
+    });
+    this.populateData();
   }
 
 
@@ -203,7 +212,7 @@ export class PaymentsComponent {
         this.isFileSelected = true;
         this.paymentsForm.get('paymentImage')?.setValue(file);
       }
-    }
+    } 
 
   onSubmit() {
       try {

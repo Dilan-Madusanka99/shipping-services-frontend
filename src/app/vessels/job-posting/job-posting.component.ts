@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { JobPostingServiceService } from 'src/app/services/vessels/job-posting-service.service';
+import { VesselRegistrationService } from 'src/app/services/vessels/vessel-registration.service';
 
 export interface PeriodicElement {
   jobDescription: String;
@@ -40,9 +41,19 @@ export class JobPostingComponent {
   selectedFile: File | null = null;
   previewUrl: SafeUrl | null;
   isFileSelected = false;
+  selectedVessel: string = ''; 
+  allVesselDropdown: any = [];
+  vesselDropdown: any = [];
+  allVesselListDetails: any;
 
 
-  constructor(private fb: FormBuilder, private seafarersService: JobPostingServiceService, private messageService: MessageServiceService, private sanitizer: DomSanitizer) {
+  constructor(
+    private fb: FormBuilder, 
+    private seafarersService: JobPostingServiceService, 
+    private messageService: MessageServiceService, 
+    private sanitizer: DomSanitizer,
+    private vesselService: VesselRegistrationService
+  ) {
         this.jobPostingForm = this.fb.group({
           jobPostImage: new FormControl('', [Validators.required]),
           jobPostImageName: new FormControl(''),
@@ -56,6 +67,23 @@ export class JobPostingComponent {
 
   ngOnInit(): void{
     this.populateData();
+    this.getVesselList();
+  }
+
+  public getVesselList(): void {
+    this.vesselService.getData().subscribe((response: any) => {
+      if (response && response.length > 0) {
+        this.allVesselListDetails = response;
+        response.forEach((vessel: any) => {
+          const vesselData = {
+            id: vessel.id,
+            vesselName: vessel.vesselName
+          };
+          this.allVesselDropdown.push(vesselData);
+        });
+      }
+      this.vesselDropdown = this.allVesselDropdown;
+    });
   }
 
   applyFilter(event: Event) {
@@ -236,5 +264,26 @@ export class JobPostingComponent {
     public refreshData(): void {
       this.populateData();
     }
+
+      onVesselKey(eventTarget: any) {
+      this.vesselDropdown = this.vesselSearch(eventTarget.value);
+      }
+
+      vesselSearch(value: string) {
+      let filter = value.toLowerCase();
+      return this.allVesselDropdown.filter((option: any) => option.name.toLowerCase().startsWith(filter));
+      }
+
+      public onVesselSelect(event): void {
+      let selectedVesselId = event;
+
+      this.patchFormVesselValues(selectedVesselId);
+      }
+
+      public patchFormVesselValues(vesselId: number): void {
+        this.jobPostingForm.patchValue({
+        vesselName: vesselId
+        });
+      }
 
 }

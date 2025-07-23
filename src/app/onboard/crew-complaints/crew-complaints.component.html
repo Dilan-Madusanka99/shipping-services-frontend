@@ -84,22 +84,22 @@
     </div>
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-      <ng-container matColumnDef="sidNo">
+      <ng-container matColumnDef="sidName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header [hidden]="true">SID No</th>
         <td mat-cell *matCellDef="let element">{{ element.sidNo }}</td>
       </ng-container>
-      <ng-container matColumnDef="sidName">
-        <th mat-header-cell *matHeaderCellDef>Sid No</th>
+      <ng-container matColumnDef="sidNo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Sid No</th>
         <td mat-cell *matCellDef="let element">{{ sidMap.get(+element.sidNo) }}</td>
       </ng-container>
 
       <ng-container matColumnDef="vesselName">
-        <th mat-header-cell *matHeaderCellDef>Vessel Name</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Vessel Name</th>
         <td mat-cell *matCellDef="let element">{{ element.vesselName }}</td>
       </ng-container>
 
       <ng-container matColumnDef="complaintDate">
-        <th mat-header-cell *matHeaderCellDef>Complaint Date</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Complaint Date</th>
         <td mat-cell *matCellDef="let element">{{ element.complaintDate | date: 'dd/MM/yyyy' }}</td>
       </ng-container>
 

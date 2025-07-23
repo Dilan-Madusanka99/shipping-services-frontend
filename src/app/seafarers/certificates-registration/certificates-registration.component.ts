@@ -30,7 +30,7 @@ const ELEMENT_DATA: any[] = [{ sidNo: 'S001', cName: 'AFF', cIssuedDate: '07/04/
 export class CertificatesRegistrationComponent {
   certificatesRegistrationForm: FormGroup;
 
-  displayedColumns: string[] = ['sidNo', 'sidName', 'cName', 'cIssuedDate', 'cExpiredDate', 'actions'];
+  displayedColumns: string[] = ['sidNo', 'cName', 'cIssuedDate', 'cExpiredDate', 'actions'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -180,7 +180,7 @@ export class CertificatesRegistrationComponent {
       console.log('Form Submitted');
       console.log(this.certificatesRegistrationForm.value);
 
-      if (!this.certificatesRegistrationForm.valid) return;
+      // if (!this.certificatesRegistrationForm.valid) return;
       if (this.mode === 'add') {
         this.seafarersService.serviceCall(this.prepareSeafarerData()).subscribe({
           next: (response: any) => {

@@ -44,6 +44,7 @@ export class SeaServicesComponent implements OnInit{
     allSeafarersDropdown: any = [];  // sid link
     seafarersDropdown: any = []; 
     allSeafarersListDetails: any;
+    sidMap = new Map<number, string>();
 
     constructor(
       private fb: FormBuilder, 
@@ -85,7 +86,15 @@ export class SeaServicesComponent implements OnInit{
         });
       }
       this.seafarersDropdown = this.allSeafarersDropdown;
+      this.createSidMap();
     });
+  }
+
+  public createSidMap(): void {
+    this.allSeafarersListDetails.forEach((seaFarer: any) => {
+      this.sidMap.set(seaFarer.id, seaFarer.sidNo);
+    });
+    this.populateData();
   }
   
     applyFilter(event: Event) {

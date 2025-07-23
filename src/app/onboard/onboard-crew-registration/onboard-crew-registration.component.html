@@ -5,7 +5,7 @@
         <mat-label>SID No</mat-label>
         <mat-select [(ngModel)]="selectedSeafarers" formControlName="sidNo" (valueChange)="onSeafarersSelect($event)">
           <mat-form-field class="w-100">
-            <input matInput placeholder="Search for Seafarers..." (keyup)="onKey($event.target)" />
+            <input matInput placeholder="Search for Seafarers..." (keyup)="onSeafarerKey($event.target)" />
           </mat-form-field>
           <mat-option *ngFor="let seafarers of seafarersDropdown" [value]="seafarers.id">{{ seafarers.sidNo }}</mat-option>
         </mat-select>
@@ -29,23 +29,42 @@
       </mat-form-field>
       <br />
 
-      <!-- Should be defined as dropdown link -->
+
       <mat-form-field class="example-full-width">
+        <mat-label>Imo No</mat-label>
+        <mat-select [(ngModel)]="selectedVessel" formControlName="imoNo" (valueChange)="onVesselSelect($event)">
+          <mat-form-field class="w-100">
+            <input matInput placeholder="Search for Vessel..." (keyup)="onVesselKey($event.target)" />
+          </mat-form-field>
+          <mat-option *ngFor="let vessel of vesselDropdown" [value]="vessel.id">{{ vessel.imoNo }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br />
+
+      <mat-form-field class="example-full-width">
+        <mat-label>vessel Name </mat-label>
+          <input matInput placeholder="Vessel Name" formControlName="vesselName">
+      </mat-form-field>
+      <br>
+
+
+      <!-- Should be defined as dropdown link -->
+      <!-- <mat-form-field class="example-full-width">
         <mat-label>Imo No</mat-label>
         <mat-select [(value)]="selected" formControlName="imoNo">
           <mat-option value="S001">S001</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
+      <br /> -->
 
       <!-- Should be defined as dropdown link -->
-      <mat-form-field class="example-full-width">
+      <!-- <mat-form-field class="example-full-width">
         <mat-label>Vessel Name</mat-label>
         <mat-select [(value)]="selected" formControlName="vesselName">
           <mat-option value="S001">S001</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
+      <br /> -->
 
       <mat-form-field class="example-full-width">
         <mat-label>Signon Date</mat-label>
@@ -85,31 +104,31 @@
       </mat-form-field>
     </div>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-      <ng-container matColumnDef="sidNo">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+      <ng-container matColumnDef="sidName">
         <th mat-header-cell *matHeaderCellDef [hidden]="true">SID No</th>
         <td mat-cell *matCellDef="let element">{{ element.sidNo }}</td>
       </ng-container>
 
       <!-- [step 4] -->
-      <ng-container matColumnDef="sidName">
-        <th mat-header-cell *matHeaderCellDef>Sid No</th>
+      <ng-container matColumnDef="sidNo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Sid No</th>
         <td mat-cell *matCellDef="let element">{{ sidMap.get(+element.sidNo) }}</td>
       </ng-container>
       <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef>Position</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Position</th>
         <td mat-cell *matCellDef="let element">{{ element.position }}</td>
       </ng-container>
       <ng-container matColumnDef="vesselName">
-        <th mat-header-cell *matHeaderCellDef>Vessel Name</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Vessel Name</th>
         <td mat-cell *matCellDef="let element">{{ element.vesselName }}</td>
       </ng-container>
       <ng-container matColumnDef="signOnDate">
-        <th mat-header-cell *matHeaderCellDef>SignOn Date</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>SignOn Date</th>
         <td mat-cell *matCellDef="let element">{{ element.signOnDate | date: 'dd/MM/yyyy' }}</td>
       </ng-container>
       <ng-container matColumnDef="signOffDate">
-        <th mat-header-cell *matHeaderCellDef>SignOff Date</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>SignOff Date</th>
         <td mat-cell *matCellDef="let element">{{ element.signOffDate | date: 'dd/MM/yyyy' }}</td>
       </ng-container>
       <ng-container matColumnDef="actions">

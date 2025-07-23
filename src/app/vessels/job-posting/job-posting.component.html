@@ -2,7 +2,7 @@
   <div class="form-section">
     <form [formGroup]="jobPostingForm" class="jobPostingForm" (ngSubmit)="onSubmit()">
     
-    <h5>Job Postings</h5>
+    <h5>Job Vacancies</h5>
         <div class="form-field">
             <label for="image">Upload Image</label>
             <input type="file" (change)="onFileSelected($event)" accept="image/*"/>
@@ -15,13 +15,24 @@
         <br>
 
         <!-- should be linked vessel name -->
-        <mat-form-field class="example-full-width">
+        <!-- <mat-form-field class="example-full-width">
         <mat-label> Vessel Name </mat-label>
         <mat-select formControlName="vesselName">
           <mat-option value="AB Trainee">AB Trainee</mat-option>
         </mat-select>
       </mat-form-field>  
-      <br>
+      <br> -->
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Vessel Name</mat-label>
+            <mat-select [(ngModel)]="selectedVessel" formControlName="vesselName" (valueChange)="onVesselSelect($event)">
+              <mat-form-field class="w-100">
+                <input matInput placeholder="Search for vessel..." (keyup)="onVesselKey($event.target)" />
+          </mat-form-field>
+            <mat-option *ngFor="let vessel of vesselDropdown" [value]="vessel.id">{{ vessel.vesselName }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <br />
 
         <mat-form-field class="example-full-width">
         <mat-label> Position </mat-label>

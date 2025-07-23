@@ -55,12 +55,12 @@
       </ng-container>
 
       <ng-container matColumnDef="roles">
-        <th mat-header-cell *matHeaderCellDef>Role</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Role</th>
         <td mat-cell *matCellDef="let element">{{ element.roles }}</td>
       </ng-container>
 
       <ng-container matColumnDef="attendenceStatus">
-        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
         <td mat-cell *matCellDef="let element">{{ element.attendenceStatus }}</td>
       </ng-container>
 

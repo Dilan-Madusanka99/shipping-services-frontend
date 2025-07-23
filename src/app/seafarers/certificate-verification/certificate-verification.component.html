@@ -83,10 +83,15 @@
             </div>
 
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-                <ng-container matColumnDef="sidNo">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> SID No </th>
+                <ng-container matColumnDef="sidName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header [hidden]="true"> SID No </th>
                     <td mat-cell *matCellDef="let element"> {{element.sidNo}} </td>
                   </ng-container>
+
+                <ng-container matColumnDef="sidNo">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>SID No</th>
+                  <td mat-cell *matCellDef="let element">{{ sidMap.get(+element.sidNo) }}</td>
+                </ng-container>
 
                   <ng-container matColumnDef="certificateName">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Certificate Name </th>

@@ -47,7 +47,8 @@ export class CertificateVerificationComponent {
   selectedSeafarers: string = '';
   allSeafarersDropdown: any = [];  // sid link
   seafarersDropdown: any = []; 
-  allSeafarersListDetails: any;  
+  allSeafarersListDetails: any;   
+  sidMap = new Map<number, string>();
   
 constructor(
   private fb: FormBuilder, 
@@ -85,7 +86,15 @@ constructor(
         });
       }
       this.seafarersDropdown = this.allSeafarersDropdown;
+      this.createSidMap();
     });
+  }
+
+  public createSidMap(): void {
+    this.allSeafarersListDetails.forEach((seaFarer: any) => {
+      this.sidMap.set(seaFarer.id, seaFarer.sidNo);
+    });
+    this.populateData();
   }
 
   applyFilter(event: Event) {
