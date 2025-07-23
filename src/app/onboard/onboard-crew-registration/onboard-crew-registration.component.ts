@@ -43,7 +43,7 @@ export class OnboardCrewRegistrationComponent {
   allSeafarersDropdown: any = []; // sid link
   seafarersDropdown: any = [];
   allSeafarersListDetails: any;
-  sidMap = new Map<number, string>();
+  sidMap = new Map<number, string>(); // [step 1]
 
   constructor(
     private fb: FormBuilder,
@@ -78,7 +78,7 @@ export class OnboardCrewRegistrationComponent {
         });
       }
       this.seafarersDropdown = this.allSeafarersDropdown;
-      this.createSidMap();
+      this.createSidMap(); // [step 2]
 
       // this.setSeafearersNoOnTable();
     });
@@ -99,6 +99,7 @@ export class OnboardCrewRegistrationComponent {
     this.dataSource.sort = this.sort;
   }
 
+  // [step 3]
   public createSidMap(): void {
     this.allSeafarersListDetails.forEach((seaFarer: any) => {
       this.sidMap.set(seaFarer.id, seaFarer.sidNo);
