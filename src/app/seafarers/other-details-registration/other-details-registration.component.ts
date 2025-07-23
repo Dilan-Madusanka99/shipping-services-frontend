@@ -27,10 +27,9 @@ const ELEMENT_DATA: any[] = [{ sidno: '123', ppNo: 'N123', cdcNo: 'C123', yellow
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OtherDetailsRegistrationComponent {
-
   otherDetailsRegistrationForm: FormGroup;
 
-  displayedColumns: string[] = ['sidNo', 'ppNo', 'cdcNo', 'yellowFeverNo', 'actions'];
+  displayedColumns: string[] = ['sidNo', 'sidName', 'ppNo', 'cdcNo', 'yellowFeverNo', 'actions'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -49,9 +48,10 @@ export class OtherDetailsRegistrationComponent {
   isCdcFileSelected = false;
   isYfFileSelected = false;
   selectedSeafarers: string = '';
-  allSeafarersDropdown: any = [];  // sid link
-  seafarersDropdown: any = []; 
-  allSeafarersListDetails: any; 
+  allSeafarersDropdown: any = []; // sid link
+  seafarersDropdown: any = [];
+  allSeafarersListDetails: any;
+  sidMap = new Map<number, string>();
 
   constructor(
     private fb: FormBuilder,
@@ -71,21 +71,36 @@ export class OtherDetailsRegistrationComponent {
       ppImage: new FormControl('', [Validators.required]),
       ppImageName: new FormControl(''),
       ppImageType: new FormControl(''),
-      ppNo: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
+      ppNo: new FormControl('', [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(15),
+        Validators.pattern(/^[A-Za-z0-9]+$/)
+      ]),
       ppIssuedPlace: new FormControl('', [Validators.required]),
       ppIssuedDate: new FormControl('', [Validators.required]),
       ppExpireDate: new FormControl('', [Validators.required]),
       cdcImage: new FormControl('', [Validators.required]),
       cdcImageName: new FormControl(''),
       cdcImageType: new FormControl(''),
-      cdcNo: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
+      cdcNo: new FormControl('', [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(15),
+        Validators.pattern(/^[A-Za-z0-9]+$/)
+      ]),
       cdcIssuedPlace: new FormControl('', [Validators.required]),
       cdcIssuedDate: new FormControl('', [Validators.required]),
       cdcExpireDate: new FormControl('', [Validators.required]),
       yellowFeverImage: new FormControl('', [Validators.required]),
       yellowFeverImageName: new FormControl(''),
       yellowFeverImageType: new FormControl(''),
-      yellowFeverNo: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
+      yellowFeverNo: new FormControl('', [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(15),
+        Validators.pattern(/^[A-Za-z0-9]+$/)
+      ]),
       yellowFeverIssuedPlace: new FormControl('', [Validators.required]),
       yellowFeverIssuedDate: new FormControl('', [Validators.required]),
       yellowFeverExpireDate: new FormControl('', [Validators.required])
@@ -93,7 +108,6 @@ export class OtherDetailsRegistrationComponent {
   }
 
   ngOnInit(): void {
-    this.populateData();
     this.getSeafarersList();
   }
 
@@ -110,7 +124,15 @@ export class OtherDetailsRegistrationComponent {
         });
       }
       this.seafarersDropdown = this.allSeafarersDropdown;
+      this.createSidMap();
     });
+  }
+
+  public createSidMap(): void {
+    this.allSeafarersListDetails.forEach((seaFarer: any) => {
+      this.sidMap.set(seaFarer.id, seaFarer.sidNo);
+    });
+    this.populateData();
   }
 
   applyFilter(event: Event) {
@@ -289,7 +311,7 @@ export class OtherDetailsRegistrationComponent {
       console.log('Form Submitted');
       console.log(this.otherDetailsRegistrationForm.value);
 
-      if(!this.otherDetailsRegistrationForm.valid) return;
+      if (!this.otherDetailsRegistrationForm.valid) return;
       if (this.mode === 'add') {
         this.seafarersService.serviceCall(this.prepareSeafarerData()).subscribe({
           next: (response: any) => {
@@ -376,7 +398,7 @@ export class OtherDetailsRegistrationComponent {
     const cdcImageType = data.cdcImageImageType;
     this.previewUrlCdc = `data:${cdcImageType};base64,${cdcImageFile}`;
 
-    const yellowFeverImageFile = data.yellowFeverImage ;
+    const yellowFeverImageFile = data.yellowFeverImage;
     const yellowFeverImageType = data.yellowFeverImageImageType;
     this.previewUrlYf = `data:${yellowFeverImageType};base64,${yellowFeverImageFile}`;
   }

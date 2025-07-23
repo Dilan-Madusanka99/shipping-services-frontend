@@ -12,7 +12,7 @@
         <p>Image Preview:</p>
         <img [src]="previewUrlSid" alt="Image preview" width="200" />
       </div>
-      <br /> 
+      <br />
 
       <mat-form-field class="example-full-width">
         <mat-label>SID No</mat-label>
@@ -23,7 +23,7 @@
           <mat-option *ngFor="let seafarers of seafarersDropdown" [value]="seafarers.id">{{ seafarers.sidNo }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <br>
+      <br />
 
       <mat-form-field class="example-full-width">
         <mat-label>Issued Place</mat-label>
@@ -195,10 +195,10 @@
       <br />
       <br />
 
-      <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" >
+      <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled">
         {{ saveButtonLabel }}
       </button>
-      <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" >Reset</button>
+      <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()">Reset</button>
     </form>
   </div>
 
@@ -218,8 +218,12 @@
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
       <ng-container matColumnDef="sidNo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>SID</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [hidden]="true">SID</th>
         <td mat-cell *matCellDef="let element">{{ element.sidNo }}</td>
+      </ng-container>
+      <ng-container matColumnDef="sidName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>SID No</th>
+        <td mat-cell *matCellDef="let element">{{ sidMap.get(+element.sidNo) }}</td>
       </ng-container>
 
       <ng-container matColumnDef="ppNo">
