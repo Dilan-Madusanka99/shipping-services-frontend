@@ -59,10 +59,10 @@ export class CrewComplaintsComponent {
       sidNo: new FormControl('', [Validators.required]),
       imoNo: new FormControl('', [Validators.required]),
       vesselName: new FormControl(''),
-      complaintorName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z.]+$/)]), // letters & .
-      complaintDate: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)]),
+      complaintorName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z .]+$/)]),
+      complaintDate: new FormControl('', [Validators.required,]),
       complaintType: new FormControl('', [Validators.required]),
-      complaint: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(255)])
+      complaint: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(255)])
     });
   }
 

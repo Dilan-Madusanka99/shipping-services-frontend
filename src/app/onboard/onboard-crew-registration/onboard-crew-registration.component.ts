@@ -56,8 +56,8 @@ export class OnboardCrewRegistrationComponent {
       position: new FormControl('', [Validators.required]),
       imoNo: new FormControl('', [Validators.required]),
       vesselName: new FormControl('', [Validators.required]),
-      signOnDate: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)]),
-      signOffDate: new FormControl('', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)])
+      signOnDate: new FormControl('', [Validators.required]),
+      signOffDate: new FormControl('', [Validators.required])
     });
   }
 
@@ -143,7 +143,7 @@ export class OnboardCrewRegistrationComponent {
       console.log('Form Submitted');
       console.log(this.onboardCrewRegistrationForm.value);
 
-      // if(!this.onboardCrewRegistrationForm.valid) return;
+      if(!this.onboardCrewRegistrationForm.valid) return;
       if (this.mode === 'add') {
         this.onboardCrewRegistrationService.serviceCall(this.onboardCrewRegistrationForm.value).subscribe({
           next: (response: any) => {
