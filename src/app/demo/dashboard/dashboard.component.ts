@@ -18,6 +18,14 @@ import '../../../assets/charts/amchart/worldLow.js';
 
 import dataJson from 'src/fake-data/map_data';
 import mapColor from 'src/fake-data/map-color-data.json';
+import { Router } from '@angular/router';
+
+interface MenuItem {
+  title: string;
+  description: string;
+  icon: string;
+  route: string;
+}
 
 @Component({
   selector: 'app-dashboard',
@@ -27,6 +35,41 @@ import mapColor from 'src/fake-data/map-color-data.json';
   styleUrls: ['./dashboard.component.scss']
 })
 export default class DashboardComponent implements OnInit {
+  menuItems: MenuItem[] = [
+    {
+      title: 'Onboard Crew Registration',
+      description: 'Register the crew to be onboard',
+      icon: '®️',
+      route: '/onboard/onboardCrewRegistration'
+    },
+    {
+      title: 'Employee Registration',
+      description: 'Register Employees to the system',
+      icon: '👨‍🏫',
+      route: '/register/employee'
+    },
+    {
+      title: 'Employee Attendance',
+      description: 'Mark Employee Attendance',
+      icon: '📚',
+      route: '/register/employeeAttendence'
+    },
+    {
+      title: 'Employee List',
+      description: 'Get Employee List Report',
+      icon: '👨‍🏫',
+      route: '/reports/employee-list'
+    },
+    {
+      title: 'Get Appointment List Report',
+      description: 'Appointements made',
+      icon: '📚',
+      route: '/reports/appointment-list'
+    }
+  ];
+
+  constructor(private router: Router) {}
+
   ngOnInit() {
     setTimeout(() => {
       const latlong = dataJson;
@@ -375,4 +418,8 @@ export default class DashboardComponent implements OnInit {
       color: 'text-c-green'
     }
   ];
+
+  navigateToSection(route: string) {
+    this.router.navigate([route]);
+  }
 }

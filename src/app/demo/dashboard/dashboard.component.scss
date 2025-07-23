@@ -1,0 +1,78 @@
+/* Menu Section */
+.menu-section {
+    padding: 5rem 0;
+    background: #f8f4fc;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #404c64;
+    margin-bottom: 3rem;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.menu-card {
+    background: #404c64; // cards
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(143, 72, 22, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #404c64, #596887, #6b7385);
+}
+
+.menu-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 30px rgba(139, 69, 19, 0.2);
+    border-color: #d2b48c;
+}
+
+.card-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f8f4fc;
+    margin-bottom: 1rem;
+}
+
+.card-description {
+    color: #7a7878;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.card-arrow {
+    font-size: 1.5rem;
+    color: #7a7878;
+    transition: transform 0.3s ease;
+}
+
+.menu-card:hover .card-arrow {
+    transform: translateX(5px);
+}
