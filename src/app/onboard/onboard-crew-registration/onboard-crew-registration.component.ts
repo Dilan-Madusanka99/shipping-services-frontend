@@ -27,10 +27,9 @@ const ELEMENT_DATA: any[] = [{ sidNo: 'S123', position: 'AB', vesselName: 'souse
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnboardCrewRegistrationComponent {
-  
   onboardCrewRegistrationForm: FormGroup;
 
-  displayedColumns: string[] = ['sidNo', 'position', 'vesselName', 'signOnDate', 'signOffDate', 'actions'];
+  displayedColumns: string[] = ['sidName', 'position', 'vesselName', 'signOnDate', 'signOffDate', 'actions'];
 
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -41,9 +40,10 @@ export class OnboardCrewRegistrationComponent {
   selectedData;
   isButtonDisabled = false;
   selectedSeafarers: string = '';
-  allSeafarersDropdown: any = [];  // sid link
-  seafarersDropdown: any = []; 
+  allSeafarersDropdown: any = []; // sid link
+  seafarersDropdown: any = [];
   allSeafarersListDetails: any;
+  sidMap = new Map<number, string>();
 
   constructor(
     private fb: FormBuilder,
@@ -62,7 +62,6 @@ export class OnboardCrewRegistrationComponent {
   }
 
   ngOnInit(): void {
-    this.populateData();
     this.getSeafarersList();
   }
 
@@ -79,7 +78,32 @@ export class OnboardCrewRegistrationComponent {
         });
       }
       this.seafarersDropdown = this.allSeafarersDropdown;
+      this.createSidMap();
+
+      // this.setSeafearersNoOnTable();
     });
+  }
+
+  public setSeafearersNoOnTable(): void {
+    let tabData = this.dataSource.data;
+    let newData: any[] = [];
+
+    this.allSeafarersDropdown.forEach((seaFarer: any) => {
+      const tabItem = tabData.find((item: any) => +item.sidNo === seaFarer.id);
+      tabItem.sidName = seaFarer.sidNo;
+      newData.push(tabItem);
+    });
+
+    this.dataSource = new MatTableDataSource(newData);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  public createSidMap(): void {
+    this.allSeafarersListDetails.forEach((seaFarer: any) => {
+      this.sidMap.set(seaFarer.id, seaFarer.sidNo);
+    });
+    this.populateData();
   }
 
   applyFilter(event: Event) {
@@ -118,7 +142,7 @@ export class OnboardCrewRegistrationComponent {
       console.log('Form Submitted');
       console.log(this.onboardCrewRegistrationForm.value);
 
-      if(!this.onboardCrewRegistrationForm.valid) return;
+      // if(!this.onboardCrewRegistrationForm.valid) return;
       if (this.mode === 'add') {
         this.onboardCrewRegistrationService.serviceCall(this.onboardCrewRegistrationForm.value).subscribe({
           next: (response: any) => {
@@ -168,6 +192,12 @@ export class OnboardCrewRegistrationComponent {
     this.saveButtonLabel = 'Edit';
     this.mode = 'edit';
     this.selectedData = data;
+
+    this.onboardCrewRegistrationForm.patchValue({
+      sidNo: +data.sidNo,
+      signOnDate: new Date(data.signOnDate).toISOString().substring(0, 10),
+      signOffDate: new Date(data.signOffDate).toISOString().substring(0, 10)
+    });
   }
 
   public deleteData(data: any): void {
@@ -196,26 +226,27 @@ export class OnboardCrewRegistrationComponent {
 
   public refreshData(): void {
     this.populateData();
+    // this.setSeafearersNoOnTable();
   }
 
   onKey(eventTarget: any) {
     this.seafarersDropdown = this.search(eventTarget.value);
-    }
+  }
 
-    search(value: string) {
+  search(value: string) {
     let filter = value.toLowerCase();
     return this.allSeafarersDropdown.filter((option: any) => option.name.toLowerCase().startsWith(filter));
-    }
+  }
 
-    public onSeafarersSelect(event): void {
-      let selectedSeafarersId = event;
+  public onSeafarersSelect(event): void {
+    let selectedSeafarersId = event;
 
     this.patchFormSeafarersValues(selectedSeafarersId);
-    }
+  }
 
-    public patchFormSeafarersValues(seafarersId: number): void {
-      this.onboardCrewRegistrationForm.patchValue({
-        sidNo: seafarersId
-      });
-    }
+  public patchFormSeafarersValues(seafarersId: number): void {
+    this.onboardCrewRegistrationForm.patchValue({
+      sidNo: seafarersId
+    });
+  }
 }

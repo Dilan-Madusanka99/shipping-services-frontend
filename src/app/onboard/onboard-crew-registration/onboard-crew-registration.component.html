@@ -1,17 +1,16 @@
 <div class="container">
   <div class="form-section">
     <form [formGroup]="onboardCrewRegistrationForm" class="onboardCrewRegistrationForm" (ngSubmit)="onSubmit()">
-     
       <mat-form-field class="example-full-width">
-            <mat-label>SID No</mat-label>
-              <mat-select [(ngModel)]="selectedSeafarers" formControlName="sidNo" (valueChange)="onSeafarersSelect($event)">
-            <mat-form-field class="w-100">
+        <mat-label>SID No</mat-label>
+        <mat-select [(ngModel)]="selectedSeafarers" formControlName="sidNo" (valueChange)="onSeafarersSelect($event)">
+          <mat-form-field class="w-100">
             <input matInput placeholder="Search for Seafarers..." (keyup)="onKey($event.target)" />
           </mat-form-field>
           <mat-option *ngFor="let seafarers of seafarersDropdown" [value]="seafarers.id">{{ seafarers.sidNo }}</mat-option>
-            </mat-select>
-            </mat-form-field>
-            <br>
+        </mat-select>
+      </mat-form-field>
+      <br />
 
       <mat-form-field class="example-full-width">
         <mat-label>Position</mat-label>
@@ -67,10 +66,10 @@
       <br />
       <br />
 
-      <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" >
+      <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled">
         {{ saveButtonLabel }}
       </button>
-      <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" >Reset</button>
+      <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()">Reset</button>
     </form>
   </div>
   <div class="table-section">
@@ -88,8 +87,12 @@
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
       <ng-container matColumnDef="sidNo">
-        <th mat-header-cell *matHeaderCellDef>SID No</th>
+        <th mat-header-cell *matHeaderCellDef [hidden]="true">SID No</th>
         <td mat-cell *matCellDef="let element">{{ element.sidNo }}</td>
+      </ng-container>
+      <ng-container matColumnDef="sidName">
+        <th mat-header-cell *matHeaderCellDef>Sid No</th>
+        <td mat-cell *matCellDef="let element">{{ sidMap.get(+element.sidNo) }}</td>
       </ng-container>
       <ng-container matColumnDef="position">
         <th mat-header-cell *matHeaderCellDef>Position</th>
