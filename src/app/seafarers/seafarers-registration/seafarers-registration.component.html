@@ -22,7 +22,7 @@
         <input matInput placeholder="SID No" formControlName="sidNo" >
           <span class="text-danger" 
             *ngIf="(seafarersForm.get('sidNo').touched || submitted) && seafarersForm.get('sidNo').errors && seafarersForm.get('sidNo').errors['required'] ">
-             First Name is Required
+             SID No is Required
           </span>
       </mat-form-field>
       <br>

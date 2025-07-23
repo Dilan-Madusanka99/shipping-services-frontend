@@ -21,6 +21,10 @@
       <mat-form-field class="example-full-width">
         <mat-label>Supplier No</mat-label>
         <input matInput placeholder="Supplier No" formControlName="supplierNo" >
+        <span class="text-danger" 
+          *ngIf="(supplierRegistrationForm.get('supplierNo').touched || submitted) && supplierRegistrationForm.get('supplierNo').errors && supplierRegistrationForm.get('supplierNo').errors['required'] ">
+          Supplier No is Required
+        </span>        
       </mat-form-field>
       <br>
 

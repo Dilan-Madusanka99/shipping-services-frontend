@@ -38,6 +38,7 @@ export class EmployeeComponent implements OnInit {
   saveButtonLabel = 'Save';
   mode = 'add';
   selectedData;
+  submitted: boolean;
   isButtonDisabled = false;
   // Photo upload [start]
   selectedFile: File | null = null;

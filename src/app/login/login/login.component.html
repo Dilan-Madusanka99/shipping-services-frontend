@@ -27,6 +27,10 @@
       <mat-form-field class="example-full-width">
         <mat-label>User Name</mat-label>
         <input matInput placeholder="User Name" formControlName="userName" />
+        <span class="text-danger" 
+          *ngIf="(LoginForm.get('userName').touched || submitted) && LoginForm.get('userName').errors && LoginForm.get('userName').errors['required'] ">
+          User Name is Required
+        </span> 
       </mat-form-field>
       <br />
 

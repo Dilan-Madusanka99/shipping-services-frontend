@@ -15,17 +15,23 @@
           </div>
           <br>
 
+          
+            <mat-form-field class="example-full-width">
+                <mat-label>IMO No</mat-label>
+                <input matInput placeholder="IMO No" formControlName="imoNo">
+                <span class="text-danger" 
+                *ngIf="(vesselRegistrationForm.get('imoNo').touched || submitted) && vesselRegistrationForm.get('imoNo').errors && vesselRegistrationForm.get('imoNo').errors['required'] ">
+                IMO No is Required
+                </span>
+            </mat-form-field>
+            <br>
+
             <mat-form-field class="example-full-width">
              <mat-label>Vessel Name</mat-label>
              <input matInput placeholder="Vessel Name" formControlName="vesselName">
             </mat-form-field>
             <br>
 
-            <mat-form-field class="example-full-width">
-                <mat-label>IMO No</mat-label>
-                <input matInput placeholder="IMO No" formControlName="imoNo">
-              </mat-form-field>
-              <br>
 
             <mat-form-field class="example-full-width">
                 <mat-label> Vessel Type </mat-label>

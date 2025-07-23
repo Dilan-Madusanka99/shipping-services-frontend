@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
   saveButtonLabel = 'Save';
   mode = 'add';
   selectedData;
+  submitted: boolean;
   isButtonDisabled = false;
   hide = true;
   showPassword: boolean[] = this.users.map(() => false);

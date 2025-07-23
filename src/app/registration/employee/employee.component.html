@@ -17,6 +17,10 @@
       <mat-form-field class="example-full-width">
         <mat-label>Emp No.</mat-label>
         <input matInput placeholder="Emp No." formControlName="empNo" />
+        <span class="text-danger" 
+            *ngIf="(employeeForm.get('empNo').touched || submitted) && employeeForm.get('empNo').errors && employeeForm.get('empNo').errors['required'] ">
+             Employee No is Required
+        </span>
       </mat-form-field>
       <br />
 

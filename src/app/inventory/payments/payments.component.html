@@ -5,6 +5,10 @@
       <mat-form-field class="example-full-width">
           <mat-label> Payment No </mat-label>
           <input matInput placeholder="Payment No" formControlName="paymentNo">
+        <span class="text-danger" 
+          *ngIf="(paymentsForm.get('paymentNo').touched || submitted) && paymentsForm.get('paymentNo').errors && paymentsForm.get('paymentNo').errors['required'] ">
+          Payment No is Required
+        </span>           
         </mat-form-field>
         <br>
 

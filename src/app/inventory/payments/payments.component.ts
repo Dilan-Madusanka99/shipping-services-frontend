@@ -42,6 +42,7 @@ export class PaymentsComponent {
     saveButtonLabel = 'Save';
     mode = 'add';
     selectedData;
+    submitted: boolean;
     isButtonDisabled = false;
     selectedFile: File | null = null;
     previewUrl!: SafeUrl | null; 
