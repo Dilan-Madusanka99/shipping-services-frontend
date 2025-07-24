@@ -74,8 +74,24 @@ export class CommonDataServiceService implements OnInit {
     }
   }
 
+
+  // seafarer monthly registered chart
   public getSearfarersRegisterdByMonth() {
     const requestUrl = environment.baseUrl + '/common-data-service/seafarers_registeredByMonth';
+
+    let headers = {};
+    if (this.httpService.getAuthToken() !== null) {
+      headers = {
+        Authorization: 'Bearer ' + this.httpService.getAuthToken()
+      };
+    }
+
+    return this.http.get(requestUrl, { headers: headers });
+  }
+
+  // vessel type registered chart
+  public getVesselRegisteredByType() {
+    const requestUrl = environment.baseUrl + '/common-data-service/vessel_RegisteredByType';
 
     let headers = {};
     if (this.httpService.getAuthToken() !== null) {
