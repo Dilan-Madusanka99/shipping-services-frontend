@@ -234,6 +234,10 @@ export class EmployeeComponent implements OnInit {
     const file = data.profileImage;
     const imageType = data.profileImageType;
     this.previewUrl = `data:${imageType};base64,${file}`;
+
+    this.employeeForm.patchValue({
+    dob: new Date(data.dob).toISOString().substring(0, 10)
+    });
   }
 
   public deleteData(data: any): void {

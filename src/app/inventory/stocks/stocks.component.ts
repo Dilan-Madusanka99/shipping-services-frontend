@@ -216,6 +216,11 @@ export class StocksComponent {
         this.saveButtonLabel = 'Edit';
         this.mode = 'edit';
         this.selectedData = data;
+
+        this.stocksForm.patchValue({
+        itemNo: +data.itemNo,
+        supplierName: +data.supplierName
+        });
       }
   
       public deleteData(data: any): void {

@@ -185,7 +185,9 @@ export class OnboardCrewRegistrationComponent {
           }
         });
       } else if (this.mode === 'edit') {
-        this.onboardCrewRegistrationService.editData(this.selectedData?.id, this.onboardCrewRegistrationForm.value).subscribe({
+        this.onboardCrewRegistrationService.editData(
+          this.selectedData?.id, this.onboardCrewRegistrationForm.value
+        ).subscribe({
           next: (response: any) => {
             let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
             this.dataSource.data[elementIndex] = response;
@@ -221,6 +223,7 @@ export class OnboardCrewRegistrationComponent {
 
     this.onboardCrewRegistrationForm.patchValue({
       sidNo: +data.sidNo,
+      imoNo: +data.imoNo,
       signOnDate: new Date(data.signOnDate).toISOString().substring(0, 10),
       signOffDate: new Date(data.signOffDate).toISOString().substring(0, 10)
     });

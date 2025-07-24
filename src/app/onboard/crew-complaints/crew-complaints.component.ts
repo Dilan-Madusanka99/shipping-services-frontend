@@ -197,6 +197,12 @@ export class CrewComplaintsComponent {
     this.saveButtonLabel = 'Edit';
     this.mode = 'edit';
     this.selectedData = data;
+
+    this.crewComplaintsForm.patchValue({
+    sidNo: +data.sidNo,
+    imoNo: +data.imoNo,
+    complaintDate: new Date(data.complaintDate).toISOString().substring(0, 10)
+    });
   }
 
   public deleteData(data: any): void {

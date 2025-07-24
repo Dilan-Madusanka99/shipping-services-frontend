@@ -184,6 +184,12 @@ export class SeaServicesComponent implements OnInit{
         this.saveButtonLabel = 'Edit';
         this.mode = 'edit';
         this.selectedData = data;
+
+        this.seaServicesForm.patchValue({
+        sidNo: +data.sidNo,
+        signOn: new Date(data.signOn).toISOString().substring(0, 10),
+        signOff: new Date(data.signOff).toISOString().substring(0, 10),
+        });
       }
   
       public deleteData(data: any): void {

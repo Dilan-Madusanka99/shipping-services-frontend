@@ -45,6 +45,7 @@ export class JobPostingComponent {
   allVesselDropdown: any = [];
   vesselDropdown: any = [];
   allVesselListDetails: any;
+  vesselMap = new Map<number, string>();
 
 
   constructor(
@@ -83,7 +84,15 @@ export class JobPostingComponent {
         });
       }
       this.vesselDropdown = this.allVesselDropdown;
+      this.createVesselMap();
     });
+  }
+
+  public createVesselMap(): void {
+    this.allVesselListDetails.forEach((vessel: any) => {
+      this.vesselMap.set(vessel.id, vessel.vesselName);
+    });
+    this.populateData();
   }
 
   applyFilter(event: Event) {
@@ -232,9 +241,13 @@ export class JobPostingComponent {
       this.mode = 'edit';
       this.selectedData = data;
 
-      const file = data.profileImage;
+      const file = data.jobPostImage;
       const imageType = data.jobPostImageType;
       this.previewUrl = `data:${imageType};base64,${file}`;
+
+      this.jobPostingForm.patchValue({
+      vesselName: +data.vesselName
+    });
     }
 
     public deleteData(data: any): void {

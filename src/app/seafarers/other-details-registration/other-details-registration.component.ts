@@ -401,6 +401,18 @@ export class OtherDetailsRegistrationComponent {
     const yellowFeverImageFile = data.yellowFeverImage;
     const yellowFeverImageType = data.yellowFeverImageImageType;
     this.previewUrlYf = `data:${yellowFeverImageType};base64,${yellowFeverImageFile}`;
+
+    this.otherDetailsRegistrationForm.patchValue({
+    sidNo: +data.sidNo,
+    sidIssuedDate: new Date(data.sidIssuedDate).toISOString().substring(0, 10),
+    sidExpireDate: new Date(data.sidExpireDate).toISOString().substring(0, 10),
+    ppIssuedDate: new Date(data.ppIssuedDate).toISOString().substring(0, 10),
+    ppExpireDate: new Date(data.ppExpireDate).toISOString().substring(0, 10),
+    cdcIssuedDate: new Date(data.cdcIssuedDate).toISOString().substring(0, 10),
+    cdcExpireDate: new Date(data.cdcExpireDate).toISOString().substring(0, 10),
+    yellowFeverIssuedDate: new Date(data.yellowFeverIssuedDate).toISOString().substring(0, 10),
+    yellowFeverExpireDate: new Date(data.yellowFeverExpireDate).toISOString().substring(0, 10),
+    });
   }
 
   public deleteData(data: any): void {

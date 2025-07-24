@@ -279,7 +279,7 @@ export class PaymentsComponent {
     public editData(data: any): void {
       this.paymentsForm.patchValue(data);
 
-      /* Diable Form */
+      /* Disable Form */
       this.paymentsForm.get('quantity').disable();
       this.paymentsForm.get('quantity').updateValueAndValidity();
 
@@ -287,9 +287,14 @@ export class PaymentsComponent {
       this.mode = 'edit';
       this.selectedData = data;
 
-      const file = data.profileImage;
+      const file = data.paymentImage;
       const imageType = data.paymentImageImageType;
       this.previewUrl = `data:${imageType};base64,${file}`;
+
+      this.paymentsForm.patchValue({
+      supplierName: +data.supplierName,
+      paymentDate: new Date(data.paymentDate).toISOString().substring(0, 10),
+      });
     }
 
     public deleteData(data: any): void {

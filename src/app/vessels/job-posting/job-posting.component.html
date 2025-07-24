@@ -87,9 +87,14 @@
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
+      <ng-container matColumnDef="vessel">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [hidden]="true"> Vessel </th>
+        <td mat-cell *matCellDef="let element"> {{element.vesselName}} </td>
+      </ng-container>
+
       <ng-container matColumnDef="vesselName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Vessel </th>
-        <td mat-cell *matCellDef="let element"> {{element.vesselName}} </td>
+        <td mat-cell *matCellDef="let element"> {{ vesselMap.get (+element.vesselName) }} </td>
       </ng-container>
 
       <ng-container matColumnDef="position">

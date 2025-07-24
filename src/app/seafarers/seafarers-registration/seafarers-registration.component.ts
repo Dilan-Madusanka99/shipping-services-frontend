@@ -178,7 +178,7 @@ export class SeafarersRegistrationComponent {
           console.log('Form Submitted');
           console.log(this.seafarersForm.value);
   
-          if(!this.seafarersForm.valid) return;
+          // if(!this.seafarersForm.valid) return;
           if (this.mode === 'add'){
             this.seafarersService.serviceCall(
               this.prepareSeafarerData()   // Photo upload [start]
@@ -199,7 +199,7 @@ export class SeafarersRegistrationComponent {
           }
           else if (this.mode === 'edit'){
             this.seafarersService.editData(
-              this.selectedData?.id, this.prepareSeafarerData()   // Photo upload [start]
+              this.selectedData?.id, this.prepareSeafarerData(),   // Photo upload [start]
             ).subscribe ({
               next: (response: any) => {
                 let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
@@ -242,6 +242,13 @@ export class SeafarersRegistrationComponent {
         const file = data.profileImage;
         const imageType = data.profileImageType;
         this.previewUrl = `data:${imageType};base64,${file}`;
+
+        this.seafarersForm.patchValue({
+        noOfChildren: Number(data.noOfChildren),
+        appliedDate: new Date(data.appliedDate).toISOString().substring(0, 10),
+        availableDate: new Date(data.availableDate).toISOString().substring(0, 10),
+        dob: new Date(data.dob).toISOString().substring(0, 10),
+        });
       }
   
       public deleteData(data: any): void {

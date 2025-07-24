@@ -250,6 +250,10 @@ constructor(
         const file = data.profileImage;
         const imageType = data.profileImageType;
         this.previewUrl = `data:${imageType};base64,${file}`;
+
+        this.certificateVerificationForm.patchValue({
+        sidNo: +data.sidNo,
+        });
       }
   
       public deleteData(data: any): void {

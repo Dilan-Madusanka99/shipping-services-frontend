@@ -222,6 +222,10 @@ export class SupplierRegistrationComponent {
       const file = data.profileImage;
       const imageType = data.profileImageType;
       this.previewUrl = `data:${imageType};base64,${file}`;
+
+      this.supplierRegistrationForm.patchValue({
+      supplierBank: +data.supplierBank
+      });
     }
 
     public deleteData(data: any): void {

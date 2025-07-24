@@ -66,7 +66,7 @@ export class CertificatesRegistrationComponent {
       cIssuedDate: new FormControl('', [Validators.required]),
       cExpiredDate: new FormControl('', [Validators.required])
     });
-  }
+  } 
 
   ngOnInit(): void {
     this.getSeafarersList();
@@ -180,7 +180,7 @@ export class CertificatesRegistrationComponent {
       console.log('Form Submitted');
       console.log(this.certificatesRegistrationForm.value);
 
-      // if (!this.certificatesRegistrationForm.valid) return;
+      if (!this.certificatesRegistrationForm.valid) return;
       if (this.mode === 'add') {
         this.seafarersService.serviceCall(this.prepareSeafarerData()).subscribe({
           next: (response: any) => {
@@ -239,6 +239,12 @@ export class CertificatesRegistrationComponent {
     const file = data.certificateImage;
     const imageType = data.certificateImageType;
     this.previewUrl = `data:${imageType};base64,${file}`;
+
+    this.certificatesRegistrationForm.patchValue({
+    sidNo: +data.sidNo,
+    cIssuedDate: new Date(data.cIssuedDate).toISOString().substring(0, 10),
+    cExpiredDate: new Date(data.cExpiredDate).toISOString().substring(0, 10),
+    });
   }
 
   public deleteData(data: any): void {
