@@ -231,6 +231,7 @@ export class CertificatesRegistrationComponent {
   }
 
   public editData(data: any): void {
+    console.log(data);
     this.certificatesRegistrationForm.patchValue(data);
     this.saveButtonLabel = 'Edit';
     this.mode = 'edit';
@@ -239,6 +240,9 @@ export class CertificatesRegistrationComponent {
     const file = data.certificateImage;
     const imageType = data.certificateImageType;
     this.previewUrl = `data:${imageType};base64,${file}`;
+
+    this.certificatesRegistrationForm.controls['cIssuedPlace'].setValue(data.cIssuedPlace) // issue place patch
+
 
     this.certificatesRegistrationForm.patchValue({
     sidNo: +data.sidNo,

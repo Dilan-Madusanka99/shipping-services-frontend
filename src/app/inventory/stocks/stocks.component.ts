@@ -65,10 +65,10 @@ export class StocksComponent {
     private supplierRegistrationService : SupplierRegistrationService
     ) {
       this.stocksForm = this.fb.group({
-        itemNo : new FormControl('', [Validators.required]),
+        itemNo : new FormControl('', [Validators.required, ]),
         itemName: new FormControl('', [Validators.required]),
         supplierName : new FormControl('', [Validators.required]),
-        quantity : new FormControl('', [Validators.required, Validators.pattern(/^[0-9]+$/)]),
+        quantity : new FormControl('', [Validators.required, Validators.min(0)]),
         qtyMeasure : new FormControl('', [Validators.required]),
       });
     }

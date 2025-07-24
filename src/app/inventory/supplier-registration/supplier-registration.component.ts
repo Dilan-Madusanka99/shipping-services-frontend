@@ -53,15 +53,15 @@ export class SupplierRegistrationComponent {
         profileImageName: new FormControl(''),
         profileImageType: new FormControl(''),
         supplierNo: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
-        supplierName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(20), Validators.pattern(/^[A-Za-z]+$/)]),
+        supplierName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(25), Validators.pattern(/^[A-Za-z0-9.,\- ]+$/)]),
         supplierCategory: new FormControl('', [Validators.required]),
-        supplierSubCategory: new FormControl('', [Validators.minLength(1), Validators.maxLength(15), Validators.pattern(/^[A-Za-z]+$/)]),
-        supplierContactNo: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]),
-        supplierEmail: new FormControl('', [Validators.required, Validators.email]),
-        supplierAccName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(25), Validators.pattern(/^[A-Za-z]+$/)]),
+        supplierSubCategory: new FormControl('', [Validators.minLength(1), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9.,\- ]+$/)]),
+        supplierContactNo: new FormControl('', [Validators.required, Validators.pattern(/^0\d{9}$/)]),
+        supplierEmail: new FormControl('', [Validators.required, Validators.email]), 
+        supplierAccName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(25), Validators.pattern(/^[A-Za-z0-9.,\- ]+$/)]),
         supplierAccNo: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(20), Validators.pattern(/^\d+$/)]),
         supplierBank: new FormControl('', [Validators.required]),
-        supplierBranch: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]),
+        supplierBranch: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z. ]+$/)]),
       });
     }
 
@@ -223,9 +223,7 @@ export class SupplierRegistrationComponent {
       const imageType = data.profileImageType;
       this.previewUrl = `data:${imageType};base64,${file}`;
 
-      this.supplierRegistrationForm.patchValue({
-      supplierBank: +data.supplierBank
-      });
+      this.supplierRegistrationForm.controls['supplierBank'].setValue(data.supplierBank) // supplier bank patch edit
     }
 
     public deleteData(data: any): void {

@@ -59,7 +59,7 @@ export class CrewComplaintsComponent {
       sidNo: new FormControl('', [Validators.required]),
       imoNo: new FormControl('', [Validators.required]),
       vesselName: new FormControl(''),
-      complaintorName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z .]+$/)]),
+      complaintorName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\- ]+$/)]),
       complaintDate: new FormControl('', [Validators.required,]),
       complaintType: new FormControl('', [Validators.required]),
       complaint: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(255)])

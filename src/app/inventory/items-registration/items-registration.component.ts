@@ -47,7 +47,7 @@ export class ItemsRegistrationComponent {
         
         itemNo: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
         emNo: new FormControl('', [Validators.minLength(5), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
-        itemName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(20), Validators.pattern(/^[A-Za-z0-9]+$/)]),
+        itemName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(20), Validators.pattern(/^[A-Za-z0-9.,\- ]+$/)]),
         itemCategory: new FormControl('', [Validators.required]),
         profileImage: new FormControl('', [Validators.required]),
         profileImageName: new FormControl(''),
