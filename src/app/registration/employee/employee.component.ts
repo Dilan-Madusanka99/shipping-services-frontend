@@ -9,6 +9,7 @@ import { EmployeeServiceService } from 'src/app/services/employee/employee-servi
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { QrCodeComponent } from 'src/app/qr-container/qr-code/qr-code.component';
 import { MatDialog } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 export interface PeriodicElement {
   empNo: number;
@@ -244,13 +245,26 @@ export class EmployeeComponent implements OnInit {
     const id = data.id;
 
       // Confirmation prompt
-    const confirmDelete = window.confirm('Are you sure you want to delete this record?');
-      if (!confirmDelete) {
-      return; // If user cancels, do nothing
-    }
+    // const confirmDelete = window.confirm('Are you sure you want to delete this record?');
+    //   if (!confirmDelete) {
+    //   return; // If user cancels, do nothing
+    // }
 
     try {
-      this.employeeService.deleteData(id).subscribe({
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'You want to delete this?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result && !result.isConfirmed) {
+          return;
+        }
+
+        this.employeeService.deleteData(id).subscribe({
         next: (response: any) => {
           const index = this.dataSource.data.findIndex((element) => element.id === id);
 
@@ -263,6 +277,8 @@ export class EmployeeComponent implements OnInit {
         error: (error: any) => {
           this.messageService.showError('Action Failed With Error' + error);
         }
+      });
+
       });
     } catch (error) {
       console.log(error);
