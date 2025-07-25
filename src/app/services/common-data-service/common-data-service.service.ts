@@ -116,4 +116,19 @@ export class CommonDataServiceService implements OnInit {
 
     return this.http.get(requestUrl, { headers: headers });
   }
+
+  // payment monthly chart
+  public getPaymentsByMonth() {
+    const requestUrl = environment.baseUrl + '/common-data-service/payments_ByMonth';
+
+    let headers = {};
+    if (this.httpService.getAuthToken() !== null) {
+      headers = {
+        Authorization: 'Bearer ' + this.httpService.getAuthToken()
+      };
+    }
+
+    return this.http.get(requestUrl, { headers: headers });
+  }
+
 }

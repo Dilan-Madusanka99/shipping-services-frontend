@@ -9,9 +9,10 @@ import { SeafarersRegisteredByMonthlyComponent } from './seafarers-registered-by
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { VesselRegisteredByTypeComponent } from './vessel-registered-by-type/vessel-registered-by-type.component';
 import { EmployeeAttendanceByMonthComponent } from './employee-attendance-by-month/employee-attendance-by-month.component';
+import { PaymentsByMonthlyComponent } from './payments-by-monthly/payments-by-monthly.component';
 
 @NgModule({
-  declarations: [SeafarersRegisteredByMonthlyComponent, VesselRegisteredByTypeComponent, EmployeeAttendanceByMonthComponent],
+  declarations: [SeafarersRegisteredByMonthlyComponent, VesselRegisteredByTypeComponent, EmployeeAttendanceByMonthComponent, PaymentsByMonthlyComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(ChartsRoutes),

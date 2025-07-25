@@ -175,6 +175,13 @@ export class EmployeeAttendenceComponent {
 
   public deleteData(data: any): void {
     const id = data.id;
+    
+
+      // Confirmation box
+    // const confirmDelete = window.confirm('Are you sure you want to delete this record?');
+    //   if (!confirmDelete) {
+    //   return;
+    // }
 
     try {
       this.employeeAttendenceService.deleteData(id).subscribe({

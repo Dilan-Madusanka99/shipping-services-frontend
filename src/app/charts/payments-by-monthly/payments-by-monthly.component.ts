@@ -4,26 +4,26 @@ import { CommonDataServiceService } from 'src/app/services/common-data-service/c
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 
 @Component({
-  selector: 'app-vessel-registered-by-type',
+  selector: 'app-payments-by-monthly',
   standalone: false,
-  templateUrl: './vessel-registered-by-type.component.html',
-  styleUrl: './vessel-registered-by-type.component.scss'
+  templateUrl: './payments-by-monthly.component.html',
+  styleUrl: './payments-by-monthly.component.scss'
 })
-export class VesselRegisteredByTypeComponent {
-  @ViewChild('chart') chart: ChartComponent;
-  vesselRegisteredByTypeOptions: any = {};
+export class PaymentsByMonthlyComponent {
+    @ViewChild('chart') chart: ChartComponent;
+    paymentByMonthlyOptions: any = {};
   
     constructor(
       private commonDataService: CommonDataServiceService,
       private messageService: MessageServiceService
     ) {
-      this.vesselRegisteredByType();
+      this.paymentsByMonth();
     }
   
-    public vesselRegisteredByType(): void {
-      this.commonDataService.getVesselRegisteredByType().subscribe({
+    public paymentsByMonth(): void {
+      this.commonDataService.getPaymentsByMonth().subscribe({
         next: (response: any) => {
-          this.updateVesselRegisteredByType(response);
+          this.updatePaymentsByMonth(response);
         },
         error: (error: any) => {
           this.messageService.showError(error);
@@ -31,16 +31,16 @@ export class VesselRegisteredByTypeComponent {
       });
     }
   
-    public updateVesselRegisteredByType(data: any): void {
-      const vesselRegisteredByTypeData = data.map((data: any) => {
+    public updatePaymentsByMonth(data: any): void {
+      const paymentsByMonthData = data.map((data: any) => {
         return {
           x: data.month,
           y: data.cnt
         };
       });
   
-      this.vesselRegisteredByTypeOptions = {
-        series: [{ name: 'Vessels Registered Per Month', data: vesselRegisteredByTypeData }],
+      this.paymentByMonthlyOptions = {
+        series: [{ name: 'Supplier Payments Per Month', data: paymentsByMonthData }],
         chart: {
           type: 'bar',
           height: 350,
@@ -81,7 +81,7 @@ export class VesselRegisteredByTypeComponent {
           borderColor: '#e5e7eb'
         },
         title: {
-          text: 'Vessel Registered Per Type',
+          text: 'Supplier Payments Per Month',
           align: 'center',
           style: {
             color: '#1f2937',

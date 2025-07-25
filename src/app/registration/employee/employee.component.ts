@@ -243,6 +243,12 @@ export class EmployeeComponent implements OnInit {
   public deleteData(data: any): void {
     const id = data.id;
 
+      // Confirmation prompt
+    const confirmDelete = window.confirm('Are you sure you want to delete this record?');
+      if (!confirmDelete) {
+      return; // If user cancels, do nothing
+    }
+
     try {
       this.employeeService.deleteData(id).subscribe({
         next: (response: any) => {

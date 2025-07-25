@@ -40,7 +40,7 @@ export class EmployeeAttendanceByMonthComponent {
     });
 
     this.employeeAttendanceByMonthOptions = {
-      series: [{ name: 'Employee Attendence Per Month', data: employeeAttendanceByMonthData }],
+      series: [{ name: 'Employee Attendance Per Month', data: employeeAttendanceByMonthData }],
       chart: {
         type: 'bar',
         height: 350,

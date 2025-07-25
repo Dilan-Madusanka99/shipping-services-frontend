@@ -472,6 +472,16 @@ const NavigationItems = [
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
       },
+      {
+        id: 'paymentsMonthChart',
+        title: 'Supplier Payments',
+        type: 'item',
+        url: '/charts/paymentSByMonthly',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
     ]
   }
 ];
