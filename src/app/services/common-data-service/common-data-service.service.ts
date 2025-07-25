@@ -101,5 +101,19 @@ export class CommonDataServiceService implements OnInit {
     }
 
     return this.http.get(requestUrl, { headers: headers });
+  } 
+
+  // employee attendance monthly chart
+  public getEmployeeAttendanceByMonth() {
+    const requestUrl = environment.baseUrl + '/common-data-service/employee_AttendanceByMonth';
+
+    let headers = {};
+    if (this.httpService.getAuthToken() !== null) {
+      headers = {
+        Authorization: 'Bearer ' + this.httpService.getAuthToken()
+      };
+    }
+
+    return this.http.get(requestUrl, { headers: headers });
   }
 }

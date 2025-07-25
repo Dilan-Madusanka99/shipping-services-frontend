@@ -8,9 +8,10 @@ import { MatRadioModule } from '@angular/material/radio';
 import { SeafarersRegisteredByMonthlyComponent } from './seafarers-registered-by-monthly/seafarers-registered-by-monthly.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { VesselRegisteredByTypeComponent } from './vessel-registered-by-type/vessel-registered-by-type.component';
+import { EmployeeAttendanceByMonthComponent } from './employee-attendance-by-month/employee-attendance-by-month.component';
 
 @NgModule({
-  declarations: [SeafarersRegisteredByMonthlyComponent, VesselRegisteredByTypeComponent],
+  declarations: [SeafarersRegisteredByMonthlyComponent, VesselRegisteredByTypeComponent, EmployeeAttendanceByMonthComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(ChartsRoutes),

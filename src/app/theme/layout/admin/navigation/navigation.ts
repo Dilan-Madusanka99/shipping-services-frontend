@@ -462,6 +462,16 @@ const NavigationItems = [
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
       },
+      {
+        id: 'employeeAttendenceMonthChart',
+        title: 'Employee Attendance',
+        type: 'item',
+        url: '/charts/employeeAttendanceByMonth',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      },
     ]
   }
 ];
