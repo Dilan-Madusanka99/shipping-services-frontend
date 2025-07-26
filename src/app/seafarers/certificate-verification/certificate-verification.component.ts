@@ -299,13 +299,13 @@ constructor(
         this.populateData();
       }
 
-      onKey(eventTarget: any) {
+    onKey(eventTarget: any) {
     this.seafarersDropdown = this.search(eventTarget.value);
     }
 
     search(value: string) {
     let filter = value.toLowerCase();
-    return this.allSeafarersDropdown.filter((option: any) => option.name.toLowerCase().startsWith(filter));
+    return this.allSeafarersDropdown.filter((option: any) => option.sidNo.toLowerCase().startsWith(filter));
     }
 
     public onSeafarersSelect(event): void {

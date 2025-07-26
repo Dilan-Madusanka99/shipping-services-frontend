@@ -23,7 +23,6 @@ export class StockListComponent implements OnInit {
   sortDirection: 'asc' | 'desc' = 'asc';
   loading: boolean = true;
   error: string | null = null;
-  allItemListDetails: any;
   supplierList: any;
   itemList: any;
 

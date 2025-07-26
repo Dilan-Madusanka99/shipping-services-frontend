@@ -248,13 +248,14 @@ export class CrewComplaintsComponent {
     this.populateData();
   }
 
+  // sid link
   onSeafarersKey(eventTarget: any) {
     this.seafarersDropdown = this.seafarersSearch(eventTarget.value);
   }
 
   seafarersSearch(value: string) {
     let filter = value.toLowerCase();
-    return this.allSeafarersDropdown.filter((option: any) => option.name.toLowerCase().startsWith(filter));
+    return this.allSeafarersDropdown.filter((option: any) => option.sidNo.toLowerCase().startsWith(filter));
   }
 
   public onSeafarersSelect(event): void {
@@ -276,7 +277,7 @@ export class CrewComplaintsComponent {
 
   vesselSearch(value: string) {
     let filter = value.toLowerCase();
-    return this.allVesselDropdown.filter((option: any) => option.name.toLowerCase().startsWith(filter));
+    return this.allVesselDropdown.filter((option: any) => option.imoNo.toLowerCase().startsWith(filter));
   }
 
   public onVesselSelect(event): void {

@@ -300,7 +300,7 @@ export class CertificatesRegistrationComponent {
 
   search(value: string) {
     let filter = value.toLowerCase();
-    return this.allSeafarersDropdown.filter((option: any) => option.name.toLowerCase().startsWith(filter));
+    return this.allSeafarersDropdown.filter((option: any) => option.sidNo.toLowerCase().startsWith(filter));
   }
 
   public onSeafarersSelect(event): void {

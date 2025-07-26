@@ -79,7 +79,10 @@
 
         <mat-form-field class="example-full-width">
           <mat-label>Bank</mat-label>
-          <mat-select formControlName="supplierBank">
+          <mat-select [(ngModel)]="selectedSupplierBank" formControlName="supplierBank" (valueChange)="onSupplierBankSelect($event)">
+            <mat-form-field class="w-100">
+              <input matInput placeholder="Search for supplier bank..." (keyup)="onSupplierBankKey($event.target)" />
+            </mat-form-field>
             <mat-option value="Bank of Ceylon">Bank of Ceylon</mat-option>
             <mat-option value="Peoples Bank">Peoples Bank</mat-option>
             <mat-option value="Commercial Bank of Ceylon">Commercial Bank</mat-option>

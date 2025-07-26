@@ -38,7 +38,7 @@ const NavigationItems = [
         title: 'Dashboard',
         type: 'item',
         url: '/dashboard',
-        icon: 'feather icon-home',
+        icon: 'feather icon-grid',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         isVisible: true
@@ -57,7 +57,7 @@ const NavigationItems = [
         id: 'privilegeDetails',
         title: 'Privileges',
         type: 'collapse',
-        icon: 'ti ti-key',
+        icon: 'feather icon-user-check',
         auth: authenticationEnum.Privileges,
         isVisible: false,
         children: [
@@ -120,7 +120,7 @@ const NavigationItems = [
         title: 'Employee Details',
         type: 'item',
         url: '/register/employee',
-        icon: 'feather icon-home',
+        icon: 'feather icon-user',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -130,7 +130,7 @@ const NavigationItems = [
         title: 'Employee Attendence',
         type: 'item',
         url: '/register/employeeAttendence',
-        icon: 'feather icon-home',
+        icon: 'feather icon-calendar',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -150,7 +150,7 @@ const NavigationItems = [
         title: 'Vessel Details',
         type: 'item',
         url: '/vessels/vesselRegistration',
-        icon: 'feather icon-home',
+        icon: 'feather icon-anchor',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -160,7 +160,7 @@ const NavigationItems = [
         title: 'Job Vacancies',
         type: 'item',
         url: '/vessels/jobPosting',
-        icon: 'feather icon-home',
+        icon: 'feather icon-briefcase',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -190,7 +190,7 @@ const NavigationItems = [
         title: 'Crew Complaints',
         type: 'item',
         url: '/onboard/crewComplaints',
-        icon: 'feather icon-home',
+        icon: 'feather icon-alert-circle',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -210,7 +210,7 @@ const NavigationItems = [
         title: 'Personal Details',
         type: 'item',
         url: '/seafarers/seafarersRegistration',
-        icon: 'feather icon-home',
+        icon: 'feather icon-user',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -220,7 +220,7 @@ const NavigationItems = [
         title: 'Document Details',
         type: 'item',
         url: '/seafarers/otherDetailsRegistration',
-        icon: 'feather icon-home',
+        icon: 'feather icon-file',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -230,7 +230,7 @@ const NavigationItems = [
         title: 'Certificates Details',
         type: 'item',
         url: '/seafarers/certificatesRegistration',
-        icon: 'feather icon-home',
+        icon: 'feather icon-award',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -240,7 +240,7 @@ const NavigationItems = [
         title: 'Sea Services',
         type: 'item',
         url: '/seafarers/seaServices',
-        icon: 'feather icon-home',
+        icon: 'feather icon-anchor',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -250,7 +250,7 @@ const NavigationItems = [
         title: 'Certificates Verfication',
         type: 'item',
         url: '/seafarers/certificateVerification',
-        icon: 'feather icon-home',
+        icon: 'feather icon-check-circle',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -260,7 +260,7 @@ const NavigationItems = [
         title: 'Appointment',
         type: 'item',
         url: '/seafarers/appointment',
-        icon: 'feather icon-home',
+        icon: 'feather icon-calendar',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -280,7 +280,7 @@ const NavigationItems = [
         title: 'Items Details',
         type: 'item',
         url: '/inventory/itemsRegistration',
-        icon: 'feather icon-home',
+        icon: 'feather icon-package',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -290,7 +290,7 @@ const NavigationItems = [
         title: 'Stocks',
         type: 'item',
         url: '/inventory/stocks',
-        icon: 'feather icon-home',
+        icon: 'feather icon-box',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -300,7 +300,7 @@ const NavigationItems = [
         title: 'Supplier Details',
         type: 'item',
         url: '/inventory/supplierRegistration',
-        icon: 'feather icon-home',
+        icon: 'feather icon-user-plus',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -310,7 +310,7 @@ const NavigationItems = [
         title: 'Payment Details',
         type: 'item',
         url: '/inventory/payments',
-        icon: 'feather icon-home',
+        icon: 'feather icon-credit-card',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -330,7 +330,7 @@ const NavigationItems = [
         title: 'Login',
         type: 'item',
         url: '/login/login',
-        icon: 'feather icon-home',
+        icon: 'feather icon-log-in',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -349,7 +349,7 @@ const NavigationItems = [
         title: 'Employee List',
         type: 'item',
         url: '/reports/employee-list',
-        icon: 'feather icon-home',
+        icon: 'icon-clipboard',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -359,7 +359,7 @@ const NavigationItems = [
         title: 'Appointment List',
         type: 'item',
         url: '/reports/appointment-list',
-        icon: 'feather icon-home',
+        icon: 'icon-clipboard',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -369,7 +369,7 @@ const NavigationItems = [
         title: 'Vessel List',
         type: 'item',
         url: '/reports/vessel-list',
-        icon: 'feather icon-home',
+        icon: 'icon-clipboard',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -379,7 +379,7 @@ const NavigationItems = [
         title: 'Item List',
         type: 'item',
         url: '/reports/item-list',
-        icon: 'feather icon-home',
+        icon: 'icon-clipboard',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -389,7 +389,7 @@ const NavigationItems = [
         title: 'Stock List',
         type: 'item',
         url: '/reports/stock-list',
-        icon: 'feather icon-home',
+        icon: 'icon-clipboard',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -399,7 +399,7 @@ const NavigationItems = [
         title: 'Supplier List',
         type: 'item',
         url: '/reports/supplier-list',
-        icon: 'feather icon-home',
+        icon: 'icon-clipboard',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -409,7 +409,7 @@ const NavigationItems = [
         title: 'Payment List',
         type: 'item',
         url: '/reports/payment-list',
-        icon: 'feather icon-home',
+        icon: 'icon-clipboard',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -429,7 +429,7 @@ const NavigationItems = [
         title: 'Seafarer Registration',
         type: 'item',
         url: '/charts/seafarersRegisteredByMonthly',
-        icon: 'feather icon-home',
+        icon: 'feather icon-bar-chart',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -439,7 +439,7 @@ const NavigationItems = [
         title: 'Vessel Registration',
         type: 'item',
         url: '/charts/vesselRegisteredByType',
-        icon: 'feather icon-home',
+        icon: 'feather icon-bar-chart',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -449,7 +449,7 @@ const NavigationItems = [
         title: 'Employee Attendance',
         type: 'item',
         url: '/charts/employeeAttendanceByMonth',
-        icon: 'feather icon-home',
+        icon: 'feather icon-bar-chart',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false
@@ -459,7 +459,7 @@ const NavigationItems = [
         title: 'Supplier Payments',
         type: 'item',
         url: '/charts/paymentSByMonthly',
-        icon: 'feather icon-home',
+        icon: 'feather icon-bar-chart',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,
         breadcrumbs: false

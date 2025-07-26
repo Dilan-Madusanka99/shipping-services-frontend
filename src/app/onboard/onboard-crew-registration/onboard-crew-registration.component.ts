@@ -280,7 +280,7 @@ export class OnboardCrewRegistrationComponent {
 
     vesselSearch(value: string) {
       let filter = value.toLowerCase();
-       return this.allSeafarersDropdown.filter((option: any) => option.name.toLowerCase().startsWith(filter));
+       return this.allVesselDropdown.filter((option: any) => option.imoNo.toLowerCase().startsWith(filter));
     }
 
     public onVesselSelect(event): void {

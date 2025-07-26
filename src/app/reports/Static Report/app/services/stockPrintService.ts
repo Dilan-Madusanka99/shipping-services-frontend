@@ -81,7 +81,6 @@ export class StockPrintService {
               <th>Item</th>
               <th>Supplier</th>
               <th>Quantity</th>
-              <th>Measure</th>
             </tr>
           </thead>
           <tbody>

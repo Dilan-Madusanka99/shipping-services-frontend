@@ -6,6 +6,7 @@ import { MessageServiceService } from 'src/app/services/message-service/message-
 import { Payment } from '../../models/payment.module';
 import { PaymentPrintService } from '../../services/paymentPrintService';
 import { PaymentsService } from 'src/app/services/inventory/payments.service';
+import { SupplierRegistrationService } from 'src/app/services/inventory/supplier-registration.service';
 
 @Component({
   selector: 'app-payment-list',
@@ -21,6 +22,7 @@ export class PaymentListComponent implements OnInit {
   sortDirection: 'asc' | 'desc' = 'asc';
   loading: boolean = true;
   error: string | null = null;
+  supplierList: any;
 
   displayedColumns: string[] = ['paymentNo', 'itemName', 'supplierName', 'quantity', 'amount', 'paymentDate', 'paymentStatus'];
   dataSource: MatTableDataSource<any>;
@@ -30,12 +32,34 @@ export class PaymentListComponent implements OnInit {
   constructor(
     private paymentService: PaymentsService,
     private printService: PaymentPrintService,
-    private messageService: MessageServiceService
+    private messageService: MessageServiceService,
+    private supplierService: SupplierRegistrationService
   ) {}
 
   ngOnInit(): void {
     this.populateData();
+    this.getSupplierList();
   }
+
+  public getSupplierList(): void {
+    try{
+      this.supplierService.getData().subscribe({
+        next: (response: any) => {
+          this.supplierList = response;
+        },
+        error: (error: any) => {
+          this.messageService.showError("Error While Getting Suppliers List");
+        }
+      })
+    } catch(error) {
+      this.messageService.showError("Error While Getting Suppliers List");
+    }
+  }
+
+   public getSupplierName(id: any): string {
+    return this.supplierList.find((item: any) => item.id == +id).supplierName;
+  }
+
 
   search(): void {
     if (!this.searchTerm.trim()) {

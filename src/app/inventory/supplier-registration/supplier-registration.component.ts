@@ -42,6 +42,9 @@ export class SupplierRegistrationComponent {
   selectedFile: File | null = null;
   previewUrl!: SafeUrl | null; 
   isFileSelected = false;
+  allSupplierBankDropdown: any = [];
+  supplierBankDropdown: any = [];
+  selectedSupplierBank: string = '';
 
   constructor(
     private fb: FormBuilder, 
@@ -267,5 +270,28 @@ export class SupplierRegistrationComponent {
     public refreshData(): void {
       this.populateData();
     }
+
+    // Supplier Dropdown list
+      onSupplierBankKey(eventTarget: any) {
+      this.supplierBankDropdown = this.supplierBankSearch(eventTarget.value);
+      }
+
+      supplierBankSearch(value: string) {
+      let filter = value.toLowerCase();
+      return this.allSupplierBankDropdown.filter((option: any) => option.supplierBank.toLowerCase().startsWith(filter));
+      }
+
+      public onSupplierBankSelect(event): void {
+      let selectedSupplierBankId = event;
+
+      // this.patchFormSupplierBankValues(selectedSupplierBankId);
+      }
+
+      // public patchFormSupplierBankValues(supplierBankId: number): void {
+      //   this.supplierRegistrationForm.patchValue({
+      //   supplierBank: supplierBankId
+      //   });
+      // }
+
   
 }

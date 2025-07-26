@@ -272,16 +272,15 @@ export class StocksComponent {
 
     itemSearch(value: string) {
       let filter = value.toLowerCase();
-       return this.allItemDropdown.filter((option: any) => option.name.toLowerCase().startsWith(filter));
+       return this.allItemDropdown.filter((option: any) => option.itemNo.toLowerCase().startsWith(filter));
     }
 
     public onItemSelect(event): void {
-      let selectItmId = event;
-
-      this.patchFormItmValues(selectItmId);
+      let selectItemId = event;
+      this.patchFormItemValues(selectItemId);
     }
 
-  public patchFormItmValues(itemId: number): void {
+  public patchFormItemValues(itemId: number): void {
     this.allItemListDetails.forEach((itm) => {
       if (itm.id === itemId) {
         this.stocksForm.patchValue({
@@ -298,7 +297,7 @@ export class StocksComponent {
 
       supplierSearch(value: string) {
       let filter = value.toLowerCase();
-      return this.allSupplierDropdown.filter((option: any) => option.name.toLowerCase().startsWith(filter));
+      return this.allSupplierDropdown.filter((option: any) => option.supplierName.toLowerCase().startsWith(filter));
       }
 
       public onSupplierSelect(event): void {
