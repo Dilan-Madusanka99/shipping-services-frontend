@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { AppointmentService } from 'src/app/services/seafarers/appointment.service';
+import Swal from 'sweetalert2';
 
 export interface PeriodicElement {
   firstName: String;
@@ -153,6 +154,18 @@ export class AppointmentComponent implements OnInit{
         const id = data.id;
         
         try {
+          Swal.fire({
+            title: 'Are you sure?',
+            text: 'You want to delete this?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+          }).then((result) => {
+            if (result && !result.isConfirmed) {
+              return;
+            }
+
           this.appointmentService.deleteData(id).subscribe ({
             next: (response: any) => {
               const index = this.dataSource.data.findIndex((element) => element.id === id);
@@ -167,6 +180,8 @@ export class AppointmentComponent implements OnInit{
               this.messageService.showError('Action Failed With Error' + error);
             }
           });
+
+        });
         } catch (error) {
           console.log(error);
           this.messageService.showError('Action Failed With Error' + error);

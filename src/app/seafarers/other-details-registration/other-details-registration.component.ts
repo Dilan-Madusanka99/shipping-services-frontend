@@ -8,6 +8,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { OtherDetailsRegistrationService } from 'src/app/services/seafarers/other-details-registration.service';
 import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.service';
+import Swal from 'sweetalert2';
 
 export interface PeriodicElement {
   sidNo: String;
@@ -419,6 +420,18 @@ export class OtherDetailsRegistrationComponent {
     const id = data.id;
 
     try {
+          Swal.fire({
+            title: 'Are you sure?',
+            text: 'You want to delete this?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+          }).then((result) => {
+            if (result && !result.isConfirmed) {
+              return;
+            }
+            
       this.seafarersService.deleteData(id).subscribe({
         next: (response: any) => {
           const index = this.dataSource.data.findIndex((element) => element.id === id);
@@ -433,6 +446,8 @@ export class OtherDetailsRegistrationComponent {
           this.messageService.showError('Action Failed With Error' + error);
         }
       });
+
+    });
     } catch (error) {
       console.log(error);
       this.messageService.showError('Action Failed With Error' + error);

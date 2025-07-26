@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { SupplierRegistrationService } from 'src/app/services/inventory/supplier-registration.service';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
+import Swal from 'sweetalert2';
 
 export interface PeriodicElement {
   supplierNo: String;
@@ -230,6 +231,17 @@ export class SupplierRegistrationComponent {
       const id = data.id;
       
       try {
+            Swal.fire({
+              title: 'Are you sure?',
+              text: 'You want to delete this?',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Yes, delete it!',
+              cancelButtonText: 'Cancel',
+            }).then((result) => {
+              if (result && !result.isConfirmed) {
+                return;
+              }
         this.supplierRegistrationService.deleteData(id).subscribe ({
           next: (response: any) => {
             const index = this.dataSource.data.findIndex((element) => element.id === id);
@@ -244,6 +256,8 @@ export class SupplierRegistrationComponent {
             this.messageService.showError('Action Failed With Error' + error);
           }
         });
+
+      });
       } catch (error) {
         console.log(error);
         this.messageService.showError('Action Failed With Error' + error);

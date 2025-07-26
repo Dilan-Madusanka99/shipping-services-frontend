@@ -9,6 +9,7 @@ import { PaymentsService } from 'src/app/services/inventory/payments.service';
 import { StocksService } from 'src/app/services/inventory/stocks.service';
 import { SupplierRegistrationService } from 'src/app/services/inventory/supplier-registration.service';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
+import Swal from 'sweetalert2';
 
 export interface PeriodicElement {
   itemNo: String;
@@ -227,6 +228,17 @@ export class StocksComponent {
         const id = data.id;
         
         try {
+            Swal.fire({
+              title: 'Are you sure?',
+              text: 'You want to delete this?',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Yes, delete it!',
+              cancelButtonText: 'Cancel',
+            }).then((result) => {
+              if (result && !result.isConfirmed) {
+                return;
+              }
           this.stocksService.deleteData(id).subscribe ({
             next: (response: any) => {
               const index = this.dataSource.data.findIndex((element) => element.id === id);
@@ -241,6 +253,8 @@ export class StocksComponent {
               this.messageService.showError('Action Failed With Error' + error);
             }
           });
+
+        });
         } catch (error) {
           console.log(error);
           this.messageService.showError('Action Failed With Error' + error);

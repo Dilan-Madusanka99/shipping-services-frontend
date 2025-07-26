@@ -8,6 +8,7 @@ import { MessageServiceService } from 'src/app/services/message-service/message-
 import { OnboardCrewRegistrationService } from 'src/app/services/onboard/onboard-crew-registration.service';
 import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.service';
 import { VesselRegistrationService } from 'src/app/services/vessels/vessel-registration.service';
+import Swal from 'sweetalert2';
 
 export interface PeriodicElement {
   sidNo: string;
@@ -233,6 +234,18 @@ export class OnboardCrewRegistrationComponent {
     const id = data.id;
 
     try {
+          Swal.fire({
+            title: 'Are you sure?',
+            text: 'You want to delete this?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+          }).then((result) => {
+            if (result && !result.isConfirmed) {
+              return;
+            }
+            
       this.onboardCrewRegistrationService.deleteData(id).subscribe({
         next: (response: any) => {
           const index = this.dataSource.data.findIndex((element) => element.id === id);
@@ -247,6 +260,8 @@ export class OnboardCrewRegistrationComponent {
           this.messageService.showError('Action Failed With Error' + error);
         }
       });
+
+    });
     } catch (error) {
       console.log(error);
       this.messageService.showError('Action Failed With Error' + error);
@@ -291,7 +306,7 @@ export class OnboardCrewRegistrationComponent {
 
   seafarerSearch(value: string) {
     let filter = value.toLowerCase();
-    return this.allSeafarersDropdown.filter((option: any) => option.name.toLowerCase().startsWith(filter));
+    return this.allSeafarersDropdown.filter((option: any) => option.sidNo.toLowerCase().startsWith(filter));
   }
 
   public onSeafarersSelect(event): void {

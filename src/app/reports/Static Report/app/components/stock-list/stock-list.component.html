@@ -26,7 +26,7 @@
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
       <ng-container matColumnDef="itemNo">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Item No </th>
-        <td mat-cell *matCellDef="let element"> {{element.itemNo}} </td>
+        <td mat-cell *matCellDef="let element"> {{getItemNo(element.itemNo)}} </td>
       </ng-container>
     
       <ng-container matColumnDef="itemName">
@@ -36,7 +36,7 @@
     
       <ng-container matColumnDef="supplierName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Supplier Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.supplierName}} </td>
+        <td mat-cell *matCellDef="let element"> {{getSupplierName(element.supplierName)}} </td>
       </ng-container>
 
       <ng-container matColumnDef="quantity">

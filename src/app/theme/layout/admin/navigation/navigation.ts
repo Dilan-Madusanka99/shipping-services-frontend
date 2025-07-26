@@ -86,58 +86,19 @@ const NavigationItems = [
     ]
   },
 
-  {
-    id: 'login',
-    title: 'Login',
-    type: 'group',
-    icon: 'icon-navigation',
-    auth: authenticationEnum.Home,
-    children: [
-      {
-        id: 'LoginDet',
-        title: 'Login',
-        type: 'item',
-        url: '/login/login',
-        icon: 'feather icon-home',
-        classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
-        breadcrumbs: false
-      }
-    ]
-  },
-
-  {
-    id: 'user',
-    title: 'User',
-    type: 'group',
-    icon: 'icon-navigation',
-    auth: authenticationEnum.Home,
-    children: [
-      {
-        id: 'UserProfileDet',
-        title: 'User Profile',
-        type: 'item',
-        url: '/user/userProfile',
-        icon: 'feather icon-home',
-        classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
-        breadcrumbs: false
-      }
-    ]
-  },
 
   // {
-  //   id: 'FormDemo',
-  //   title: 'Form Demo',
+  //   id: 'user',
+  //   title: 'User',
   //   type: 'group',
   //   icon: 'icon-navigation',
   //   auth: authenticationEnum.Home,
   //   children: [
   //     {
-  //       id: 'FormDemoDet',
-  //       title: 'Form Demo',
+  //       id: 'UserProfileDet',
+  //       title: 'User Profile',
   //       type: 'item',
-  //       url: '/pages/form-demo',
+  //       url: '/user/userProfile',
   //       icon: 'feather icon-home',
   //       classes: 'nav-item',
   //       auth: authenticationEnum.Home_Dashboard,
@@ -145,6 +106,7 @@ const NavigationItems = [
   //     }
   //   ]
   // },
+
 
   {
     id: 'registration',
@@ -348,6 +310,26 @@ const NavigationItems = [
         title: 'Payment Details',
         type: 'item',
         url: '/inventory/payments',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Home_Dashboard,
+        breadcrumbs: false
+      }
+    ]
+  },
+  
+  {
+    id: 'login',
+    title: 'Login',
+    type: 'group',
+    icon: 'icon-navigation',
+    auth: authenticationEnum.Home,
+    children: [
+      {
+        id: 'LoginDet',
+        title: 'Login',
+        type: 'item',
+        url: '/login/login',
         icon: 'feather icon-home',
         classes: 'nav-item',
         auth: authenticationEnum.Home_Dashboard,

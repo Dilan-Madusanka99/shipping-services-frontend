@@ -9,6 +9,7 @@ import { QrCodeComponent } from 'src/app/qr-container/qr-code/qr-code.component'
 import { EmployeeAttendenceService } from 'src/app/services/employee/employee-attendence.service';
 import { EmployeeServiceService } from 'src/app/services/employee/employee-service.service';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
+import Swal from 'sweetalert2';
 
 export interface PeriodicElement {
   attandenceDate: Date;
@@ -175,15 +176,20 @@ export class EmployeeAttendenceComponent {
 
   public deleteData(data: any): void {
     const id = data.id;
-    
-
-      // Confirmation box
-    // const confirmDelete = window.confirm('Are you sure you want to delete this record?');
-    //   if (!confirmDelete) {
-    //   return;
-    // }
 
     try {
+      Swal.fire({
+              title: 'Are you sure?',
+              text: 'You want to delete this?',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Yes, delete it!',
+              cancelButtonText: 'Cancel',
+            }).then((result) => {
+              if (result && !result.isConfirmed) {
+                return;
+              }
+              
       this.employeeAttendenceService.deleteData(id).subscribe({
         next: (response: any) => {
           const index = this.dataSource.data.findIndex((element) => element.id === id);
@@ -197,6 +203,8 @@ export class EmployeeAttendenceComponent {
         error: (error: any) => {
           this.messageService.showError('Action Failed With Error' + error);
         }
+      });
+
       });
     } catch (error) {
       console.log(error);

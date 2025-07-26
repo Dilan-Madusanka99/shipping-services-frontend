@@ -34,7 +34,7 @@ export class VesselRegisteredByTypeComponent {
     public updateVesselRegisteredByType(data: any): void {
       const vesselRegisteredByTypeData = data.map((data: any) => {
         return {
-          x: data.month,
+          x: data.type,
           y: data.cnt
         };
       });

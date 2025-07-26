@@ -6,6 +6,8 @@ import { MessageServiceService } from 'src/app/services/message-service/message-
 import { Stock } from '../../models/stock.model';
 import { StocksService } from 'src/app/services/inventory/stocks.service';
 import { StockPrintService } from '../../services/stockPrintService';
+import { SupplierRegistrationService } from 'src/app/services/inventory/supplier-registration.service';
+import { ItemsRegistrationService } from 'src/app/services/inventory/items-registration.service';
 
 @Component({
   selector: 'app-stock-list',
@@ -21,6 +23,9 @@ export class StockListComponent implements OnInit {
   sortDirection: 'asc' | 'desc' = 'asc';
   loading: boolean = true;
   error: string | null = null;
+  allItemListDetails: any;
+  supplierList: any;
+  itemList: any;
 
   displayedColumns: string[] = ['itemNo', 'itemName', 'supplierName', 'quantity'];
   dataSource: MatTableDataSource<any>;
@@ -30,11 +35,52 @@ export class StockListComponent implements OnInit {
   constructor(
     private stockService: StocksService,
     private printService: StockPrintService,
-    private messageService: MessageServiceService
+    private messageService: MessageServiceService,
+    private supplierService: SupplierRegistrationService,
+    private itemService: ItemsRegistrationService
   ) {}
 
   ngOnInit(): void {
+    this.getSupplierList();
+    this.getItemList();
     this.populateData();
+  }
+
+  public getSupplierList(): void {
+    try{
+      this.supplierService.getData().subscribe({
+        next: (response: any) => {
+          this.supplierList = response;
+        },
+        error: (error: any) => {
+          this.messageService.showError("Error While Getting Suppliers List");
+        }
+      })
+    } catch(error) {
+      this.messageService.showError("Error While Getting Suppliers List");
+    }
+  }
+
+  public getItemList(): void {
+    try{
+      this.itemService.getData().subscribe({
+        next: (response: any) => {
+          this.itemList = response;
+        },
+        error: (error: any) => {
+          this.messageService.showError("Error While Getting Item List");
+        }
+      })
+    } catch(error) {
+      this.messageService.showError("Error While Getting Item List");
+    }
+  }
+
+  public getSupplierName(id: any): string {
+    return this.supplierList.find((item: any) => item.id == +id).supplierName;
+  }
+  public getItemNo(id: any): string {
+    return this.itemList.find((item: any) => item.id == +id).itemNo;
   }
 
 

@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.service';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import Swal from 'sweetalert2';
 
 export interface PeriodicElement {
   sidno: String;
@@ -255,6 +256,18 @@ export class SeafarersRegistrationComponent {
         const id = data.id;
         
         try {
+          Swal.fire({
+            title: 'Are you sure?',
+            text: 'You want to delete this?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+          }).then((result) => {
+            if (result && !result.isConfirmed) {
+              return;
+            }
+            
           this.seafarersService.deleteData(id).subscribe ({
             next: (response: any) => {
               const index = this.dataSource.data.findIndex((element) => element.id === id);
@@ -269,6 +282,8 @@ export class SeafarersRegistrationComponent {
               this.messageService.showError('Action Failed With Error' + error);
             }
           });
+
+        });
         } catch (error) {
           console.log(error);
           this.messageService.showError('Action Failed With Error' + error);
