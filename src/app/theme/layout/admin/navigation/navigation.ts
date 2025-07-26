@@ -16,7 +16,7 @@ export interface NavigationItem {
   breadcrumbs?: boolean;
   function?: any;
   children?: Navigation[];
-  auth?: number;
+  auth?: number[];
   isVisible: boolean;
 }
 
@@ -30,7 +30,7 @@ const NavigationItems = [
     title: 'Home',
     type: 'group',
     icon: 'icon-navigation',
-    auth: authenticationEnum.Home,
+    auth: [authenticationEnum.Home_Dashboard],
     isVisible: false,
     children: [
       {
@@ -40,7 +40,7 @@ const NavigationItems = [
         url: '/dashboard',
         icon: 'feather icon-grid',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Home_Dashboard],
         isVisible: true
       }
     ]
@@ -51,14 +51,14 @@ const NavigationItems = [
     type: 'group',
     icon: 'icon-navigation',
     isVisible: false,
-    auth: authenticationEnum.Privileges,
+    auth: [authenticationEnum.System_Privileges, authenticationEnum.Privilege_Groups],
     children: [
       {
         id: 'privilegeDetails',
         title: 'Privileges',
         type: 'collapse',
         icon: 'feather icon-user-check',
-        auth: authenticationEnum.Privileges,
+        auth: [authenticationEnum.System_Privileges, authenticationEnum.Privilege_Groups],
         isVisible: false,
         children: [
           {
@@ -68,7 +68,7 @@ const NavigationItems = [
             url: '/privileges/system-privileges',
             icon: 'ti ti-dashboard',
             breadcrumbs: false,
-            auth: authenticationEnum.System_Privileges,
+            auth: [authenticationEnum.System_Privileges],
             isVisible: false
           },
           {
@@ -78,14 +78,13 @@ const NavigationItems = [
             url: '/privileges/privilege-groups',
             icon: 'ti ti-dashboard',
             breadcrumbs: false,
-            auth: authenticationEnum.Privilege_Groups,
+            auth: [authenticationEnum.Privilege_Groups],
             isVisible: false
           }
         ]
       }
     ]
   },
-
 
   // {
   //   id: 'user',
@@ -107,13 +106,12 @@ const NavigationItems = [
   //   ]
   // },
 
-
   {
     id: 'registration',
     title: 'Employee',
     type: 'group',
     icon: 'icon-navigation',
-    auth: authenticationEnum.Home,
+    auth: [authenticationEnum.Employee_Details, authenticationEnum.Employee_Attendence],
     children: [
       {
         id: 'EmployeeDet',
@@ -122,7 +120,7 @@ const NavigationItems = [
         url: '/register/employee',
         icon: 'feather icon-user',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: authenticationEnum.Employee_Details,
         breadcrumbs: false
       },
       {
@@ -132,7 +130,7 @@ const NavigationItems = [
         url: '/register/employeeAttendence',
         icon: 'feather icon-calendar',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: authenticationEnum.Employee_Attendence,
         breadcrumbs: false
       }
     ]
@@ -143,7 +141,7 @@ const NavigationItems = [
     title: 'vessels',
     type: 'group',
     icon: 'icon-navigation',
-    auth: authenticationEnum.Home,
+    auth: [authenticationEnum.Vessle_Details, authenticationEnum.Job_Vacancies],
     children: [
       {
         id: 'VesselRegistrationDet',
@@ -152,7 +150,7 @@ const NavigationItems = [
         url: '/vessels/vesselRegistration',
         icon: 'feather icon-anchor',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Vessle_Details],
         breadcrumbs: false
       },
       {
@@ -162,7 +160,7 @@ const NavigationItems = [
         url: '/vessels/jobPosting',
         icon: 'feather icon-briefcase',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Job_Vacancies],
         breadcrumbs: false
       }
     ]
@@ -173,7 +171,7 @@ const NavigationItems = [
     title: 'Onboard Crew',
     type: 'group',
     icon: 'icon-navigation',
-    auth: authenticationEnum.Home,
+    auth: [authenticationEnum.Certificate_Details, authenticationEnum.Crew_Complaints],
     children: [
       {
         id: 'OnboardDet',
@@ -182,7 +180,7 @@ const NavigationItems = [
         url: '/onboard/onboardCrewRegistration',
         icon: 'feather icon-home',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: authenticationEnum.Certificate_Details,
         breadcrumbs: false
       },
       {
@@ -192,7 +190,7 @@ const NavigationItems = [
         url: '/onboard/crewComplaints',
         icon: 'feather icon-alert-circle',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: authenticationEnum.Crew_Complaints,
         breadcrumbs: false
       }
     ]
@@ -203,7 +201,14 @@ const NavigationItems = [
     title: 'Seafarers',
     type: 'group',
     icon: 'icon-navigation',
-    auth: authenticationEnum.Home,
+    auth: [
+      authenticationEnum.Personal_Details,
+      authenticationEnum.Document_Details,
+      authenticationEnum.Certificate_Details,
+      authenticationEnum.Sea_Services,
+      authenticationEnum.Certificate_Verification,
+      authenticationEnum.Appointment
+    ],
     children: [
       {
         id: 'SeafarersRegistrationDet',
@@ -212,7 +217,7 @@ const NavigationItems = [
         url: '/seafarers/seafarersRegistration',
         icon: 'feather icon-user',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Personal_Details],
         breadcrumbs: false
       },
       {
@@ -222,7 +227,7 @@ const NavigationItems = [
         url: '/seafarers/otherDetailsRegistration',
         icon: 'feather icon-file',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Document_Details],
         breadcrumbs: false
       },
       {
@@ -232,7 +237,7 @@ const NavigationItems = [
         url: '/seafarers/certificatesRegistration',
         icon: 'feather icon-award',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Certificate_Details],
         breadcrumbs: false
       },
       {
@@ -242,7 +247,7 @@ const NavigationItems = [
         url: '/seafarers/seaServices',
         icon: 'feather icon-anchor',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Sea_Services],
         breadcrumbs: false
       },
       {
@@ -252,7 +257,7 @@ const NavigationItems = [
         url: '/seafarers/certificateVerification',
         icon: 'feather icon-check-circle',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Certificate_Verification],
         breadcrumbs: false
       },
       {
@@ -262,9 +267,9 @@ const NavigationItems = [
         url: '/seafarers/appointment',
         icon: 'feather icon-calendar',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Appointment],
         breadcrumbs: false
-      },
+      }
     ]
   },
 
@@ -273,7 +278,12 @@ const NavigationItems = [
     title: 'Inventory & Supplier & Payment',
     type: 'group',
     icon: 'icon-navigation',
-    auth: authenticationEnum.Home,
+    auth: [
+      authenticationEnum.Item_Details,
+      authenticationEnum.Stocks,
+      authenticationEnum.Supplier_Details,
+      authenticationEnum.Payment_Details
+    ],
     children: [
       {
         id: 'InventoryDet',
@@ -282,7 +292,7 @@ const NavigationItems = [
         url: '/inventory/itemsRegistration',
         icon: 'feather icon-package',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Item_Details],
         breadcrumbs: false
       },
       {
@@ -292,7 +302,7 @@ const NavigationItems = [
         url: '/inventory/stocks',
         icon: 'feather icon-box',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Stocks],
         breadcrumbs: false
       },
       {
@@ -302,7 +312,7 @@ const NavigationItems = [
         url: '/inventory/supplierRegistration',
         icon: 'feather icon-user-plus',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Supplier_Details],
         breadcrumbs: false
       },
       {
@@ -312,18 +322,18 @@ const NavigationItems = [
         url: '/inventory/payments',
         icon: 'feather icon-credit-card',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Payment_Details],
         breadcrumbs: false
       }
     ]
   },
-  
+
   {
     id: 'login',
     title: 'Login',
     type: 'group',
     icon: 'icon-navigation',
-    auth: authenticationEnum.Home,
+    auth: [authenticationEnum.Login],
     children: [
       {
         id: 'LoginDet',
@@ -332,7 +342,7 @@ const NavigationItems = [
         url: '/login/login',
         icon: 'feather icon-log-in',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Login],
         breadcrumbs: false
       }
     ]
@@ -342,7 +352,15 @@ const NavigationItems = [
     title: 'Reports',
     type: 'group',
     icon: 'icon-navigation',
-    auth: authenticationEnum.Home,
+    auth: [
+      authenticationEnum.Employee_List,
+      authenticationEnum.Appointment_List,
+      authenticationEnum.Vessle_List,
+      authenticationEnum.Item_List,
+      authenticationEnum.Stock_List,
+      authenticationEnum.Supplier_List,
+      authenticationEnum.Payment_List
+    ],
     children: [
       {
         id: 'employeeList',
@@ -351,7 +369,7 @@ const NavigationItems = [
         url: '/reports/employee-list',
         icon: 'icon-clipboard',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Employee_List],
         breadcrumbs: false
       },
       {
@@ -361,7 +379,7 @@ const NavigationItems = [
         url: '/reports/appointment-list',
         icon: 'icon-clipboard',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Appointment_List],
         breadcrumbs: false
       },
       {
@@ -371,7 +389,7 @@ const NavigationItems = [
         url: '/reports/vessel-list',
         icon: 'icon-clipboard',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Vessle_List],
         breadcrumbs: false
       },
       {
@@ -381,7 +399,7 @@ const NavigationItems = [
         url: '/reports/item-list',
         icon: 'icon-clipboard',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Item_List],
         breadcrumbs: false
       },
       {
@@ -391,7 +409,7 @@ const NavigationItems = [
         url: '/reports/stock-list',
         icon: 'icon-clipboard',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Stock_List],
         breadcrumbs: false
       },
       {
@@ -401,7 +419,7 @@ const NavigationItems = [
         url: '/reports/supplier-list',
         icon: 'icon-clipboard',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Supplier_List],
         breadcrumbs: false
       },
       {
@@ -411,9 +429,9 @@ const NavigationItems = [
         url: '/reports/payment-list',
         icon: 'icon-clipboard',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Payment_List],
         breadcrumbs: false
-      },
+      }
     ]
   },
 
@@ -422,7 +440,12 @@ const NavigationItems = [
     title: 'Charts',
     type: 'group',
     icon: 'icon-navigation',
-    auth: authenticationEnum.Home,
+    auth: [
+      authenticationEnum.Seafarer_Reistration_Chart,
+      authenticationEnum.Vessle_Registration_Chart,
+      authenticationEnum.Employee_Attendence_Chart,
+      authenticationEnum.Supplier_Payment_Chart
+    ],
     children: [
       {
         id: 'seafarersMontlyRegistrationChart',
@@ -431,7 +454,7 @@ const NavigationItems = [
         url: '/charts/seafarersRegisteredByMonthly',
         icon: 'feather icon-bar-chart',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Seafarer_Reistration_Chart],
         breadcrumbs: false
       },
       {
@@ -441,7 +464,7 @@ const NavigationItems = [
         url: '/charts/vesselRegisteredByType',
         icon: 'feather icon-bar-chart',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Vessle_Registration_Chart],
         breadcrumbs: false
       },
       {
@@ -451,7 +474,7 @@ const NavigationItems = [
         url: '/charts/employeeAttendanceByMonth',
         icon: 'feather icon-bar-chart',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Employee_Attendence_Chart],
         breadcrumbs: false
       },
       {
@@ -461,9 +484,9 @@ const NavigationItems = [
         url: '/charts/paymentSByMonthly',
         icon: 'feather icon-bar-chart',
         classes: 'nav-item',
-        auth: authenticationEnum.Home_Dashboard,
+        auth: [authenticationEnum.Supplier_Payment_Chart],
         breadcrumbs: false
-      },
+      }
     ]
   }
 ];

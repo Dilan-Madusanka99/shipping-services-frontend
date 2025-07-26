@@ -131,6 +131,14 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
+.logo-top-left {
+    position: absolute;
+    top: 20px; /* distance from top */
+    left: 20px; /* distance from left */
+    z-index: 1000; /* make sure it stays on top */
+    height: 60px; /* adjust size as needed */
+}
+
 .carousel-track {
     display: flex;
     transition: transform 0.5s ease;

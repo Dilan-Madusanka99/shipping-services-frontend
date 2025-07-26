@@ -12,7 +12,7 @@ import { MessageServiceService } from 'src/app/services/message-service/message-
   selector: 'app-add-remove-table',
   standalone: false,
   templateUrl: './add-remove-table.component.html',
-  styleUrl: './add-remove-table.component.scss',
+  styleUrl: './add-remove-table.component.scss'
 })
 export class AddRemoveTableComponent implements OnInit {
   sourceDisplayedColumns: string[] = ['sourceSelect', 'id', 'description'];
@@ -36,20 +36,12 @@ export class AddRemoveTableComponent implements OnInit {
   ngOnInit(): void {
     // table initialize
     this.commonDataService
-      .getAvailablePrivilegeList(
-        'get',
-        this.data.availableUrl,
-        +this.data.selectedItem.id
-      )
+      .getAvailablePrivilegeList('get', this.data.availableUrl, +this.data.selectedItem.id)
       .then((responseSource: any) => {
         this.sourceTableData.data = responseSource;
         this.sourceTableData.data = [...this.sourceTableData.data];
         this.commonDataService
-          .getAssignedPrivilegeList(
-            'get',
-            this.data.assignedUrl,
-            +this.data.selectedItem.id
-          )
+          .getAssignedPrivilegeList('get', this.data.assignedUrl, +this.data.selectedItem.id)
           .then((responseTarget: any) => {
             this.targetTableData.data = responseTarget;
             this.targetTableData.data = [...this.targetTableData.data];
@@ -95,18 +87,14 @@ export class AddRemoveTableComponent implements OnInit {
     if (!row) {
       return `${this.isAllSourceSelected() ? 'deselect' : 'select'} all`;
     }
-    return `${
-      this.sourceSelection.isSelected(row) ? 'deselect' : 'select'
-    } row ${row.position + 1}`;
+    return `${this.sourceSelection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 
   targetCheckboxLabel(row?: any): string {
     if (!row) {
       return `${this.isAllTargetSelected() ? 'deselect' : 'select'} all`;
     }
-    return `${
-      this.targetSelection.isSelected(row) ? 'deselect' : 'select'
-    } row ${row.position + 1}`;
+    return `${this.targetSelection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 
   onSourceTableDataSelect(row?: any) {
@@ -120,13 +108,11 @@ export class AddRemoveTableComponent implements OnInit {
     this.sourceSelection.selected.forEach((item) => {
       const inputElement = {
         id: item.id,
-        description: item.description,
+        description: item.description
       };
 
       this.targetTableData.data.push(inputElement);
-      this.sourceTableData.data = this.sourceTableData.data.filter(
-        (removingItem) => removingItem.id != item.id
-      );
+      this.sourceTableData.data = this.sourceTableData.data.filter((removingItem) => removingItem.id != item.id);
       this.sourceSelection.deselect(item);
     });
 
@@ -138,13 +124,11 @@ export class AddRemoveTableComponent implements OnInit {
     this.targetSelection.selected.forEach((item) => {
       const inputElement = {
         id: item.id,
-        description: item.description,
+        description: item.description
       };
 
       this.sourceTableData.data.push(inputElement);
-      this.targetTableData.data = this.targetTableData.data.filter(
-        (removingItem) => removingItem.id != item.id
-      );
+      this.targetTableData.data = this.targetTableData.data.filter((removingItem) => removingItem.id != item.id);
       this.targetSelection.deselect(item);
     });
 
@@ -161,25 +145,27 @@ export class AddRemoveTableComponent implements OnInit {
 
     const body = {
       removedData: removedData,
-      addedData: addedData,
+      addedData: addedData
     };
 
-    this.commonDataService.saveData('post', url, body).then((response: any) => {
-      this.cacheService.refreshCache(this.httpService.getUserId()!);
-    });
+    this.commonDataService
+      .saveData('post', url, body)
+      .then((response: any) => {
+        this.cacheService.refreshCache(this.httpService.getUserId()!);
+        this._messageService.showSuccess('Data saved Successfully!');
+      })
+      .catch((error) => {
+        this._messageService.showError('Error while adding privileges');
+      });
 
     this.isDisableButton = true;
   }
 
   public getRemovedItems() {
-    return this.oldAssignedData.filter(
-      (item: any) => !this.targetTableData.data.includes(item)
-    );
+    return this.oldAssignedData.filter((item: any) => !this.targetTableData.data.includes(item));
   }
   public getAddedItems() {
-    return this.oldAvailableData.filter(
-      (item: any) => !this.sourceTableData.data.includes(item)
-    );
+    return this.oldAvailableData.filter((item: any) => !this.sourceTableData.data.includes(item));
   }
 
   public resetData(): void {
