@@ -1,13 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
+import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.service';
+import { JobPostingServiceService } from 'src/app/services/vessels/job-posting-service.service';
 
 interface Job {
   id: number;
   title: string;
-  company: string;
-  location: string;
-  salary: string;
-  description: string;
+  company?: string;
+  location?: string;
+  salary?: string;
+  description?: string;
+  jobPostImage?: string;
 }
 
 interface Appointment {
@@ -26,7 +30,7 @@ interface Appointment {
   templateUrl: './first-page.component.html',
   styleUrl: './first-page.component.scss'
 })
-export class FirstPageComponent {
+export class FirstPageComponent implements OnInit {
   currentSlide = 0;
   showAppointmentModal = false;
   showSuccessModal = false;
@@ -44,62 +48,101 @@ export class FirstPageComponent {
   };
 
   submittedAppointment: Appointment | null = null;
-
+  openJobs: any[] = [];
   jobs: Job[] = [
-    {
-      id: 1,
-      title: 'Senior Software Engineer',
-      company: 'TechCorp Inc.',
-      location: 'San Francisco, CA',
-      salary: '$120,000 - $150,000',
-      description: 'Join our innovative team building cutting-edge software solutions.'
-    },
-    {
-      id: 2,
-      title: 'Product Manager',
-      company: 'Innovation Labs',
-      location: 'New York, NY',
-      salary: '$100,000 - $130,000',
-      description: 'Lead product development and strategy for our flagship platform.'
-    },
-    {
-      id: 3,
-      title: 'UX Designer',
-      company: 'Design Studio',
-      location: 'Los Angeles, CA',
-      salary: '$80,000 - $110,000',
-      description: 'Create beautiful and intuitive user experiences for our mobile app.'
-    },
-    {
-      id: 4,
-      title: 'Data Scientist',
-      company: 'Analytics Pro',
-      location: 'Seattle, WA',
-      salary: '$110,000 - $140,000',
-      description: 'Analyze complex data sets to drive business insights and decisions.'
-    },
-    {
-      id: 5,
-      title: 'Marketing Manager',
-      company: 'Brand Solutions',
-      location: 'Chicago, IL',
-      salary: '$70,000 - $90,000',
-      description: 'Develop and execute marketing strategies to grow our brand presence.'
-    },
-    {
-      id: 6,
-      title: 'DevOps Engineer',
-      company: 'CloudTech',
-      location: 'Austin, TX',
-      salary: '$95,000 - $125,000',
-      description: 'Build and maintain scalable cloud infrastructure and CI/CD pipelines.'
-    }
+    // {
+    //   id: 1,
+    //   title: 'Senior Software Engineer',
+    //   company: 'TechCorp Inc.',
+    //   location: 'San Francisco, CA',
+    //   salary: '$120,000 - $150,000',
+    //   description: 'Join our innovative team building cutting-edge software solutions.'
+    // },
+    // {
+    //   id: 2,
+    //   title: 'Product Manager',
+    //   company: 'Innovation Labs',
+    //   location: 'New York, NY',
+    //   salary: '$100,000 - $130,000',
+    //   description: 'Lead product development and strategy for our flagship platform.'
+    // },
+    // {
+    //   id: 3,
+    //   title: 'UX Designer',
+    //   company: 'Design Studio',
+    //   location: 'Los Angeles, CA',
+    //   salary: '$80,000 - $110,000',
+    //   description: 'Create beautiful and intuitive user experiences for our mobile app.'
+    // },
+    // {
+    //   id: 4,
+    //   title: 'Data Scientist',
+    //   company: 'Analytics Pro',
+    //   location: 'Seattle, WA',
+    //   salary: '$110,000 - $140,000',
+    //   description: 'Analyze complex data sets to drive business insights and decisions.'
+    // },
+    // {
+    //   id: 5,
+    //   title: 'Marketing Manager',
+    //   company: 'Brand Solutions',
+    //   location: 'Chicago, IL',
+    //   salary: '$70,000 - $90,000',
+    //   description: 'Develop and execute marketing strategies to grow our brand presence.'
+    // },
+    // {
+    //   id: 6,
+    //   title: 'DevOps Engineer',
+    //   company: 'CloudTech',
+    //   location: 'Austin, TX',
+    //   salary: '$95,000 - $125,000',
+    //   description: 'Build and maintain scalable cloud infrastructure and CI/CD pipelines.'
+    // }
   ];
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private jobPostingService: JobPostingServiceService,
+    private messageService: MessageServiceService
+  ) {
     // Set minimum date to today
     const today = new Date();
     this.minDate = today.toISOString().split('T')[0];
+  }
+  ngOnInit(): void {
+    this.getOpenJobs();
+  }
+
+  public getOpenJobs(): void {
+    try {
+      this.jobPostingService.getOpenJobs().subscribe({
+        next: (dataList: any[]) => {
+          if (dataList.length <= 0) {
+            return;
+          }
+          this.openJobs = dataList;
+          this.processJobData();
+        },
+        error: (error) => {
+          this.messageService.showError('Action Failed With Error ' + error);
+        }
+      });
+    } catch (error) {
+      this.messageService.showError('Action Failed With Error ' + error);
+    }
+  }
+
+  public processJobData(): void {
+    this.openJobs.forEach((job: any) => {
+      const obj: Job = {
+        id: job.id,
+        title: job.position,
+        company: job.vesselName,
+        description: job.description,
+        jobPostImage: 'data:image/jpge;base64,' + job.jobPostImage
+      };
+      this.jobs.push(obj);
+    });
   }
   nextSlide() {
     if (this.currentSlide < this.jobs.length - 3) {

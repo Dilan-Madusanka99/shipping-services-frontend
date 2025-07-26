@@ -192,6 +192,17 @@
   </div>
 </section>
 
+<!-- Appointment Section -->
+<section class="appointment-section">
+  <div class="container">
+    <div class="appointment-content">
+      <h2>Ready to Take the Next Step?</h2>
+      <p>Contact us and Schedule an appointment to find the perfect job match</p>
+      <!-- <button class="btn btn-primary" (click)="bookAppointment()">Book Appointment</button> -->
+    </div>
+  </div>
+</section>
+
 <!-- Jobs Section -->
 <section class="jobs-section">
   <div class="container">
@@ -200,25 +211,15 @@
       <div class="carousel-track" [style.transform]="'translateX(' + -currentSlide * 320 + 'px)'">
         <div class="job-card" *ngFor="let job of jobs">
           <h3 class="job-title">{{ job.title }}</h3>
-          <p class="job-company">{{ job.company }}</p>
-          <p class="job-location">📍 {{ job.location }}</p>
-          <p class="job-salary">{{ job.salary }}</p>
+          <img [src]="job.jobPostImage" [alt]="job.company" />
+          <p class="job-company">Vessle Name: {{ job.company }}</p>
+          <!-- <p class="job-location">📍 {{ job.location }}</p> -->
+          <!-- <p class="job-salary">{{ job.salary }}</p> -->
           <p>{{ job.description }}</p>
         </div>
       </div>
       <button class="carousel-nav prev" (click)="previousSlide()">‹</button>
       <button class="carousel-nav next" (click)="nextSlide()">›</button>
-    </div>
-  </div>
-</section>
-
-<!-- Appointment Section -->
-<section class="appointment-section">
-  <div class="container">
-    <div class="appointment-content">
-      <h2>Ready to Take the Next Step?</h2>
-      <p>Contact us and Schedule an appointment to find the perfect job match  </p>
-      <!-- <button class="btn btn-primary" (click)="bookAppointment()">Book Appointment</button> -->
     </div>
   </div>
 </section>
@@ -233,9 +234,9 @@
         <p>✉️ vwshippingsrilanka.com</p>
         <p>
           📍 44/5, Gnanartha Pradeepa Road,
-          
+
           <br />
-           Colombo 08.
+          Colombo 08.
         </p>
       </div>
       <div class="footer-section">
