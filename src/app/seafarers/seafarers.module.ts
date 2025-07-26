@@ -12,9 +12,10 @@ import { SeaServicesComponent } from './sea-services/sea-services.component';
 import { AppointmentComponent } from './appointment/appointment.component';
 import { FormsModule } from '@angular/forms';
 import { CertificateVerificationComponent } from './certificate-verification/certificate-verification.component';
+import { SeafarersDocComponent } from './seafarers-doc/seafarers-doc.component';
 
 @NgModule({
-  declarations: [ SeafarersRegistrationComponent, OtherDetailsRegistrationComponent, CertificatesRegistrationComponent, SeaServicesComponent, AppointmentComponent, CertificateVerificationComponent],
+  declarations: [ SeafarersRegistrationComponent, OtherDetailsRegistrationComponent, CertificatesRegistrationComponent, SeaServicesComponent, AppointmentComponent, CertificateVerificationComponent, SeafarersDocComponent],
   imports: [CommonModule, RouterModule.forChild(RegistrationRoutes), ReactiveFormsModule, MaterialModule, MatRadioModule, FormsModule  ]
 })
 export class SeafarersModule { }
