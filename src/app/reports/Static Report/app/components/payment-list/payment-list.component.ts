@@ -56,9 +56,13 @@ export class PaymentListComponent implements OnInit {
     }
   }
 
-   public getSupplierName(id: any): string {
+  public getSupplierName(id: any): string {
     return this.supplierList.find((item: any) => item.id == +id).supplierName;
   }
+
+  //   public getAmount(id: any): string {
+  //   return this.supplierList.find((item: any) => item.id == +id).supplierName;
+  // }
 
 
   search(): void {
@@ -109,8 +113,25 @@ export class PaymentListComponent implements OnInit {
     return this.sortDirection === 'asc' ? '↑' : '↓';
   }
 
-  printReport(): void {
-    this.printService.printPaymentReport(this.dataSource.filteredData);
+   printReport(): void {
+
+    let dataArray = this.dataSource.filteredData;
+    console.log(this.dataSource.filteredData);
+    let printData: any[] = [];
+
+    dataArray.forEach((data: any) => {
+      let obj = {
+        id: data.id,
+        paymentNo: data.paymentNo,
+        supplierName: this.getSupplierName(data.supplierName),
+        amount: data.amount,
+        paymentDate: data.paymentDate,
+        paymentStatus: data.paymentStatus
+      };
+      printData.push(obj);
+    })
+
+    this.printService.printPaymentReport(printData);
   }
 
   getDate(): string {

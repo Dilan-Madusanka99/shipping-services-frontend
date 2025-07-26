@@ -91,7 +91,7 @@ export class PaymentPrintService {
               <tr>
                 <td>${payment.paymentNo}</td>
                 <td>${payment.supplierName}</td>
-                <td>${payment.amount}</td>
+                <td>${'Rs. ' + payment.amount + '.00'}</td>
                 <td> ${new Date(payment.paymentDate).toLocaleDateString()}</td>
                 <td>${payment.paymentStatus}</td>
               </tr>
