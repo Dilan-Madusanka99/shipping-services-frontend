@@ -117,14 +117,14 @@ export class LoginComponent implements OnInit {
       console.log('Form Submitted');
       console.log(this.LoginForm.value);
 
-      if(!this.LoginForm.valid) return;
+      if (!this.LoginForm.valid) return;
       if (this.mode === 'add') {
         this.loginService.serviceCall(this.LoginForm.getRawValue()).subscribe({
           next: (response: any) => {
             if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {
-              this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
+              this.dataSource = new MatTableDataSource([response, ...this.dataSource?.data]);
             } else {
-              this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
+              this.dataSource = new MatTableDataSource([response, ...this.dataSource?.data]);
             }
 
             this.messageService.showSuccess('Data Saved Successfully!');
@@ -138,7 +138,7 @@ export class LoginComponent implements OnInit {
           next: (response: any) => {
             let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
             this.dataSource.data[elementIndex] = response;
-            this.dataSource = new MatTableDataSource(this.dataSource.data);
+            this.dataSource = new MatTableDataSource(this.dataSource?.data);
             this.messageService.showSuccess('Data Edited Successfully!');
           },
           error: (error) => {
@@ -149,6 +149,7 @@ export class LoginComponent implements OnInit {
       this.mode = 'add';
       this.LoginForm.disable();
       this.isButtonDisabled = true;
+      this.populateData();
     } catch (error) {
       console.log(error);
       this.messageService.showError('Action Failed With Error' + error);
@@ -162,11 +163,10 @@ export class LoginComponent implements OnInit {
 
     this.LoginForm.get('users')?.enable();
     this.LoginForm.get('password')?.enable();
+    this.LoginForm.get('userName')?.enable();
 
     this.isButtonDisabled = false;
-    this.mode = 'edit'; 
-
-  
+    this.mode = 'add';
   }
 
   public editData(data: any): void {
@@ -182,40 +182,37 @@ export class LoginComponent implements OnInit {
     this.LoginForm.get('password').enable();
   }
 
-
-
   public deleteData(data: any): void {
     const id = data.id;
 
     try {
-            Swal.fire({
-              title: 'Are you sure?',
-              text: 'You want to delete this?',
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonText: 'Yes, delete it!',
-              cancelButtonText: 'Cancel',
-            }).then((result) => {
-              if (result && !result.isConfirmed) {
-                return;
-              }
-
-      this.loginService.deleteData(id).subscribe({
-        next: (response: any) => {
-          const index = this.dataSource.data.findIndex((element) => element.id === id);
-
-          if (index !== -1) {
-            this.dataSource.data.splice(index, 1);
-          }
-          this.dataSource = new MatTableDataSource(this.dataSource.data);
-          this.messageService.showSuccess('Data Deleted Successfully!');
-        },
-        error: (error: any) => {
-          this.messageService.showError('Action Failed With Error' + error);
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'You want to delete this?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result && !result.isConfirmed) {
+          return;
         }
-      });
 
-    });
+        this.loginService.deleteData(id).subscribe({
+          next: (response: any) => {
+            const index = this.dataSource.data.findIndex((element) => element.id === id);
+
+            if (index !== -1) {
+              this.dataSource.data.splice(index, 1);
+            }
+            this.dataSource = new MatTableDataSource(this.dataSource.data);
+            this.messageService.showSuccess('Data Deleted Successfully!');
+          },
+          error: (error: any) => {
+            this.messageService.showError('Action Failed With Error' + error);
+          }
+        });
+      });
     } catch (error) {
       console.log(error);
       this.messageService.showError('Action Failed With Error' + error);
