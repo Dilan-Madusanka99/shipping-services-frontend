@@ -167,36 +167,6 @@ const NavigationItems = [
   },
 
   {
-    id: 'Onboard',
-    title: 'Onboard Crew',
-    type: 'group',
-    icon: 'icon-navigation',
-    auth: [authenticationEnum.Certificate_Details, authenticationEnum.Crew_Complaints],
-    children: [
-      {
-        id: 'OnboardDet',
-        title: 'Onboard Crew Details',
-        type: 'item',
-        url: '/onboard/onboardCrewRegistration',
-        icon: 'feather icon-home',
-        classes: 'nav-item',
-        auth: authenticationEnum.Certificate_Details,
-        breadcrumbs: false
-      },
-      {
-        id: 'OnboardDet',
-        title: 'Crew Complaints',
-        type: 'item',
-        url: '/onboard/crewComplaints',
-        icon: 'feather icon-alert-circle',
-        classes: 'nav-item',
-        auth: authenticationEnum.Crew_Complaints,
-        breadcrumbs: false
-      }
-    ]
-  },
-
-  {
     id: 'Seafarers',
     title: 'Seafarers',
     type: 'group',
@@ -210,6 +180,16 @@ const NavigationItems = [
       authenticationEnum.Appointment
     ],
     children: [
+      {
+        id: 'SeafarersRegistrationDet',
+        title: 'Appointment',
+        type: 'item',
+        url: '/seafarers/appointment',
+        icon: 'feather icon-calendar',
+        classes: 'nav-item',
+        auth: [authenticationEnum.Appointment],
+        breadcrumbs: false
+      },
       {
         id: 'SeafarersRegistrationDet',
         title: 'Personal Details',
@@ -259,15 +239,35 @@ const NavigationItems = [
         classes: 'nav-item',
         auth: [authenticationEnum.Certificate_Verification],
         breadcrumbs: false
+      }
+    ]
+  },
+
+  {
+    id: 'Onboard',
+    title: 'Onboard Crew',
+    type: 'group',
+    icon: 'icon-navigation',
+    auth: [authenticationEnum.Certificate_Details, authenticationEnum.Crew_Complaints],
+    children: [
+      {
+        id: 'OnboardDet',
+        title: 'Onboard Crew Details',
+        type: 'item',
+        url: '/onboard/onboardCrewRegistration',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Certificate_Details,
+        breadcrumbs: false
       },
       {
-        id: 'SeafarersRegistrationDet',
-        title: 'Appointment',
+        id: 'OnboardDet',
+        title: 'Crew Complaints',
         type: 'item',
-        url: '/seafarers/appointment',
-        icon: 'feather icon-calendar',
+        url: '/onboard/crewComplaints',
+        icon: 'feather icon-alert-circle',
         classes: 'nav-item',
-        auth: [authenticationEnum.Appointment],
+        auth: authenticationEnum.Crew_Complaints,
         breadcrumbs: false
       }
     ]
@@ -443,7 +443,7 @@ const NavigationItems = [
     auth: [
       authenticationEnum.Seafarer_Reistration_Chart,
       authenticationEnum.Vessle_Registration_Chart,
-      authenticationEnum.Employee_Attendence_Chart,
+      // authenticationEnum.Employee_Attendence_Chart,
       authenticationEnum.Supplier_Payment_Chart
     ],
     children: [
@@ -467,16 +467,16 @@ const NavigationItems = [
         auth: [authenticationEnum.Vessle_Registration_Chart],
         breadcrumbs: false
       },
-      {
-        id: 'employeeAttendenceMonthChart',
-        title: 'Employee Attendance',
-        type: 'item',
-        url: '/charts/employeeAttendanceByMonth',
-        icon: 'feather icon-bar-chart',
-        classes: 'nav-item',
-        auth: [authenticationEnum.Employee_Attendence_Chart],
-        breadcrumbs: false
-      },
+      // {
+      //   id: 'employeeAttendenceMonthChart',
+      //   title: 'Employee Attendance',
+      //   type: 'item',
+      //   url: '/charts/employeeAttendanceByMonth',
+      //   icon: 'feather icon-bar-chart',
+      //   classes: 'nav-item',
+      //   auth: [authenticationEnum.Employee_Attendence_Chart],
+      //   breadcrumbs: false
+      // },
       {
         id: 'paymentsMonthChart',
         title: 'Supplier Payments',

@@ -9,6 +9,7 @@ import { AddRemoveTableComponent } from '../../add-remove-table/add-remove-table
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { AuthServiceService } from 'src/app/services/auth-service/auth-service.service';
 import { authenticationEnum } from 'src/app/guards/auth.enum';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-privilege-groups',
@@ -104,6 +105,19 @@ export class PrivilegeGroupsComponent implements OnInit {
 
   public onDeletePrivilageGroupClick(id: number, data: any): void {
     try {
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'You want to delete this?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result && !result.isConfirmed) {
+          return;
+        }
+      });
       this._privilegesService.deletePrivilegeGroup(id, data).then((response) => {
         console.log(response);
         this.getPrivilegeGroupList();

@@ -158,9 +158,15 @@ export class LoginComponent implements OnInit {
   public resetData(): void {
     this.LoginForm.reset();
     this.saveButtonLabel = 'Save';
-    this.LoginForm.enable();
+    this.LoginForm.disable();
+
+    this.LoginForm.get('users')?.enable();
+    this.LoginForm.get('password')?.enable();
+
     this.isButtonDisabled = false;
-    this.mode = 'edit';
+    this.mode = 'edit'; 
+
+  
   }
 
   public editData(data: any): void {
@@ -175,6 +181,8 @@ export class LoginComponent implements OnInit {
     this.LoginForm.disable();
     this.LoginForm.get('password').enable();
   }
+
+
 
   public deleteData(data: any): void {
     const id = data.id;
