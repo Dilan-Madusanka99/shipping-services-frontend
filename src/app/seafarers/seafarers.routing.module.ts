@@ -5,6 +5,7 @@ import { CertificatesRegistrationComponent } from './certificates-registration/c
 import { SeaServicesComponent } from './sea-services/sea-services.component'
 import { AppointmentComponent } from './appointment/appointment.component'
 import { CertificateVerificationComponent } from './certificate-verification/certificate-verification.component'
+import { SeafarersDocComponent } from './seafarers-doc/seafarers-doc.component'
 
 
 export const RegistrationRoutes: Routes = [
@@ -14,5 +15,6 @@ export const RegistrationRoutes: Routes = [
     { path: 'seaServices', component: SeaServicesComponent },
     { path: 'appointment', component: AppointmentComponent },
     { path: 'certificateVerification', component: CertificateVerificationComponent },
+    { path: 'seafarerDoc', component: SeafarersDocComponent}
     
 ]

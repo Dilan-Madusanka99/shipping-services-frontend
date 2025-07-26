@@ -239,6 +239,16 @@ const NavigationItems = [
         classes: 'nav-item',
         auth: [authenticationEnum.Certificate_Verification],
         breadcrumbs: false
+      },
+      {
+        id: 'seafarerDoc',
+        title: 'Seafarer Document',
+        type: 'item',
+        url: '/seafarers/seafarerDoc',
+        icon: 'feather icon-check-circle',
+        classes: 'nav-item',
+        auth: [authenticationEnum.Certificate_Verification],
+        breadcrumbs: false
       }
     ]
   },
