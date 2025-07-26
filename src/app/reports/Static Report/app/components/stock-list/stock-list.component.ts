@@ -129,7 +129,24 @@ export class StockListComponent implements OnInit {
   }
 
   printReport(): void {
-    this.printService.printStockReport(this.dataSource.filteredData);
+
+    let dataArray = this.dataSource.filteredData;
+    console.log(this.dataSource.filteredData);
+    let printData: any[] = [];
+
+    dataArray.forEach((data: any) => {
+      let obj = {
+        id: data.id,
+        itemNo: this.getItemNo(data.itemNo),
+        itemName: data.itemName,
+        supplierName: this.getSupplierName(data.supplierName),
+        quantity: data.quantity,
+        qtyMeasure: data.qtyMeasure
+      };
+      printData.push(obj);
+    })
+
+    this.printService.printStockReport(printData);
   }
 
   getDate(): string {
