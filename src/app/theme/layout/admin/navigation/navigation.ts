@@ -247,7 +247,7 @@ const NavigationItems = [
         url: '/seafarers/seafarerDoc',
         icon: 'feather icon-check-circle',
         classes: 'nav-item',
-        auth: [authenticationEnum.Certificate_Verification],
+        auth: [authenticationEnum.Personal_Details],
         breadcrumbs: false
       }
     ]
