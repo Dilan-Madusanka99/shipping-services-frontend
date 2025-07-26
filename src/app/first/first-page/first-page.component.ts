@@ -36,6 +36,8 @@ export class FirstPageComponent implements OnInit {
   showSuccessModal = false;
   isSubmitting = false;
   minDate = '';
+  allJobPostingListDetails: any;
+  jobPostingMap = new Map<number, string>();
 
   appointment: Appointment = {
     name: '',
@@ -103,7 +105,7 @@ export class FirstPageComponent implements OnInit {
   constructor(
     private router: Router,
     private jobPostingService: JobPostingServiceService,
-    private messageService: MessageServiceService
+    private messageService: MessageServiceService,
   ) {
     // Set minimum date to today
     const today = new Date();
@@ -144,6 +146,7 @@ export class FirstPageComponent implements OnInit {
       this.jobs.push(obj);
     });
   }
+
   nextSlide() {
     if (this.currentSlide < this.jobs.length - 3) {
       this.currentSlide++;
