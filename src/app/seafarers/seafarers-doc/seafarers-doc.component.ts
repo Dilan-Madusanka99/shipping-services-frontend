@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.service';
+import { OtherDetailsRegistrationService } from 'src/app/services/seafarers/other-details-registration.service';
+import { CertificatesRegistrationService } from 'src/app/services/seafarers/certificates-registration.service';
+import { SeaServicesService } from 'src/app/services/seafarers/sea-services.service';
 
 @Component({
   selector: 'app-seafarers-doc',
@@ -17,10 +20,14 @@ export class SeafarersDocComponent {
   allSeafarersDropdown: any = [];
   seafarersDropdown: any = [];
   allSeafarersListDetails: any;
+  // certificatesList: any[] = [];
 
   constructor(
     private fb: FormBuilder,
-    private seafarersService: SeafarersServiceService
+    private seafarersService: SeafarersServiceService,
+    private otherDetailsService: OtherDetailsRegistrationService,
+    private certificateDetailsService: CertificatesRegistrationService,
+    private seaServicesService: SeaServicesService
   ) {}
 
   ngOnInit() {
@@ -29,17 +36,20 @@ export class SeafarersDocComponent {
   }
 
   public getSeafarersList(): void {
-    this.seafarersService.getData().subscribe((response: any) => {
+    this.seafarersService.getData().subscribe((response: any) => {  
       if (response && response.length > 0) {
         this.allSeafarersListDetails = response;
         response.forEach((seafarers: any) => {
           const seafarersData = {
             id: seafarers.id,
-            sidNo: seafarers.sidNo
+            sidNo: seafarers.sidNo,
+            // otherDetails: seafarers.otherDetails,            
+            // certificateDetails: seafarers.certificateDetails
           };
           this.allSeafarersDropdown.push(seafarersData);
         });
       }
+      // this.certificatesList = certs;
       this.seafarersDropdown = this.allSeafarersDropdown;
     });
   }
@@ -72,7 +82,42 @@ export class SeafarersDocComponent {
       englishLanguage: [''],
       profileImage: [''],
       profileImageName: [''],
-      profileImageType: ['']
+      profileImageType: [''],
+      // Other Details (Document Details)
+      sidNo: [''],
+      sidIssuedPlace: [''],
+      sidIssuedDate: [''],
+      sidExpireDate: [''],
+      ppNo: [''],
+      ppIssuedPlace: [''],
+      ppIssuedDate: [''],
+      ppExpireDate: [''],
+      cdcNo: [''],
+      cdcIssuedPlace: [''],
+      cdcIssuedDate: [''],
+      cdcExpireDate: [''],
+      yellowFeverNo: [''],
+      yellowFeverIssuedPlace: [''],
+      kiyellowFeverIssuedDatenName: [''],
+      yellowFeverExpireDate: [''],
+      // Certificate Details
+      cName: [''],
+      cNo: [''],
+      cIssuedPlace: [''],
+      cIssuedDate: [''],
+      cExpiredDate: [''],
+      //  Sea Services
+      companyName: [''],
+      vesselName: [''],
+      // position: [''],
+      vesselType: [''],
+      flag: [''],
+      grt: [''],
+      bhp: [''],
+      signOn: [''],
+      signOff: [''],
+      totalMonths: [''],
+      reason: [''],
     });
 
     this.userForm.disable();
@@ -155,6 +200,9 @@ export class SeafarersDocComponent {
     let selectedSeafarersId = event;
 
     this.patchFormSeafarersValues(selectedSeafarersId);
+    this.loadOtherDetails(selectedSeafarersId);
+    this.loadCertificateDetails(selectedSeafarersId);
+    this.loadSeaServiceDetails(selectedSeafarersId);
   }
 
   public patchFormSeafarersValues(seafarersId: number): void {
@@ -189,4 +237,65 @@ export class SeafarersDocComponent {
   public refreshData(): void {
     // this.populateData();
   }
+
+  private loadOtherDetails(selectedSeafarersId: number): void {
+  this.otherDetailsService.getBySeafarerId(selectedSeafarersId).subscribe((otherDetails: any) => {
+    if (otherDetails) {
+      this.userForm.patchValue({
+        sidNo: otherDetails.sidNo,
+        sidIssuedPlace: otherDetails.sidIssuedPlace,
+        sidIssuedDate: otherDetails.sidIssuedDate,
+        sidExpireDate: otherDetails.sidExpireDate,
+        ppNo: otherDetails.ppNo,
+        ppIssuedPlace: otherDetails.ppIssuedPlace,
+        ppIssuedDate: otherDetails.ppIssuedDate,
+        ppExpireDate: otherDetails.ppExpireDate,
+        cdcNo: otherDetails.cdcNo,
+        cdcIssuedPlace: otherDetails.cdcIssuedPlace,
+        cdcIssuedDate: otherDetails.cdcIssuedDate,
+        cdcExpireDate: otherDetails.cdcExpireDate,
+        yellowFeverNo: otherDetails.yellowFeverNo,
+        yellowFeverIssuedPlace: otherDetails.yellowFeverIssuedPlace,
+        kiyellowFeverIssuedDatenName: otherDetails.kiyellowFeverIssuedDatenName,
+        yellowFeverExpireDate: otherDetails.yellowFeverExpireDate
+      });
+    }
+  });
+  }
+
+  private loadCertificateDetails(selectedSeafarersId: number): void {
+  this.certificateDetailsService.getBySeafarerId(selectedSeafarersId).subscribe((certificate: any) => {
+    if (certificate) {
+      this.userForm.patchValue({
+        cName: certificate.cName,
+        cNo: certificate.cNo,
+        cIssuedPlace: certificate.cIssuedPlace,
+        cIssuedDate: certificate.cIssuedDate,
+        cExpiredDate: certificate.cExpiredDate
+      });
+    }
+  });
+  }
+
+  private loadSeaServiceDetails(seafarersId: number): void {
+  this.seaServicesService.getBySeafarerId(seafarersId).subscribe((seaService: any) => {
+    if (seaService) {
+      this.userForm.patchValue({
+        companyName: seaService.companyName,
+        vesselName: seaService.vesselName,
+        vesselType: seaService.vesselType,
+        flag: seaService.flag,
+        grt: seaService.grt,
+        bhp: seaService.bhp,
+        signOn: seaService.signOn,
+        signOff: seaService.signOff,
+        totalMonths: seaService.totalMonths,
+        reason: seaService.reason
+      });
+    }
+  });
+  }
+
+
+
 }
