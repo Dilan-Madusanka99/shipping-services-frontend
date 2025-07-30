@@ -3,12 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.service';
-<<<<<<< HEAD
-=======
 import { OtherDetailsRegistrationService } from 'src/app/services/seafarers/other-details-registration.service';
 import { CertificatesRegistrationService } from 'src/app/services/seafarers/certificates-registration.service';
 import { SeaServicesService } from 'src/app/services/seafarers/sea-services.service';
->>>>>>> 0b0e3fd272392c444c95cd634ca06d7825a2b1ba
 
 @Component({
   selector: 'app-seafarers-doc',
@@ -23,12 +20,7 @@ export class SeafarersDocComponent {
   allSeafarersDropdown: any = [];
   seafarersDropdown: any = [];
   allSeafarersListDetails: any;
-<<<<<<< HEAD
 
-  constructor(
-    private fb: FormBuilder,
-    private seafarersService: SeafarersServiceService
-=======
   // certificatesList: any[] = [];
 
   constructor(
@@ -37,7 +29,6 @@ export class SeafarersDocComponent {
     private otherDetailsService: OtherDetailsRegistrationService,
     private certificateDetailsService: CertificatesRegistrationService,
     private seaServicesService: SeaServicesService
->>>>>>> 0b0e3fd272392c444c95cd634ca06d7825a2b1ba
   ) {}
 
   ngOnInit() {
@@ -46,31 +37,20 @@ export class SeafarersDocComponent {
   }
 
   public getSeafarersList(): void {
-<<<<<<< HEAD
-    this.seafarersService.getData().subscribe((response: any) => {
-=======
     this.seafarersService.getData().subscribe((response: any) => {  
->>>>>>> 0b0e3fd272392c444c95cd634ca06d7825a2b1ba
       if (response && response.length > 0) {
         this.allSeafarersListDetails = response;
         response.forEach((seafarers: any) => {
           const seafarersData = {
             id: seafarers.id,
-<<<<<<< HEAD
             sidNo: seafarers.sidNo
-=======
-            sidNo: seafarers.sidNo,
             // otherDetails: seafarers.otherDetails,            
             // certificateDetails: seafarers.certificateDetails
->>>>>>> 0b0e3fd272392c444c95cd634ca06d7825a2b1ba
           };
           this.allSeafarersDropdown.push(seafarersData);
         });
       }
-<<<<<<< HEAD
-=======
       // this.certificatesList = certs;
->>>>>>> 0b0e3fd272392c444c95cd634ca06d7825a2b1ba
       this.seafarersDropdown = this.allSeafarersDropdown;
     });
   }
@@ -103,9 +83,6 @@ export class SeafarersDocComponent {
       englishLanguage: [''],
       profileImage: [''],
       profileImageName: [''],
-<<<<<<< HEAD
-      profileImageType: ['']
-=======
       profileImageType: [''],
       // Other Details (Document Details)
       sidNo: [''],
@@ -142,7 +119,6 @@ export class SeafarersDocComponent {
       signOff: [''],
       totalMonths: [''],
       reason: [''],
->>>>>>> 0b0e3fd272392c444c95cd634ca06d7825a2b1ba
     });
 
     this.userForm.disable();
@@ -225,12 +201,9 @@ export class SeafarersDocComponent {
     let selectedSeafarersId = event;
 
     this.patchFormSeafarersValues(selectedSeafarersId);
-<<<<<<< HEAD
-=======
     this.loadOtherDetails(selectedSeafarersId);
     this.loadCertificateDetails(selectedSeafarersId);
     this.loadSeaServiceDetails(selectedSeafarersId);
->>>>>>> 0b0e3fd272392c444c95cd634ca06d7825a2b1ba
   }
 
   public patchFormSeafarersValues(seafarersId: number): void {
@@ -265,8 +238,6 @@ export class SeafarersDocComponent {
   public refreshData(): void {
     // this.populateData();
   }
-<<<<<<< HEAD
-=======
 
   private loadOtherDetails(selectedSeafarersId: number): void {
   this.otherDetailsService.getBySeafarerId(selectedSeafarersId).subscribe((otherDetails: any) => {
@@ -325,8 +296,4 @@ export class SeafarersDocComponent {
     }
   });
   }
-
-
-
->>>>>>> 0b0e3fd272392c444c95cd634ca06d7825a2b1ba
 }

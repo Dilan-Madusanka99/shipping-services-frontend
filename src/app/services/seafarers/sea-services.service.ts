@@ -2,10 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpService } from '../http.service';
 import { environment } from 'src/environments/environment';
-<<<<<<< HEAD
-=======
 import { Observable } from 'rxjs';
->>>>>>> 0b0e3fd272392c444c95cd634ca06d7825a2b1ba
 
 @Injectable({
   providedIn: 'root'
@@ -76,13 +73,12 @@ export class SeaServicesService {
           return this.http.delete(requestUrl, {headers: headers});
         }
 
-<<<<<<< HEAD
-=======
+
+        private apiUrl = environment.baseUrl + '/seaServices';
+
         getBySeafarerId(seafarerId: number): Observable<any> {
         return this.http.get(`${this.apiUrl}/seafarer/${seafarerId}`);
         }
 
-
->>>>>>> 0b0e3fd272392c444c95cd634ca06d7825a2b1ba
   
 }
