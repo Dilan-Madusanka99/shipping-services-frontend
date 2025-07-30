@@ -1,0 +1,159 @@
+<div class="container">
+  <div class="form-section">
+    <form [formGroup]="appointmentForm" class="appointmentForm" (ngSubmit)="onSubmit()">
+
+      <!-- sid select -->
+      <mat-form-field class="example-full-width">
+        <mat-label> SID </mat-label>
+        <input matInput placeholder="SID" formControlName="sid">
+        <span class="text-danger"
+          *ngIf="(appointmentForm.get('sid').touched || submitted) && appointmentForm.get('sid').errors && appointmentForm.get('sid').errors['required'] ">
+          SID No is Required
+        </span>
+      </mat-form-field>
+      <br>
+
+      <mat-form-field class="example-full-width">
+        <mat-label> First Name </mat-label>
+        <input matInput placeholder="firstName" formControlName="firstName">
+      </mat-form-field>
+      <br>
+
+      <mat-form-field class="example-full-width">
+        <mat-label> Last Name </mat-label>
+        <input matInput placeholder="Last Name" formControlName="lastName">
+      </mat-form-field>
+      <br>
+
+      <mat-form-field class="example-full-width">
+        <mat-label> Position </mat-label>
+        <mat-select formControlName="position">
+          <mat-option value="AB Trainee">AB Trainee</mat-option>
+          <mat-option value="OS">OS</mat-option>
+          <mat-option value="AB">AB</mat-option>
+          <mat-option value="Bosun">Bosun</mat-option>
+          <mat-option value="Pumpman">Pumpman</mat-option>
+          <mat-option value="Oiler">Oiler</mat-option>
+          <mat-option value="Fitter">Fitter</mat-option>
+          <mat-option value="Messman">Messman</mat-option>
+          <mat-option value="Cook">Cook</mat-option>
+          <mat-option value="Electrician">Electrician</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+
+      <mat-form-field class="example-full-width">
+        <mat-label> Mobile </mat-label>
+        <input matInput placeholder="Mobile" formControlName="mobile" >
+      </mat-form-field>
+      <br>
+
+      <mat-form-field class="example-full-width">
+        <mat-label> E-mail </mat-label>
+        <input matInput placeholder="E-mail" formControlName="email" >
+      </mat-form-field>
+      <br>
+
+      <mat-form-field class="example-full-width">
+        <mat-label> Appointment Date </mat-label>
+        <input matInput [matDatepicker]="appointmentDate" formControlName="appointmentDate" />
+        <mat-hint> MM/DD/YYYY </mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="appointmentDate"></mat-datepicker-toggle>
+        <mat-datepicker #appointmentDate></mat-datepicker>
+      </mat-form-field>
+      <br><br>
+
+      <mat-form-field class="example-full-width">
+        <mat-label> Appointment Time </mat-label>
+        <mat-select formControlName="appointmentTime">
+          <mat-option value="10.00 - 10.30">10.00 - 10.30</mat-option>
+          <mat-option value="10.45 - 11.15">10.45 - 11.15</mat-option>
+          <mat-option value="11.30 - 12.00">11.30 - 12.00</mat-option>
+          <mat-option value="12.15 - 12.45">12.15 - 12.45</mat-option>
+          <mat-option value="13.00 - 13.30">13.00 - 13.30</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+
+      <mat-form-field class="example-full-width">
+        <mat-label> Appointment Status </mat-label>
+        <mat-select formControlName="appointmentStatus">
+          <mat-option value="Scheduled">Scheduled</mat-option>
+          <mat-option value="Re-Scheduled">Re-scheduled</mat-option>
+          <mat-option value="Cancelled">Cancelled</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+
+      <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" >
+        {{saveButtonLabel}} </button>
+      <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" > Reset
+      </button>
+
+    </form>
+  </div>
+  <div class="table-section">
+    <div class="refresh-filter-section">
+      <div class="refresh-button">
+        <button mat-raised-button color="primary" (click)="refreshData()">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </div>
+
+      <mat-form-field class="filter">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+      </mat-form-field>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Position </th>
+        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="appointmentDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Appointment Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.appointmentDate | date: 'dd/MM/yyyy'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="appointmentTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Appointment Time </th>
+        <td mat-cell *matCellDef="let element"> {{element.appointmentTime}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="appointmentStatus">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Appointment Status</th>
+        <td mat-cell *matCellDef="let element"> {{element.appointmentStatus}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button color="warn" (click)="editData(element)" matTooltip="edit">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteData(element)" matTooltip="delete">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
+</div>

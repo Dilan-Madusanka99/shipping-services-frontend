@@ -1,0 +1,50 @@
+<div class="backimage">
+<div class="auth-wrapper">
+  <div class="auth-content">
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
+      <div class="card">
+        <div class="card-body text-center">
+          <div class="mb-4">
+            <i class="feather icon-unlock auth-icon" style="color: #333;"></i>
+          </div>
+          <h3 class="mb-4">L O G I N</h3>
+          <!-- <img src="assets\images\user\V W Shipping Logo.jpeg" alt=""> -->
+          <div class="input-group mb-3">
+            <input type="login" class="form-control" placeholder="Username" formControlName="loginName" />
+          </div> 
+          <span
+            class="text-danger"
+            *ngIf="
+              (formControl['loginName'].touched || submitted) &&
+              formControl['loginName'].errors &&
+              formControl['loginName'].errors['required']
+            "
+          >
+            User name is required
+          </span>
+          <div class="input-group mb-4">
+            <input type="password" class="form-control" placeholder="Password" formControlName="password" />
+          </div>
+          <span
+            class="text-danger"
+            *ngIf="
+              (formControl['password'].touched || submitted) && formControl['password'].errors && formControl['password'].errors['required']
+            "
+          >
+            Password is required
+          </span>
+          <div class="form-group text-start mb-4">
+            <!-- <div class="checkbox checkbox-fill d-inline">
+              <input type="checkbox" name="checkbox-fill-1" id="checkbox-fill-a1" checked="" />
+              <label for="checkbox-fill-a1" class="cr">Save Details</label>
+            </div> -->
+          </div>
+          <button class="btn btn-dark mb-4">Login</button>
+
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</div>

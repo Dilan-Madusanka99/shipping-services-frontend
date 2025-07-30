@@ -1,0 +1,173 @@
+<div class="container">
+  <div class="form-section">
+    <form [formGroup]="supplierRegistrationForm" class="supplierRegistrationForm" (ngSubmit)="onSubmit()">
+
+      <h5>Supplier Details</h5>
+
+      <!-- Photo upload - Start -->
+       <div class="form-field">
+        <label for="image">Upload Image</label>
+        <input type="file" (change)="onFileSelected($event)" accept="image/*"/>
+       </div>
+        
+      <div *ngIf="previewUrl">
+        <p>Image Preview:</p>
+        <img [src]="previewUrl" alt="Image preview" width="200" />
+      </div>
+      <br>
+      <!-- Photo upload - End -->
+
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Supplier No</mat-label>
+        <input matInput placeholder="Supplier No" formControlName="supplierNo" >
+        <span class="text-danger" 
+          *ngIf="(supplierRegistrationForm.get('supplierNo').touched || submitted) && supplierRegistrationForm.get('supplierNo').errors && supplierRegistrationForm.get('supplierNo').errors['required'] ">
+          Supplier No is Required
+        </span>        
+      </mat-form-field>
+      <br>
+
+      <mat-form-field class="example-full-width">
+          <mat-label>Supplier Name</mat-label>
+          <input matInput placeholder="Supplier Name" formControlName="supplierName">
+        </mat-form-field>
+        <br>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Supplier Category</mat-label>
+          <mat-select [(value)]="selected" formControlName="supplierCategory">
+            <mat-option value="Deck Stores">Deck Stores</mat-option>
+            <mat-option value="Engine Stores">Engine Stores</mat-option>
+            <mat-option value="Foods">Foods</mat-option>
+            <mat-option value="Other">Other</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Supplier Sub Category (Optional)</mat-label>
+          <input matInput placeholder="Supplier Sub Category (optional)" formControlName="supplierSubCategory">
+        </mat-form-field>
+        <br>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Supplier Contact No</mat-label>
+          <input matInput placeholder="Supplier Contact No" formControlName="supplierContactNo">
+        </mat-form-field>
+        <br>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Supplier Email</mat-label>
+          <input matInput placeholder="Supplier Email" formControlName="supplierEmail">
+        </mat-form-field>
+        <br><br>
+
+        <h5>Supplier Bank Details</h5>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Bank Account Name</mat-label>
+          <input matInput placeholder="Bank Account Name" formControlName="supplierAccName">
+        </mat-form-field>
+        <br>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Bank Account No</mat-label>
+          <input matInput placeholder="Bank Account No" formControlName="supplierAccNo">
+        </mat-form-field>
+        <br>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Bank</mat-label>
+          <mat-select [(ngModel)]="selectedSupplierBank" formControlName="supplierBank" (valueChange)="onSupplierBankSelect($event)">
+            <mat-form-field class="w-100">
+              <input matInput placeholder="Search for supplier bank..." (keyup)="onSupplierBankKey($event.target)" />
+            </mat-form-field>
+            <mat-option value="Bank of Ceylon">Bank of Ceylon</mat-option>
+            <mat-option value="Peoples Bank">Peoples Bank</mat-option>
+            <mat-option value="Commercial Bank of Ceylon">Commercial Bank</mat-option>
+            <mat-option value="Hatton National Bank">Hatton National Bank</mat-option>
+            <mat-option value="Sampath Bank">Sampath Bank</mat-option>
+            <mat-option value="Seylan Bank">Seylan Bank</mat-option>
+            <mat-option value="Nations Trust Bank">Nations Trust Bank</mat-option>
+            <mat-option value="National Development Bank">National Development Bank</mat-option>
+            <mat-option value="DFCC Bank">DFCC Bank</mat-option>
+            <mat-option value="Pan Asia Bank">Pan Asia Bank</mat-option>
+            <mat-option value="Amana Bank">Amana Bank</mat-option>
+            <mat-option value="Union Bank">Union Bank</mat-option>
+            <mat-option value="Standard Chartered Bank">Standard Chartered Bank</mat-option>
+            <mat-option value="Habib Bank">Habib Bank</mat-option>
+            <mat-option value="National Savings Bank">National Savings Bank</mat-option>
+            <mat-option value="Regional Development Bank">Regional Development Bank</mat-option>
+            <mat-option value="Sanasa Development Bank PLC">Sanasa Development Bank PLC</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Branch</mat-label>
+          <input matInput placeholder="Branch" formControlName="supplierBranch">
+        </mat-form-field>
+        <br>
+
+        <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" > {{saveButtonLabel}} </button>
+        <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" > Reset </button>
+      
+    </form>
+    
+  </div>
+  <div class="table-section">
+    <div class="refresh-filter-section">
+      <div class="refresh-button">
+        <button mat-raised-button color="primary" (click)="refreshData()">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </div>
+      <mat-form-field class="filter">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+      </mat-form-field>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" matSort>
+
+      <ng-container matColumnDef="supplierNo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Supplier No </th>
+        <td mat-cell *matCellDef="let element"> {{element.supplierNo}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="supplierName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Supplier Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.supplierName}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="supplierCategory">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Supplier Category </th>
+        <td mat-cell *matCellDef="let element"> {{element.supplierCategory}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="supplierContactNo">
+        <th mat-header-cell *matHeaderCellDef> Supplier Contact No </th>
+        <td mat-cell *matCellDef="let element"> {{element.supplierContactNo}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element"> 
+          <button mat-icon-button color="warn" (click)="editData(element)" matTooltip="edit">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteData(element)" matTooltip="delete">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+       </div>
+</div>  
+  
