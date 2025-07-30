@@ -249,7 +249,11 @@ const NavigationItems = [
         classes: 'nav-item',
         auth: [authenticationEnum.Personal_Details],
         breadcrumbs: false
+<<<<<<< HEAD
       },
+=======
+      }
+>>>>>>> 0b0e3fd272392c444c95cd634ca06d7825a2b1ba
     ]
   },
 

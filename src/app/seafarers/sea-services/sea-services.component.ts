@@ -31,7 +31,12 @@ const ELEMENT_DATA: any[] = [
 export class SeaServicesComponent implements OnInit{
 
   seaServicesForm : FormGroup;
+<<<<<<< HEAD
 displayedColumns: string[] = ['sidNo', 'vesselName', 'vesselType', 'position', 'totalMonths','actions'];
+=======
+
+    displayedColumns: string[] = ['sidNo', 'vesselName', 'vesselType', 'position', 'totalMonths','actions'];
+>>>>>>> 0b0e3fd272392c444c95cd634ca06d7825a2b1ba
     dataSource: MatTableDataSource<any>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
@@ -44,8 +49,12 @@ displayedColumns: string[] = ['sidNo', 'vesselName', 'vesselType', 'position', '
     allSeafarersDropdown: any = [];  // sid link
     seafarersDropdown: any = []; 
     allSeafarersListDetails: any;
+<<<<<<< HEAD
     sidMap = new Map<number, string>(); 
     
+=======
+    sidMap = new Map<number, string>();
+>>>>>>> 0b0e3fd272392c444c95cd634ca06d7825a2b1ba
 
     constructor(
       private fb: FormBuilder, 
