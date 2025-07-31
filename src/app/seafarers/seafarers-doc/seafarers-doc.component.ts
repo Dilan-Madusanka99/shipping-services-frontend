@@ -21,7 +21,7 @@ export class SeafarersDocComponent {
   seafarersDropdown: any = [];
   allSeafarersListDetails: any;
 
-  // certificatesList: any[] = [];
+  certificatesList: any[] = []; // added
 
   constructor(
     private fb: FormBuilder,
