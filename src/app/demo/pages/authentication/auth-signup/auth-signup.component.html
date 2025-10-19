@@ -37,6 +37,17 @@
           >
             Last name is required
           </span>
+
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Seafarer Id" formControlName="sid" />
+          </div>
+          <span
+            class="text-danger"
+            *ngIf="(formControl['sid'].touched || submitted) && formControl['sid'].errors && formControl['sid'].errors['required']"
+          >
+            Seafarer Id is required
+          </span>
+
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="User Name" formControlName="login" />
           </div>

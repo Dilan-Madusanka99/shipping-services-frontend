@@ -22,6 +22,7 @@ export default class AuthSignupComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
+      sid: ['', [Validators.required]],
       login: ['', [Validators.required]],
       password: ['', [Validators.required]]
     });
@@ -46,6 +47,7 @@ export default class AuthSignupComponent implements OnInit {
         .request('POST', '/register', {
           firstName: this.registerForm.value.firstName,
           lastName: this.registerForm.value.lastName,
+          sid: this.registerForm.value.sid,
           login: this.registerForm.value.login,
           password: this.registerForm.value.password
         })
