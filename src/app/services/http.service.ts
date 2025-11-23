@@ -128,4 +128,12 @@ export class HttpService {
   public clearCache(): void {
     this.removeToken();
   }
+
+  setUserRole(role: string) {
+    window.localStorage.setItem('role', role);
+  }
+
+  getUserRole() {
+    return window.localStorage.getItem('role');
+  }
 }

@@ -90,6 +90,7 @@ export default class AuthSigninComponent implements OnInit {
           this.httpService.setAuthToken(response.token);
           this.httpService.setUserId(response.id);
           this.httpService.setLoginNameToCache(response.login);
+          this.httpService.setUserRole(response.role);
           this.getData(response.id);
         })
         .catch((error) => {
