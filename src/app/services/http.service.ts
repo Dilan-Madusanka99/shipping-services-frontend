@@ -136,4 +136,14 @@ export class HttpService {
   getUserRole() {
     return window.localStorage.getItem('role');
   }
+
+  setUserSid(sid: string) {
+    if (window.localStorage.getItem('role') === 'SEAFARER') {
+      window.localStorage.setItem('sid', sid);
+    }
+  }
+
+  getSid() {
+    return window.localStorage.getItem('sid');
+  }
 }
