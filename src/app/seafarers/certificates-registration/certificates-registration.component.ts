@@ -108,20 +108,39 @@ export class CertificatesRegistrationComponent {
 
   public populateData(): void {
     try {
-      this.seafarersService.getData().subscribe({
-        next: (dataList: any[]) => {
-          if (dataList.length <= 0) {
-            return;
-          }
+      if (window.localStorage.getItem('role') === 'SEAFARER') {
+        /* If the role is seafarer then get only details related to SID no*/
+        this.seafarersService.geSeafarerData(window.localStorage.getItem('sid')).subscribe({
+          next: (data) => {
+            if (!data) {
+              return;
+            }
 
-          this.dataSource = new MatTableDataSource(dataList);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-        },
-        error: (error) => {
-          this.messageService.showError('Action Failed With Error ' + error);
-        }
-      });
+            this.dataSource = new MatTableDataSource([data]);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          },
+          error: (error) => {
+            this.messageService.showError('Action Failed With Error ' + error);
+          }
+        });
+
+      } else {
+          this.seafarersService.getData().subscribe({
+          next: (dataList: any[]) => {
+            if (dataList.length <= 0) {
+              return;
+            }
+
+            this.dataSource = new MatTableDataSource(dataList);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          },
+          error: (error) => {
+            this.messageService.showError('Action Failed With Error ' + error);
+          }
+        });
+      }
     } catch (error) {
       this.messageService.showError('Action Failed With Error ' + error);
     }

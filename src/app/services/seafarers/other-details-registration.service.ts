@@ -73,9 +73,23 @@ export class OtherDetailsRegistrationService {
       return this.http.delete(requestUrl, {headers: headers});
     }
 
-    private apiUrl = environment.baseUrl + '/seaSeother_details_registrationrvices';
+    private apiUrl = environment.baseUrl + '/other_details_registration';
 
     getBySeafarerId(seafarerId: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/seafarer/${seafarerId}`);
     }
+
+    getSeafarerData(sidNo: String) {
+      const requestUrl = environment.baseUrl + '/other_details_registration' + sidNo;
+    
+      let headers = {};
+  
+      if (this.httpService.getAuthToken() !== null) {
+              headers = {
+           Authorization: 'Bearer ' + this.httpService.getAuthToken()
+        };
+      }
+    
+       return this.http.get(requestUrl, headers);
+     }
 }

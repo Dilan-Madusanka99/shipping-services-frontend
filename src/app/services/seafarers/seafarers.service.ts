@@ -74,7 +74,7 @@ export class SeafarersServiceService {
     return this.http.delete(requestUrl, { headers: headers });
   }
 
-  geSeafarerData(sidNo: String) {
+  getSeafarerData(sidNo: String) {
     const requestUrl = environment.baseUrl + '/seafarers_registration/' + sidNo;
 
     let headers = {};

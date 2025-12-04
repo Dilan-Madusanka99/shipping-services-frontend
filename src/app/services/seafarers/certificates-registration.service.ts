@@ -79,4 +79,18 @@ export class CertificatesRegistrationService {
       getBySeafarerId(seafarerId: number): Observable<any> {
       return this.http.get(`${this.apiUrl}/seafarer/${seafarerId}`);
       }
+
+  geSeafarerData(sidNo: String) {
+    const requestUrl = environment.baseUrl + '/certificates_registration' + sidNo;
+
+    let headers = {};
+
+    if (this.httpService.getAuthToken() !== null) {
+      headers = {
+        Authorization: 'Bearer ' + this.httpService.getAuthToken()
+      };
+    }
+
+    return this.http.get(requestUrl, headers);
+  }
 }
