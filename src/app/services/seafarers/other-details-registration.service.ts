@@ -80,7 +80,7 @@ export class OtherDetailsRegistrationService {
     }
 
     getSeafarerData(sidNo: String) {
-      const requestUrl = environment.baseUrl + '/other_details_registration' + sidNo;
+      const requestUrl = environment.baseUrl + '/other_details_registration/' + sidNo;
     
       let headers = {};
   
