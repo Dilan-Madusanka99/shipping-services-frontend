@@ -110,7 +110,7 @@ export class CertificatesRegistrationComponent {
     try {
       if (window.localStorage.getItem('role') === 'SEAFARER') {
         /* If the role is seafarer then get only details related to SID no*/
-        this.seafarersService.geSeafarerData(window.localStorage.getItem('sid')).subscribe({
+        this.seafarersService.getSeafarerData(window.localStorage.getItem('sid')).subscribe({
           next: (data) => {
             if (!data) {
               return;
