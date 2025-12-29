@@ -80,5 +80,18 @@ export class SeaServicesService {
         return this.http.get(`${this.apiUrl}/seafarer/${seafarerId}`);
         }
 
+      getSeafarerData(sidNo: String) {
+        const requestUrl = environment.baseUrl + '/seaServices/' + sidNo;
+
+        let headers = {};
+
+        if (this.httpService.getAuthToken() !== null) {
+          headers = {
+            Authorization: 'Bearer ' + this.httpService.getAuthToken()
+          };
+        }
+
+        return this.http.get(requestUrl, headers);
+      }
   
 }
