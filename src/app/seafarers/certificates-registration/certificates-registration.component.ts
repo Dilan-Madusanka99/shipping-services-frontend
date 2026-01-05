@@ -67,7 +67,7 @@ export class CertificatesRegistrationComponent {
       cIssuedDate: new FormControl('', [Validators.required]),
       cExpiredDate: new FormControl('', [Validators.required])
     });
-  } 
+  }
 
   ngOnInit(): void {
     this.getSeafarersList();
@@ -111,12 +111,12 @@ export class CertificatesRegistrationComponent {
       if (window.localStorage.getItem('role') === 'SEAFARER') {
         /* If the role is seafarer then get only details related to SID no*/
         this.seafarersService.getSeafarerData(window.localStorage.getItem('sid')).subscribe({
-          next: (data) => {
+          next: (data: any) => {
             if (!data) {
               return;
             }
 
-            this.dataSource = new MatTableDataSource([data]);
+            this.dataSource = new MatTableDataSource(data);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
           },
@@ -124,9 +124,8 @@ export class CertificatesRegistrationComponent {
             this.messageService.showError('Action Failed With Error ' + error);
           }
         });
-
       } else {
-          this.seafarersService.getData().subscribe({
+        this.seafarersService.getData().subscribe({
           next: (dataList: any[]) => {
             if (dataList.length <= 0) {
               return;
@@ -261,13 +260,12 @@ export class CertificatesRegistrationComponent {
     const imageType = data.certificateImageType;
     this.previewUrl = `data:${imageType};base64,${file}`;
 
-    this.certificatesRegistrationForm.controls['cIssuedPlace'].setValue(data.cIssuedPlace) // issue place patch
-
+    this.certificatesRegistrationForm.controls['cIssuedPlace'].setValue(data.cIssuedPlace); // issue place patch
 
     this.certificatesRegistrationForm.patchValue({
-    sidNo: +data.sidNo,
-    cIssuedDate: new Date(data.cIssuedDate).toISOString().substring(0, 10),
-    cExpiredDate: new Date(data.cExpiredDate).toISOString().substring(0, 10),
+      sidNo: +data.sidNo,
+      cIssuedDate: new Date(data.cIssuedDate).toISOString().substring(0, 10),
+      cExpiredDate: new Date(data.cExpiredDate).toISOString().substring(0, 10)
     });
   }
 
@@ -275,34 +273,33 @@ export class CertificatesRegistrationComponent {
     const id = data.id;
 
     try {
-          Swal.fire({
-            title: 'Are you sure?',
-            text: 'You want to delete this?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'Cancel',
-          }).then((result) => {
-            if (result && !result.isConfirmed) {
-              return;
-            }
-            
-      this.seafarersService.deleteData(id).subscribe({
-        next: (response: any) => {
-          const index = this.dataSource.data.findIndex((element) => element.id === id);
-
-          if (index !== -1) {
-            this.dataSource.data.splice(index, 1);
-          }
-          this.dataSource = new MatTableDataSource(this.dataSource.data);
-          this.messageService.showSuccess('Data Deleted Successfully!');
-        },
-        error: (error: any) => {
-          this.messageService.showError('Action Failed With Error' + error);
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'You want to delete this?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result && !result.isConfirmed) {
+          return;
         }
-      });
 
-    });
+        this.seafarersService.deleteData(id).subscribe({
+          next: (response: any) => {
+            const index = this.dataSource.data.findIndex((element) => element.id === id);
+
+            if (index !== -1) {
+              this.dataSource.data.splice(index, 1);
+            }
+            this.dataSource = new MatTableDataSource(this.dataSource.data);
+            this.messageService.showSuccess('Data Deleted Successfully!');
+          },
+          error: (error: any) => {
+            this.messageService.showError('Action Failed With Error' + error);
+          }
+        });
+      });
     } catch (error) {
       console.log(error);
       this.messageService.showError('Action Failed With Error' + error);
