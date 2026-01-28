@@ -112,12 +112,12 @@ export class SeaServicesComponent implements OnInit{
       if (window.localStorage.getItem('role') === 'SEAFARER') {
         /* If the role is seafarer then get only details related to SID no*/
         this.seaServicesService.getSeafarerData(window.localStorage.getItem('sid')).subscribe({
-          next: (data) => {
+          next: (data: any) => {
             if (!data) {
               return;
             }
 
-            this.dataSource = new MatTableDataSource([data]);
+            this.dataSource = new MatTableDataSource(data);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
           },
