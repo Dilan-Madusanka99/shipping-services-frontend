@@ -121,32 +121,11 @@ export class CrewComplaintsComponent {
     }
   }
 
-  // public populateData(): void {
-  //   try {
-  //     this.crewComplaintsService.getData().subscribe({
-  //       next: (dataList: any[]) => {
-  //         if (dataList.length <= 0) {
-  //           return;
-  //         }
-
-  //         this.dataSource = new MatTableDataSource(dataList);
-  //         this.dataSource.paginator = this.paginator;
-  //         this.dataSource.sort = this.sort;
-  //       },
-  //       error: (error) => {
-  //         this.messageService.showError('Action Failed With Error ' + error);
-  //       }
-  //     });
-  //   } catch (error) {
-  //     this.messageService.showError('Action Failed With Error ' + error);
-  //   }
-  // }
-
    public populateData(): void {
     try {
       if (window.localStorage.getItem('role') === 'SEAFARER') {
         /* If the role is seafarer then get only details related to SID no*/ 
-        this.seafarersService.getSeafarerData(window.localStorage.getItem('sid')).subscribe({
+        this.crewComplaintsService.getSeafarerData(window.localStorage.getItem('sid')).subscribe({
           next: (data) => {
             if (!data) {
               return;
@@ -161,7 +140,7 @@ export class CrewComplaintsComponent {
           }
         });
       } else {
-        this.seafarersService.getData().subscribe({
+        this.crewComplaintsService.getData().subscribe({
           next: (dataList: any[]) => {
             if (dataList.length <= 0) {
               return;

@@ -43,7 +43,11 @@ export class AppointmentComponent implements OnInit{
     isButtonDisabled = false;
     submitted: boolean;
 
-    constructor(private fb: FormBuilder, private appointmentService: AppointmentService, private messageService: MessageServiceService) {
+    constructor(
+      private fb: FormBuilder, 
+      private appointmentService: AppointmentService, 
+      private messageService: MessageServiceService
+    ) {
       this.appointmentForm = this.fb.group({
         sid: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
         firstName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern(/^[A-Za-z .'-]+$/)]),
