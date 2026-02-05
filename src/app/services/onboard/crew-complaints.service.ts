@@ -72,6 +72,18 @@ export class CrewComplaintsService {
           return this.http.delete(requestUrl, {headers: headers});
         }
 
+ getSeafarerData(sidNo: String) {
+      const requestUrl = environment.baseUrl + '/crewComplaints/' + sidNo;
+    
+      let headers = {};
   
+      if (this.httpService.getAuthToken() !== null) {
+              headers = {
+           Authorization: 'Bearer ' + this.httpService.getAuthToken()
+        };
+      }
+    
+       return this.http.get(requestUrl, headers);
+     }  
 }
 
