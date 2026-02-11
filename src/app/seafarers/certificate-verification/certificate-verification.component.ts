@@ -107,14 +107,32 @@ constructor(
       }
     }
   
-    public populateData(): void {
-      try {
-        this.certificateVerificationService.getData(). subscribe({
-          next: (dataList: any[]) => {
-            if (dataList.length <=0) {
+   public populateData(): void {
+    try {
+      if (window.localStorage.getItem('role') === 'SEAFARER') {
+        /* If the role is seafarer then get only details related to SID no*/
+        this.certificateVerificationService.getSeafarerData(window.localStorage.getItem('sid')).subscribe({
+          next: (data: any) => {
+            if (!data) {
               return;
             }
-            
+
+            this.dataSource = new MatTableDataSource(data);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          },
+          error: (error) => {
+            this.messageService.showError('Action Failed With Error ' + error);
+          }
+        });
+
+      } else {
+          this.certificateVerificationService.getData().subscribe({
+          next: (dataList: any[]) => {
+            if (dataList.length <= 0) {
+              return;
+            }
+
             this.dataSource = new MatTableDataSource(dataList);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
@@ -123,10 +141,11 @@ constructor(
             this.messageService.showError('Action Failed With Error ' + error);
           }
         });
-      } catch (error) {
-        this.messageService.showError('Action Failed With Error ' + error);
       }
+    } catch (error) {
+      this.messageService.showError('Action Failed With Error ' + error);
     }
+  }
 
     public prepareSeafarerData(): FormData {
       const certificateVerificationFormData = new FormData();
