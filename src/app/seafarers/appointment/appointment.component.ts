@@ -74,17 +74,17 @@ export class AppointmentComponent implements OnInit{
       }
     }
   
-  public populateData(): void {
+   public populateData(): void {
     try {
       if (window.localStorage.getItem('role') === 'SEAFARER') {
         /* If the role is seafarer then get only details related to SID no*/
         this.appointmentService.getSeafarerData(window.localStorage.getItem('sid')).subscribe({
-          next: (data) => {
+          next: (data: any) => {
             if (!data) {
               return;
             }
 
-            this.dataSource = new MatTableDataSource([data]);
+            this.dataSource = new MatTableDataSource(data);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
           },
@@ -92,8 +92,9 @@ export class AppointmentComponent implements OnInit{
             this.messageService.showError('Action Failed With Error ' + error);
           }
         });
+
       } else {
-        this.appointmentService.getData().subscribe({
+          this.appointmentService.getData().subscribe({
           next: (dataList: any[]) => {
             if (dataList.length <= 0) {
               return;
