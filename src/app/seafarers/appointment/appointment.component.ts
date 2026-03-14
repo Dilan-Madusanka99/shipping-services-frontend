@@ -49,7 +49,7 @@ export class AppointmentComponent implements OnInit{
       private messageService: MessageServiceService
     ) {
       this.appointmentForm = this.fb.group({
-        sid: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
+        sidNo: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
         firstName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern(/^[A-Za-z .'-]+$/)]),
         lastName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern(/^[A-Za-z .'-]+$/)]),
         position: new FormControl('', [Validators.required]),
@@ -118,6 +118,7 @@ export class AppointmentComponent implements OnInit{
           console.log('mode' + this.mode);
           console.log('Form Submitted');
           console.log(this.appointmentForm.value);
+          console.log(this.appointmentForm.valid);
   
           if(!this.appointmentForm.valid) return;
           if (this.mode === 'add'){
