@@ -5,9 +5,9 @@
       <!-- sid select -->
       <mat-form-field class="example-full-width">
         <mat-label> SID </mat-label>
-        <input matInput placeholder="SID" formControlName="sid">
+        <input matInput placeholder="SID" formControlName="sidNo">
         <span class="text-danger"
-          *ngIf="(appointmentForm.get('sid').touched || submitted) && appointmentForm.get('sid').errors && appointmentForm.get('sid').errors['required'] ">
+          *ngIf="(appointmentForm.get('sidNo').touched || submitted) && appointmentForm.get('sidNo').errors && appointmentForm.get('sidNo').errors['required'] ">
           SID No is Required
         </span>
       </mat-form-field>
