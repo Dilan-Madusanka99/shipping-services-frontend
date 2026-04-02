@@ -1,3 +1,8 @@
+<div class="header">
+  <h3>Job Postings</h3>
+  <!-- <i class="feather icon-user"></i> -->
+</div>
+
 <div class="container">
   <div class="form-section">
     <form [formGroup]="jobPostingForm" class="jobPostingForm" (ngSubmit)="onSubmit()">
@@ -23,7 +28,7 @@
       </mat-form-field>  
       <br> -->
 
-          <mat-form-field class="example-full-width">
+          <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Vessel Name</mat-label>
             <mat-select [(ngModel)]="selectedVessel" formControlName="vesselName" (valueChange)="onVesselSelect($event)">
               <mat-form-field class="w-100">
@@ -34,7 +39,7 @@
           </mat-form-field>
           <br />
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Position </mat-label>
         <mat-select formControlName="position">
           <mat-option value="AB Trainee">AB Trainee</mat-option>
@@ -51,7 +56,7 @@
       </mat-form-field>  
       <br>
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Job Status </mat-label>
         <mat-select formControlName="jobStatus">
           <mat-option value="Open">Open</mat-option>
@@ -60,7 +65,7 @@
       </mat-form-field>  
       <br>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="outline" class="example-full-width">
             <mat-label> Description </mat-label>
             <input matInput placeholder="Description" formControlName="jobDescription" >
         </mat-form-field>
@@ -79,8 +84,8 @@
           <mat-icon>refresh</mat-icon>
         </button>
       </div>
-      <mat-form-field class="filter">
-        <mat-label>Filter</mat-label>
+      <mat-form-field appearance="outline" class="filter">
+        <mat-icon matPrefix>search</mat-icon>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
       </mat-form-field>
     </div>
