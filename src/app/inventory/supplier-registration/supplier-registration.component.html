@@ -1,3 +1,8 @@
+<div class="header">
+  <h3>Supplier Registration</h3>
+  <!-- <i class="feather icon-user"></i> -->
+</div>
+
 <div class="container">
   <div class="form-section">
     <form [formGroup]="supplierRegistrationForm" class="supplierRegistrationForm" (ngSubmit)="onSubmit()">
@@ -18,7 +23,7 @@
       <!-- Photo upload - End -->
 
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Supplier No</mat-label>
         <input matInput placeholder="Supplier No" formControlName="supplierNo" >
         <span class="text-danger" 
@@ -28,13 +33,13 @@
       </mat-form-field>
       <br>
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Supplier Name</mat-label>
           <input matInput placeholder="Supplier Name" formControlName="supplierName">
         </mat-form-field>
         <br>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Supplier Category</mat-label>
           <mat-select [(value)]="selected" formControlName="supplierCategory">
             <mat-option value="Deck Stores">Deck Stores</mat-option>
@@ -45,19 +50,19 @@
         </mat-form-field>
         <br>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Supplier Sub Category (Optional)</mat-label>
           <input matInput placeholder="Supplier Sub Category (optional)" formControlName="supplierSubCategory">
         </mat-form-field>
         <br>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Supplier Contact No</mat-label>
           <input matInput placeholder="Supplier Contact No" formControlName="supplierContactNo">
         </mat-form-field>
         <br>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Supplier Email</mat-label>
           <input matInput placeholder="Supplier Email" formControlName="supplierEmail">
         </mat-form-field>
@@ -65,19 +70,19 @@
 
         <h5>Supplier Bank Details</h5>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Bank Account Name</mat-label>
           <input matInput placeholder="Bank Account Name" formControlName="supplierAccName">
         </mat-form-field>
         <br>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Bank Account No</mat-label>
           <input matInput placeholder="Bank Account No" formControlName="supplierAccNo">
         </mat-form-field>
         <br>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Bank</mat-label>
           <mat-select [(ngModel)]="selectedSupplierBank" formControlName="supplierBank" (valueChange)="onSupplierBankSelect($event)">
             <mat-form-field class="w-100">
@@ -104,7 +109,7 @@
         </mat-form-field>
         <br>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Branch</mat-label>
           <input matInput placeholder="Branch" formControlName="supplierBranch">
         </mat-form-field>
@@ -123,8 +128,8 @@
           <mat-icon>refresh</mat-icon>
         </button>
       </div>
-      <mat-form-field class="filter">
-        <mat-label>Filter</mat-label>
+      <mat-form-field appearance="outline" class="filter">
+        <mat-icon matPrefix>search</mat-icon>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
       </mat-form-field>
     </div>
