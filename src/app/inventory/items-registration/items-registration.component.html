@@ -1,8 +1,13 @@
+<div class="header">
+  <h3>Item Registration</h3>
+  <!-- <i class="feather icon-user"></i> -->
+</div>
+
 <div class="container">
   <div class="form-section">
     <form [formGroup]="itemsRegistrationForm" class="itemsRegistrationForm" (ngSubmit)="onSubmit()">
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Item No.</mat-label>
         <input matInput placeholder="Item No." formControlName="itemNo" >
         <span class="text-danger" 
@@ -12,19 +17,19 @@
       </mat-form-field>
       <br>
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>IMPA No</mat-label>
           <input matInput placeholder="IMPA (Optional)" formControlName="emNo">
         </mat-form-field>
         <br>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Item Name</mat-label>
           <input matInput placeholder="Item Name" formControlName="itemName">
         </mat-form-field>
         <br>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Item Category</mat-label>
           <mat-select [(value)]="selected" formControlName="itemCategory">
             <mat-option value="Deck Stores">Deck Stores</mat-option>
@@ -59,8 +64,8 @@
           <mat-icon>refresh</mat-icon>
         </button>
       </div>
-      <mat-form-field class="filter">
-        <mat-label>Filter</mat-label>
+      <mat-form-field appearance="outline" class="filter">
+        <mat-icon matPrefix>search</mat-icon>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
       </mat-form-field>
     </div>
