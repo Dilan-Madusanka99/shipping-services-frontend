@@ -1,8 +1,13 @@
+<div class="header">
+  <h3>Payment Details</h3>
+  <!-- <i class="feather icon-user"></i> -->
+</div>
+
 <div class="container">
   <div class="form-section">
     <form [formGroup]="paymentsForm" class="paymentsForm" (ngSubmit)="onSubmit()">
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
           <mat-label> Payment No </mat-label>
           <input matInput placeholder="Payment No" formControlName="paymentNo">
         <span class="text-danger" 
@@ -12,7 +17,7 @@
         </mat-form-field>
         <br>
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Item No</mat-label>
         <mat-select [(ngModel)]="selectedItem" formControlName="itemNo" (valueChange)="onItemSelect($event)">
           <mat-form-field class="w-100">
@@ -23,13 +28,13 @@
       </mat-form-field>
       <br />
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Item Name </mat-label>
           <input matInput placeholder="Item Name" formControlName="itemName">
         </mat-form-field>
         <br>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Supplier Name</mat-label>
           <mat-select [(ngModel)]="selectedSupplier" formControlName="supplierName" (valueChange)="onSupplierSelect($event)">
             <mat-form-field class="w-100">
@@ -40,7 +45,7 @@
         </mat-form-field>
         <br />
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="outline" class="example-full-width">
           <mat-label> Quantity </mat-label>
           <input matInput type="number" matInput placeholder="Qty  " formControlName="quantity" [min]="1" [max]="100">
         </mat-form-field>
@@ -54,13 +59,13 @@
           </mat-radio-group>
         <br><br>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="outline" class="example-full-width">
           <mat-label> Amount (Rs:)  </mat-label>
           <input matInput placeholder="(Rs:)" formControlName="amount">
         </mat-form-field>
         <br>
         
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Payment Date </mat-label>
           <input matInput [matDatepicker]="picker" formControlName="paymentDate"/>
           <mat-hint>MM/DD/YYYY</mat-hint>
@@ -69,7 +74,7 @@
         </mat-form-field>
         <br>
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Payment Status  </mat-label>
           <mat-select [(value)]="selected" formControlName="paymentStatus">
             <mat-option value="Paid">Paid</mat-option>
@@ -102,8 +107,8 @@
           <mat-icon>refresh</mat-icon>
         </button>
       </div>
-      <mat-form-field class="filter">
-        <mat-label>Filter</mat-label>
+      <mat-form-field appearance="outline" class="filter">
+        <mat-icon matPrefix>search</mat-icon>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
       </mat-form-field>
     </div>
