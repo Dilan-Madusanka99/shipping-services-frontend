@@ -1,3 +1,8 @@
+<div class="header">
+  <h3>Employee Details</h3>
+  <!-- <i class="feather icon-user"></i> -->
+</div>
+
 <div class="container">
     <div class="form-section">
         <form [formGroup]="vesselRegistrationForm" class="vesselRegistrationForm" (ngSubmit)="onSubmit()">
@@ -16,7 +21,7 @@
           <br>
 
           
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>IMO No</mat-label>
                 <input matInput placeholder="IMO No" formControlName="imoNo">
                 <span class="text-danger" 
@@ -26,14 +31,14 @@
             </mat-form-field>
             <br>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
              <mat-label>Vessel Name</mat-label>
              <input matInput placeholder="Vessel Name" formControlName="vesselName">
             </mat-form-field>
             <br>
 
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label> Vessel Type </mat-label>
                 <mat-select formControlName="vesselType">
                   <mat-option value="Tanker">Tanker</mat-option>
@@ -46,25 +51,25 @@
               </mat-form-field>
               <br>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Flag</mat-label>
                 <input matInput placeholder="Flag" formControlName="flag">
             </mat-form-field>
             <br>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Year of Build</mat-label>
                 <input matInput placeholder="Year of Build" formControlName="yob">
             </mat-form-field>
             <br>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Gross Tonnage</mat-label>
                 <input matInput placeholder="GRT" formControlName="grt">
             </mat-form-field>
             <br>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>BHP (KW)</mat-label>
                 <input matInput placeholder="BHP (KW)" formControlName="bhp">
             </mat-form-field>
@@ -84,8 +89,8 @@
               </button>
             </div>
     
-            <mat-form-field class="filter">
-              <mat-label>Filter</mat-label>
+            <mat-form-field appearance="outline" class="filter">
+              <mat-icon matPrefix>search</mat-icon>
               <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
             </mat-form-field>
           </div>
