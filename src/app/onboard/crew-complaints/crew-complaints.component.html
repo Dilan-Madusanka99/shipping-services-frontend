@@ -6,10 +6,11 @@
 <div class="container">
   <div class="form-section">
     <form [formGroup]="crewComplaintsForm" class="crewComplaintsForm" (ngSubmit)="onSubmit()">
-      <mat-form-field class="example-full-width">
+
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>SID No</mat-label>
         <mat-select [(ngModel)]="selectedSeafarers" formControlName="sidNo" (valueChange)="onSeafarersSelect($event)">
-          <mat-form-field appearance="outline" class="w-100">
+          <mat-form-field class="w-100">
             <input matInput placeholder="Search for Seafarers..." (keyup)="onSeafarersKey($event.target)" />
           </mat-form-field>
           <mat-option *ngFor="let seafarers of seafarersDropdown" [value]="seafarers.id">{{ seafarers.sidNo }}</mat-option>

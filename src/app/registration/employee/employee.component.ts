@@ -32,7 +32,7 @@ const ELEMENT_DATA: any[] = [{ profileImage: 'Image', empNo: 1, firstName: 'Hydr
 export class EmployeeComponent implements OnInit {
   employeeForm: FormGroup;
 
-  displayedColumns: string[] = ['profileImage',   'empNo', 'firstName', 'nic', 'roles', 'actions'];
+  displayedColumns: string[] = ['profileImage', 'empNo', 'firstName', 'nic', 'roles', 'actions'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

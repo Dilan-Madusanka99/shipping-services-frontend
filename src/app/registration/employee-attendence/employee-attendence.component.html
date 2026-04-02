@@ -6,10 +6,10 @@
 <div class="container">
   <div class="form-section">
     <form [formGroup]="employeeAttendenceForm" class="employeeAttendenceForm" (ngSubmit)="onSubmit()">
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Users</mat-label>
         <mat-select [(ngModel)]="selectedEmployee" formControlName="users" (valueChange)="onEmployeeSelect($event)">
-          <mat-form-field appearance="outline" class="w-100">
+          <mat-form-field class="w-100">
             <input matInput placeholder="Search for employee..." (keyup)="onKey($event.target)" />
           </mat-form-field>
           <mat-option *ngFor="let emp of employeeDropdown" [value]="emp.id">{{ emp.name }}</mat-option>

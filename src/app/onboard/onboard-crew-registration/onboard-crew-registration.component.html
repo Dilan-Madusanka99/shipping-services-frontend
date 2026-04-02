@@ -6,7 +6,8 @@
 <div class="container">
   <div class="form-section">
     <form [formGroup]="onboardCrewRegistrationForm" class="onboardCrewRegistrationForm" (ngSubmit)="onSubmit()">
-      <mat-form-field class="example-full-width">
+
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>SID No</mat-label>
         <mat-select [(ngModel)]="selectedSeafarers" formControlName="sidNo" (valueChange)="onSeafarersSelect($event)">
           <mat-form-field class="w-100">

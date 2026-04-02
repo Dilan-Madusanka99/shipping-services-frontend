@@ -11,12 +11,13 @@ import { VesselRegistrationService } from 'src/app/services/vessels/vessel-regis
 import Swal from 'sweetalert2';
 
 export interface PeriodicElement {
-  jobDescription: String;
+  jobPostImage: string;
+  jobDescription: string;
   jobPostingDate: Date;
 }
 
 const ELEMENT_DATA: any[] = [ 
-  {vesselName: 'M/T Don Juan', position: 'AB', jobStatus: 'open'},
+  {jobPostImage: 'Image', vesselName: 'M/T Don Juan', position: 'AB', jobStatus: 'open'},
 ];
 
 @Component({
@@ -29,7 +30,7 @@ export class JobPostingComponent {
 
   jobPostingForm : FormGroup;
 
-  displayedColumns: string[] = ['vesselName' ,'position', 'jobStatus', 'actions'];
+  displayedColumns: string[] = ['jobPostImage', 'vesselName' ,'position', 'jobStatus', 'actions'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

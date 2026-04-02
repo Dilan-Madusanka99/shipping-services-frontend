@@ -6,8 +6,7 @@
 <div class="container">
   <div class="form-section">
     <form [formGroup]="jobPostingForm" class="jobPostingForm" (ngSubmit)="onSubmit()">
-    
-    <h5>Job Vacancies</h5>
+
         <div class="form-field">
             <label for="image">Upload Image</label>
             <input type="file" (change)="onFileSelected($event)" accept="image/*"/>
@@ -91,6 +90,15 @@
     </div>
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+      <ng-container matColumnDef="jobPostImage">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <img 
+            [src]="'data:image/jpeg;base64,' + element.jobPostImage" class="avatar"
+          />
+        </td>
+      </ng-container>
 
       <ng-container matColumnDef="vessel">
         <th mat-header-cell *matHeaderCellDef mat-sort-header [hidden]="true"> Vessel </th>
