@@ -1,0 +1,76 @@
+<div class="calendar-wrapper">
+
+  <!-- Navigation bar -->
+  <div class="cal-nav">
+    <div class="nav-left">
+      <button class="nav-btn" (click)="prevMonth()" aria-label="Previous month">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="10,3 5,8 10,13"/>
+        </svg>
+      </button>
+      <button class="nav-btn today-btn" (click)="goToday()" [class.active]="isCurrentMonth()">Today</button>
+      <button class="nav-btn" (click)="nextMonth()" aria-label="Next month">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6,3 11,8 6,13"/>
+        </svg>
+      </button>
+    </div>
+    <h1 class="month-label">{{ monthLabel() }}</h1>
+    <div class="nav-right">
+      <!-- Placeholder for future view switcher -->
+      <span class="view-label">Month</span>
+    </div>
+  </div>
+
+  <!-- Day-of-week headers -->
+  <div class="day-headers">
+    <div class="day-header" *ngFor="let d of weekDays">{{ d }}</div>
+  </div>
+
+  <!-- Calendar grid -->
+  <div class="cal-grid">
+    <div
+      class="week-row"
+      *ngFor="let week of calendarMonth().weeks; let wi = index; trackBy: trackByWeek"
+    >
+      <div
+        class="day-cell"
+        *ngFor="let day of week; trackBy: trackByDate"
+        [class.other-month]="!day.isCurrentMonth"
+        [class.is-today]="day.isToday"
+        [class.has-events]="day.appointments.length > 0"
+        (click)="onDayClick(day)"
+        [attr.aria-label]="day.dateStr"
+      >
+        <!-- Day number -->
+        <div class="day-num-wrap">
+          <span class="day-num" [class.today-badge]="day.isToday">{{ day.day }}</span>
+        </div>
+
+        <!-- Appointment pills -->
+        <!-- <div class="events-area">
+          <div
+            *ngFor="let appt of getVisibleAppointments(day.appointments); trackBy: trackById"
+            class="event-pill"
+            [style.background]="appt.color + '20'"
+            [style.color]="appt.color"
+            [style.border-color]="appt.color + '40'"
+            (click)="onAppointmentClick(appt, $event)"
+            [title]="appt.title"
+          >
+            <span class="event-dot" [style.background]="appt.color"></span>
+            <span class="event-name">{{ appt.title }}</span>
+          </div>
+
+          <div
+            *ngIf="getOverflowCount(day.appointments) > 0"
+            class="overflow-label"
+          >
+            +{{ getOverflowCount(day.appointments) }} more
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+</div>

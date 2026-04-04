@@ -86,3 +86,9 @@
     background: #f0f0f0;
   }
   
+  .main-content {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
