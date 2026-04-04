@@ -1,7 +1,12 @@
+<div class="header">
+  <h3>Employee Attendences</h3>
+  <!-- <i class="feather icon-user"></i> -->
+</div>
+
 <div class="container">
   <div class="form-section">
     <form [formGroup]="employeeAttendenceForm" class="employeeAttendenceForm" (ngSubmit)="onSubmit()">
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Users</mat-label>
         <mat-select [(ngModel)]="selectedEmployee" formControlName="users" (valueChange)="onEmployeeSelect($event)">
           <mat-form-field class="w-100">
@@ -12,7 +17,7 @@
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Attendence Status</mat-label>
         <mat-select formControlName="attendenceStatus">
           <mat-option value="Present">Present</mat-option>
@@ -37,8 +42,8 @@
         </button>
       </div>
 
-      <mat-form-field class="filter">
-        <mat-label>Filter</mat-label>
+      <mat-form-field appearance="outline" class="filter">
+        <mat-icon matPrefix>search</mat-icon>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input />
       </mat-form-field>
     </div>

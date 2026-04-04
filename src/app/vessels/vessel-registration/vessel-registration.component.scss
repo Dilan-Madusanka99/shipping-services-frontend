@@ -1,63 +1,203 @@
-.container{
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
+h3{
+  margin-top: -50px;  
+  margin-bottom: 15px;
+  margin-left: 60px;
+  color: #e18720;
+  font-size: 30px;
+  font-weight: 580; 
 }
 
-.form-section{
-    flex: 75px;
-    padding: 5px;
-    border-right: 1px solid #ccc;
+.container {
+  display: flex;
+  gap: 24px;
+  padding: 20px;
+  background: #F8FAFC;
 }
 
-.table-section{
-    flex: 200px;  
+.form-section {
+  width: 340px;
 }
 
-.example-full-width{
-    width: 50%;
+.vesselRegistrationForm {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
 }
 
-.form-button{
-    margin-right: 1%;
+.table-section {
+  flex: 1;
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
 }
 
-.refresh-filter-section{
-    display: flex;
-    flex-direction: row;
+::ng-deep .mat-mdc-text-field-wrapper {
+  border-radius: 10px !important;
 }
 
-.refresh-button{
-    margin: 1%;
+::ng-deep .mdc-text-field--focused .mdc-notched-outline__leading,
+::ng-deep .mdc-text-field--focused .mdc-notched-outline__notch,
+::ng-deep .mdc-text-field--focused .mdc-notched-outline__trailing {
+  border-color: #3B82F6 !important;
 }
 
-.filter{
-    width: 100%;
+// form buttons
+.form-button {
+  width: 48%;
+  margin-right: 2%;
+  border-radius: 8px !important;
 }
 
-.refresh-filter-section{
-    display: flex;
-    flex-direction: row;
-    width: 50%;
+[type='submit'] {
+    background-color: #0d6efd !important;  /* blue */
+    color: #ffffff !important;            /* white text */
 }
 
-.refresh-button{
-    margin: 1%;
+[type='reset'] {
+    background-color: #EF4444 !important;  /* blue */
+    color: #ffffff !important;            /* white text */
 }
 
-// Photo upload
-.form-field {
-    max-width: 300px;
-    margin-bottom: 1rem;
-  }
+.form-button:last-child {
+  margin-right: 0;
+}
 
-  input[type="file"] {
-    width: 100%;
-  }
-  
-  img {
-    margin-top: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
 
+// filter section
+.refresh-filter-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #eef1f5;
+  padding: 10px 14px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+}
+
+.refresh-button {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: #e9edf3;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.refresh-button mat-icon {
+  color: #2563eb;
+}
+
+::ng-deep .filter {
+  width: 260px;
+}
+
+::ng-deep .filter .mat-mdc-text-field-wrapper {
+  background: #e5e7eb !important;
+  border-radius: 14px !important;
+  height: 50px !important;
+  box-shadow: none !important;
+}
+
+/* remove default border */
+::ng-deep .filter .mdc-notched-outline__leading,
+::ng-deep .filter .mdc-notched-outline__notch,
+::ng-deep .filter .mdc-notched-outline__trailing {
+  border: none !important;
+}
+
+/* input text */
+::ng-deep .filter .mat-mdc-input-element {
+  padding-left: 8px !important;
+}
+
+/* icon spacing */
+::ng-deep .filter mat-icon {
+  margin-left: 10px;
+  color: #6b7280;
+}
+
+// table styling
+table {
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+// header
+::ng-deep th.mat-mdc-header-cell {
+  background: #F1F5F9;
+  color: #64748B;
+  font-weight: 600;
+}
+
+// rows
+::ng-deep td.mat-mdc-cell {
+  padding: 12px;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+// hover effect
+::ng-deep tr.mat-mdc-row:hover {
+  background: #F8FAFC;
+  transition: 0.2s;
+}
+
+/* Action BUTTON STYLE */
+::ng-deep button[mat-icon-button] {
+  margin-right: 6px;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+/* EDIT action button */
+::ng-deep button[mat-icon-button][mattooltip="edit"] mat-icon {
+  color: #3B82F6;
+}
+
+/* DELETE action button*/
+::ng-deep button[mat-icon-button][mattooltip="delete"] mat-icon {
+  color: #EF4444;
+}
+
+/* HOVER EFFECT */
+::ng-deep button[mat-icon-button]:hover {
+  background: #F1F5F9;
+}
+
+// image preview cleanup
+img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;   /* circle image */
+    object-fit: cover;    /* no stretching */
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #E2E8F0;
+}
+
+
+/* LABEL */
+label {
+  font-weight: 500;
+  color: #475569;
+}
+
+/* ERROR TEXT */
+.text-danger {
+  font-size: 12px;
+  color: #EF4444;
+}
+
+/* PAGINATOR */
+::ng-deep .mat-mdc-paginator {
+  margin-top: 10px;
+}

@@ -1,7 +1,13 @@
+<div class="header">
+  <h3>Crew Complaints</h3>
+  <!-- <i class="feather icon-user"></i> -->
+</div>
+
 <div class="container">
   <div class="form-section">
     <form [formGroup]="crewComplaintsForm" class="crewComplaintsForm" (ngSubmit)="onSubmit()">
-      <mat-form-field class="example-full-width">
+
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>SID No</mat-label>
         <mat-select [(ngModel)]="selectedSeafarers" formControlName="sidNo" (valueChange)="onSeafarersSelect($event)">
           <mat-form-field class="w-100">
@@ -12,7 +18,7 @@
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>IMO No</mat-label>
         <mat-select [(ngModel)]="selectedVessel" formControlName="imoNo" (valueChange)="onVesselSelect($event)">
           <mat-form-field class="w-100">
@@ -23,19 +29,19 @@
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Vessel Name</mat-label>
         <input matInput placeholder="Vessel Name" formControlName="vesselName" />
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Complaintor Name</mat-label>
         <input matInput placeholder="Complaintor Name" formControlName="complaintorName" />
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Complaint Date</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="complaintDate" />
         <mat-hint>MM/DD/YYYY</mat-hint>
@@ -44,7 +50,7 @@
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Complaint Type</mat-label>
         <mat-select [(value)]="selected" formControlName="complaintType">
           <mat-option value="Drug & Alchol">Drug & Alchol</mat-option>
@@ -57,7 +63,7 @@
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Complaint</mat-label>
         <input matInput placeholder="Complaint" formControlName="complaint" />
       </mat-form-field>
@@ -77,8 +83,8 @@
           <mat-icon>refresh</mat-icon>
         </button>
       </div>
-      <mat-form-field class="filter">
-        <mat-label>Filter</mat-label>
+      <mat-form-field appearance="outline" class="filter">
+        <mat-icon matPrefix>search</mat-icon>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input />
       </mat-form-field>
     </div>

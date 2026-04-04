@@ -9,13 +9,14 @@ import { VesselRegistrationService } from 'src/app/services/vessels/vessel-regis
 import Swal from 'sweetalert2';
 
 export interface PeriodicElement {
+  profileImage: string;
   vesselName: string;
   imoNo: String;
   vesselType: string;
   flag: string;
 }
 
-const ELEMENT_DATA: any[] = [{ vesselName: 'Dacil', imoNo: 'souselas', vesselType: 'bulk', flag: 'portugal' }];
+const ELEMENT_DATA: any[] = [{ profileImage: 'Image', vesselName: 'Dacil', imoNo: 'souselas', vesselType: 'bulk', flag: 'portugal' }];
 
 @Component({
   selector: 'app-vessel-registration',
@@ -26,7 +27,7 @@ const ELEMENT_DATA: any[] = [{ vesselName: 'Dacil', imoNo: 'souselas', vesselTyp
 export class VesselRegistrationComponent implements OnInit {
   vesselRegistrationForm: FormGroup;
 
-  displayedColumns: string[] = ['vesselName', 'imoNo', 'vesselType', 'flag', 'actions'];
+  displayedColumns: string[] = ['profileImage', 'vesselName', 'imoNo', 'vesselType', 'flag', 'actions'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

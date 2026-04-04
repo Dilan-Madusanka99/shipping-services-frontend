@@ -12,13 +12,14 @@ import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 
 export interface PeriodicElement {
+  profileImage: string;
   empNo: number;
   firstName: string;
   nic: number;
   roles: string;
 }
 
-const ELEMENT_DATA: any[] = [{ empNo: 1, firstName: 'Hydrogen', nic: 1, roles: 'manager' }];
+const ELEMENT_DATA: any[] = [{ profileImage: 'Image', empNo: 1, firstName: 'Hydrogen', nic: 1, roles: 'manager' }];
 
 @Component({
   selector: 'app-employee',
@@ -31,7 +32,7 @@ const ELEMENT_DATA: any[] = [{ empNo: 1, firstName: 'Hydrogen', nic: 1, roles: '
 export class EmployeeComponent implements OnInit {
   employeeForm: FormGroup;
 
-  displayedColumns: string[] = ['empNo', 'firstName', 'nic', 'roles', 'actions'];
+  displayedColumns: string[] = ['profileImage', 'empNo', 'firstName', 'nic', 'roles', 'actions'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
