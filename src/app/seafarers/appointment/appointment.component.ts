@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { AppointmentService } from 'src/app/services/seafarers/appointment.service';
 import Swal from 'sweetalert2';
+import { Appointment } from './calendar/calendar.component';
 
 export interface PeriodicElement {
   firstName: String;
@@ -42,6 +43,11 @@ export class AppointmentComponent implements OnInit{
     selectedData;
     isButtonDisabled = false;
     submitted: boolean;
+    selectedIndex = 0;
+
+    readonly showModal = signal(false);
+    readonly editingAppointment = signal<Appointment | null>(null);
+    readonly prefillDate = signal<string>('');
 
     constructor(
       private fb: FormBuilder, 
@@ -154,6 +160,7 @@ export class AppointmentComponent implements OnInit{
           this.mode = 'add';
           this.appointmentForm.disable();
           this.isButtonDisabled = true;
+          this.resetData();
         } catch (error) {
           console.log(error);
           this.messageService.showError('Action Failed With Error' + error);
@@ -172,6 +179,29 @@ export class AppointmentComponent implements OnInit{
         this.saveButtonLabel = 'Edit';
         this.mode = 'edit';
         this.selectedData = data;
+        this.selectTab(0);
+
+        let editAppointmentData: Appointment = {
+          id: data.id,
+          title: null,
+          date: this.appointmentForm.get('appointmentDate').value,
+          time: this.appointmentForm.get('appointmentTime').value,
+          duration: null,
+          category: null,
+          color: null,
+          notes: null,
+          createdAt: null,
+          sid: this.appointmentForm.get('sidNo').value,
+          firstName: this.appointmentForm.get('firstName').value,
+          lastName: this.appointmentForm.get('lastName').value,
+          position: this.appointmentForm.get('position').value,
+          mobile: this.appointmentForm.get('mobile').value,
+          email: this.appointmentForm.get('email').value,
+          status: this.appointmentForm.get('appointmentStatus').value,
+          formData: this.appointmentForm
+        };
+
+        this.openEditModal(editAppointmentData);
       }
   
       public deleteData(data: any): void {
@@ -215,5 +245,46 @@ export class AppointmentComponent implements OnInit{
       public refreshData(): void {
         this.populateData();
       }
+
+        // Open modal to add new appointment
+  openAddModal(dateStr?: string): void {
+    this.editingAppointment.set(null);
+    this.prefillDate.set(dateStr ?? '');
+    this.showModal.set(true);
+  }
+
+  // Open modal to edit existing appointment
+  openEditModal(appt: Appointment): void {
+    this.editingAppointment.set(appt);
+    this.prefillDate.set('');
+    this.showModal.set(true);
+  }
+
+  closeModal(): void {
+    this.showModal.set(false);
+    this.editingAppointment.set(null);
+    this.prefillDate.set('');
+  }
+
+    saveAppointment(data: any): void {
+    const editing = this.editingAppointment();
+    this.appointmentForm.patchValue(data?.value);
+    if (editing) {
+      this.mode = 'edit';
+    } else {
+      this.mode = 'add';
+    }
+    this.appointmentForm.updateValueAndValidity();
+    this.onSubmit();
+    this.closeModal();
+  }
+
+  deleteAppointment(id: string): void {
+    // this.apptService.delete(id);
+  }
+
+  selectTab(index: number): void {
+    this.selectedIndex = index;
+  }
 
 }
