@@ -29,6 +29,8 @@
     border: 2px solid transparent;
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .menu-card::before {
@@ -45,6 +47,16 @@
     transform: translateY(-8px);
     box-shadow: 0 8px 30px rgba(139, 69, 19, 0.2);
     border-color: #d2b48c;
+}
+
+.open-btn {
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  border: none;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
 }
 
 .card-icon {
@@ -69,10 +81,18 @@
 
 .card-arrow {
     font-size: 1.5rem;
-    color: #7a7878;
+    color: white;
     transition: transform 0.3s ease;
 }
 
 .menu-card:hover .card-arrow {
     transform: translateX(5px);
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between; // 👈 THIS is the key
+  align-items: center;
+  margin-top: auto;
+  padding-top: 1rem;
 }

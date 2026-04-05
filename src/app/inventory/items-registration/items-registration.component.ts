@@ -9,13 +9,14 @@ import { MessageServiceService } from 'src/app/services/message-service/message-
 import Swal from 'sweetalert2';
 
 export interface PeriodicElement {
-  itemNo: String;
+  itemNo: string;
   itemName: string;
   itemCategory: string;
+  profileImage: string;
 } 
 
 const ELEMENT_DATA: any[] = [ 
-  {itemNo: 1, itemName: 'bearing', itemCategory: 'engine stores'},
+  {itemNo: 1, itemName: 'bearing', itemCategory: 'engine stores', profileImage: 'Image'},
 ];
 
 @Component({
@@ -28,7 +29,7 @@ export class ItemsRegistrationComponent {
 
   itemsRegistrationForm : FormGroup;
 
-  displayedColumns: string[] = ['itemNo', 'itemName', 'itemCategory', 'actions'];
+  displayedColumns: string[] = ['profileImage', 'itemNo', 'itemName', 'itemCategory', 'actions'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

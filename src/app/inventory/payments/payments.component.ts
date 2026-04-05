@@ -12,15 +12,16 @@ import { MessageServiceService } from 'src/app/services/message-service/message-
 import Swal from 'sweetalert2';
 
 export interface PeriodicElement {
-  paymentNo: String;
+  paymentImage: string;
+  paymentNo: string;
   supplierName: string;
   amount: string;
   paymentDate: Date;
-  paymentStatus: String;
+  paymentStatus: string;
 }
 
 const ELEMENT_DATA: any[] = [ 
-  {paymentNo: '001', supplierName: 'fish city', amount: '10000', paymentDate: '8/7/2025', paymentStatus: 'paid'},
+  {paymentImage: 'image', paymentNo: '001', supplierName: 'fish city', amount: '10000', paymentDate: '8/7/2025', paymentStatus: 'paid'},
 ]; 
 
 @Component({
@@ -35,7 +36,7 @@ export class PaymentsComponent {
 
   paymentsForm : FormGroup;
 
-    displayedColumns: string[] = ['paymentNo', 'supplierName', 'amount', 'paymentDate', 'paymentStatus', 'actions'];
+    displayedColumns: string[] = ['paymentImage', 'paymentNo', 'supplierName', 'amount', 'paymentDate', 'paymentStatus', 'actions'];
     dataSource: MatTableDataSource<any>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;

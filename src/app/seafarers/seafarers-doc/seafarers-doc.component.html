@@ -1,7 +1,11 @@
+<div class="header">
+  <h3>Seafarer Document</h3>
+  <!-- <i class="feather icon-user"></i> -->
+</div>
+
 <div class="container">
   <div class="form-header">
-    <h6>Seafarer Details Form</h6>
-    <mat-form-field class="example-full-width">
+    <mat-form-field appearance="outline" class="example-full-width">
       <mat-label>SID No</mat-label>
       <mat-select [(ngModel)]="selectedSeafarers" formControlName="sidNo" (valueChange)="onSeafarersSelect($event)">
         <mat-form-field class="w-100">
@@ -10,6 +14,7 @@
         <mat-option *ngFor="let seafarers of seafarersDropdown" [value]="seafarers.id">{{ seafarers.sidNo }}</mat-option>
       </mat-select>
     </mat-form-field>
+    
     <div class="refresh-button">
       <button mat-raised-button color="primary" (click)="refreshData()">
         <mat-icon>refresh</mat-icon>

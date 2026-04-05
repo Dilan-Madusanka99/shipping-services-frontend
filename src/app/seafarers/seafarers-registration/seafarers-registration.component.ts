@@ -10,14 +10,15 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import Swal from 'sweetalert2';
 
 export interface PeriodicElement {
-  sidno: String;
+  profileImage: string;
+  sidno: string;
   position: string;
   surname: string;
   mobile: string;
   appliedDate: Date;
 }
 
-const ELEMENT_DATA: any[] = [{ sidno: '100', position: 'AB', surname: 'Fernando', mobile: '076', appliedDate: '07/04/2025' }];
+const ELEMENT_DATA: any[] = [{ profileImage: 'Image', sidno: '100', position: 'AB', surname: 'Fernando', mobile: '076', appliedDate: '07/04/2025' }];
 
 @Component({
   selector: 'app-seafarers-registration',
@@ -30,7 +31,7 @@ const ELEMENT_DATA: any[] = [{ sidno: '100', position: 'AB', surname: 'Fernando'
 export class SeafarersRegistrationComponent {
   seafarersForm: FormGroup;
 
-  displayedColumns: string[] = ['sidNo', 'position', 'surname', 'mobile', 'appliedDate', 'actions'];
+  displayedColumns: string[] = ['profileImage', 'sidNo', 'position', 'surname', 'mobile', 'appliedDate', 'actions'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

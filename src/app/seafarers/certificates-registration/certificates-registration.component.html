@@ -1,7 +1,11 @@
+<div class="header">
+  <h3>Certificate Details</h3>
+  <!-- <i class="feather icon-user"></i> -->
+</div>
+
 <div class="container">
   <div class="form-section">
     <form [formGroup]="certificatesRegistrationForm" class="certificatesRegistrationForm" (ngSubmit)="onSubmit()">
-      <h5>Certificate Details</h5>
 
       <div class="form-field">
         <label for="image">Upload Image</label>
@@ -14,7 +18,7 @@
       </div>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>SID No</mat-label>
         <mat-select [(ngModel)]="selectedSeafarers" formControlName="sidNo" (valueChange)="onSeafarersSelect($event)">
           <mat-form-field class="w-100">
@@ -25,7 +29,7 @@
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Certificate Name</mat-label>
         <mat-select formControlName="cName">
           <mat-option value="Advanced Fire Fighting">Advanced Fire Fighting</mat-option>
@@ -48,13 +52,13 @@
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Certificate No</mat-label>
         <input matInput placeholder="Certificate No" formControlName="cNo" />
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Place</mat-label>
         <mat-select formControlName="cIssuedPlace">
           <mat-option value="Cinec">Cinec Campus (Pvt) Ltd</mat-option>
@@ -67,7 +71,7 @@
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Date</mat-label>
         <input matInput [matDatepicker]="cIssuedDate" formControlName="cIssuedDate" class="example-full-width" />
         <mat-hint>MM/DD/YYYY</mat-hint>
@@ -76,7 +80,7 @@
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Expired Date</mat-label>
         <input matInput [matDatepicker]="cExpiredDate" formControlName="cExpiredDate" />
         <mat-hint>MM/DD/YYYY</mat-hint>
@@ -100,9 +104,9 @@
         </button>
       </div>
 
-      <mat-form-field class="filter">
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input />
+      <mat-form-field appearance="outline" class="filter">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input />
       </mat-form-field>
     </div>
 

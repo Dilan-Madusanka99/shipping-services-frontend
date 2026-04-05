@@ -9,14 +9,15 @@ import { MessageServiceService } from 'src/app/services/message-service/message-
 import Swal from 'sweetalert2';
 
 export interface PeriodicElement {
-  supplierNo: String;
+  profileImage: string;
+  supplierNo: string;
   supplierName: string;
-  supplierCategory: String;
-  supplierContactNo: String;
+  supplierCategory: string;
+  supplierContactNo: string;
 }
 
 const ELEMENT_DATA: any[] = [ 
-  {supplierNo: 'S01', supplierName: 'Fish City', supplierCategory: 'Foods', supplierContactNo: '0112674644'},
+  {profileImage: 'Image', supplierNo: 'S01', supplierName: 'Fish City', supplierCategory: 'Foods', supplierContactNo: '0112674644'},
 ];
 
 @Component({
@@ -29,7 +30,7 @@ export class SupplierRegistrationComponent {
 
   supplierRegistrationForm : FormGroup;
 
-  displayedColumns: string[] = ['supplierNo', 'supplierName', 'supplierCategory', 'supplierContactNo', 'actions'];
+  displayedColumns: string[] = ['profileImage', 'supplierNo', 'supplierName', 'supplierCategory', 'supplierContactNo', 'actions'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -65,7 +66,7 @@ export class SupplierRegistrationComponent {
         supplierAccName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(25), Validators.pattern(/^[A-Za-z0-9.,\- ]+$/)]),
         supplierAccNo: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(20), Validators.pattern(/^\d+$/)]),
         supplierBank: new FormControl('', [Validators.required]),
-        supplierBranch: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z. ]+$/)]),
+        supplierBranch: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z0-9 ]+$/)]),
       });
     }
 

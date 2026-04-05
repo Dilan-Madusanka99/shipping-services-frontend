@@ -1,3 +1,8 @@
+<div class="header">
+  <h3>Document Details</h3>
+  <!-- <i class="feather icon-user"></i> -->
+</div>
+
 <div class="container">
   <div class="form-section">
     <form [formGroup]="otherDetailsRegistrationForm" class="otherDetailsRegistrationForm" (ngSubmit)="onSubmit()">
@@ -14,7 +19,7 @@
       </div>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>SID No</mat-label>
         <mat-select [(ngModel)]="selectedSeafarers" formControlName="sidNo" (valueChange)="onSeafarersSelect($event)">
           <mat-form-field class="w-100">
@@ -25,7 +30,7 @@
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Place</mat-label>
         <mat-select formControlName="sidIssuedPlace">
           <mat-option value="Colombo">Colombo</mat-option>
@@ -33,7 +38,7 @@
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Date</mat-label>
         <input matInput [matDatepicker]="sidIssuedDate" formControlName="sidIssuedDate" />
         <mat-hint>MM/DD/YYYY</mat-hint>
@@ -42,7 +47,7 @@
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Expired Date</mat-label>
         <input matInput [matDatepicker]="sidExpireDate" formControlName="sidExpireDate" />
         <mat-hint>MM/DD/YYYY</mat-hint>
@@ -66,13 +71,13 @@
       </div>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Passport NO</mat-label>
         <input matInput placeholder="Passport No" formControlName="ppNo" />
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Place</mat-label>
         <mat-select formControlName="ppIssuedPlace">
           <mat-option value="Colombo">Colombo</mat-option>
@@ -80,7 +85,7 @@
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Date</mat-label>
         <input matInput [matDatepicker]="ppIssuedDate" formControlName="ppIssuedDate" />
         <mat-hint>MM/DD/YYYY</mat-hint>
@@ -89,7 +94,7 @@
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Expired Date</mat-label>
         <input matInput [matDatepicker]="ppExpireDate" formControlName="ppExpireDate" />
         <mat-hint>MM/DD/YYYY</mat-hint>
@@ -113,13 +118,13 @@
       </div>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>CDC NO</mat-label>
         <input matInput placeholder="CDC No" formControlName="cdcNo" />
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Place</mat-label>
         <mat-select formControlName="cdcIssuedPlace">
           <mat-option value="Colombo">Colombo</mat-option>
@@ -127,7 +132,7 @@
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Date</mat-label>
         <input matInput [matDatepicker]="cdcIssuedDate" formControlName="cdcIssuedDate" />
         <mat-hint>MM/DD/YYYY</mat-hint>
@@ -136,7 +141,7 @@
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Expired Date</mat-label>
         <input matInput [matDatepicker]="cdcExpireDate" formControlName="cdcExpireDate" />
         <mat-hint>MM/DD/YYYY</mat-hint>
@@ -160,13 +165,13 @@
       </div>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Yello Fever NO</mat-label>
         <input matInput placeholder="Yellow Fever No" formControlName="yellowFeverNo" />
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Place</mat-label>
         <mat-select formControlName="yellowFeverIssuedPlace">
           <mat-option value="Colombo">Colombo</mat-option>
@@ -175,7 +180,7 @@
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Date</mat-label>
         <input matInput [matDatepicker]="yellowFeverIssuedDate" formControlName="yellowFeverIssuedDate" />
         <mat-hint>MM/DD/YYYY</mat-hint>
@@ -184,7 +189,7 @@
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Expired Date</mat-label>
         <input matInput [matDatepicker]="yellowFeverExpireDate" formControlName="yellowFeverExpireDate" />
         <mat-hint>MM/DD/YYYY</mat-hint>
@@ -210,9 +215,9 @@
         </button>
       </div>
 
-      <mat-form-field class="filter">
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input />
+      <mat-form-field appearance="outline" class="filter">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input />
       </mat-form-field>
     </div>
 

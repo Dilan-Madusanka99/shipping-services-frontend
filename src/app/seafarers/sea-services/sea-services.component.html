@@ -1,10 +1,13 @@
+<div class="header">
+  <h3>Sea Services</h3>
+  <!-- <i class="feather icon-user"></i> -->
+</div>
+
 <div class="container">
     <div class="form-section">
         <form [formGroup]="seaServicesForm" class="seaServicesForm" (ngSubmit)="onSubmit()">
 
-          <h5>Sea Services</h5>
-
-          <mat-form-field class="example-full-width">
+          <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>SID No</mat-label>
               <mat-select [(ngModel)]="selectedSeafarers" formControlName="sidNo" (valueChange)="onSeafarersSelect($event)">
             <mat-form-field class="w-100">
@@ -15,19 +18,19 @@
             </mat-form-field>
             <br>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Company Name</mat-label>
                 <input matInput placeholder="Company Name" formControlName="companyName">
               </mat-form-field>
               <br>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Vessel Name</mat-label>
                 <input matInput placeholder="Vessel Name" formControlName="vesselName">
             </mat-form-field>
             <br>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label> Position </mat-label>
                 <mat-select formControlName="position">
                   <mat-option value="AB Trn">AB Trn</mat-option>
@@ -54,25 +57,25 @@
             </mat-radio-group> 
             <br><br>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Flag</mat-label>
                 <input matInput placeholder="Flag" formControlName="flag">
             </mat-form-field>
             <br>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Gross Tonnage</mat-label>
                 <input matInput placeholder="GRT" formControlName="grt">
             </mat-form-field>
             <br>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>BHP (KW)</mat-label>
                 <input matInput placeholder="BHP" formControlName="bhp">
             </mat-form-field>
             <br>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label> Sign On Date </mat-label>
                 <input matInput [matDatepicker]="signOn" formControlName="signOn"/>
                 <mat-hint> MM/DD/YYYY </mat-hint>
@@ -81,7 +84,7 @@
             </mat-form-field>
             <br>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label> Sign Off Date </mat-label>
                 <input matInput [matDatepicker]="signOff" formControlName="signOff"/>
                 <mat-hint> MM/DD/YYYY </mat-hint>
@@ -90,13 +93,13 @@
             </mat-form-field>
             <br>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Total Months</mat-label>
                 <input matInput type="number" matInput placeholder="Total Months" formControlName="totalMonths" [min]="1" [max]="100">
             </mat-form-field>
             <br>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label> Sign Off Reason </mat-label>
                 <mat-select formControlName="reason">
                   <mat-option value="Completed Contract">Completed Contract</mat-option>
@@ -121,9 +124,9 @@
               </button>
             </div>
     
-            <mat-form-field class="filter">
-              <mat-label>Filter</mat-label>
-              <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+            <mat-form-field appearance="outline" class="filter">
+              <mat-icon matPrefix>search</mat-icon>
+              <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
             </mat-form-field>
           </div>
       

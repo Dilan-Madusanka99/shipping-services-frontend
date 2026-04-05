@@ -1,7 +1,12 @@
+<div class="header">
+  <h3>Login Details</h3>
+  <!-- <i class="feather icon-user"></i> -->
+</div>
+
 <div class="container">
   <div class="form-section">
     <form [formGroup]="LoginForm" class="LoginForm" (ngSubmit)="onSubmit()">
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Users</mat-label>
         <mat-select [(ngModel)]="selectedEmployee" formControlName="users" (valueChange)="onEmployeeSelect($event)">
           <mat-form-field class="w-100">
@@ -12,19 +17,19 @@
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>First Name</mat-label>
         <input matInput placeholder="First Name" formControlName="firstName" />
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Last Name</mat-label>
         <input matInput placeholder="Last Name" formControlName="lastName" />
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>User Name</mat-label>
         <input matInput placeholder="User Name" formControlName="userName" />
         <span class="text-danger" 
@@ -51,7 +56,7 @@
       </mat-form-field>
       <br />
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Roles</mat-label>
         <mat-select formControlName="role">
           <mat-option value="Managing Director">Managing Director</mat-option>
@@ -77,9 +82,9 @@
           <mat-icon>refresh</mat-icon>
         </button>
       </div>
-      <mat-form-field class="filter">
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input />
+      <mat-form-field appearance="outline" class="filter">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input />
       </mat-form-field>
     </div>
 
