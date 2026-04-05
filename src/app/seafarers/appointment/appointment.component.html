@@ -1,24 +1,22 @@
-<<<<<<< HEAD
 <div class="header">
   <h3>Appointment Details</h3>
   <!-- <i class="feather icon-user"></i> -->
 </div>
 
 <div class="container">
-=======
 <mat-tab-group [(selectedIndex)]="selectedIndex">
   <mat-tab label="Set Appointments"> <div class="container"></div> 
->>>>>>> 7c359259982329168fbe29f2c0dc692ca47b4a54
   <div class="form-section">
-    <div class="main-content">
-      <app-calendar
-        (dayClick)="openAddModal($event)"
-        (appointmentClick)="openEditModal($event)"
-      >
-      </app-calendar>
-    </div>
+    <form [formGroup]="appointmentForm" class="appointmentForm" (ngSubmit)="onSubmit()">
 
-<<<<<<< HEAD
+      <div class="main-content">
+        <app-calendar
+          (dayClick)="openAddModal($event)"
+          (appointmentClick)="openEditModal($event)"
+        >
+        </app-calendar>
+      </div>
+
       <!-- sid select -->
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> SID </mat-label>
@@ -108,7 +106,7 @@
       </button>
 
     </form>
-=======
+
     <app-appointment-modal
       *ngIf="showModal()"
       [appointment]="editingAppointment()"
@@ -117,19 +115,19 @@
       (close)="closeModal()"
     >
     </app-appointment-modal>
->>>>>>> 7c359259982329168fbe29f2c0dc692ca47b4a54
   </div>
-  </mat-tab>
-  <mat-tab label="Appointment List"> 
-    <div class="container">
-  
-  <div class="table-section">
-    <div class="refresh-filter-section">
-      <div class="refresh-button">
-        <button mat-raised-button color="primary" (click)="refreshData()">
-          <mat-icon>refresh</mat-icon>
-        </button>
-      </div>
+
+    </mat-tab>
+    <mat-tab label="Appointment List"> 
+      <div class="container">
+    
+    <div class="table-section">
+      <div class="refresh-filter-section">
+        <div class="refresh-button">
+          <button mat-raised-button color="primary" (click)="refreshData()">
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </div>
 
       <mat-form-field appearance="outline" class="filter">
         <mat-icon matPrefix>search</mat-icon>
