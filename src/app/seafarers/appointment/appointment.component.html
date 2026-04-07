@@ -1,111 +1,13 @@
-<div class="header">
-  <h3>Appointment Details</h3>
-  <!-- <i class="feather icon-user"></i> -->
-</div>
-
-<div class="container">
 <mat-tab-group [(selectedIndex)]="selectedIndex">
   <mat-tab label="Set Appointments"> <div class="container"></div> 
   <div class="form-section">
-    <form [formGroup]="appointmentForm" class="appointmentForm" (ngSubmit)="onSubmit()">
-
-      <div class="main-content">
-        <app-calendar
-          (dayClick)="openAddModal($event)"
-          (appointmentClick)="openEditModal($event)"
-        >
-        </app-calendar>
-      </div>
-
-      <!-- sid select -->
-      <mat-form-field appearance="outline" class="example-full-width">
-        <mat-label> SID </mat-label>
-        <input matInput placeholder="SID" formControlName="sidNo">
-        <span class="text-danger"
-          *ngIf="(appointmentForm.get('sidNo').touched || submitted) && appointmentForm.get('sidNo').errors && appointmentForm.get('sidNo').errors['required'] ">
-          SID No is Required
-        </span>
-      </mat-form-field>
-      <br>
-
-      <mat-form-field appearance="outline" class="example-full-width">
-        <mat-label> Surname </mat-label>
-        <input matInput placeholder="Surname" formControlName="firstName">
-      </mat-form-field>
-      <br>
-
-      <mat-form-field appearance="outline" class="example-full-width">
-        <mat-label> Other Names </mat-label>
-        <input matInput placeholder="Other Names" formControlName="lastName">
-      </mat-form-field>
-      <br>
-
-      <mat-form-field appearance="outline" class="example-full-width">
-        <mat-label> Position </mat-label>
-        <mat-select formControlName="position">
-          <mat-option value="AB Trainee">AB Trainee</mat-option>
-          <mat-option value="OS">OS</mat-option>
-          <mat-option value="AB">AB</mat-option>
-          <mat-option value="Bosun">Bosun</mat-option>
-          <mat-option value="Pumpman">Pumpman</mat-option>
-          <mat-option value="Oiler">Oiler</mat-option>
-          <mat-option value="Fitter">Fitter</mat-option>
-          <mat-option value="Messman">Messman</mat-option>
-          <mat-option value="Cook">Cook</mat-option>
-          <mat-option value="Electrician">Electrician</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <br>
-
-      <mat-form-field appearance="outline" class="example-full-width">
-        <mat-label> Mobile </mat-label>
-        <input matInput placeholder="Mobile" formControlName="mobile" >
-      </mat-form-field>
-      <br>
-
-      <mat-form-field appearance="outline" class="example-full-width">
-        <mat-label> E-mail </mat-label>
-        <input matInput placeholder="E-mail" formControlName="email" >
-      </mat-form-field>
-      <br>
-
-      <mat-form-field appearance="outline" class="example-full-width">
-        <mat-label> Appointment Date </mat-label>
-        <input matInput [matDatepicker]="appointmentDate" formControlName="appointmentDate" />
-        <mat-hint> MM/DD/YYYY </mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="appointmentDate"></mat-datepicker-toggle>
-        <mat-datepicker #appointmentDate></mat-datepicker>
-      </mat-form-field>
-      <br><br>
-
-      <mat-form-field appearance="outline" class="example-full-width">
-        <mat-label> Appointment Time </mat-label>
-        <mat-select formControlName="appointmentTime">
-          <mat-option value="10.00 - 10.30">10.00 - 10.30</mat-option>
-          <mat-option value="10.45 - 11.15">10.45 - 11.15</mat-option>
-          <mat-option value="11.30 - 12.00">11.30 - 12.00</mat-option>
-          <mat-option value="12.15 - 12.45">12.15 - 12.45</mat-option>
-          <mat-option value="13.00 - 13.30">13.00 - 13.30</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <br>
-
-      <mat-form-field appearance="outline" class="example-full-width">
-        <mat-label> Appointment Status </mat-label>
-        <mat-select formControlName="appointmentStatus">
-          <mat-option value="Scheduled">Scheduled</mat-option>
-          <mat-option value="Re-Scheduled">Re-scheduled</mat-option>
-          <mat-option value="Cancelled">Cancelled</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <br>
-
-      <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" >
-        {{saveButtonLabel}} </button>
-      <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" > Reset
-      </button>
-
-    </form>
+    <div class="main-content">
+      <app-calendar
+        (dayClick)="openAddModal($event)"
+        (appointmentClick)="openEditModal($event)"
+      >
+      </app-calendar>
+    </div>
 
     <app-appointment-modal
       *ngIf="showModal()"
@@ -116,22 +18,21 @@
     >
     </app-appointment-modal>
   </div>
+  </mat-tab>
+  <mat-tab label="Appointment List"> 
+    <div class="container">
+  
+  <div class="table-section">
+    <div class="refresh-filter-section">
+      <div class="refresh-button">
+        <button mat-raised-button color="primary" (click)="refreshData()">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </div>
 
-    </mat-tab>
-    <mat-tab label="Appointment List"> 
-      <div class="container">
-    
-    <div class="table-section">
-      <div class="refresh-filter-section">
-        <div class="refresh-button">
-          <button mat-raised-button color="primary" (click)="refreshData()">
-            <mat-icon>refresh</mat-icon>
-          </button>
-        </div>
-
-      <mat-form-field appearance="outline" class="filter">
-        <mat-icon matPrefix>search</mat-icon>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
+      <mat-form-field class="filter">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
       </mat-form-field>
     </div>
 
