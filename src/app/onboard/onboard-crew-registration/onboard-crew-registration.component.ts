@@ -11,14 +11,15 @@ import { VesselRegistrationService } from 'src/app/services/vessels/vessel-regis
 import Swal from 'sweetalert2';
 
 export interface PeriodicElement {
-  sidNo: string;
+  sidNo: String;
   position: String;
-  vesselName: string;
+  vesselName: String;
   signOnDate: Date;
   signOffDate: Date;
+  status: String;
 }
 
-const ELEMENT_DATA: any[] = [{ sidNo: 'S123', position: 'AB', vesselName: 'souselas', signOnDate: '8/7/2025', signOffDate: '8/5/2026' }];
+const ELEMENT_DATA: any[] = [{ sidNo: 'S123', position: 'AB', vesselName: 'souselas', signOnDate: '8/7/2025', signOffDate: '8/5/2026', status: 'active' }];
 
 @Component({
   selector: 'app-onboard-crew-registration',
@@ -31,7 +32,7 @@ const ELEMENT_DATA: any[] = [{ sidNo: 'S123', position: 'AB', vesselName: 'souse
 export class OnboardCrewRegistrationComponent {
   onboardCrewRegistrationForm: FormGroup;
 
-  displayedColumns: string[] = ['sidNo', 'position', 'vesselName', 'signOnDate', 'signOffDate', 'actions'];
+  displayedColumns: string[] = ['sidNo', 'position', 'vesselName', 'signOnDate', 'signOffDate', 'status', 'actions'];
 
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -64,7 +65,8 @@ export class OnboardCrewRegistrationComponent {
       imoNo: new FormControl('', [Validators.required]),
       vesselName: new FormControl('', [Validators.required]),
       signOnDate: new FormControl('', [Validators.required]),
-      signOffDate: new FormControl('', [Validators.required])
+      signOffDate: new FormControl('', [Validators.required]),
+      status: new FormControl('', [Validators.required])
     });
   }
 

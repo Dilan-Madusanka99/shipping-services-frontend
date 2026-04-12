@@ -18,15 +18,6 @@
         </div>
         <br>
 
-        <!-- should be linked vessel name -->
-        <!-- <mat-form-field class="example-full-width">
-        <mat-label> Vessel Name </mat-label>
-        <mat-select formControlName="vesselName">
-          <mat-option value="AB Trainee">AB Trainee</mat-option>
-        </mat-select>
-      </mat-form-field>  
-      <br> -->
-
           <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Vessel Name</mat-label>
             <mat-select [(ngModel)]="selectedVessel" formControlName="vesselName" (valueChange)="onVesselSelect($event)">
@@ -67,6 +58,15 @@
         <mat-form-field appearance="outline" class="example-full-width">
             <mat-label> Description </mat-label>
             <input matInput placeholder="Description" formControlName="jobDescription" >
+        </mat-form-field>
+        <br>
+
+        <mat-form-field appearance="outline" class="example-full-width">
+          <mat-label>Closing Date</mat-label>
+          <input matInput [matDatepicker]="jobClosingDate" formControlName="jobClosingDate" />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="jobClosingDate"></mat-datepicker-toggle>
+          <mat-datepicker #jobClosingDate></mat-datepicker>
         </mat-form-field>
         <br><br>
 
@@ -118,6 +118,11 @@
       <ng-container matColumnDef="jobStatus">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Job Status </th>
         <td mat-cell *matCellDef="let element"> {{element.jobStatus}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="jobClosingDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Closing Date</th>
+        <td mat-cell *matCellDef="let element">{{ element.jobClosingDate | date: 'dd/MM/yyyy' }}</td>
       </ng-container>
 
       <ng-container matColumnDef="actions">

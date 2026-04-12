@@ -117,6 +117,7 @@ export class AppointmentModalComponent implements OnInit, OnChanges {
     { value: 'Scheduled', label: 'Scheduled' },
     { value: 'Re-Scheduled', label: 'Re-Scheduled' },
     { value: 'Cancelled', label: 'Cancelled' },
+    { value: 'Done', label: 'Done' }
   ]
 
   form: AppointmentFormData = this.defaultForm();

@@ -28,7 +28,7 @@
       <div class="field" [class.has-error]="(appointmentForm.get('sidNo').touched || submitted) && appointmentForm.get('sidNo').errors && appointmentForm.get('sidNo').errors['required']">
         <label>SID</label>
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <input matInput placeholder="S0001" formControlName="sidNo">
+        <input matInput placeholder="" formControlName="sidNo">
       </mat-form-field>
         <div *ngIf="(appointmentForm.get('sidNo').touched || submitted) && appointmentForm.get('sidNo').errors">
           <span  class="error-msg" *ngIf="appointmentForm.get('sidNo').errors['required']">Sid No is required</span>
@@ -54,7 +54,7 @@
       <div class="field" [class.has-error]="(appointmentForm.get('firstName').touched || submitted) && appointmentForm.get('firstName').errors && appointmentForm.get('firstName').errors['required']">
         <label>First Name</label>
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <input matInput placeholder="Dilan" formControlName="firstName">
+        <input matInput placeholder="" formControlName="firstName">
       </mat-form-field>
       <div *ngIf="(appointmentForm.get('firstName').touched || submitted) && appointmentForm.get('firstName').errors">
         <span *ngIf="appointmentForm.get('firstName').errors['required']"  class="error-msg">First name is required</span>
@@ -67,7 +67,7 @@
       <div class="field" [class.has-error]="(appointmentForm.get('lastName').touched || submitted) && appointmentForm.get('lastName').errors && appointmentForm.get('lastName').errors['required']">
         <label>Last Name</label>
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <input matInput placeholder="Madushanka" formControlName="lastName">
+        <input matInput placeholder="" formControlName="lastName">
       </mat-form-field>
       <div *ngIf="(appointmentForm.get('lastName').touched || submitted) && appointmentForm.get('lastName').errors">
         <span  class="error-msg" *ngIf="appointmentForm.get('lastName').errors['required']">Last name is required</span>
@@ -82,7 +82,7 @@
       <div class="field" [class.has-error]="(appointmentForm.get('mobile').touched || submitted) && appointmentForm.get('mobile').errors">
         <label>Mobile</label>
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <input matInput placeholder="077123456" formControlName="mobile">
+        <input matInput placeholder="" formControlName="mobile">
       </mat-form-field>
       <div *ngIf="(appointmentForm.get('mobile').touched || submitted) && appointmentForm.get('mobile').errors">
         <span  class="error-msg" *ngIf="appointmentForm.get('mobile').errors['required']">Mobile is required</span>
@@ -95,7 +95,7 @@
       <div class="field" [class.has-error]="(appointmentForm.get('email').touched || submitted) && appointmentForm.get('email').errors">
         <label>Email</label>
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <input matInput placeholder="dilan@gmail.com" formControlName="email">
+        <input matInput placeholder="" formControlName="email">
       </mat-form-field>
       <div *ngIf="(appointmentForm.get('email').touched || submitted) && appointmentForm.get('email').errors">
         <span  class="error-msg" *ngIf="appointmentForm.get('email').errors['required']">Email is required</span>

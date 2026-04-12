@@ -1,5 +1,9 @@
+<div class="container">
+
 <mat-tab-group [(selectedIndex)]="selectedIndex">
-  <mat-tab label="Set Appointments"> <div class="container"></div> 
+
+  <mat-tab label="Schedule Appointments">
+    
   <div class="form-section">
     <div class="main-content">
       <app-calendar
@@ -30,9 +34,9 @@
         </button>
       </div>
 
-      <mat-form-field class="filter">
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+      <mat-form-field appearance="outline" class="filter">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
       </mat-form-field>
     </div>
 
@@ -89,3 +93,4 @@
 </div>
   </mat-tab>
 </mat-tab-group>
+</div>

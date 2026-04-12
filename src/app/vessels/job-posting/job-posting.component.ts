@@ -12,12 +12,14 @@ import Swal from 'sweetalert2';
 
 export interface PeriodicElement {
   jobPostImage: string;
-  jobDescription: string;
-  jobPostingDate: Date;
+  vesselName: string;
+  position: string;
+  jobStatus: string;
+  jobClosingDate: Date;
 }
 
 const ELEMENT_DATA: any[] = [ 
-  {jobPostImage: 'Image', vesselName: 'M/T Don Juan', position: 'AB', jobStatus: 'open'},
+  {jobPostImage: 'Image', vesselName: 'M/T Don Juan', position: 'AB', jobStatus: 'open', jobClosingDate: '1/1/2026'},
 ];
 
 @Component({
@@ -25,12 +27,13 @@ const ELEMENT_DATA: any[] = [
   standalone: false,
   templateUrl: './job-posting.component.html',
   styleUrl: './job-posting.component.scss',
+  providers: [provideNativeDateAdapter()]
 })
 export class JobPostingComponent {
 
   jobPostingForm : FormGroup;
 
-  displayedColumns: string[] = ['jobPostImage', 'vesselName' ,'position', 'jobStatus', 'actions'];
+  displayedColumns: string[] = ['jobPostImage', 'vesselName' ,'position', 'jobStatus', 'jobClosingDate', 'actions'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -65,6 +68,7 @@ export class JobPostingComponent {
           position: new FormControl('', [Validators.required]),
           jobStatus: new FormControl('', [Validators.required]),
           jobDescription: new FormControl('', [Validators.minLength(1), Validators.maxLength(255)]),
+          jobClosingDate: new FormControl('', [Validators.required])
         });
   }
 
