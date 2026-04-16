@@ -86,26 +86,6 @@ const NavigationItems = [
     ]
   },
 
-  // {
-  //   id: 'user',
-  //   title: 'User',
-  //   type: 'group',
-  //   icon: 'icon-navigation',
-  //   auth: authenticationEnum.Home,
-  //   children: [
-  //     {
-  //       id: 'UserProfileDet',
-  //       title: 'User Profile',
-  //       type: 'item',
-  //       url: '/user/userProfile',
-  //       icon: 'feather icon-home',
-  //       classes: 'nav-item',
-  //       auth: authenticationEnum.Home_Dashboard,
-  //       breadcrumbs: false
-  //     }
-  //   ]
-  // },
-
   {
     id: 'registration',
     title: 'Employee',
@@ -151,6 +131,16 @@ const NavigationItems = [
         icon: 'feather icon-anchor',
         classes: 'nav-item',
         auth: [authenticationEnum.Vessle_Details],
+        breadcrumbs: false
+      },
+      {
+        id: 'VesselRegistrationDet',
+        title: 'Standby Crew Details',
+        type: 'item',
+        url: '/vessels/standbyCrewMembers',
+        icon: 'feather icon-briefcase',
+        classes: 'nav-item',
+        auth: [authenticationEnum.Job_Vacancies],
         breadcrumbs: false
       },
       {
