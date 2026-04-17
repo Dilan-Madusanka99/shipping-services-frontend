@@ -121,7 +121,7 @@ const NavigationItems = [
     title: 'vessels',
     type: 'group',
     icon: 'icon-navigation',
-    auth: [authenticationEnum.Vessle_Details, authenticationEnum.Job_Vacancies],
+    auth: [authenticationEnum.Vessle_Details, authenticationEnum.Job_Vacancies, authenticationEnum.Standby_Crew_Members ],
     children: [
       {
         id: 'VesselRegistrationDet',
@@ -140,7 +140,7 @@ const NavigationItems = [
         url: '/vessels/standbyCrewMembers',
         icon: 'feather icon-briefcase',
         classes: 'nav-item',
-        auth: [authenticationEnum.Job_Vacancies],
+        auth: [authenticationEnum.Standby_Crew_Members],
         breadcrumbs: false
       },
       {

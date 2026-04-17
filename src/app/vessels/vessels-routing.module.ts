@@ -7,5 +7,5 @@ import { StandbyCrewMembersComponent } from './standby-crew-members/standby-crew
 export const RegistrationRoutes: Routes = [
     { path: 'vesselRegistration', component: VesselRegistrationComponent },
     { path: 'jobPosting', component: JobPostingComponent },
-    { path: 'standbyCrewMembers', component: StandbyCrewMembersComponent }
+    { path: 'standbyCrewMembers', component: StandbyCrewMembersComponent },
 ]
