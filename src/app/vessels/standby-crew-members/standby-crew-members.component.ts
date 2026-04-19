@@ -1,5 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -24,7 +25,9 @@ const ELEMENT_DATA: any[] = [{ sidNo: 'S123', position: 'AB', vesselName: 'souse
   selector: 'app-standby-crew-members',
   standalone: false,
   templateUrl: './standby-crew-members.component.html',
-  styleUrl: './standby-crew-members.component.scss'
+  styleUrl: './standby-crew-members.component.scss',
+  providers: [provideNativeDateAdapter()],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StandbyCrewMembersComponent {
   standbyCrewMembersForm: FormGroup;
