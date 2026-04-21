@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
+import { OnboardCrewRegistrationService } from 'src/app/services/onboard/onboard-crew-registration.service';
 import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.service';
 import { StandbyCrewMembersServiceService } from 'src/app/services/vessels/standby-crew-members-service.service';
 import Swal from 'sweetalert2';
@@ -47,7 +48,7 @@ export class StandbyCrewMembersComponent {
   
     constructor(
       private fb: FormBuilder,
-      private standbyCrewMembersServiceService: StandbyCrewMembersServiceService,
+      private standbyCrewMembersServiceService: OnboardCrewRegistrationService,
       private messageService: MessageServiceService,
       private seafarerService: SeafarersServiceService
     ) {

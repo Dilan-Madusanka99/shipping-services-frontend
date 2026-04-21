@@ -121,7 +121,7 @@ const NavigationItems = [
     title: 'vessels',
     type: 'group',
     icon: 'icon-navigation',
-    auth: [authenticationEnum.Vessle_Details, authenticationEnum.Job_Vacancies, authenticationEnum.Standby_Crew_Members ],
+    auth: [authenticationEnum.Vessle_Details, authenticationEnum.Job_Vacancies],
     children: [
       {
         id: 'VesselRegistrationDet',
@@ -133,16 +133,7 @@ const NavigationItems = [
         auth: [authenticationEnum.Vessle_Details],
         breadcrumbs: false
       },
-      {
-        id: 'VesselRegistrationDet',
-        title: 'Standby Crew Details',
-        type: 'item',
-        url: '/vessels/standbyCrewMembers',
-        icon: 'feather icon-briefcase',
-        classes: 'nav-item',
-        auth: [authenticationEnum.Standby_Crew_Members],
-        breadcrumbs: false
-      },
+      
       {
         id: 'VesselRegistrationDet',
         title: 'Job Vacancies',
@@ -248,7 +239,7 @@ const NavigationItems = [
     title: 'Onboard Crew',
     type: 'group',
     icon: 'icon-navigation',
-    auth: [authenticationEnum.Certificate_Details, authenticationEnum.Crew_Complaints],
+    auth: [authenticationEnum.Certificate_Details, authenticationEnum.Crew_Complaints, authenticationEnum.Standby_Crew_Members],
     children: [
       {
         id: 'OnboardDet',
@@ -258,6 +249,16 @@ const NavigationItems = [
         icon: 'feather icon-home',
         classes: 'nav-item',
         auth: authenticationEnum.Certificate_Details,
+        breadcrumbs: false
+      },
+      {
+        id: 'OnboardDet',
+        title: 'Standby Crew Details',
+        type: 'item',
+        url: '/vessels/standbyCrewMembers',
+        icon: 'feather icon-briefcase',
+        classes: 'nav-item',
+        auth: [authenticationEnum.Standby_Crew_Members],
         breadcrumbs: false
       },
       {

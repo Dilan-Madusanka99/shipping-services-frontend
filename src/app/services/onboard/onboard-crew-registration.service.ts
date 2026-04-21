@@ -40,6 +40,8 @@ export class OnboardCrewRegistrationService {
   
       return this.http.get(requestUrl, headers);
     }
+
+    // inactive seafarer data
   
     editData(id: number, form_details: any) {
       console.log('In edit data');
