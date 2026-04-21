@@ -1,38 +1,31 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.service';
 import { StandbyCrewMembersServiceService } from 'src/app/services/vessels/standby-crew-members-service.service';
-import { VesselRegistrationService } from 'src/app/services/vessels/vessel-registration.service';
 import Swal from 'sweetalert2';
 
 export interface PeriodicElement {
   sidNo: String;
   position: String;
-  vesselName: String;
-  signOnDate: Date;
-  signOffDate: Date;
   status: String;
 }
 
-const ELEMENT_DATA: any[] = [{ sidNo: 'S123', position: 'AB', vesselName: 'souselas', signOnDate: '8/7/2025', signOffDate: '8/5/2026', status: 'active' }];
+const ELEMENT_DATA: any[] = [{ sidNo: 'S123', position: 'AB', status: 'active' }];
 
 @Component({
   selector: 'app-standby-crew-members',
   standalone: false,
   templateUrl: './standby-crew-members.component.html',
-  styleUrl: './standby-crew-members.component.scss',
-  providers: [provideNativeDateAdapter()],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './standby-crew-members.component.scss'
 })
 export class StandbyCrewMembersComponent {
   standbyCrewMembersForm: FormGroup;
   
-    displayedColumns: string[] = ['sidNo', 'position', 'vesselName', 'signOnDate', 'signOffDate', 'status', 'actions'];
+    displayedColumns: string[] = ['sidNo', 'position', 'status', 'actions'];
   
     dataSource: MatTableDataSource<any>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -56,40 +49,17 @@ export class StandbyCrewMembersComponent {
       private fb: FormBuilder,
       private standbyCrewMembersServiceService: StandbyCrewMembersServiceService,
       private messageService: MessageServiceService,
-      private seafarerService: SeafarersServiceService,
-      private vesselService: VesselRegistrationService
+      private seafarerService: SeafarersServiceService
     ) {
       this.standbyCrewMembersForm = this.fb.group({
         sidNo: new FormControl('', [Validators.required]),
         position: new FormControl('', [Validators.required]),
-        imoNo: new FormControl('', [Validators.required]),
-        vesselName: new FormControl('', [Validators.required]),
-        signOnDate: new FormControl('', [Validators.required]),
-        signOffDate: new FormControl('', [Validators.required]),
         status: new FormControl('', [Validators.required])
       });
     }
   
     ngOnInit(): void {
       this.getSeafarersList();
-      this.getVesselList();
-    }
-  
-    //  vessel link
-    public getVesselList(): void {
-      this.vesselService.getData().subscribe((response: any) => {
-        if (response && response.length > 0) {
-          this.allVesselListDetails = response;
-          response.forEach((vessel: any) => {
-            const itemData = {
-              id: vessel.id,
-              imoNo: vessel.imoNo
-            };
-            this.allVesselDropdown.push(itemData);
-          });
-        }
-        this.vesselDropdown = this.allVesselDropdown;
-      });
     }
   
     // sid link
@@ -291,32 +261,6 @@ export class StandbyCrewMembersComponent {
     public refreshData(): void {
       this.populateData();
       // this.setSeafearersNoOnTable();
-    }
-  
-    // vessel link
-    onVesselKey(eventTarget: any) {
-      this.vesselDropdown = this.vesselSearch(eventTarget.value);
-      }
-  
-      vesselSearch(value: string) {
-        let filter = value.toLowerCase();
-         return this.allVesselDropdown.filter((option: any) => option.imoNo.toLowerCase().startsWith(filter));
-      }
-  
-      public onVesselSelect(event): void {
-        let selectVesselId = event;
-  
-        this.patchFormVesselValues(selectVesselId);
-      }
-  
-    public patchFormVesselValues(vesselId: number): void {
-      this.allVesselListDetails.forEach((vessel) => {
-        if (vessel.id === vesselId) {
-          this.standbyCrewMembersForm.patchValue({
-            vesselName: vessel.vesselName
-          });
-        }
-      });
     }
   
     // sid link
