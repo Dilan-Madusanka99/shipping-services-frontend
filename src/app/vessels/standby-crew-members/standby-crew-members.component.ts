@@ -134,7 +134,7 @@ export class StandbyCrewMembersComponent {
             }
           });
         } else {
-          this.standbyCrewMembersServiceService.getData().subscribe({
+          this.standbyCrewMembersServiceService.getInactiveData().subscribe({
             next: (dataList: any[]) => {
               if (dataList.length <= 0) {
                 return;

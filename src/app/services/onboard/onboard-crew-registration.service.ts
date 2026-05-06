@@ -42,6 +42,20 @@ export class OnboardCrewRegistrationService {
     }
 
     // inactive seafarer data
+    getInactiveData() {
+      const requestUrl = environment.baseUrl + '/inactiveOnboardCrewRegistration';
+  
+      let headers = {};
+  
+      if (this.httpService.getAuthToken() !== null) {
+        headers = {
+          Authorization: 'Bearer ' + this.httpService.getAuthToken(),
+        };
+      }
+  
+      return this.http.get(requestUrl, headers);
+    }
+
   
     editData(id: number, form_details: any) {
       console.log('In edit data');
