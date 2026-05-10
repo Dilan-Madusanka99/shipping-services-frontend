@@ -144,27 +144,6 @@ export class OnboardCrewRegistrationComponent {
     }
   }
 
-  // public populateData(): void {
-  //   try {
-  //     this.onboardCrewRegistrationService.getData().subscribe({
-  //       next: (dataList: any[]) => {
-  //         if (dataList.length <= 0) {
-  //           return;
-  //         }
-
-  //         this.dataSource = new MatTableDataSource(dataList);
-  //         this.dataSource.paginator = this.paginator;
-  //         this.dataSource.sort = this.sort;
-  //       },
-  //       error: (error) => {
-  //         this.messageService.showError('Action Failed With Error ' + error);
-  //       }
-  //     });
-  //   } catch (error) {
-  //     this.messageService.showError('Action Failed With Error ' + error);
-  //   }
-  // }
-
     public populateData(): void {
     try {
       if (window.localStorage.getItem('role') === 'SEAFARER') {

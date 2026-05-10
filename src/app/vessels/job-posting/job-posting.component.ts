@@ -46,13 +46,13 @@ export class JobPostingComponent {
   selectedFile: File | null = null;
   previewUrl: SafeUrl | null;
   isFileSelected = false;
-  selectedVessel: string = ''; 
+  selectedVessel: string = '';  // vessel link
   allVesselDropdown: any = [];
   vesselDropdown: any = [];
   allVesselListDetails: any;
   vesselMap = new Map<number, string>();
 
-
+  
   constructor(
     private fb: FormBuilder, 
     private seafarersService: JobPostingServiceService, 
@@ -65,7 +65,10 @@ export class JobPostingComponent {
           jobPostImageName: new FormControl(''),
           jobPostImageType: new FormControl(''),
           vesselName: new FormControl('', [Validators.required]),
+          vesselType: new FormControl('', [Validators.required]),
           position: new FormControl('', [Validators.required]),
+          cName: new FormControl([], ),
+          minimumExp: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')]),
           jobStatus: new FormControl('', [Validators.required]),
           jobDescription: new FormControl('', [Validators.minLength(1), Validators.maxLength(255)]),
           jobClosingDate: new FormControl('', [Validators.required])
@@ -243,6 +246,12 @@ export class JobPostingComponent {
 
     public editData(data: any): void {
       this.jobPostingForm.patchValue(data);
+      
+      if (data.cName && typeof data.cName === 'string') {
+        this.jobPostingForm.patchValue({
+          cName: [data.cName]
+        });
+      }
       this.saveButtonLabel = 'Edit';
       this.mode = 'edit';
       this.selectedData = data;
@@ -313,10 +322,14 @@ export class JobPostingComponent {
       this.patchFormVesselValues(selectedVesselId);
       }
 
+     // patch vessel type from vessel name 
       public patchFormVesselValues(vesselId: number): void {
-        this.jobPostingForm.patchValue({
-        vesselName: vesselId
+        this.allVesselListDetails.forEach((vessel) => {
+          if (vessel.id === vesselId) {
+            this.jobPostingForm.patchValue({
+              vesselType: vessel.vesselType
+            });
+          }
         });
       }
-
 }

@@ -18,18 +18,24 @@
         </div>
         <br>
 
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Vessel Name</mat-label>
-            <mat-select [(ngModel)]="selectedVessel" formControlName="vesselName" (valueChange)="onVesselSelect($event)">
-              <mat-form-field class="w-100">
-                <input matInput placeholder="Search for vessel..." (keyup)="onVesselKey($event.target)" />
-          </mat-form-field>
-            <mat-option *ngFor="let vessel of vesselDropdown" [value]="vessel.id">{{ vessel.vesselName }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <br />
+      <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label>Vessel Name</mat-label>
+        <mat-select [(ngModel)]="selectedVessel" formControlName="vesselName" (valueChange)="onVesselSelect($event)">
+          <mat-form-field class="w-100">
+            <input matInput placeholder="Search for vessel..." (keyup)="onVesselKey($event.target)" />
+      </mat-form-field>
+        <mat-option *ngFor="let vessel of vesselDropdown" [value]="vessel.id">{{ vessel.vesselName }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br />
 
-        <mat-form-field appearance="outline" class="example-full-width">
+      <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label>vessel Type </mat-label>
+          <input matInput placeholder="Vessel Name" formControlName="vesselType">
+      </mat-form-field>
+      <br>
+          
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Position </mat-label>
         <mat-select formControlName="position">
           <mat-option value="AB Trainee">AB Trainee</mat-option>
@@ -47,6 +53,35 @@
       <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label>Certificate Name</mat-label>
+        <mat-select formControlName="cName" multiple>
+          <mat-option value="Advanced Fire Fighting">Advanced Fire Fighting</mat-option>
+          <mat-option value="Medical First Aid">Medical First Aid</mat-option>
+          <mat-option value="Surival Craft & Rescue Boat">Surival Craft & Rescue Boat</mat-option>
+          <mat-option value="Refresher Certificates">Refresher Certificates</mat-option>
+          <mat-option value="Designated Security Duties">Security Training & Designated Security Duties</mat-option>
+          <mat-option value="Oil & Chemical Tanker">Oil & Chemical Tanker</mat-option>
+          <mat-option value="Tanker Endorsement">Tanker Endorsement</mat-option>
+          <mat-option value="Basic Endorsement">Basic Endorsement</mat-option>
+          <mat-option value="II-4 (Deck)">Certificate of Proficiency (II-4)</mat-option>
+          <mat-option value="II-5 (Deck)">Certificate of Proficiency (II-5)</mat-option>
+          <mat-option value="III-4 (Engine)">Certificate of Proficiency (III-4)</mat-option>
+          <mat-option value="III-5 (Engine)">Certificate of Proficiency (III-5)</mat-option>
+          <mat-option value="III-7 (ETR)">Certificate of Proficiency (ETR-7)</mat-option>
+          <mat-option value="MLC">Certificate of Proficiency (MLC)</mat-option>
+          <mat-option value="6G">Fitter (6G)</mat-option>
+          <mat-option value="LR">Lloyd Certificate (LR)</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br />
+
+      <mat-form-field appearance="outline" class="example-full-width">
+          <mat-label> Minimum Experience (Months)</mat-label>
+          <input matInput placeholder="Experience (Months)" formControlName="minimumExp" >
+      </mat-form-field>
+      <br>
+
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Job Status </mat-label>
         <mat-select formControlName="jobStatus">
           <mat-option value="Open">Open</mat-option>
@@ -55,20 +90,20 @@
       </mat-form-field>  
       <br>
 
-        <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label> Description </mat-label>
-            <input matInput placeholder="Description" formControlName="jobDescription" >
-        </mat-form-field>
-        <br>
+      <mat-form-field appearance="outline" class="example-full-width">
+          <mat-label> Description </mat-label>
+          <input matInput placeholder="Description" formControlName="jobDescription" >
+      </mat-form-field>
+      <br>
 
-        <mat-form-field appearance="outline" class="example-full-width">
-          <mat-label>Closing Date</mat-label>
-          <input matInput [matDatepicker]="jobClosingDate" formControlName="jobClosingDate" />
-          <mat-hint>MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="jobClosingDate"></mat-datepicker-toggle>
-          <mat-datepicker #jobClosingDate></mat-datepicker>
-        </mat-form-field>
-        <br><br>
+      <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label>Closing Date</mat-label>
+        <input matInput [matDatepicker]="jobClosingDate" formControlName="jobClosingDate" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="jobClosingDate"></mat-datepicker-toggle>
+        <mat-datepicker #jobClosingDate></mat-datepicker>
+      </mat-form-field>
+      <br><br>
 
         <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" > {{saveButtonLabel}} </button>
         <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" > Reset </button>
