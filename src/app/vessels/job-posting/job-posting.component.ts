@@ -51,6 +51,7 @@ export class JobPostingComponent {
   vesselDropdown: any = [];
   allVesselListDetails: any;
   vesselMap = new Map<number, string>();
+  formValue: any;
 
   
   constructor(
@@ -67,7 +68,7 @@ export class JobPostingComponent {
           vesselName: new FormControl('', [Validators.required]),
           vesselType: new FormControl('', [Validators.required]),
           position: new FormControl('', [Validators.required]),
-          cName: new FormControl([], ),
+          cName: new FormControl(''),
           minimumExp: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')]),
           jobStatus: new FormControl('', [Validators.required]),
           jobDescription: new FormControl('', [Validators.minLength(1), Validators.maxLength(255)]),
@@ -138,7 +139,7 @@ export class JobPostingComponent {
       const jobPostingFormData = new FormData();
       jobPostingFormData.append(
         'jobPostingForm',
-        new Blob([JSON.stringify(this.jobPostingForm.value)], {
+        new Blob([JSON.stringify(this.formValue)], {
           type: 'application/json',
         })
       );
@@ -194,6 +195,10 @@ export class JobPostingComponent {
         console.log(this.jobPostingForm.value);
 
         if(!this.jobPostingForm.valid) return;
+
+      this.formValue = this.jobPostingForm.value;
+      this.formValue.cName = this.formValue.cName.join(', '); // Convert the selected cName array to a comma-separated string
+
         if (this.mode === 'add'){
           this.seafarersService.serviceCall(this.prepareSeafarerData()).subscribe({
             next: (response: any) => {
@@ -244,14 +249,34 @@ export class JobPostingComponent {
       this.jobPostingForm.updateValueAndValidity();
     }
 
+    formatDate(timestamp: number) {
+      const date = new Date(timestamp);
+
+      // Convert to YYYY-MM-DD format
+      const formatted = date.toISOString().split('T')[0];
+
+      return formatted;
+    }
+
     public editData(data: any): void {
-      this.jobPostingForm.patchValue(data);
+    // Split the comma-separated string into an array for the form control
+    const cNameArray = data.cName ? data.cName.split(', ') : [];
+      this.jobPostingForm.patchValue({
+        vesselName: data.vesselName,
+        vesselType: data.vesselType,
+        position: data.position,
+        cName: cNameArray,
+        minimumExp: data.minimumExp,
+        jobStatus: data.jobStatus,
+        jobDescription: data.jobDescription,
+        jobClosingDate: this.formatDate(data.jobClosingDate)
+      });
       
-      if (data.cName && typeof data.cName === 'string') {
-        this.jobPostingForm.patchValue({
-          cName: [data.cName]
-        });
-      }
+      // if (data.cName && typeof data.cName === 'string') {
+      //   this.jobPostingForm.patchValue({
+      //     cName: [data.cName]
+      //   });
+      // }
       this.saveButtonLabel = 'Edit';
       this.mode = 'edit';
       this.selectedData = data;
