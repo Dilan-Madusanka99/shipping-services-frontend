@@ -29,9 +29,22 @@
       </mat-form-field>
       <br />
 
-      <mat-form-field appearance="outline" class="example-full-width">
+      <!-- <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>vessel Type </mat-label>
           <input matInput placeholder="Vessel Name" formControlName="vesselType">
+      </mat-form-field>
+      <br> -->
+
+      <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label> Vessel Type </mat-label>
+        <mat-select formControlName="vesselType">
+          <mat-option value="Tanker">Tanker</mat-option>
+          <mat-option value="Bulk">Bulk Carrier</mat-option>
+          <mat-option value="General Cargo">General Cargo</mat-option>
+          <mat-option value="Reefer Cargo">Reefer Cargo</mat-option>
+          <mat-option value="Passenger">Passenger</mat-option>
+          <mat-option value="Container">Container</mat-option>
+        </mat-select>
       </mat-form-field>
       <br>
           
