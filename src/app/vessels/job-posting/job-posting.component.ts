@@ -242,6 +242,7 @@ export class JobPostingComponent {
       this.saveButtonLabel = 'Save';
       this.jobPostingForm.enable();
       this.isButtonDisabled = false;
+      this.jobPostingForm.get('vesselType')?.disable();
 
       this.previewUrl = null;
       this.isFileSelected = false;
@@ -270,6 +271,7 @@ export class JobPostingComponent {
         jobStatus: data.jobStatus,
         jobDescription: data.jobDescription,
         jobClosingDate: this.formatDate(data.jobClosingDate)
+
       });
       
       // if (data.cName && typeof data.cName === 'string') {
@@ -280,6 +282,7 @@ export class JobPostingComponent {
       this.saveButtonLabel = 'Edit';
       this.mode = 'edit';
       this.selectedData = data;
+      
 
       const file = data.jobPostImage;
       const imageType = data.jobPostImageType;
