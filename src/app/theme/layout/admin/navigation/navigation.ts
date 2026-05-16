@@ -143,6 +143,17 @@ const NavigationItems = [
         classes: 'nav-item',
         auth: [authenticationEnum.Job_Vacancies],
         breadcrumbs: false
+      },
+
+      {
+        id: 'VesselRegistrationDet',
+        title: 'Job Suggestions',
+        type: 'item',
+        url: '/vessels/jobSuggestions',
+        icon: 'feather icon-briefcase',
+        classes: 'nav-item',
+        auth: [authenticationEnum.Job_Suggestions],
+        breadcrumbs: false
       }
     ]
   },

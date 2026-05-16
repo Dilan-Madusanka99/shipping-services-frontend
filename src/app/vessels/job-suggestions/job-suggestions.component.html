@@ -1,0 +1,60 @@
+<div class="header">
+  <h3>Job Suggestions</h3>
+</div>
+
+<div class="container">
+  <div class="form-section">
+
+    <form [formGroup]="jobSuggestionsForm" class="jobSuggestionsForm">
+
+      <!-- Select Jobs Dropdown -->
+      <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label>Select Jobs</mat-label>
+
+        <mat-select formControlName="selectedJob">
+
+          <mat-option *ngFor="let job of jobSuggestions" [value]="job.value">
+            {{ job.label }}
+          </mat-option>
+
+        </mat-select>
+
+        <!-- Validation Error -->
+        <mat-error *ngIf="jobSuggestionsForm.get('selectedJob')?.hasError('required')">
+          Please select a job
+        </mat-error>
+
+      </mat-form-field>
+
+      <!-- Optional Button to Check Selected Value -->
+      <button mat-raised-button color="primary" class="button" (click)="getSelectedJob()">
+        Get Selected Job
+      </button>
+
+    </form>
+  </div>
+  
+
+
+  <div class="profile-card">
+
+  <div class="profile-header">
+    <img class="avatar" src="assets/user-avatar.png" alt="img" />
+
+    <div class="user-info">
+      <h4>{{ user.surname }}</h4>
+      <p class="sidNo">{{ user.sidNo }}</p>
+      <p class="position">{{ user.position }}</p>
+      <p class="email">{{ user.email }}</p>
+      <p class="phone">{{ user.phone }}</p>
+    </div>
+  </div>
+
+  <div class="profile-footer">
+    <button mat-raised-button color="primary" class="profile-button" type="invite">Invite</button>
+    <button mat-stroked-button color="warn" class="profile-button" type="view">View</button>
+  </div>
+</div>
+
+
+</div>

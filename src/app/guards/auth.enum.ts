@@ -11,6 +11,7 @@ export enum authenticationEnum {
   Employee_Attendence = 6,
   Vessle_Details = 7,
   Job_Vacancies = 8,
+  Job_Suggestions = 9,
   Onboard_Crew_Details = 10,
   Standby_Crew_Members = 11,
   Crew_Complaints = 12,

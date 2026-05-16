@@ -1,0 +1,111 @@
+h3{
+  margin-top: -60px;  
+  margin-bottom: 15px;
+  margin-left: 60px;
+  color: #000000;
+  font-size: 30px;
+  font-weight: 580; 
+}
+
+.container {
+  margin-top: -20px;
+  display: flex;
+  gap: 24px;
+  padding: 20px;
+  background: #F8FAFC;
+}
+
+.form-section {
+  width: 500px;
+}
+
+.jobSuggestionsForm {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+.example-full-width{
+    width: 55%;
+}
+
+.button{
+    margin-left: 5%;
+}
+
+
+// profile card
+.profile-card {
+  width: 380px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  padding: 20px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  transition: 0.3s ease;
+}
+
+.profile-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 35px rgba(0,0,0,0.12);
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #3f51b5;
+}
+
+.user-info h4 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.position {
+  margin: 2px 0;
+  color: #3f51b5;
+  font-weight: 600;
+}
+
+.email {
+  margin: 0;
+  font-size: 13px;
+  color: #777;
+}
+
+.profile-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.profile-button {
+  width: 48%;
+  margin-right: 2%;
+  border-radius: 8px !important;
+}
+
+[type='invite'] {
+    background-color: #0d6efd !important;  /* blue */
+    color: #ffffff !important;            /* white text */
+}
+
+[type='view'] {
+    background-color: #EF4444 !important;  /* blue */
+    color: #ffffff !important;            /* white text */
+}
+
+.form-button:last-child {
+  margin-right: 0;
+}
+
