@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Route, Router } from '@angular/router';
+import { CacheService } from 'src/app/services/CacheService';
+import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { JobPostingServiceService } from 'src/app/services/vessels/job-posting-service.service';
 import { VesselRegistrationService } from 'src/app/services/vessels/vessel-registration.service';
 
@@ -20,7 +23,10 @@ export class JobSuggestionsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private jobService: JobPostingServiceService,
-    private vesselService: VesselRegistrationService   // ✅ ADD THIS
+    private vesselService: VesselRegistrationService,   // ✅ ADD THIS
+    private cacheService: CacheService,
+    private router: Router,
+    private _messageService: MessageServiceService
   ) {}
 
   ngOnInit(): void {
@@ -78,4 +84,30 @@ export class JobSuggestionsComponent implements OnInit {
     email: 'charith@example.com',
     phone: '+94 77 123 4567'    
   };
+
+
+    getData(jobId: number): void {
+    const cachedData = this.cacheService.get(jobId.toString());
+
+    // If the data is not in cache, we retrieve it from the server and store it in the cache.
+    if (!cachedData) {
+      this.jobService
+        .getAuthIds(jobId)
+        .then((data: any) => {
+          try {
+            if (data.length > 0) {
+              this.cacheService.set(jobId.toString(), data);
+              this.router.navigate(['/dashboard']);
+            } else {
+              this._messageService.showError('User does not have privileges');
+            }
+          } catch (error) {
+            this._messageService.showError('Action Failed');
+          }
+        })
+        .catch((error) => {
+          this._messageService.showError('Action Failed');
+        });
+    }
+  }
 }

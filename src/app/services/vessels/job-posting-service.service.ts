@@ -87,4 +87,20 @@ export class JobPostingServiceService {
 
     return this.http.get(requestUrl, headers);
   }
+
+  getAuthToken(): string | null {
+    return JSON.parse(window.localStorage.getItem('auth_token') as string);
+  } 
+
+  public getAuthIds(jobId: number): Promise<any> {
+      const requestUrl = environment.baseUrl + '/get-auth-ids/' + jobId;
+  
+      let headers = {};
+  
+      if (this.getAuthToken() !== null) {
+        headers = { Authorization: 'Bearer ' + this.getAuthToken() };
+      }
+  
+      return this.http.get(requestUrl, { headers: headers }).toPromise();
+    }
 }
