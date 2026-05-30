@@ -70,10 +70,30 @@ export class JobSuggestionsComponent implements OnInit {
     const selected = this.jobSuggestionsForm.value.selectedJob;
     console.log('Selected Job:', selected);
 
-    if (selected) {
-      console.log('Vessel:', selected.vesselName);
-      console.log('Position:', selected.position);
-    }
+    // if (selected) {
+    //   console.log('Vessel:', selected.vesselName);
+    //   console.log('Position:', selected.position);
+    // }
+
+    console.log('Selected Job:', selected);
+
+    const jobId = selected.id; 
+
+    this.jobService.getAuthIds(jobId)
+    .then((data: any) => {
+      console.log('Auth IDs:', data);
+
+      if (data && data.length > 0) {
+        this.cacheService.set(jobId.toString(), data);
+        this.router.navigate(['/dashboard']);
+      } else {
+        this._messageService.showError('User does not have privileges');            
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      this._messageService.showError('Action Failed');
+    });
   }
 
   // profile cards
