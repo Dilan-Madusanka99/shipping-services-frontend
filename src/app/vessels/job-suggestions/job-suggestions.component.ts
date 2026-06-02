@@ -84,8 +84,6 @@ export class JobSuggestionsComponent implements OnInit {
       console.log('Auth IDs:', data);
 
       if (data && data.length > 0) {
-        this.cacheService.set(jobId.toString(), data);
-        this.router.navigate(['/dashboard']);
       } else {
         this._messageService.showError('User does not have privileges');            
       }

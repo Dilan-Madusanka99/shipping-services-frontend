@@ -93,7 +93,7 @@ export class JobPostingServiceService {
   } 
 
   public getAuthIds(jobId: number): Promise<any> {
-      const requestUrl = environment.baseUrl + '/get-auth-ids/' + jobId;
+      const requestUrl = environment.baseUrl + '/get-job-ids/' + jobId;
   
       let headers = {};
   
