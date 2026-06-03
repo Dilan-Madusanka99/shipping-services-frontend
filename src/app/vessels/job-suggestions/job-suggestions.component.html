@@ -28,15 +28,19 @@
 
       <!-- Optional Button to Check Selected Value -->
       <button mat-raised-button color="primary" class="button" (click)="getSelectedJob()">
-        Get Selected Job
+        Get Job Suggestions
       </button>
 
     </form>
   </div>
   
 
+    <!-- No Data -->
+  <div *ngIf="users.length === 0">
+    No users found
+  </div>
 
-  <div class="profile-card">
+  <div class="profile-card" *ngFor="let user of users">
 
   <div class="profile-header">
     <img class="avatar" src="assets/user-avatar.png" alt="img" />
@@ -46,7 +50,7 @@
       <p class="sidNo">{{ user.sidNo }}</p>
       <p class="position">{{ user.position }}</p>
       <p class="email">{{ user.email }}</p>
-      <p class="phone">{{ user.phone }}</p>
+      <p class="mobile">{{ user.mobile }}</p>
     </div>
   </div>
 

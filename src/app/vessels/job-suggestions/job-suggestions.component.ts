@@ -19,6 +19,7 @@ export class JobSuggestionsComponent implements OnInit {
   jobList: any[] = [];
   vesselList: any[] = [];
   vesselMap = new Map<number, string>();
+  users: any[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -64,68 +65,42 @@ export class JobSuggestionsComponent implements OnInit {
   });
 }
   
-
   // Get selected value 
-  getSelectedJob(): void {
-    const selected = this.jobSuggestionsForm.value.selectedJob;
-    console.log('Selected Job:', selected);
+getSelectedJob(): void {
+  const selected = this.jobSuggestionsForm.value.selectedJob;
 
-    // if (selected) {
-    //   console.log('Vessel:', selected.vesselName);
-    //   console.log('Position:', selected.position);
-    // }
+  if (!selected) {
+    this._messageService.showError('Please select a job');
+    return;
+  }
 
-    console.log('Selected Job:', selected);
+  const jobId = selected.id;
 
-    const jobId = selected.id; 
-
-    this.jobService.getAuthIds(jobId)
+  this.jobService.getAuthIds(jobId)
     .then((data: any) => {
-      console.log('Auth IDs:', data);
+      console.log('API Response:', data);
 
       if (data && data.length > 0) {
+
+        // 🔥 THIS LINE WAS MISSING
+        this.users = data.map(u => ({
+          surname: u.surname,
+          sidNo: u.seafarer_no,
+          position: u.position,
+          email: u.email,
+          mobile: u.mobile
+        }));
+
       } else {
-        this._messageService.showError('User does not have privileges');            
+        this.users = [];
+        this._messageService.showError('No users found');
       }
     })
     .catch((error) => {
       console.error(error);
       this._messageService.showError('Action Failed');
     });
-  }
-
-  // profile cards
-   user = {
-    surname: 'Charith Mihiran',
-    sidNo: 'S0001',
-    position: 'AB',
-    email: 'charith@example.com',
-    phone: '+94 77 123 4567'    
-  };
 
 
-    getData(jobId: number): void {
-    const cachedData = this.cacheService.get(jobId.toString());
-
-    // If the data is not in cache, we retrieve it from the server and store it in the cache.
-    if (!cachedData) {
-      this.jobService
-        .getAuthIds(jobId)
-        .then((data: any) => {
-          try {
-            if (data.length > 0) {
-              this.cacheService.set(jobId.toString(), data);
-              this.router.navigate(['/dashboard']);
-            } else {
-              this._messageService.showError('User does not have privileges');
-            }
-          } catch (error) {
-            this._messageService.showError('Action Failed');
-          }
-        })
-        .catch((error) => {
-          this._messageService.showError('Action Failed');
-        });
-    }
-  }
+}
 }
