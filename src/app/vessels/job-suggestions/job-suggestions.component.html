@@ -35,10 +35,7 @@
   </div>
   
 
-    <!-- No Data -->
-  <div *ngIf="users.length === 0">
-    No users found
-  </div>
+  
 
   <div class="profile-card" *ngFor="let user of users">
 
@@ -55,7 +52,7 @@
   </div>
 
   <div class="profile-footer">
-    <button mat-raised-button color="primary" class="profile-button" type="invite">Invite</button>
+    <button mat-raised-button color="primary" class="profile-button" type="Add Appointment">Add Appointment</button>
     <button mat-stroked-button color="warn" class="profile-button" type="view">View</button>
   </div>
 </div>

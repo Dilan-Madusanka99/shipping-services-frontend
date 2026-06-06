@@ -93,7 +93,7 @@ getSelectedJob(): void {
 
       } else {
         this.users = [];
-        this._messageService.showError('No users found');
+        this._messageService.showError('No suggestions found');
       }
     })
     .catch((error) => {
