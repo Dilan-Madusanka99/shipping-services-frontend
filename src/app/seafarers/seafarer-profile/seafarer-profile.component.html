@@ -1,0 +1,340 @@
+<div class="profile-page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <button class="back-btn" (click)="close()">
+      <span class="arrow">&#8592;</span> Back to Suggestions
+    </button>
+    <div class="header-status">
+      <!-- <span class="status-badge pending">PENDING</span> -->
+    </div>
+  </div>
+
+  <!-- Hero Card -->
+  <div class="hero-card">
+    <div class="hero-left">
+      <div class="avatar-wrap">
+        <img [src]="seafarer?.photo || 'assets/default-avatar.png'" alt="Seafarer Photo" class="avatar-img" />
+      </div>
+      <div class="hero-info">
+        <h1 class="hero-name">{{ seafarer?.name || '—' }}</h1>
+        <span class="hero-position">{{ seafarer?.position || '—' }}</span>
+        <div class="hero-meta">
+          <span><i class="ic">&#9679;</i> SID: {{ seafarer?.sidNo || '—' }}</span>
+          <span><i class="ic">&#9679;</i> {{ seafarer?.gender || '—' }}</span>
+          <span><i class="ic">&#9679;</i> {{ seafarer?.maritalStatus || '—' }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-score">
+      <div class="score-ring">
+        <svg viewBox="0 0 80 80">
+          <circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="6"/>
+          <circle cx="40" cy="40" r="34" fill="none" stroke="#fff" stroke-width="6"
+                  stroke-dasharray="213.6" stroke-dashoffset="53.4"
+                  stroke-linecap="round" transform="rotate(-90 40 40)"/>
+        </svg>
+        <div class="score-label">
+          <span class="score-num">75%</span>
+          <span class="score-text">Match</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Body Grid -->
+  <div class="sections-grid">
+
+    <!-- Personal Details -->
+    <div class="section-card">
+      <div class="section-header">
+        <span class="section-icon">&#128100;</span>
+        <h2>Personal Details</h2>
+      </div>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label>Full Name</label>
+          <span>{{ seafarer?.name || '—' }}</span>
+        </div>
+        <div class="detail-item">
+          <label>Position</label>
+          <span>{{ seafarer?.position || '—' }}</span>
+        </div>
+        <div class="detail-item">
+          <label>Date of Birth</label>
+          <span>{{ seafarer?.dob || '—' }}</span>
+        </div>
+        <div class="detail-item">
+          <label>NIC</label>
+          <span>{{ seafarer?.nic || '—' }}</span>
+        </div>
+        <div class="detail-item">
+          <label>Religion</label>
+          <span>{{ seafarer?.religion || '—' }}</span>
+        </div>
+        <div class="detail-item">
+          <label>Gender</label>
+          <span>{{ seafarer?.gender || '—' }}</span>
+        </div>
+        <div class="detail-item">
+          <label>Marital Status</label>
+          <span>{{ seafarer?.maritalStatus || '—' }}</span>
+        </div>
+        <div class="detail-item full-width">
+          <label>Address</label>
+          <span>{{ seafarer?.address || '—' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Details -->
+    <div class="section-card">
+      <div class="section-header">
+        <span class="section-icon">&#128222;</span>
+        <h2>Contact Details</h2>
+      </div>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label>Home</label>
+          <span>{{ seafarer?.homePhone || '—' }}</span>
+        </div>
+        <div class="detail-item">
+          <label>Mobile</label>
+          <span>{{ seafarer?.mobile || '—' }}</span>
+        </div>
+        <div class="detail-item full-width">
+          <label>Email</label>
+          <span>{{ seafarer?.email || '—' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seafarer ID -->
+    <div class="section-card doc-card">
+      <div class="section-header">
+        <span class="section-icon">&#128203;</span>
+        <h2>Seafarer ID</h2>
+      </div>
+      <div class="doc-body">
+        <div class="doc-image-wrap">
+          <img [src]="seafarer?.sidImage || 'assets/doc-placeholder.png'" alt="SID" class="doc-img" />
+        </div>
+        <div class="detail-grid">
+          <div class="detail-item full-width">
+            <label>SID No</label>
+            <span>{{ seafarer?.sidNo || '—' }}</span>
+          </div>
+          <div class="detail-item">
+            <label>Issued Place</label>
+            <span>{{ seafarer?.sidIssuedPlace || '—' }}</span>
+          </div>
+          <div class="detail-item">
+            <label>Issued Date</label>
+            <span>{{ seafarer?.sidIssuedDate || '—' }}</span>
+          </div>
+          <div class="detail-item full-width">
+            <label>Expiry Date</label>
+            <span [class.expired]="isExpired(seafarer?.sidExpiredDate)">
+              {{ seafarer?.sidExpiredDate || '—' }}
+              <span class="exp-tag" *ngIf="isExpired(seafarer?.sidExpiredDate)">EXPIRED</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Passport -->
+    <div class="section-card doc-card">
+      <div class="section-header">
+        <span class="section-icon">&#128213;</span>
+        <h2>Passport</h2>
+      </div>
+      <div class="doc-body">
+        <div class="doc-image-wrap">
+          <img [src]="seafarer?.passportImage || 'assets/doc-placeholder.png'" alt="Passport" class="doc-img" />
+        </div>
+        <div class="detail-grid">
+          <div class="detail-item full-width">
+            <label>Passport No</label>
+            <span>{{ seafarer?.passportNo || '—' }}</span>
+          </div>
+          <div class="detail-item">
+            <label>Issued Place</label>
+            <span>{{ seafarer?.passportIssuedPlace || '—' }}</span>
+          </div>
+          <div class="detail-item">
+            <label>Issued Date</label>
+            <span>{{ seafarer?.passportIssuedDate || '—' }}</span>
+          </div>
+          <div class="detail-item full-width">
+            <label>Expiry Date</label>
+            <span [class.expired]="isExpired(seafarer?.passportExpireDate)">
+              {{ seafarer?.passportExpireDate || '—' }}
+              <span class="exp-tag" *ngIf="isExpired(seafarer?.passportExpireDate)">EXPIRED</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seaman Book -->
+    <div class="section-card doc-card">
+      <div class="section-header">
+        <span class="section-icon">&#128218;</span>
+        <h2>Seaman Book</h2>
+      </div>
+      <div class="doc-body">
+        <div class="doc-image-wrap">
+          <img [src]="seafarer?.seamanBookImage || 'assets/doc-placeholder.png'" alt="Seaman Book" class="doc-img" />
+        </div>
+        <div class="detail-grid">
+          <div class="detail-item full-width">
+            <label>Book No</label>
+            <span>{{ seafarer?.seamanBookNo || '—' }}</span>
+          </div>
+          <div class="detail-item">
+            <label>Issued Place</label>
+            <span>{{ seafarer?.seamanIssuedPlace || '—' }}</span>
+          </div>
+          <div class="detail-item">
+            <label>Issued Date</label>
+            <span>{{ seafarer?.seamanIssuedDate || '—' }}</span>
+          </div>
+          <div class="detail-item full-width">
+            <label>Expiry Date</label>
+            <span [class.expired]="isExpired(seafarer?.seamanExpireDate)">
+              {{ seafarer?.seamanExpireDate || '—' }}
+              <span class="exp-tag" *ngIf="isExpired(seafarer?.seamanExpireDate)">EXPIRED</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Yellow Fever -->
+    <div class="section-card doc-card">
+      <div class="section-header">
+        <span class="section-icon">&#128137;</span>
+        <h2>Yellow Fever</h2>
+      </div>
+      <div class="doc-body">
+        <div class="doc-image-wrap">
+          <img [src]="seafarer?.yellowFeverImage || 'assets/doc-placeholder.png'" alt="Yellow Fever" class="doc-img" />
+        </div>
+        <div class="detail-grid">
+          <div class="detail-item full-width">
+            <label>Certificate No</label>
+            <span>{{ seafarer?.yellowFeverNo || '—' }}</span>
+          </div>
+          <div class="detail-item">
+            <label>Issued Place</label>
+            <span>{{ seafarer?.yellowFeverIssuedPlace || '—' }}</span>
+          </div>
+          <div class="detail-item">
+            <label>Issued Date</label>
+            <span>{{ seafarer?.yellowFeverIssuedDate || '—' }}</span>
+          </div>
+          <div class="detail-item full-width">
+            <label>Expiry Date</label>
+            <span [class.expired]="isExpired(seafarer?.yellowFeverExpireDate)">
+              {{ seafarer?.yellowFeverExpireDate || '—' }}
+              <span class="exp-tag" *ngIf="isExpired(seafarer?.yellowFeverExpireDate)">EXPIRED</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Certificates (multi) -->
+    <div class="section-card full-section">
+      <div class="section-header">
+        <span class="section-icon">&#127941;</span>
+        <h2>Certificates</h2>
+        <span class="count-badge">{{ certificates?.length || 0 }}</span>
+      </div>
+      <div class="cert-list">
+        <div class="cert-item" *ngFor="let cert of certificates; let i = index">
+          <div class="cert-number">{{ i + 1 }}</div>
+          <div class="cert-image-wrap">
+            <img [src]="cert.image || 'assets/doc-placeholder.png'" alt="Certificate" class="cert-img" />
+          </div>
+          <div class="cert-details">
+            <div class="detail-grid">
+              <div class="detail-item full-width">
+                <label>Certificate Name</label>
+                <span>{{ cert.name || '—' }}</span>
+              </div>
+              <div class="detail-item">
+                <label>Certificate No</label>
+                <span>{{ cert.certNo || '—' }}</span>
+              </div>
+              <div class="detail-item">
+                <label>Issued Place</label>
+                <span>{{ cert.issuedPlace || '—' }}</span>
+              </div>
+              <div class="detail-item">
+                <label>Issued Date</label>
+                <span>{{ cert.issuedDate || '—' }}</span>
+              </div>
+              <div class="detail-item">
+                <label>Expiry Date</label>
+                <span [class.expired]="isExpired(cert.expiredDate)">
+                  {{ cert.expiredDate || '—' }}
+                  <span class="exp-tag" *ngIf="isExpired(cert.expiredDate)">EXPIRED</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="empty-state" *ngIf="!certificates || certificates.length === 0">
+          No certificates registered.
+        </div>
+      </div>
+    </div>
+
+    <!-- Sea Services -->
+    <div class="section-card full-section">
+      <div class="section-header">
+        <span class="section-icon">&#9875;</span>
+        <h2>Sea Services</h2>
+      </div>
+      <div class="table-wrap">
+        <table class="sea-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Company</th>
+              <th>Vessel Name</th>
+              <th>Vessel Type</th>
+              <th>Position</th>
+              <th>Total Months</th>
+              <th>Sign Off Reason</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let svc of seaServices; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ svc.companyName || '—' }}</td>
+              <td>{{ svc.vesselName || '—' }}</td>
+              <td>{{ svc.vesselType || '—' }}</td>
+              <td>{{ svc.position || '—' }}</td>
+              <td><span class="months-badge">{{ svc.totalMonths || 0 }} mo</span></td>
+              <td>{{ svc.signOffReason || '—' }}</td>
+            </tr>
+            <tr *ngIf="!seaServices || seaServices.length === 0">
+              <td colspan="7" class="empty-row">No sea service records found.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- end sections-grid -->
+
+  <!-- Action Bar -->
+  <div class="action-bar">
+    <!-- <button class="btn-reject">Reject</button> -->
+    <button class="btn-invite">Add Appointment</button>
+  </div>
+
+</div>

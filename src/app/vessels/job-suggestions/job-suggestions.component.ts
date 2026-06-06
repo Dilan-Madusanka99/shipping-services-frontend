@@ -5,6 +5,8 @@ import { CacheService } from 'src/app/services/CacheService';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { JobPostingServiceService } from 'src/app/services/vessels/job-posting-service.service';
 import { VesselRegistrationService } from 'src/app/services/vessels/vessel-registration.service';
+import { MatDialog } from '@angular/material/dialog';
+import { SeafarerProfileComponent } from 'src/app/seafarers/seafarer-profile/seafarer-profile.component';
 
 @Component({
   selector: 'app-job-suggestions',
@@ -27,7 +29,8 @@ export class JobSuggestionsComponent implements OnInit {
     private vesselService: VesselRegistrationService,   // ✅ ADD THIS
     private cacheService: CacheService,
     private router: Router,
-    private _messageService: MessageServiceService
+    private _messageService: MessageServiceService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -103,4 +106,32 @@ getSelectedJob(): void {
 
 
 }
+
+openProfile(sidNo: string): void {
+    const suggestion = this.jobSuggestionsForm.value.selectedJob;
+    const dialogRef = this.dialog.open(SeafarerProfileComponent, {
+      width: '900px',          // dialog width
+      maxWidth: '95vw',        // shrinks on small screens
+      height: '90vh',          // tall enough to scroll inside
+      panelClass: 'seafarer-dialog-panel',
+      data: {
+        sidNo: sidNo
+      }
+    });
+ 
+    // Handle what the user clicked in the dialog footer
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) return;
+ 
+      if (result.action === 'INVITE') {
+        // call your appointment / invite service
+        console.log('Invite seafarer:', result.seafarerId);
+      }
+ 
+      if (result.action === 'REJECT') {
+        // update suggestion status to REJECTED
+        console.log('Reject seafarer:', result.seafarerId);
+      }
+    });
+  }
 }

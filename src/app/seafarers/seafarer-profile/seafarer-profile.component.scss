@@ -1,0 +1,414 @@
+/* ── Base ───────────────────────────────────────── */
+:host {
+  display: block;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #eef0f4;
+  min-height: 100vh;
+}
+
+.profile-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 20px 60px;
+}
+
+/* ── Page Header ─────────────────────────────────── */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #3f4d67;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+.back-btn:hover { background: rgba(63,77,103,0.1); }
+.back-btn .arrow { font-size: 18px; }
+
+.status-badge {
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.status-badge.pending  { background: #fff3cd; color: #856404; }
+.status-badge.invited  { background: #d1ecf1; color: #0c5460; }
+.status-badge.rejected { background: #f8d7da; color: #721c24; }
+
+/* ── Hero Card ───────────────────────────────────── */
+.hero-card {
+  background: linear-gradient(135deg, #3f4d67 0%, #2c3752 100%);
+  border-radius: 16px;
+  padding: 32px 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 32px rgba(63,77,103,0.25);
+}
+
+.hero-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.avatar-wrap {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.4);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.1);
+}
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-name {
+  color: #fff;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  letter-spacing: 0.3px;
+}
+.hero-position {
+  display: inline-block;
+  background: rgba(255,255,255,0.18);
+  color: #e8ecf2;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 3px 12px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+.hero-meta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.hero-meta span {
+  color: rgba(255,255,255,0.65);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.ic { font-size: 7px; color: rgba(255,255,255,0.4); font-style: normal; }
+
+/* Match score ring */
+.hero-score { flex-shrink: 0; }
+.score-ring {
+  position: relative;
+  width: 90px;
+  height: 90px;
+}
+.score-ring svg {
+  width: 90px;
+  height: 90px;
+  transform: none;
+}
+.score-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.score-num {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+}
+.score-text {
+  color: rgba(255,255,255,0.6);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ── Section Grid ────────────────────────────────── */
+.sections-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.full-section {
+  grid-column: 1 / -1;
+}
+
+/* ── Section Card ────────────────────────────────── */
+.section-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(63,77,103,0.08);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid #eef0f4;
+}
+.section-icon {
+  font-size: 18px;
+  width: 36px;
+  height: 36px;
+  background: #eef0f4;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.section-header h2 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #3f4d67;
+  letter-spacing: 0.3px;
+}
+
+.count-badge {
+  margin-left: auto;
+  background: #3f4d67;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 12px;
+}
+
+/* ── Detail Grid ─────────────────────────────────── */
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 20px;
+}
+
+.detail-item { display: flex; flex-direction: column; gap: 3px; }
+
+.detail-item.full-width { grid-column: 1 / -1; }
+
+.detail-item label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #8a94a6;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+.detail-item span {
+  font-size: 14px;
+  color: #2c3752;
+  font-weight: 500;
+}
+.detail-item span.expired { color: #c0392b; }
+
+.exp-tag {
+  display: inline-block;
+  background: #fdecea;
+  color: #c0392b;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 6px;
+  margin-left: 6px;
+  vertical-align: middle;
+  letter-spacing: 0.5px;
+}
+
+/* ── Document Card ───────────────────────────────── */
+.doc-body {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.doc-image-wrap {
+  width: 100px;
+  height: 120px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #eef0f4;
+  border: 2px dashed #c8cdd8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.doc-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Certificates ────────────────────────────────── */
+.cert-list { display: flex; flex-direction: column; gap: 16px; }
+
+.cert-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 16px;
+  background: #f8f9fb;
+  border-radius: 10px;
+  border-left: 4px solid #3f4d67;
+  position: relative;
+}
+
+.cert-number {
+  width: 28px;
+  height: 28px;
+  background: #3f4d67;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.cert-image-wrap {
+  width: 80px;
+  height: 96px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #e4e7ed;
+  border: 2px dashed #c8cdd8;
+}
+.cert-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cert-details { flex: 1; }
+
+.empty-state {
+  text-align: center;
+  color: #8a94a6;
+  font-size: 14px;
+  padding: 24px 0;
+}
+
+/* ── Sea Services Table ──────────────────────────── */
+.table-wrap { overflow-x: auto; }
+
+.sea-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+.sea-table thead tr {
+  background: #3f4d67;
+}
+.sea-table thead th {
+  padding: 12px 14px;
+  text-align: left;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+.sea-table thead th:first-child { border-radius: 8px 0 0 0; }
+.sea-table thead th:last-child  { border-radius: 0 8px 0 0; }
+
+.sea-table tbody tr {
+  border-bottom: 1px solid #eef0f4;
+  transition: background 0.15s;
+}
+.sea-table tbody tr:hover { background: #f5f6f9; }
+
+.sea-table tbody td {
+  padding: 12px 14px;
+  color: #2c3752;
+  font-size: 13.5px;
+}
+
+.months-badge {
+  background: #e8ecf5;
+  color: #3f4d67;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+.empty-row {
+  text-align: center;
+  color: #8a94a6;
+  padding: 24px !important;
+}
+
+/* ── Action Bar ──────────────────────────────────── */
+.action-bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 2px solid #dde1ea;
+}
+
+.btn-reject {
+  padding: 11px 28px;
+  border: 2px solid #c0392b;
+  background: #fff;
+  color: #c0392b;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-reject:hover { background: #c0392b; color: #fff; }
+
+.btn-invite {
+  padding: 11px 28px;
+  border: none;
+  background: #3f4d67;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-invite:hover { background: #2c3752; }
+
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 768px) {
+  .sections-grid { grid-template-columns: 1fr; }
+  .hero-card { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .doc-body { flex-direction: column; }
+  .detail-grid { grid-template-columns: 1fr; }
+  .detail-item.full-width { grid-column: 1; }
+}
