@@ -260,6 +260,7 @@ export class JobPostingComponent {
     }
 
     public editData(data: any): void {
+
     // Split the comma-separated string into an array for the form control
     const cNameArray = data.cName ? data.cName.split(', ') : [];
       this.jobPostingForm.patchValue({

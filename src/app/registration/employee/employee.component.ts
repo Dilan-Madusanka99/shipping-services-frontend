@@ -231,7 +231,7 @@ export class EmployeeComponent implements OnInit {
     this.saveButtonLabel = 'Edit';
     this.mode = 'edit';
     this.selectedData = data;
-
+ 
     /* Preview image on edit */
     const file = data.profileImage;
     const imageType = data.profileImageType;
