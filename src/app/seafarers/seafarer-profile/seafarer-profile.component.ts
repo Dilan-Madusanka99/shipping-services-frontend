@@ -2,6 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA  } from '@angular/material/dialog';
+import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.service';
+import { OtherDetailsRegistrationService } from 'src/app/services/seafarers/other-details-registration.service';
+import { CertificatesRegistrationService } from 'src/app/services/seafarers/certificates-registration.service';
+import { SeaServicesService } from 'src/app/services/seafarers/sea-services.service';
 
 
 @Component({
@@ -14,91 +18,83 @@ import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA  } from '@angular/materi
 export class SeafarerProfileComponent implements OnInit {
 
   seafarer: any = null;
+  otherDetails: any = null;
   certificates: any[] = [];
   seaServices: any[] = [];
 
-  constructor(private route: ActivatedRoute, private dialogRef: MatDialogRef<SeafarerProfileComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(private route: ActivatedRoute, 
+              private dialogRef: MatDialogRef<SeafarerProfileComponent>, 
+              @Inject(MAT_DIALOG_DATA) public data: any,
+              private seafarersService: SeafarersServiceService,
+              private otherSeafarerService: OtherDetailsRegistrationService,
+              private certificatesService: CertificatesRegistrationService,
+              private seaServicesService: SeaServicesService) {}
 
   ngOnInit(): void {
-    console.log(this.data.sidNo); /* sidNo -> data.sidNo */
-    this.populateData();
+    const sidNo = this.data.sidNo;
+
+    console.log('SID No:', sidNo);
+    if (sidNo) {
+      this.loadSeafarerData(sidNo);
+      this.loadOtherSeafarerData(sidNo);
+      this.loadCertificatesData(sidNo);
+      this.loadSeaServicesData(sidNo);
+    }
   }
 
-  populateData() {
-    // Sample data for local testing
-    this.seafarer = {
-      name: 'Ruwan Perera',
-      position: 'Chief Officer',
-      dob: '1988-04-15',
-      nic: '882061234V',
-      religion: 'Buddhist',
-      gender: 'Male',
-      maritalStatus: 'Married',
-      address: 'No. 45, Galle Road, Colombo 03',
-      homePhone: '+94 11 234 5678',
-      mobile: '+94 77 123 4567',
-      email: 'ruwan.perera@email.com',
-      photo: null,
-      sidNo: 'SF-20240023',
-      sidIssuedPlace: 'Colombo',
-      sidIssuedDate: '2020-01-10',
-      sidExpiredDate: '2025-01-10',
-      sidImage: null,
-      passportNo: 'N1234567',
-      passportIssuedPlace: 'Colombo',
-      passportIssuedDate: '2019-06-01',
-      passportExpireDate: '2029-06-01',
-      passportImage: null,
-      seamanBookNo: 'SB-789456',
-      seamanIssuedPlace: 'Colombo',
-      seamanIssuedDate: '2018-03-20',
-      seamanExpireDate: '2023-03-20',
-      seamanBookImage: null,
-      yellowFeverNo: 'YF-00123',
-      yellowFeverIssuedPlace: 'Colombo',
-      yellowFeverIssuedDate: '2022-07-15',
-      yellowFeverExpireDate: '2032-07-15',
-      yellowFeverImage: null,
-    };
+  loadSeafarerData(sidNo: string) {
+    this.seafarersService.getSeafarerData(sidNo).subscribe({
+      next: (data: any) => {
+        console.log('Seafarer API Response:', data);
 
-    this.certificates = [
-      {
-        name: 'STCW Basic Safety Training',
-        certNo: 'STCW-2021-001',
-        issuedPlace: 'Colombo',
-        issuedDate: '2021-03-10',
-        expiredDate: '2026-03-10',
-        image: null
+        this.seafarer = data.seafarer || data;
       },
-      {
-        name: 'Certificate of Competency - Chief Officer',
-        certNo: 'CoC-2020-045',
-        issuedPlace: 'Colombo',
-        issuedDate: '2020-09-05',
-        expiredDate: '2025-09-05',
-        image: null
+      error: (err) => {
+        console.error('Error loading seafarer data', err);
       }
-    ];
-
-    this.seaServices = [
-      {
-        companyName: 'Lanka Shipping Ltd.',
-        vesselName: 'MV Serendib',
-        vesselType: 'Bulk Carrier',
-        position: 'Chief Officer',
-        totalMonths: 18,
-        signOffReason: 'Contract End'
-      },
-      {
-        companyName: 'Ocean Carriers Pvt Ltd.',
-        vesselName: 'MV Pacific Star',
-        vesselType: 'Tanker',
-        position: 'Second Officer',
-        totalMonths: 24,
-        signOffReason: 'Promotion'
-      }
-    ];
+    });
   }
+
+  loadOtherSeafarerData(sidNo: string) {
+    this.otherSeafarerService.getSeafarerData(sidNo).subscribe({
+      next: (data: any) => {
+        console.log('Other Details API Response::', data);
+
+        this.otherDetails = data.otherDetails  || data;
+      },
+      error: (err) => {
+        console.error('Error loading other details data', err);
+      }
+    });
+  }
+
+    loadCertificatesData(sidNo: string) {
+    this.certificatesService.getSeafarerData(sidNo).subscribe({
+      next: (data: any) => {
+        console.log('Certificates API Response::', data);
+
+        this.certificates = data.certificates  || data;
+      },
+      error: (err) => {
+        console.error('Error loading certificates data', err);
+      }
+    });
+  }
+
+    loadSeaServicesData(sidNo: string) {
+    this.seaServicesService.getSeafarerData(sidNo).subscribe({
+      next: (data: any) => {
+        console.log('Sea Services API Response::', data);
+
+        this.seaServices = data.seaServices  || data;
+      },
+      error: (err) => {
+        console.error('Error loading sea services data', err);
+      }
+    });
+  }
+
+
 
   isExpired(dateStr: string): boolean {
     if (!dateStr) return false;
@@ -108,4 +104,5 @@ export class SeafarerProfileComponent implements OnInit {
   close(): void {
   this.dialogRef.close();
 }
+
 }

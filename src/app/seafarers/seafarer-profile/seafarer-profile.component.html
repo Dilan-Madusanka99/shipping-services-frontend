@@ -17,12 +17,12 @@
         <img [src]="seafarer?.photo || 'assets/default-avatar.png'" alt="Seafarer Photo" class="avatar-img" />
       </div>
       <div class="hero-info">
-        <h1 class="hero-name">{{ seafarer?.name || '—' }}</h1>
+        <h1 class="hero-name">{{ seafarer?.surname }} {{ seafarer?.otherNames }}</h1>
         <span class="hero-position">{{ seafarer?.position || '—' }}</span>
         <div class="hero-meta">
           <span><i class="ic">&#9679;</i> SID: {{ seafarer?.sidNo || '—' }}</span>
           <span><i class="ic">&#9679;</i> {{ seafarer?.gender || '—' }}</span>
-          <span><i class="ic">&#9679;</i> {{ seafarer?.maritalStatus || '—' }}</span>
+          <span><i class="ic">&#9679;</i> {{ seafarer?.marriedStatus || '—' }}</span>
         </div>
       </div>
     </div>
@@ -54,7 +54,7 @@
       <div class="detail-grid">
         <div class="detail-item">
           <label>Full Name</label>
-          <span>{{ seafarer?.name || '—' }}</span>
+          <span>{{ seafarer?.surname }} {{ seafarer?.otherNames }}</span>
         </div>
         <div class="detail-item">
           <label>Position</label>
@@ -62,7 +62,7 @@
         </div>
         <div class="detail-item">
           <label>Date of Birth</label>
-          <span>{{ seafarer?.dob || '—' }}</span>
+          <span>{{ seafarer?.dob? (seafarer.dob | date:'dd/MM/yyyy') : '—' }} </span>
         </div>
         <div class="detail-item">
           <label>NIC</label>
@@ -78,7 +78,7 @@
         </div>
         <div class="detail-item">
           <label>Marital Status</label>
-          <span>{{ seafarer?.maritalStatus || '—' }}</span>
+          <span>{{ seafarer?.marriedStatus || '—' }}</span>
         </div>
         <div class="detail-item full-width">
           <label>Address</label>
@@ -96,7 +96,7 @@
       <div class="detail-grid">
         <div class="detail-item">
           <label>Home</label>
-          <span>{{ seafarer?.homePhone || '—' }}</span>
+          <span>{{ seafarer?.home || '—' }}</span>
         </div>
         <div class="detail-item">
           <label>Mobile</label>
@@ -308,7 +308,7 @@
               <th>Vessel Type</th>
               <th>Position</th>
               <th>Total Months</th>
-              <th>Sign Off Reason</th>
+              <th>Sign Off Date</th>
             </tr>
           </thead>
           <tbody>
@@ -319,7 +319,7 @@
               <td>{{ svc.vesselType || '—' }}</td>
               <td>{{ svc.position || '—' }}</td>
               <td><span class="months-badge">{{ svc.totalMonths || 0 }} mo</span></td>
-              <td>{{ svc.signOffReason || '—' }}</td>
+              <td>{{ svc.signOff | date:'dd/MM/yyyy' }}</td>
             </tr>
             <tr *ngIf="!seaServices || seaServices.length === 0">
               <td colspan="7" class="empty-row">No sea service records found.</td>
