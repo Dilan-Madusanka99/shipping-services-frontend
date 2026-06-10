@@ -21,6 +21,7 @@ export class SeafarerProfileComponent implements OnInit {
   otherDetails: any = null;
   certificates: any[] = [];
   seaServices: any[] = [];
+  seaFarerIdNo: any;
 
   constructor(private route: ActivatedRoute, 
               private dialogRef: MatDialogRef<SeafarerProfileComponent>, 
@@ -32,6 +33,7 @@ export class SeafarerProfileComponent implements OnInit {
 
   ngOnInit(): void {
     const sidNo = this.data.sidNo;
+    this.seaFarerIdNo = sidNo;
 
     console.log('SID No:', sidNo);
     if (sidNo) {
@@ -47,7 +49,13 @@ export class SeafarerProfileComponent implements OnInit {
       next: (data: any) => {
         console.log('Seafarer API Response:', data);
 
-        this.seafarer = data.seafarer || data;
+        const dataResponse = data.seafarer || data;
+
+        this.seafarer = {
+          ...this.seafarer,
+          ...dataResponse
+        };
+        this.seafarer.sidNo = dataResponse.sidNo;
       },
       error: (err) => {
         console.error('Error loading seafarer data', err);
@@ -60,7 +68,11 @@ export class SeafarerProfileComponent implements OnInit {
       next: (data: any) => {
         console.log('Other Details API Response::', data);
 
-        this.otherDetails = data.otherDetails  || data;
+        const dataResponse = data.otherDetails  || data;
+        this.seafarer = {
+          ...this.seafarer,
+          ...dataResponse
+        }
       },
       error: (err) => {
         console.error('Error loading other details data', err);

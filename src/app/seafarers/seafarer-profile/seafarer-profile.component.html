@@ -20,7 +20,7 @@
         <h1 class="hero-name">{{ seafarer?.surname }} {{ seafarer?.otherNames }}</h1>
         <span class="hero-position">{{ seafarer?.position || '—' }}</span>
         <div class="hero-meta">
-          <span><i class="ic">&#9679;</i> SID: {{ seafarer?.sidNo || '—' }}</span>
+          <span><i class="ic">&#9679;</i> SID: {{ seaFarerIdNo || '—' }}</span>
           <span><i class="ic">&#9679;</i> {{ seafarer?.gender || '—' }}</span>
           <span><i class="ic">&#9679;</i> {{ seafarer?.marriedStatus || '—' }}</span>
         </div>
@@ -122,7 +122,7 @@
         <div class="detail-grid">
           <div class="detail-item full-width">
             <label>SID No</label>
-            <span>{{ seafarer?.sidNo || '—' }}</span>
+            <span>{{ seaFarerIdNo || '—' }}</span>
           </div>
           <div class="detail-item">
             <label>Issued Place</label>
@@ -130,13 +130,13 @@
           </div>
           <div class="detail-item">
             <label>Issued Date</label>
-            <span>{{ seafarer?.sidIssuedDate || '—' }}</span>
+            <span>{{ (seafarer?.sidIssuedDate | date:'dd/MM/yyyy') || '—' }}</span>
           </div>
           <div class="detail-item full-width">
             <label>Expiry Date</label>
-            <span [class.expired]="isExpired(seafarer?.sidExpiredDate)">
-              {{ seafarer?.sidExpiredDate || '—' }}
-              <span class="exp-tag" *ngIf="isExpired(seafarer?.sidExpiredDate)">EXPIRED</span>
+            <span [class.expired]="isExpired(seafarer?.sidExpireDate)">
+              {{ (seafarer?.sidExpireDate | date:'dd/MM/yyyy') || '—' }}
+              <span class="exp-tag" *ngIf="isExpired(seafarer?.sidExpireDate)">EXPIRED</span>
             </span>
           </div>
         </div>
@@ -156,21 +156,21 @@
         <div class="detail-grid">
           <div class="detail-item full-width">
             <label>Passport No</label>
-            <span>{{ seafarer?.passportNo || '—' }}</span>
+            <span>{{ seafarer?.ppNo || '—' }}</span>
           </div>
           <div class="detail-item">
             <label>Issued Place</label>
-            <span>{{ seafarer?.passportIssuedPlace || '—' }}</span>
+            <span>{{ seafarer?.ppIssuedPlace || '—' }}</span>
           </div>
           <div class="detail-item">
             <label>Issued Date</label>
-            <span>{{ seafarer?.passportIssuedDate || '—' }}</span>
+            <span>{{ (seafarer?.ppIssuedDate | date:'dd/MM/yyyy') || '—' }}</span>
           </div>
           <div class="detail-item full-width">
             <label>Expiry Date</label>
-            <span [class.expired]="isExpired(seafarer?.passportExpireDate)">
-              {{ seafarer?.passportExpireDate || '—' }}
-              <span class="exp-tag" *ngIf="isExpired(seafarer?.passportExpireDate)">EXPIRED</span>
+            <span [class.expired]="isExpired(seafarer?.ppExpireDate)">
+              {{ (seafarer?.ppExpireDate | date:'dd/MM/yyyy')|| '—' }}
+              <span class="exp-tag" *ngIf="isExpired(seafarer?.ppExpireDate)">EXPIRED</span>
             </span>
           </div>
         </div>
@@ -190,21 +190,21 @@
         <div class="detail-grid">
           <div class="detail-item full-width">
             <label>Book No</label>
-            <span>{{ seafarer?.seamanBookNo || '—' }}</span>
+            <span>{{ seafarer?.cdcNo || '—' }}</span>
           </div>
           <div class="detail-item">
             <label>Issued Place</label>
-            <span>{{ seafarer?.seamanIssuedPlace || '—' }}</span>
+            <span>{{ seafarer?.cdcIssuedPlace || '—' }}</span>
           </div>
           <div class="detail-item">
             <label>Issued Date</label>
-            <span>{{ seafarer?.seamanIssuedDate || '—' }}</span>
+            <span>{{ (seafarer?.cdcIssuedDate | date:'dd/MM/yyyy') || '—' }}</span>
           </div>
           <div class="detail-item full-width">
             <label>Expiry Date</label>
-            <span [class.expired]="isExpired(seafarer?.seamanExpireDate)">
-              {{ seafarer?.seamanExpireDate || '—' }}
-              <span class="exp-tag" *ngIf="isExpired(seafarer?.seamanExpireDate)">EXPIRED</span>
+            <span [class.expired]="isExpired(seafarer?.cdcExpireDate)">
+              {{ (seafarer?.cdcExpireDate | date:'dd/MM/yyyy') || '—' }}
+              <span class="exp-tag" *ngIf="isExpired(seafarer?.cdcExpireDate)">EXPIRED</span>
             </span>
           </div>
         </div>
@@ -232,12 +232,12 @@
           </div>
           <div class="detail-item">
             <label>Issued Date</label>
-            <span>{{ seafarer?.yellowFeverIssuedDate || '—' }}</span>
+            <span>{{ (seafarer?.yellowFeverIssuedDate | date:'dd/MM/yyyy')|| '—' }}</span>
           </div>
           <div class="detail-item full-width">
             <label>Expiry Date</label>
             <span [class.expired]="isExpired(seafarer?.yellowFeverExpireDate)">
-              {{ seafarer?.yellowFeverExpireDate || '—' }}
+              {{ (seafarer?.yellowFeverExpireDate | date:'dd/MM/yyyy') || '—' }}
               <span class="exp-tag" *ngIf="isExpired(seafarer?.yellowFeverExpireDate)">EXPIRED</span>
             </span>
           </div>
@@ -262,25 +262,25 @@
             <div class="detail-grid">
               <div class="detail-item full-width">
                 <label>Certificate Name</label>
-                <span>{{ cert.name || '—' }}</span>
+                <span>{{ cert.cName || '—' }}</span>
               </div>
               <div class="detail-item">
                 <label>Certificate No</label>
-                <span>{{ cert.certNo || '—' }}</span>
+                <span>{{ cert.cNo || '—' }}</span>
               </div>
               <div class="detail-item">
                 <label>Issued Place</label>
-                <span>{{ cert.issuedPlace || '—' }}</span>
+                <span>{{ cert.cIssuedPlace || '—' }}</span>
               </div>
               <div class="detail-item">
                 <label>Issued Date</label>
-                <span>{{ cert.issuedDate || '—' }}</span>
+                <span>{{ (cert.cIssuedDate | date:'dd/MM/yyyy') || '—' }}</span>
               </div>
               <div class="detail-item">
                 <label>Expiry Date</label>
-                <span [class.expired]="isExpired(cert.expiredDate)">
-                  {{ cert.expiredDate || '—' }}
-                  <span class="exp-tag" *ngIf="isExpired(cert.expiredDate)">EXPIRED</span>
+                <span [class.expired]="isExpired(cert.cExpiredDate)">
+                  {{ (cert.cExpiredDate | date:'dd/MM/yyyy') || '—' }}
+                  <span class="exp-tag" *ngIf="isExpired(cert.cExpiredDate)">EXPIRED</span>
                 </span>
               </div>
             </div>
