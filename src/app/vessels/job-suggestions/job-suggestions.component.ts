@@ -91,7 +91,9 @@ getSelectedJob(): void {
           sidNo: u.seafarer_no,
           position: u.position,
           email: u.email,
-          mobile: u.mobile
+          mobile: u.mobile,
+          profileImage: u.profile_image,
+          matchScore: u.match_score
         }));
 
       } else {
@@ -107,15 +109,18 @@ getSelectedJob(): void {
 
 }
 
-openProfile(sidNo: string): void {
+openProfile(user: any): void {
     const suggestion = this.jobSuggestionsForm.value.selectedJob;
+    const sidNo = user.sidNo;
+    const matchScore = user.matchScore;
     const dialogRef = this.dialog.open(SeafarerProfileComponent, {
       width: '900px',          // dialog width
       maxWidth: '95vw',        // shrinks on small screens
       height: '90vh',          // tall enough to scroll inside
       panelClass: 'seafarer-dialog-panel',
       data: {
-        sidNo: sidNo
+        sidNo: sidNo,
+        matchScore: matchScore
       }
     });
  

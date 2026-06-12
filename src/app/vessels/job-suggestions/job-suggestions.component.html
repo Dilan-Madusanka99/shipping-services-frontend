@@ -40,7 +40,7 @@
   <div class="profile-card" *ngFor="let user of users">
 
   <div class="profile-header">
-    <img class="avatar" src="assets/user-avatar.png" alt="img" />
+    <img class="avatar" [src]="'data:image/jpeg;base64,' + user?.profileImage || 'assets/default-avatar.png'" alt="img" />
 
     <div class="user-info">
       <h4>{{ user.surname }}</h4>
@@ -53,7 +53,7 @@
 
   <div class="profile-footer">
     <button mat-raised-button color="primary" class="profile-button" type="select">Select</button>
-    <button mat-stroked-button color="warn" class="profile-button" type="view"  (click)="openProfile(user.sidNo)">View</button>
+    <button mat-stroked-button color="warn" class="profile-button" type="view"  (click)="openProfile(user)">View</button>
   </div>
 </div>
 

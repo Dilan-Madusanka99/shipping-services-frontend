@@ -14,7 +14,7 @@
   <div class="hero-card">
     <div class="hero-left">
       <div class="avatar-wrap">
-        <img [src]="seafarer?.photo || 'assets/default-avatar.png'" alt="Seafarer Photo" class="avatar-img" />
+        <img [src]="'data:image/jpeg;base64,' + seafarer?.profileImage || 'assets/default-avatar.png'" alt="Seafarer Photo" class="avatar-img" />
       </div>
       <div class="hero-info">
         <h1 class="hero-name">{{ seafarer?.surname }} {{ seafarer?.otherNames }}</h1>
@@ -35,7 +35,7 @@
                   stroke-linecap="round" transform="rotate(-90 40 40)"/>
         </svg>
         <div class="score-label">
-          <span class="score-num">75%</span>
+          <span class="score-num">{{matchScore}}%</span>
           <span class="score-text">Match</span>
         </div>
       </div>
@@ -117,7 +117,7 @@
       </div>
       <div class="doc-body">
         <div class="doc-image-wrap">
-          <img [src]="seafarer?.sidImage || 'assets/doc-placeholder.png'" alt="SID" class="doc-img" />
+          <img [src]="'data:image/jpeg;base64,' + seafarer?.sidImage || 'assets/doc-placeholder.png'" alt="SID" class="doc-img" />
         </div>
         <div class="detail-grid">
           <div class="detail-item full-width">
@@ -151,7 +151,7 @@
       </div>
       <div class="doc-body">
         <div class="doc-image-wrap">
-          <img [src]="seafarer?.passportImage || 'assets/doc-placeholder.png'" alt="Passport" class="doc-img" />
+          <img [src]="'data:image/jpeg;base64,' + seafarer?.ppImage || 'assets/doc-placeholder.png'" alt="Passport" class="doc-img" />
         </div>
         <div class="detail-grid">
           <div class="detail-item full-width">
@@ -185,7 +185,7 @@
       </div>
       <div class="doc-body">
         <div class="doc-image-wrap">
-          <img [src]="seafarer?.seamanBookImage || 'assets/doc-placeholder.png'" alt="Seaman Book" class="doc-img" />
+          <img [src]="'data:image/jpeg;base64,' + seafarer?.cdcImage || 'assets/doc-placeholder.png'" alt="Seaman Book" class="doc-img" />
         </div>
         <div class="detail-grid">
           <div class="detail-item full-width">
@@ -219,7 +219,7 @@
       </div>
       <div class="doc-body">
         <div class="doc-image-wrap">
-          <img [src]="seafarer?.yellowFeverImage || 'assets/doc-placeholder.png'" alt="Yellow Fever" class="doc-img" />
+          <img [src]="'data:image/jpeg;base64,' + seafarer?.yellowFeverImage || 'assets/doc-placeholder.png'" alt="Yellow Fever" class="doc-img" />
         </div>
         <div class="detail-grid">
           <div class="detail-item full-width">
@@ -256,7 +256,7 @@
         <div class="cert-item" *ngFor="let cert of certificates; let i = index">
           <div class="cert-number">{{ i + 1 }}</div>
           <div class="cert-image-wrap">
-            <img [src]="cert.image || 'assets/doc-placeholder.png'" alt="Certificate" class="cert-img" />
+            <img [src]="'data:image/jpeg;base64,' + cert.certificateImage || 'assets/doc-placeholder.png'" alt="Certificate" class="cert-img" />
           </div>
           <div class="cert-details">
             <div class="detail-grid">

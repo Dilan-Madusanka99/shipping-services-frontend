@@ -22,6 +22,7 @@ export class SeafarerProfileComponent implements OnInit {
   certificates: any[] = [];
   seaServices: any[] = [];
   seaFarerIdNo: any;
+  matchScore: any;
 
   constructor(private route: ActivatedRoute, 
               private dialogRef: MatDialogRef<SeafarerProfileComponent>, 
@@ -34,6 +35,7 @@ export class SeafarerProfileComponent implements OnInit {
   ngOnInit(): void {
     const sidNo = this.data.sidNo;
     this.seaFarerIdNo = sidNo;
+    this.matchScore = this.data.matchScore;
 
     console.log('SID No:', sidNo);
     if (sidNo) {
