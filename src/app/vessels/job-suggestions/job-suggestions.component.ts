@@ -26,7 +26,7 @@ export class JobSuggestionsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private jobService: JobPostingServiceService,
-    private vesselService: VesselRegistrationService,   // ✅ ADD THIS
+    private vesselService: VesselRegistrationService,
     private cacheService: CacheService,
     private router: Router,
     private _messageService: MessageServiceService,
@@ -84,8 +84,6 @@ getSelectedJob(): void {
       console.log('API Response:', data);
 
       if (data && data.length > 0) {
-
-        // 🔥 THIS LINE WAS MISSING
         this.users = data.map(u => ({
           surname: u.surname,
           sidNo: u.seafarer_no,

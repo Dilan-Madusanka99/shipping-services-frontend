@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA  } from '@angular/material/dialog';
 import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.service';
@@ -25,6 +25,7 @@ export class SeafarerProfileComponent implements OnInit {
   matchScore: any;
 
   constructor(private route: ActivatedRoute, 
+              private router: Router,
               private dialogRef: MatDialogRef<SeafarerProfileComponent>, 
               @Inject(MAT_DIALOG_DATA) public data: any,
               private seafarersService: SeafarersServiceService,
@@ -108,8 +109,7 @@ export class SeafarerProfileComponent implements OnInit {
     });
   }
 
-
-
+  
   isExpired(dateStr: string): boolean {
     if (!dateStr) return false;
     return new Date(dateStr) < new Date();
@@ -117,6 +117,14 @@ export class SeafarerProfileComponent implements OnInit {
 
   close(): void {
   this.dialogRef.close();
+}
+
+goToAppointment() {
+  console.log('clicked');
+
+  this.router.navigate(['/appointment']).then(result => {
+    console.log(result);
+  });
 }
 
 }
