@@ -233,7 +233,7 @@ export class SeafarersRegistrationComponent {
         this.seafarersService
           .serviceCall(
             this.prepareSeafarerData() // Photo upload [start]
-          )
+          ) 
           .subscribe({
             next: (response: any) => {
               if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {

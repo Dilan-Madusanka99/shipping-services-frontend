@@ -153,12 +153,12 @@ export class JobPostingComponent {
       } else {
         const imageBlob = this.base64ToBlob(
           this.jobPostingForm.get('jobPostImage')?.value,
-          this.jobPostingForm.get('jobPostImageImageType')?.value
+          this.jobPostingForm.get('jobPostImageType')?.value
         );
         const file = new File(
           [imageBlob],
-          this.jobPostingForm.get('jobPostImageImageName')?.value,
-          { type: this.jobPostingForm.get('jobPostImageImageType')?.value }
+          this.jobPostingForm.get('jobPostImageName')?.value,
+          { type: this.jobPostingForm.get('jobPostImageType')?.value }
         );
         jobPostingFormData.append('jobPostImage', file, file.name);
       }
@@ -216,7 +216,8 @@ export class JobPostingComponent {
           });
         }
         else if (this.mode === 'edit'){
-          this.seafarersService.editData(this.selectedData?.id, this.prepareSeafarerData()).subscribe ({
+          this.seafarersService.editData(this.selectedData?.id, this.prepareSeafarerData())
+          .subscribe ({
             next: (response: any) => {
               let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
               this.dataSource.data[elementIndex] = response;
@@ -271,15 +272,13 @@ export class JobPostingComponent {
         minimumExp: data.minimumExp,
         jobStatus: data.jobStatus,
         jobDescription: data.jobDescription,
-        jobClosingDate: this.formatDate(data.jobClosingDate)
+        jobClosingDate: this.formatDate(data.jobClosingDate),
+        jobPostImage: data.jobPostImage,
+        jobPostImageName: data.jobPostImageName,
+        jobPostImageType: data.jobPostImageType
 
       });
-      
-      // if (data.cName && typeof data.cName === 'string') {
-      //   this.jobPostingForm.patchValue({
-      //     cName: [data.cName]
-      //   });
-      // }
+    
       this.saveButtonLabel = 'Edit';
       this.mode = 'edit';
       this.selectedData = data;
