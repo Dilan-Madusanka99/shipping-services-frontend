@@ -155,6 +155,7 @@ export class AppointmentModalComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.resetForm();
+    console.log(this.appointment);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

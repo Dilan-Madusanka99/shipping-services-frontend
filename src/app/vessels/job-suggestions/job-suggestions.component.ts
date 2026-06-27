@@ -126,14 +126,19 @@ openProfile(user: any): void {
     dialogRef.afterClosed().subscribe(result => {
       if (!result) return;
  
-      if (result.action === 'INVITE') {
+      if (result.action === 'BOOK_APPOINTMENT') {
         // call your appointment / invite service
-        console.log('Invite seafarer:', result.seafarerId);
+        console.log('Invite seafarer:', result.seafarer);
+        this.router.navigate(['/seafarers/appointment'], {
+          state: {
+            seafarer: result.seafarer
+          }
+        });
       }
  
       if (result.action === 'REJECT') {
         // update suggestion status to REJECTED
-        console.log('Reject seafarer:', result.seafarerId);
+        console.log('Reject seafarer:', result.seafarer);
       }
     });
   }

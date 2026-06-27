@@ -43,6 +43,7 @@ export interface CalendarDay {
 export class CalendarComponent {
   @Output() dayClick = new EventEmitter<string>();        // dateStr
   @Output() appointmentClick = new EventEmitter<Appointment>();
+  @Output() openAddModalFromJobSuggestions = new EventEmitter<Appointment>();
 
   readonly weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 

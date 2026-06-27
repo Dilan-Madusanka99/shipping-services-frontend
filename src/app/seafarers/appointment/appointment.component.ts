@@ -8,6 +8,7 @@ import { MessageServiceService } from 'src/app/services/message-service/message-
 import { AppointmentService } from 'src/app/services/seafarers/appointment.service';
 import Swal from 'sweetalert2';
 import { Appointment } from './calendar/calendar.component';
+import { Router } from '@angular/router';
 
 export interface PeriodicElement {
   firstName: String;
@@ -44,6 +45,8 @@ export class AppointmentComponent implements OnInit{
     isButtonDisabled = false;
     submitted: boolean;
     selectedIndex = 0;
+    seafarerData: any;
+    fromJobSug = false;
 
     readonly showModal = signal(false);
     readonly editingAppointment = signal<Appointment | null>(null);
@@ -52,7 +55,8 @@ export class AppointmentComponent implements OnInit{
     constructor(
       private fb: FormBuilder, 
       private appointmentService: AppointmentService, 
-      private messageService: MessageServiceService
+      private messageService: MessageServiceService,
+      private router: Router
     ) {
       this.appointmentForm = this.fb.group({
         sidNo: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
@@ -65,10 +69,16 @@ export class AppointmentComponent implements OnInit{
         appointmentTime: new FormControl('', [ Validators.required]),
         appointmentStatus: new FormControl('', [Validators.required]),
       });
+      const nav = this.router.getCurrentNavigation();
+      this.seafarerData = nav?.extras?.state;
     }
 
     ngOnInit(): void{
-      this.populateData();  
+      this.populateData();
+
+      if(this.seafarerData) {
+        this.openAddModalFromJobSuggestions();
+      }
     }
   
     applyFilter(event: Event) {
@@ -253,6 +263,52 @@ export class AppointmentComponent implements OnInit{
     this.showModal.set(true);
   }
 
+  openAddModalFromJobSuggestions(dateStr?: string): void {
+    this.patchApointmentForm();
+    let editAppointmentData: Appointment = this.setAppointmentData();
+    this.editingAppointment.set(editAppointmentData);
+    this.prefillDate.set(dateStr ?? '');
+    this.showModal.set(true);
+    this.fromJobSug = true;
+  }
+
+  patchApointmentForm() {
+    const seafarerDetails = this.seafarerData?.seafarer
+    this.appointmentForm.patchValue({
+      sidNo: seafarerDetails.seaFarerIdNo,
+      firstName: seafarerDetails.surname,
+      lastName: seafarerDetails.otherNames,
+      position: seafarerDetails.position,
+      mobile: seafarerDetails.mobile,
+      email: seafarerDetails.email
+    });
+  }
+
+  setAppointmentData(): Appointment {
+    const seafarerDetails = this.seafarerData?.seafarer
+    console.log(seafarerDetails);
+    let editAppointmentData: Appointment = {
+          id: null,
+          title: null,
+          date: null,
+          time: null,
+          duration: null,
+          category: null,
+          color: null,
+          notes: null,
+          createdAt: null,
+          sid: seafarerDetails.seaFarerIdNo,
+          firstName: seafarerDetails.surname,
+          lastName: seafarerDetails.otherNames,
+          position: seafarerDetails.position,
+          mobile: seafarerDetails.mobile,
+          email: seafarerDetails.email,
+          status: '',
+          formData: this.appointmentForm
+        };
+      return editAppointmentData
+  }
+
   // Open modal to edit existing appointment
   openEditModal(appt: Appointment): void {
     this.editingAppointment.set(appt);
@@ -269,10 +325,11 @@ export class AppointmentComponent implements OnInit{
     saveAppointment(data: any): void {
     const editing = this.editingAppointment();
     this.appointmentForm.patchValue(data?.value);
-    if (editing) {
+    if (editing && !this.fromJobSug) {
       this.mode = 'edit';
     } else {
       this.mode = 'add';
+      this.fromJobSug = false;
     }
     this.appointmentForm.updateValueAndValidity();
     this.onSubmit();

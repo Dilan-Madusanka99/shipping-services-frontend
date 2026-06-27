@@ -120,11 +120,12 @@ export class SeafarerProfileComponent implements OnInit {
 }
 
 goToAppointment() {
-  console.log('clicked');
-
-  this.router.navigate(['/appointment']).then(result => {
-    console.log(result);
+  this.dialogRef.close({
+    action: 'BOOK_APPOINTMENT',
+    seafarer: {
+      ...this.seafarer,
+      seaFarerIdNo: this.seaFarerIdNo
+    }
   });
-}
-
+  }
 }
