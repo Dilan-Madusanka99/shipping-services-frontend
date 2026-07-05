@@ -68,6 +68,7 @@ export class AppointmentComponent implements OnInit{
         appointmentDate: new FormControl('', [Validators.required]),
         appointmentTime: new FormControl('', [ Validators.required]),
         appointmentStatus: new FormControl('', [Validators.required]),
+        appointmentType: new FormControl('', [Validators.required]),
       });
       const nav = this.router.getCurrentNavigation();
       this.seafarerData = nav?.extras?.state;

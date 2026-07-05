@@ -168,7 +168,7 @@ const NavigationItems = [
       authenticationEnum.Document_Details,
       authenticationEnum.Certificate_Details,
       authenticationEnum.Sea_Services,
-      authenticationEnum.Certificate_Verification,
+      // authenticationEnum.Certificate_Verification,
       authenticationEnum.Appointment
     ],
     children: [
@@ -222,16 +222,16 @@ const NavigationItems = [
         auth: [authenticationEnum.Sea_Services],
         breadcrumbs: false
       },
-      {
-        id: 'SeafarersRegistrationDet',
-        title: 'Certificates Verfication',
-        type: 'item',
-        url: '/seafarers/certificateVerification',
-        icon: 'feather icon-check-circle',
-        classes: 'nav-item',
-        auth: [authenticationEnum.Certificate_Verification],
-        breadcrumbs: false
-      },
+      // {
+      //   id: 'SeafarersRegistrationDet',
+      //   title: 'Certificates Verfication',
+      //   type: 'item',
+      //   url: '/seafarers/certificateVerification',
+      //   icon: 'feather icon-check-circle',
+      //   classes: 'nav-item',
+      //   auth: [authenticationEnum.Certificate_Verification],
+      //   breadcrumbs: false
+      // },
       {
         id: 'seafarerDoc',
         title: 'Seafarer Document',

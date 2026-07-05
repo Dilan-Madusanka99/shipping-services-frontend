@@ -18,7 +18,7 @@ export interface PeriodicElement {
   verificationStatus: String;
 }
 
-const ELEMENT_DATA: any[] = [{ sidNo: 'S001', cName: 'AFF', cIssuedDate: '07/04/2025', cExpiredDate: '07/04/2030' }];
+const ELEMENT_DATA: any[] = [{ sidNo: 'S001', cName: 'AFF', cIssuedDate: '07/04/2025', cExpiredDate: '07/04/2030', verificationStatus: 'valid' }];
 
 @Component({
   selector: 'app-certificates-registration',
@@ -31,7 +31,7 @@ const ELEMENT_DATA: any[] = [{ sidNo: 'S001', cName: 'AFF', cIssuedDate: '07/04/
 export class CertificatesRegistrationComponent {
   certificatesRegistrationForm: FormGroup;
 
-  displayedColumns: string[] = ['sidNo', 'cName', 'cIssuedDate', 'cExpiredDate', 'actions'];
+  displayedColumns: string[] = ['sidNo', 'cName', 'cIssuedDate', 'cExpiredDate', 'verificationStatus', 'actions'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -65,7 +65,8 @@ export class CertificatesRegistrationComponent {
       cNo: new FormControl('', [Validators.required]), // difficult for validate
       cIssuedPlace: new FormControl('', [Validators.required]),
       cIssuedDate: new FormControl('', [Validators.required]),
-      cExpiredDate: new FormControl('', [Validators.required])
+      cExpiredDate: new FormControl('', [Validators.required]),
+      verificationStatus: new FormControl([''])
     });
   }
 
