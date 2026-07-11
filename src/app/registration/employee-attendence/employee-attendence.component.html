@@ -72,7 +72,10 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Action</th>
         <td mat-cell *matCellDef="let element">
-          <!-- when employee attendence edited, can break to accuracy of the attendence -->
+          
+          <button mat-icon-button color="warn" (click)="editData(element)" matTooltip="edit">
+            <mat-icon>edit</mat-icon>
+          </button>
 
           <button mat-icon-button color="warn" (click)="deleteData(element)" matTooltip="delete">
             <mat-icon>delete</mat-icon>

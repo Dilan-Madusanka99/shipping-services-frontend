@@ -46,7 +46,6 @@ export class AppointmentComponent implements OnInit{
     submitted: boolean;
     selectedIndex = 0;
     seafarerData: any;
-    fromJobSug = false;
 
     readonly showModal = signal(false);
     readonly editingAppointment = signal<Appointment | null>(null);
