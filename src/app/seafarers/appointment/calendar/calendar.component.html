@@ -39,12 +39,22 @@
         [class.other-month]="!day.isCurrentMonth"
         [class.is-today]="day.isToday"
         [class.has-events]="day.appointments.length > 0"
+
+        [class.disabled-day]="isDisabled(day)"
+        [class.weekend]="isWeekend(day.date)"
+        [class.fully-booked]="isFullyBooked(day)"
+
         (click)="onDayClick(day)"
         [attr.aria-label]="day.dateStr"
       >
         <!-- Day number -->
         <div class="day-num-wrap">
           <span class="day-num" [class.today-badge]="day.isToday">{{ day.day }}</span>
+        </div>
+
+        <!-- Optional label -->
+        <div class="status-label" *ngIf="isFullyBooked(day)">
+          Full
         </div>
 
         <!-- Appointment pills -->
