@@ -22,6 +22,7 @@ export interface Appointment {
   mobile?: string;
   email?: string;
   status?: string;
+  type?: string;
   formData?: FormGroup
 }
 

@@ -68,7 +68,7 @@ export class AppointmentComponent implements OnInit{
         appointmentDate: new FormControl('', [Validators.required]),
         appointmentTime: new FormControl('', [ Validators.required]),
         appointmentStatus: new FormControl('', [Validators.required]),
-        appointmentType: new FormControl('', [Validators.required]),
+        appointmentTypes: new FormControl('', [Validators.required]),
       });
       const nav = this.router.getCurrentNavigation();
       this.seafarerData = nav?.extras?.state;
@@ -209,6 +209,7 @@ export class AppointmentComponent implements OnInit{
           mobile: this.appointmentForm.get('mobile').value,
           email: this.appointmentForm.get('email').value,
           status: this.appointmentForm.get('appointmentStatus').value,
+          type: this.appointmentForm.get('appointmentTypes').value,
           formData: this.appointmentForm
         };
 
@@ -281,7 +282,8 @@ export class AppointmentComponent implements OnInit{
       lastName: seafarerDetails.otherNames,
       position: seafarerDetails.position,
       mobile: seafarerDetails.mobile,
-      email: seafarerDetails.email
+      email: seafarerDetails.email,
+      appointmentTypes: seafarerDetails.type,
     });
   }
 
