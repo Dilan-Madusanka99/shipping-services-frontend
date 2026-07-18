@@ -25,6 +25,7 @@
     "@angular/router": "^18.0.5",
     "@ng-bootstrap/ng-bootstrap": "^17.0.0",
     "@popperjs/core": "^2.11.8",
+    "@stomp/stompjs": "^6.1.2",
     "@sweetalert2/ngx-sweetalert2": "^13.0.0",
     "apexcharts": "^3.49.2",
     "bootstrap": "^5.3.3",

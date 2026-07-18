@@ -5,6 +5,9 @@ import { Subscription } from 'rxjs';
 import { CacheService } from 'src/app/services/CacheService';
 import { HttpService } from 'src/app/services/http.service';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
+import { AppNotification } from 'src/app/services/notification-service/notification.model';
+import { NotificationService } from 'src/app/services/notification-service/notification.service';
+import { filter, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-auth-signin',
@@ -25,7 +28,8 @@ export default class AuthSigninComponent implements OnInit {
     private router: Router,
     private httpService: HttpService,
     private cacheService: CacheService,
-    private _messageService: MessageServiceService
+    private _messageService: MessageServiceService,
+        public service: NotificationService
   ) {
     this.loginForm = this.formBuilder.group({
       loginName: ['', [Validators.required]],
@@ -89,14 +93,46 @@ export default class AuthSigninComponent implements OnInit {
         .then((response) => {
           this.httpService.setAuthToken(response.token);
           this.httpService.setUserId(response.id);
+          this.service.init();
           this.httpService.setLoginNameToCache(response.login);
           this.httpService.setUserRole(response.role);
           this.httpService.setUserSid(response.sid);
+          
+          this.service.connect()
+          .pipe(
+            filter(connected => connected),
+            take(1)
+          )
+          .subscribe(() => {
+            this.sendLoginNotificationToUser();
+          });
+
           this.getData(response.id);
         })
         .catch((error) => {
           this.userNamePasswordError = true;
         });
     }
+  }
+
+  public sendLoginNotificationToUser(): void {
+    const name = this.httpService.getLoginNameFromCache();
+    const id =  this.httpService.getUserId();
+    const notification: AppNotification  = {
+      id: '',
+      message: 'User Logged in Successfully!',
+      type: 'LOGGIN',
+      timeStamp: new Date(),
+      readStatus: false,
+      targetUser: id? +id : null,
+      other: '',
+      email: '',
+      mobile: '',
+      title: 'Loggin Notification'
+    };
+
+    this.service.sendToUser(notification, name).subscribe((response: any) => {
+      console.log(response);
+    });
   }
 }
