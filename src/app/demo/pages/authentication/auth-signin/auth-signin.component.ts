@@ -5,6 +5,9 @@ import { Subscription } from 'rxjs';
 import { CacheService } from 'src/app/services/CacheService';
 import { HttpService } from 'src/app/services/http.service';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
+import { AppNotification } from 'src/app/services/notification-service/notification.model';
+import { NotificationService } from 'src/app/services/notification-service/notification.service';
+import { filter, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-auth-signin',
@@ -16,6 +19,7 @@ export default class AuthSigninComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
   userNamePasswordError = false;
+  navState: any;
 
   data!: any[];
   private cacheSubscription!: Subscription;
@@ -25,12 +29,17 @@ export default class AuthSigninComponent implements OnInit {
     private router: Router,
     private httpService: HttpService,
     private cacheService: CacheService,
-    private _messageService: MessageServiceService
+    private _messageService: MessageServiceService,
+    public service: NotificationService
   ) {
     this.loginForm = this.formBuilder.group({
       loginName: ['', [Validators.required]],
       password: ['', [Validators.required]]
     });
+
+    
+    const navigation = this.router.getCurrentNavigation();
+    this.navState = navigation?.extras.state as { data: any };
   }
 
   ngOnInit(): void {
@@ -39,6 +48,22 @@ export default class AuthSigninComponent implements OnInit {
     this.cacheSubscription = this.cacheService.cache$.subscribe((data) => {
       this.data = data;
     });
+    if (this.navState && this.navState.data && this.navState.data.action === 'SEND_REGISTER_NOTIFICATION') {
+      if (this.navState.data.data) {
+        /* send register notification */
+        let msg = 'Welcome to V.W.SHIPPING!';
+        let type = 'REGISTER';
+        let title = 'REGISTER Notification';
+        const name = this.navState.data.data;
+        this.sendLoginNotificationToUser(msg, type, title, name);
+
+        /* send complete details notification */
+        msg = 'Please complete details registration! Navigate to Personal Details Page';
+        type = 'DETAIL_REGISTER';
+        title = 'Details Registration Notification';
+        this.sendLoginNotificationToUser(msg, type, title, name);
+      }
+    }
   }
 
   public clearCacheIfNotAuthorize(): void {
@@ -62,7 +87,7 @@ export default class AuthSigninComponent implements OnInit {
               this.cacheService.set(userId.toString(), data);
               this.router.navigate(['/dashboard']);
             } else {
-              this._messageService.showError('User does not have privileges');
+              this._messageService.showError('User does not have privileges, Please contact system administration');
             }
           } catch (error) {
             this._messageService.showError('Action Failed');
@@ -89,14 +114,49 @@ export default class AuthSigninComponent implements OnInit {
         .then((response) => {
           this.httpService.setAuthToken(response.token);
           this.httpService.setUserId(response.id);
+          // this.service.init();
           this.httpService.setLoginNameToCache(response.login);
           this.httpService.setUserRole(response.role);
           this.httpService.setUserSid(response.sid);
+          
+          this.service.connect()
+          .pipe(
+            filter(connected => connected),
+            take(1)
+          )
+          .subscribe(() => {
+            const msg = 'User Logged in Successfully!';
+            const type = 'LOGGIN';
+            const title = 'Loggin Notification';
+            let name = this.httpService.getLoginNameFromCache();
+            this.sendLoginNotificationToUser(msg, type, title, name);
+          });
+
           this.getData(response.id);
         })
         .catch((error) => {
           this.userNamePasswordError = true;
         });
     }
+  }
+
+  public sendLoginNotificationToUser(msg: string, type: string, title: string, name: string | null): void {
+    const id =  this.httpService.getUserId();
+    const notification: AppNotification  = {
+      id: '',
+      message: msg,
+      type: type,
+      timeStamp: new Date(),
+      readStatus: false,
+      targetUser: id? +id : null,
+      other: '',
+      email: '',
+      mobile: '',
+      title: title
+    };
+
+    this.service.sendToUser(notification, name).subscribe((response: any) => {
+      console.log(response);
+    });
   }
 }

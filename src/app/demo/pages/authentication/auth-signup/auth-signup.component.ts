@@ -53,7 +53,13 @@ export default class AuthSignupComponent implements OnInit {
         })
         .then((response: any) => {
           this.httpService.setAuthToken(response.token);
-          this.router.navigate(['/auth/signup']);
+          this.router.navigate(['/auth/signin'], {
+            state: { data: {
+                action: 'SEND_REGISTER_NOTIFICATION',
+                data: response.login
+              } 
+            } 
+          });
         });
     }
   }
