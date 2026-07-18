@@ -50,10 +50,17 @@ export default class AuthSigninComponent implements OnInit {
     });
     if (this.navState && this.navState.data && this.navState.data.action === 'SEND_REGISTER_NOTIFICATION') {
       if (this.navState.data.data) {
-        const msg = 'Welcome to V.W.SHIPPING!';
-        const type = 'REGISTER';
-        const title = 'REGISTER Notification';
+        /* send register notification */
+        let msg = 'Welcome to V.W.SHIPPING!';
+        let type = 'REGISTER';
+        let title = 'REGISTER Notification';
         const name = this.navState.data.data;
+        this.sendLoginNotificationToUser(msg, type, title, name);
+
+        /* send complete details notification */
+        msg = 'Please complete details registration! Navigate to Personal Details Page';
+        type = 'DETAIL_REGISTER';
+        title = 'Details Registration Notification';
         this.sendLoginNotificationToUser(msg, type, title, name);
       }
     }

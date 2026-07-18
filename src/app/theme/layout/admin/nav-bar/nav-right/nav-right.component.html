@@ -33,7 +33,9 @@
 
           <li class="notification"  *ngFor="let n of notifications; trackBy: trackById" [class.unread]="!n.readStatus">
             <div class="d-flex">
-              <img class="img-radius" src="assets/images/user/avatar-2.jpg" alt="Generic placeholder image" />
+              <!-- <div class="notif-icon">
+                <i class="feather icon-alert-circle"></i>
+              </div> -->
               <div class="flex-grow-1">
                 <p>
                   <strong>{{n.title}}</strong>
