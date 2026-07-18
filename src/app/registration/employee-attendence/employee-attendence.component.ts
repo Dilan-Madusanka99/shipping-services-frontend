@@ -47,6 +47,7 @@ export class EmployeeAttendenceComponent {
   employeeDropdown: any = [];
   allEmployeeListDetails: any;
   readonly dialog = inject(MatDialog);
+  submitted: boolean;
 
   constructor(
     private fb: FormBuilder,
