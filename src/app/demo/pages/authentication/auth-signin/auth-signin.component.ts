@@ -19,6 +19,7 @@ export default class AuthSigninComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
   userNamePasswordError = false;
+  navState: any;
 
   data!: any[];
   private cacheSubscription!: Subscription;
@@ -35,6 +36,10 @@ export default class AuthSigninComponent implements OnInit {
       loginName: ['', [Validators.required]],
       password: ['', [Validators.required]]
     });
+
+    
+    const navigation = this.router.getCurrentNavigation();
+    this.navState = navigation?.extras.state as { data: any };
   }
 
   ngOnInit(): void {
@@ -43,6 +48,15 @@ export default class AuthSigninComponent implements OnInit {
     this.cacheSubscription = this.cacheService.cache$.subscribe((data) => {
       this.data = data;
     });
+    if (this.navState && this.navState.data && this.navState.data.action === 'SEND_REGISTER_NOTIFICATION') {
+      if (this.navState.data.data) {
+        const msg = 'Welcome to V.W.SHIPPING!';
+        const type = 'REGISTER';
+        const title = 'REGISTER Notification';
+        const name = this.navState.data.data;
+        this.sendLoginNotificationToUser(msg, type, title, name);
+      }
+    }
   }
 
   public clearCacheIfNotAuthorize(): void {
@@ -66,7 +80,7 @@ export default class AuthSigninComponent implements OnInit {
               this.cacheService.set(userId.toString(), data);
               this.router.navigate(['/dashboard']);
             } else {
-              this._messageService.showError('User does not have privileges');
+              this._messageService.showError('User does not have privileges, Please contact system administration');
             }
           } catch (error) {
             this._messageService.showError('Action Failed');
@@ -104,7 +118,11 @@ export default class AuthSigninComponent implements OnInit {
             take(1)
           )
           .subscribe(() => {
-            this.sendLoginNotificationToUser();
+            const msg = 'User Logged in Successfully!';
+            const type = 'LOGGIN';
+            const title = 'Loggin Notification';
+            let name = this.httpService.getLoginNameFromCache();
+            this.sendLoginNotificationToUser(msg, type, title, name);
           });
 
           this.getData(response.id);
@@ -115,20 +133,19 @@ export default class AuthSigninComponent implements OnInit {
     }
   }
 
-  public sendLoginNotificationToUser(): void {
-    const name = this.httpService.getLoginNameFromCache();
+  public sendLoginNotificationToUser(msg: string, type: string, title: string, name: string | null): void {
     const id =  this.httpService.getUserId();
     const notification: AppNotification  = {
       id: '',
-      message: 'User Logged in Successfully!',
-      type: 'LOGGIN',
+      message: msg,
+      type: type,
       timeStamp: new Date(),
       readStatus: false,
       targetUser: id? +id : null,
       other: '',
       email: '',
       mobile: '',
-      title: 'Loggin Notification'
+      title: title
     };
 
     this.service.sendToUser(notification, name).subscribe((response: any) => {
