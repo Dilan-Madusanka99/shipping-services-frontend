@@ -172,6 +172,10 @@ export class EmployeeAttendenceComponent {
     this.saveButtonLabel = 'Edit';
     this.mode = 'edit';
     this.selectedData = data;
+
+    this.employeeAttendenceForm.patchValue({
+      users: +data.users,
+    });
   }
 
   public deleteData(data: any): void {

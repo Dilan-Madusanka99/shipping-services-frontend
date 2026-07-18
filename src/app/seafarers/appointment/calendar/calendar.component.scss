@@ -201,3 +201,34 @@
   padding: 1px 6px;
   font-weight: 500;
 }
+
+
+/* 🔒 Disabled general */
+.disabled-day {
+  pointer-events: none;
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* 📅 Weekend style */
+.weekend {
+  background-color: #fafafa;
+}
+
+/* 🚫 Fully booked */
+.fully-booked {
+  background-color: #ffe5e5;
+}
+
+/* 🔥 Label */
+.status-label {
+  font-size: 10px;
+  color: red;
+  text-align: center;
+  margin-top: 5px;
+}
+
+/* Optional better look */
+.disabled-day .day-num {
+  color: #999;
+}

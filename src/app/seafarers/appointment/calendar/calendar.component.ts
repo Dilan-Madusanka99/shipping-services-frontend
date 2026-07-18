@@ -22,6 +22,7 @@ export interface Appointment {
   mobile?: string;
   email?: string;
   status?: string;
+  type?: string;
   formData?: FormGroup
 }
 
@@ -51,13 +52,51 @@ export class CalendarComponent {
   readonly calendarMonth = this.calSvc.calendarMonth;
   readonly isCurrentMonth = this.calSvc.isCurrentMonth;
 
+  MAX_BOOKINGS = 5;
+
   constructor(private calSvc: CalendarService) {}
 
   prevMonth(): void { this.calSvc.goToPreviousMonth(); }
   nextMonth(): void { this.calSvc.goToNextMonth(); }
   goToday(): void { this.calSvc.goToToday(); }
 
+  // checked past dates
+   isPastDate(date: Date): boolean {
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    const d = new Date(date);
+    d.setHours(0,0,0,0);
+
+    return d < today;
+  }
+
+  //checked weekends
+  isWeekend(date: Date): boolean {
+    const day = date.getDay();
+    return day === 0 || day === 6; // Sunday or Saturday
+  }
+
+  //checked fully booked
+  isFullyBooked(day: CalendarDay): boolean {
+    return day.appointments.length >= this.MAX_BOOKINGS;
+  }
+
+  //disabled logic
+  isDisabled(day: CalendarDay): boolean {
+    return (
+      this.isPastDate(day.date) ||
+      this.isWeekend(day.date) ||
+      this.isFullyBooked(day)
+    );
+  }
+
   onDayClick(day: CalendarDay): void {
+    if (this.isDisabled(day)) {
+      // optional message
+      alert('This date is not available');
+      return;
+    }
     this.dayClick.emit(day.dateStr);
   }
 

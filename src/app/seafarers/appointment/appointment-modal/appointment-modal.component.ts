@@ -23,6 +23,7 @@ export interface Appointment {
   mobile?: string;
   email?: string;
   status?: string;
+  type?: string;
   formData?: FormGroup
 }
 
@@ -63,6 +64,7 @@ export interface AppointmentFormData {
   mobile?: string;
   email?: string;
   status?: string;
+  type?: string;
 }
 
 @Component({
@@ -118,7 +120,12 @@ export class AppointmentModalComponent implements OnInit, OnChanges {
     { value: 'Re-Scheduled', label: 'Re-Scheduled' },
     { value: 'Cancelled', label: 'Cancelled' },
     { value: 'Done', label: 'Done' }
-  ]
+  ];
+
+  readonly types = [
+    { value: 'Interview', label: 'Interview' },
+    { value: 'Inquiry', label: 'Inquiry' }
+  ];
 
   form: AppointmentFormData = this.defaultForm();
   titleError = false;
@@ -131,6 +138,7 @@ export class AppointmentModalComponent implements OnInit, OnChanges {
   emailError = false;
   statusError = false;
   timeError = false;
+  typeError = false;
   submitted: boolean;
 
   constructor(
@@ -146,6 +154,7 @@ export class AppointmentModalComponent implements OnInit, OnChanges {
         appointmentDate: new FormControl('', [Validators.required]),
         appointmentTime: new FormControl('', [ Validators.required]),
         appointmentStatus: new FormControl('', [Validators.required]),
+        appointmentTypes: new FormControl('', [Validators.required]),
       });
     }
 
@@ -192,6 +201,7 @@ export class AppointmentModalComponent implements OnInit, OnChanges {
     this.emailError = false;
     this.statusError = false;
     this.timeError = false;
+    this.typeError = false;
 
     if (this.appointment) {
       this.form = {

@@ -145,17 +145,17 @@
                                                                                                                           Status is required</span>
       </div>
 
-      <!-- <div class="field" [class.has-error]="(appointmentForm.get('appointmentTypes').touched || submitted) && appointmentForm.get('appointmentTypes').errors && appointmentForm.get('appointmentTypes').errors['required']">
+      <div class="field" [class.has-error]="(appointmentForm.get('appointmentTypes').touched || submitted) && appointmentForm.get('appointmentTypes').errors && appointmentForm.get('appointmentTypes').errors['required']">
         <label>Type</label>
           <mat-form-field appearance="outline" subscriptSizing="dynamic">
             <mat-select formControlName="appointmentTypes">
-              <mat-option *ngFor="let type of type" [value]="type.value">{{type.label}}</mat-option>
+              <mat-option *ngFor="let type of types" [value]="type.value">{{type.label}}</mat-option>
             </mat-select>
         </mat-form-field>
         <span  class="error-msg" 
           *ngIf="(appointmentForm.get('appointmentTypes').touched || submitted) && appointmentForm.get('appointmentTypes').errors && appointmentForm.get('appointmentTypes').errors['required'] ">
                                                                                                                           Type is required</span>
-      </div> -->
+      </div>
     </div>
 
     <div class="modal-footer">
