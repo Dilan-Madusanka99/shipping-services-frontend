@@ -105,7 +105,7 @@
         <input matInput placeholder="Contact No." formControlName="contactNo" />
         <mat-error *ngIf="employeeForm.get('contactNo')?.hasError('required') &&
                             (employeeForm.get('contactNo')?.touched || submitted)">
-            Required (Mobile No only)
+            Contact No is Required
           </mat-error>
       </mat-form-field>
       <br />
@@ -137,8 +137,8 @@
       <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
-        <mat-label>Emergancy Contact No. (Mobile)</mat-label>
-        <input matInput placeholder="Emergancy Contact No. (Mobile)" formControlName="emergencyContactNo" />
+        <mat-label>Emergancy Contact No.</mat-label>
+        <input matInput placeholder="Emergancy Contact No." formControlName="emergencyContactNo" />
       </mat-form-field>
       <br />
       <br />

@@ -68,11 +68,11 @@ export class EmployeeComponent implements OnInit {
       nic: new FormControl('', [Validators.required, Validators.pattern(/^([0-9]{9}[vVxX]|[0-9]{12})$/)]),
       dob: new FormControl(''),
       roles: new FormControl('', [Validators.required]),
-      contactNo: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]),
+      contactNo: new FormControl('', [Validators.required, Validators.pattern(/^0\d{9}$/)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       address: new FormControl('', [Validators.minLength(5), Validators.maxLength(100), Validators.pattern(/^[a-zA-Z0-9\s,.'\-\/#]*$/)]),
       emergencyContactName: new FormControl('', [Validators.pattern(/^[A-Za-z .'-]+$/)]),
-      emergencyContactNo: new FormControl('', [Validators.pattern(/^07[0-9]{8}$/)])
+      emergencyContactNo: new FormControl('', [Validators.pattern(/^0\d{9}$/)])
     });
   }
 
