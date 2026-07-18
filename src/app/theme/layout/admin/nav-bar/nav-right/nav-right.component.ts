@@ -25,6 +25,7 @@ export class NavRightComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.setUserName();
+    this.service.init();
     // this.service.connect();
     // this.sendToUser();
 

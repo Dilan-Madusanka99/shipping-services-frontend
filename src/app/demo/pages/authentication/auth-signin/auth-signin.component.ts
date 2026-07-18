@@ -29,7 +29,7 @@ export default class AuthSigninComponent implements OnInit {
     private httpService: HttpService,
     private cacheService: CacheService,
     private _messageService: MessageServiceService,
-        public service: NotificationService
+    public service: NotificationService
   ) {
     this.loginForm = this.formBuilder.group({
       loginName: ['', [Validators.required]],
@@ -93,7 +93,7 @@ export default class AuthSigninComponent implements OnInit {
         .then((response) => {
           this.httpService.setAuthToken(response.token);
           this.httpService.setUserId(response.id);
-          this.service.init();
+          // this.service.init();
           this.httpService.setLoginNameToCache(response.login);
           this.httpService.setUserRole(response.role);
           this.httpService.setUserSid(response.sid);

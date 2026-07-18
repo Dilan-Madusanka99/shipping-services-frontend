@@ -96,6 +96,11 @@ export class NotificationService {
     const updated = this.notificationsSubject.value.map(n => ({ ...n, readStatus: true }));
     this.notificationsSubject.next(updated);
     /* send backend request to mark all notification as readed */
+    const userId = this.httpService ? this.httpService.getUserId() : null;
+    const sendUserId = userId ? +userId: null;
+
+    this.markAllAsRead(sendUserId).subscribe((response: any) => {
+    });
   }
 
   clear(): void {
@@ -142,5 +147,16 @@ export class NotificationService {
         };
     }
     return this.http.post(requestUrl, notification, {headers: headers});
+  }
+
+  public markAllAsRead(userId: any) {
+    const requestUrl = environment.baseUrl + '/notification/mark-all-read';
+    let headers = {};
+    if (this.httpService.getAuthToken() !== null) {
+        headers = {
+            Authorization: 'Bearer ' + this.httpService.getAuthToken(),
+        };
+    }
+    return this.http.post(requestUrl, userId, {headers: headers});
   }
 }
