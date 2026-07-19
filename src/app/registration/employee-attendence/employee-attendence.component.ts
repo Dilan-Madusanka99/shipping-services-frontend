@@ -47,6 +47,7 @@ export class EmployeeAttendenceComponent {
   employeeDropdown: any = [];
   allEmployeeListDetails: any;
   readonly dialog = inject(MatDialog);
+  submitted: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -58,7 +59,7 @@ export class EmployeeAttendenceComponent {
       users: new FormControl('', [Validators.required]),
       attendenceStatus: new FormControl('', [Validators.required]),
       userName: new FormControl(''),
-      roles: new FormControl('')
+      roles: new FormControl(''),
     });
   }
 
@@ -131,7 +132,7 @@ export class EmployeeAttendenceComponent {
             }
 
             this.messageService.showSuccess('Data Saved Successfully!');
-            this.populateData(); //
+            this.populateData(); 
           },
           error: (error) => {
             this.messageService.showError('Action Failed With Error' + error);
@@ -172,6 +173,7 @@ export class EmployeeAttendenceComponent {
     this.saveButtonLabel = 'Edit';
     this.mode = 'edit';
     this.selectedData = data;
+
 
     this.employeeAttendenceForm.patchValue({
       users: +data.users,
@@ -245,6 +247,7 @@ export class EmployeeAttendenceComponent {
       }
     });
   }
+
 
   generateQRCode(data) {
     console.log(data);

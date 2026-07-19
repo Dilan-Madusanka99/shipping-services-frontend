@@ -22,34 +22,56 @@
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Emp No.</mat-label>
         <input matInput placeholder="Emp No." formControlName="empNo" />
-        <span class="text-danger" 
-            *ngIf="(employeeForm.get('empNo').touched || submitted) && employeeForm.get('empNo').errors && employeeForm.get('empNo').errors['required'] ">
-             Employee No is Required
-        </span>
+        <mat-error *ngIf="employeeForm.get('empNo')?.hasError('required') &&
+                            (employeeForm.get('empNo')?.touched || submitted)">
+            Required (Ex.E001)
+          </mat-error>
       </mat-form-field>
       <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>First Name</mat-label>
         <input matInput placeholder="First Name" formControlName="firstName" />
+          <mat-error *ngIf="employeeForm.get('firstName')?.invalid && (employeeForm.get('firstName')?.touched || submitted)">
+            {{
+              employeeForm.get('firstName')?.hasError('required') ? 'First Name is Required.'
+                : employeeForm.get('firstName')?.hasError('pattern') ? 'Can contain letters only.'
+                : ''
+            }}
+          </mat-error>
       </mat-form-field>
       <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Last Name</mat-label>
         <input matInput placeholder="Last Name" formControlName="lastName" />
+          <mat-error *ngIf="employeeForm.get('lastName')?.invalid && (employeeForm.get('lastName')?.touched || submitted)">
+            {{
+              employeeForm.get('lastName')?.hasError('required') ? 'Last Name is Required.'
+                : employeeForm.get('lastName')?.hasError('pattern') ? 'Can contain letters only.'
+                : ''
+            }}
+          </mat-error>
       </mat-form-field>
       <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Calling Name</mat-label>
         <input matInput placeholder="Calling Name" formControlName="callingName" />
+          <mat-error *ngIf="employeeForm.get('callingName')?.hasError('pattern') &&
+                            (employeeForm.get('callingName')?.touched || submitted)">
+            Can contain letters only.
+          </mat-error>
       </mat-form-field>
       <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>NIC</mat-label>
         <input matInput placeholder="NIC" formControlName="nic" />
+        <mat-error *ngIf="employeeForm.get('nic')?.hasError('required') &&
+                            (employeeForm.get('nic')?.touched || submitted)">
+            Required (Standard format)
+          </mat-error>
       </mat-form-field>
       <br />
 
@@ -71,18 +93,30 @@
           <mat-option value="Shipping Executive">Shipping Executive</mat-option>
           <mat-option value="Accounts & HR Executive">Accounts & HR Executive</mat-option>
         </mat-select>
+        <mat-error *ngIf="employeeForm.get('roles')?.hasError('required') &&
+                            (employeeForm.get('roles')?.touched || submitted)">
+            Role is Required
+          </mat-error>
       </mat-form-field>
       <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
-        <mat-label>Contact No.</mat-label>
+        <mat-label>Contact No.(Mobile)</mat-label>
         <input matInput placeholder="Contact No." formControlName="contactNo" />
+        <mat-error *ngIf="employeeForm.get('contactNo')?.hasError('required') &&
+                            (employeeForm.get('contactNo')?.touched || submitted)">
+            Contact No is Required
+          </mat-error>
       </mat-form-field>
       <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Email</mat-label>
         <input matInput placeholder="Email" formControlName="email" />
+        <mat-error *ngIf="employeeForm.get('email')?.hasError('required') &&
+                            (employeeForm.get('email')?.touched || submitted)">
+            Email is Required.
+          </mat-error>
       </mat-form-field>
       <br />
 
@@ -95,6 +129,10 @@
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Emergancy Contact Name</mat-label>
         <input matInput placeholder="Emergancy Contact Name" formControlName="emergencyContactName" />
+        <span class="text-danger" 
+            *ngIf="(employeeForm.get('emergencyContactName').touched || submitted) && employeeForm.get('emergencyContactName').errors && employeeForm.get('emergencyContactName').errors['required'] ">
+             Address is Required
+        </span>
       </mat-form-field>
       <br />
 

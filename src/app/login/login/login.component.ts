@@ -12,10 +12,11 @@ export interface PeriodicElement {
   firstName: string;
   lastName: string;
   userName: string;
+  password: string;
   role: string;
 }
 
-const ELEMENT_DATA: any[] = [{ firstName: 'Dilan', lastName: 'Fernando', userName: 'Dilan', role: 'Managing Director' }];
+const ELEMENT_DATA: any[] = [{ firstName: 'Dilan', lastName: 'Fernando', userName: 'Dilan', password:'123', role: 'Managing Director' }];
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,7 @@ const ELEMENT_DATA: any[] = [{ firstName: 'Dilan', lastName: 'Fernando', userNam
 export class LoginComponent implements OnInit {
   LoginForm: FormGroup;
 
-  displayedColumns: string[] = ['firstName', 'lastName', 'userName', 'role', 'actions'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'userName', 'password', 'role', 'actions'];
   users = [{ password: 'secret123' }];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -147,7 +148,7 @@ export class LoginComponent implements OnInit {
         });
       }
       this.mode = 'add';
-      this.LoginForm.disable();
+      this.LoginForm.disable(); 
       this.isButtonDisabled = true;
       this.populateData();
     } catch (error) {

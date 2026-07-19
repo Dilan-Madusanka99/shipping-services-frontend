@@ -7,6 +7,7 @@
   <div class="form-section">
     <form [formGroup]="employeeAttendenceForm" class="employeeAttendenceForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="outline" class="example-full-width">
+
         <mat-label>Users</mat-label>
         <mat-select [(ngModel)]="selectedEmployee" formControlName="users" (valueChange)="onEmployeeSelect($event)">
           <mat-form-field class="w-100">
@@ -14,6 +15,10 @@
           </mat-form-field>
           <mat-option *ngFor="let emp of employeeDropdown" [value]="emp.id">{{ emp.name }}</mat-option>
         </mat-select>
+          <mat-error *ngIf="employeeAttendenceForm.get('users')?.hasError('required') &&
+                    (employeeAttendenceForm.get('users')?.touched || submitted)">
+            User is required.
+          </mat-error>
       </mat-form-field>
       <br />
 
@@ -23,6 +28,10 @@
           <mat-option value="Present">Present</mat-option>
           <mat-option value="Absent">Absent</mat-option>
         </mat-select>
+          <mat-error *ngIf="employeeAttendenceForm.get('attendenceStatus')?.hasError('required') &&
+                    (employeeAttendenceForm.get('attendenceStatus')?.touched || submitted)">
+            Attendance is required.
+          </mat-error>
       </mat-form-field>
       <br />
       <br />
