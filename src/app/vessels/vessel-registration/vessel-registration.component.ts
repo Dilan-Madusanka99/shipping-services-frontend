@@ -51,13 +51,13 @@ export class VesselRegistrationComponent implements OnInit {
       profileImage: new FormControl('', [Validators.required]),
       profileImageName: new FormControl(''),
       profileImageType: new FormControl(''),
-      vesselName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z /]+$/)]),
+      vesselName: new FormControl('', [Validators.required, ]),
       imoNo: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]+$/)]),
-      vesselType: new FormControl('', [Validators.required]),
+      vesselType: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z /]+$/)]),
       flag: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), Validators.pattern(/^[A-Za-z ]+$/)]),
       yob: new FormControl('', [Validators.required, Validators.pattern(/^\d{4}$/)]),
-      grt: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(10), Validators.pattern(/^[0-9]+$/)]),
-      bhp: new FormControl('', [Validators.required,Validators.minLength(3), Validators.maxLength(10), Validators.pattern(/^[0-9]+$/)])
+      grt: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]+$/)]),
+      bhp: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]+$/)])
     });
   }
 
