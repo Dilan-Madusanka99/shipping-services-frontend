@@ -10,11 +10,13 @@ import { JobPostingComponent } from './job-posting/job-posting.component';
 import { StandbyCrewMembersComponent } from './standby-crew-members/standby-crew-members.component';
 import { JobSuggestionsComponent } from './job-suggestions/job-suggestions.component';
 import { SeafarerProfileComponent } from '../seafarers/seafarer-profile/seafarer-profile.component';
+import { JobVacanciesBoxesComponent } from './job-vacancies-boxes/job-vacancies-boxes.component';
+import { JobDetailsDialogComponent } from './job-vacancies-boxes/job-details-dialog/job-details-dialog.component';
 
 
 
 @NgModule({
-  declarations: [ VesselRegistrationComponent, JobPostingComponent, StandbyCrewMembersComponent, JobSuggestionsComponent ],
+  declarations: [ VesselRegistrationComponent, JobPostingComponent, StandbyCrewMembersComponent, JobSuggestionsComponent, JobVacanciesBoxesComponent, JobDetailsDialogComponent ],
   imports: [
     CommonModule, RouterModule.forChild(RegistrationRoutes), ReactiveFormsModule, MaterialModule, MatRadioModule, FormsModule, SeafarerProfileComponent
   ]

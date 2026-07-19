@@ -196,7 +196,7 @@ export class JobPostingComponent {
 
         if(!this.jobPostingForm.valid) return;
 
-      this.formValue = this.jobPostingForm.value;
+      this.formValue = this.jobPostingForm.getRawValue();
       this.formValue.cName = this.formValue.cName.join(', '); // Convert the selected cName array to a comma-separated string
 
         if (this.mode === 'add'){

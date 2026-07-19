@@ -1,0 +1,207 @@
+// Theme
+$navy: #3f4d67;
+$navy-dark: #2c3547;
+$navy-muted: #7a8499;
+$navy-tint: #e8ebf1;
+$border: #d5dae3;
+$white: #ffffff;
+
+.vacancy-page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+}
+
+// ---------- Header ----------
+.page-header {
+  background: $navy;
+  color: $white;
+  border-radius: 10px;
+  padding: 16px 22px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .header-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 500;
+    }
+  }
+
+  .header-subtitle {
+    font-size: 13px;
+    color: rgba($white, 0.75);
+  }
+}
+
+// ---------- Filters ----------
+.filter-bar {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  .search-field { flex: 2 1 260px; }
+  .type-field   { flex: 1 1 180px; }
+}
+
+// ---------- Loading / error / empty states ----------
+.state-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 56px 16px;
+  color: $navy-muted;
+
+  .state-icon {
+    font-size: 44px;
+    width: 44px;
+    height: 44px;
+  }
+
+  button { color: $navy; }
+}
+
+// ---------- Card grid ----------
+.job-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.job-card {
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid $border;
+  border-radius: 12px;
+  box-shadow: none;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: $navy;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba($navy, 0.14);
+    outline: none;
+  }
+}
+
+// ---------- Image ----------
+.job-image {
+  position: relative;
+  height: 140px;
+  background: $navy-tint;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
+
+  // Sits behind the image; visible when there's no image or it fails to load
+  .image-placeholder-icon {
+    color: rgba($navy, 0.35);
+    font-size: 44px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .applied-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    background: $navy;
+    color: $white;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 6px;
+  }
+}
+
+// ---------- Card body ----------
+.job-body {
+  padding: 14px 16px 16px;
+  background: $white;
+}
+
+.vessel-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+
+  .vessel-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: $navy;
+  }
+
+  .vessel-type {
+    font-size: 12px;
+    color: $navy-muted;
+    white-space: nowrap;
+  }
+}
+
+.position {
+  margin: 6px 0 10px;
+  font-size: 16px;
+  font-weight: 500;
+  color: $navy-dark;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+
+  .chip {
+    background: $navy-tint;
+    color: $navy;
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 6px;
+  }
+
+  .chip-more {
+    background: transparent;
+    border: 1px dashed $border;
+    color: $navy-muted;
+  }
+}
+
+.closing-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: $navy-muted;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+
+  &.closing-soon {
+    color: #b3541e;
+    font-weight: 500;
+  }
+}
