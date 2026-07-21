@@ -19,7 +19,7 @@ export interface PeriodicElement {
   status: String;
 }
 
-const ELEMENT_DATA: any[] = [{ sidNo: 'S123', position: 'AB', vesselName: 'souselas', signOnDate: '8/7/2025', signOffDate: '8/5/2026', status: 'active' }];
+const ELEMENT_DATA: any[] = [{sidNo: 'S123', position: 'AB', vesselName: 'souselas', signOnDate: '8/7/2025', signOffDate: '8/5/2026', status: 'active' }];
 
 @Component({
   selector: 'app-onboard-crew-registration',
@@ -100,7 +100,8 @@ export class OnboardCrewRegistrationComponent {
         response.forEach((seafarers: any) => {
           const seafarersData = {
             id: seafarers.id,
-            sidNo: seafarers.sidNo
+            sidNo: seafarers.sidNo,
+            profileImage: seafarers.profileImage
           };
           this.allSeafarersDropdown.push(seafarersData);
         });

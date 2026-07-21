@@ -11,7 +11,7 @@ export class MessageServiceService {
   constructor(private toastrService: ToastrService) {}
 
   showSuccess(message: string, duration: number = 3000) {
-    this.toastrService.success('Scucess!', message, {
+    this.toastrService.success('Success!', message, {
       timeOut: duration,
     });
   }

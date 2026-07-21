@@ -100,7 +100,8 @@
       </mat-form-field>
     </div>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>    
+
       <ng-container matColumnDef="sidName">
         <th mat-header-cell *matHeaderCellDef [hidden]="true">SID No</th>
         <td mat-cell *matCellDef="let element">{{ element.sidNo }}</td>

@@ -57,6 +57,7 @@ export class EmployeeAttendenceComponent {
   ) {
     this.employeeAttendenceForm = this.fb.group({
       users: new FormControl('', [Validators.required]),
+      attandenceDate: new FormControl('', []),
       attendenceStatus: new FormControl('', [Validators.required]),
       userName: new FormControl(''),
       roles: new FormControl(''),

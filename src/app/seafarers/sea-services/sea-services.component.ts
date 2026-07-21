@@ -64,7 +64,7 @@ export class SeaServicesComponent implements OnInit{
         bhp: new FormControl('', [Validators.minLength(3), Validators.maxLength(10), Validators.pattern(/^\d+$/)]), 
         signOn: new FormControl('', [Validators.required]),
         signOff: new FormControl('', [Validators.required]),
-        totalMonths: new FormControl('', [Validators.required, Validators.min(1), Validators.max(100), Validators.pattern(/^\d+$/)]), // whole numbers
+        totalMonths: new FormControl({ value: '', disabled: true }),
         reason: new FormControl('', [Validators.required])
       });
     }
@@ -72,6 +72,7 @@ export class SeaServicesComponent implements OnInit{
     ngOnInit(): void{
       this.populateData();
       this.getSeafarersList();
+      this.calculateTotalMonths();
     }
 
     public getSeafarersList(): void {
@@ -273,6 +274,78 @@ export class SeaServicesComponent implements OnInit{
       this.seaServicesForm.patchValue({
         sidNo: seafarersId
       });
+    }
+
+    private calculateTotalMonths(): void {
+
+      this.seaServicesForm.get('signOn')?.valueChanges.subscribe(() => {
+        this.updateTotalMonths();
+      });
+
+      this.seaServicesForm.get('signOff')?.valueChanges.subscribe(() => {
+        this.updateTotalMonths();
+      });
+
+    }
+
+    private updateTotalMonths(): void {
+
+      const signOn = this.seaServicesForm.get('signOn')?.value;
+      const signOff = this.seaServicesForm.get('signOff')?.value;
+
+      if (!signOn || !signOff) {
+        this.seaServicesForm.patchValue(
+          {
+            totalMonths: ''
+          },
+          { emitEvent: false }
+        );
+        return;
+      }
+
+      const start = new Date(signOn);
+      const end = new Date(signOff);
+
+      if (end < start) {
+        this.seaServicesForm.patchValue(
+          {
+            totalMonths: ''
+          },
+          { emitEvent: false }
+        );
+        return;
+      }
+
+      let months =
+        (end.getFullYear() - start.getFullYear()) * 12 +
+        (end.getMonth() - start.getMonth());
+
+      let days = end.getDate() - start.getDate();
+
+      // Borrow days from previous month
+      if (days < 0) {
+        months--;
+
+        const previousMonthDays = new Date(
+          end.getFullYear(),
+          end.getMonth(),
+          0
+        ).getDate();
+
+        days += previousMonthDays;
+      }
+
+      if (months < 0) {
+        months = 0;
+      }
+
+      this.seaServicesForm.patchValue(
+        {
+          totalMonths: `${months} M ${days} D`
+        },
+        { emitEvent: false }
+      );
+
     }
 
 }

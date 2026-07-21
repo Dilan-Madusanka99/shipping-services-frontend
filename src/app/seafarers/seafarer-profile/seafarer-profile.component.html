@@ -318,7 +318,7 @@
               <td>{{ svc.vesselName || '—' }}</td>
               <td>{{ svc.vesselType || '—' }}</td>
               <td>{{ svc.position || '—' }}</td>
-              <td><span class="months-badge">{{ svc.totalMonths || 0 }} mo</span></td>
+              <td><span class="months-badge">{{ svc.totalMonths || 0 }} </span></td>
               <td>{{ svc.signOff | date:'dd/MM/yyyy' }}</td>
             </tr>
             <tr *ngIf="!seaServices || seaServices.length === 0">

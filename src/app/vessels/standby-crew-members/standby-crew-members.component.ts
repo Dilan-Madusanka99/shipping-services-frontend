@@ -124,7 +124,7 @@ export class StandbyCrewMembersComponent {
     try {
       if (window.localStorage.getItem('role') === 'SEAFARER') {
         /* If the role is seafarer then get only details related to SID no*/
-        this.seafarerService.getSeafarerData(window.localStorage.getItem('sid')).subscribe({
+        this.standbyCrewMembersServiceService.getSeafarerData(window.localStorage.getItem('sid')).subscribe({
           next: (data: any) => {
             if (!data) {
               return;
@@ -139,7 +139,7 @@ export class StandbyCrewMembersComponent {
           }
         });
       } else {
-        this.seafarerService.getData().subscribe({
+        this.standbyCrewMembersServiceService.getData().subscribe({
           next: (dataList: any[]) => {
             if (dataList.length <= 0) {
               return;
