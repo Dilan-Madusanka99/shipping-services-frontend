@@ -15,19 +15,16 @@
           <mat-option *ngFor="let emp of employeeDropdown" [value]="emp.id">{{ emp.name }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>First Name</mat-label>
         <input matInput placeholder="First Name" formControlName="firstName" />
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Last Name</mat-label>
         <input matInput placeholder="Last Name" formControlName="lastName" />
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>User Name</mat-label>
@@ -37,7 +34,6 @@
           User Name is Required
         </span> 
       </mat-form-field>
-      <br />
 
       <!-- password -->
       <mat-form-field appearance="outline" class="example-full-width">
@@ -54,7 +50,6 @@
           <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Roles</mat-label>
@@ -66,7 +61,6 @@
           <mat-option value="Shipping Executive">Shipping Executive</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
 
       <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" >
         {{ saveButtonLabel }}

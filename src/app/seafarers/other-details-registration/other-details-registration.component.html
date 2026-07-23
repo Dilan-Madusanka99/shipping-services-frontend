@@ -28,7 +28,6 @@
           <mat-option *ngFor="let seafarers of seafarersDropdown" [value]="seafarers.id">{{ seafarers.sidNo }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Place</mat-label>
@@ -36,7 +35,6 @@
           <mat-option value="Colombo">Colombo</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Date</mat-label>
@@ -45,7 +43,6 @@
         <mat-datepicker-toggle matIconSuffix [for]="sidIssuedDate"></mat-datepicker-toggle>
         <mat-datepicker #sidIssuedDate></mat-datepicker>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Expired Date</mat-label>
@@ -53,10 +50,7 @@
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="sidExpireDate"></mat-datepicker-toggle>
         <mat-datepicker #sidExpireDate></mat-datepicker>
-      </mat-form-field>
-      <br />
-      <br />
-      <br />
+      </mat-form-field> <br>
 
       <h5>National Passport</h5>
 
@@ -75,7 +69,6 @@
         <mat-label>Passport NO</mat-label>
         <input matInput placeholder="Passport No" formControlName="ppNo" />
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Place</mat-label>
@@ -83,7 +76,6 @@
           <mat-option value="Colombo">Colombo</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Date</mat-label>
@@ -92,7 +84,6 @@
         <mat-datepicker-toggle matIconSuffix [for]="ppIssuedDate"></mat-datepicker-toggle>
         <mat-datepicker #ppIssuedDate></mat-datepicker>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Expired Date</mat-label>
@@ -101,8 +92,6 @@
         <mat-datepicker-toggle matIconSuffix [for]="ppExpireDate"></mat-datepicker-toggle>
         <mat-datepicker #ppExpireDate></mat-datepicker>
       </mat-form-field>
-      <br />
-      <br />
       <br />
 
       <h5>Seaman Book (CDC)</h5>
@@ -122,7 +111,6 @@
         <mat-label>CDC NO</mat-label>
         <input matInput placeholder="CDC No" formControlName="cdcNo" />
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Place</mat-label>
@@ -130,7 +118,6 @@
           <mat-option value="Colombo">Colombo</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Date</mat-label>
@@ -139,7 +126,6 @@
         <mat-datepicker-toggle matIconSuffix [for]="cdcIssuedDate"></mat-datepicker-toggle>
         <mat-datepicker #cdcIssuedDate></mat-datepicker>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Expired Date</mat-label>
@@ -149,10 +135,8 @@
         <mat-datepicker #cdcExpireDate></mat-datepicker>
       </mat-form-field>
       <br />
-      <br />
-      <br />
 
-      <h5>Yellow Fever Vaccination</h5>
+      <h5>YF Vaccination</h5>
 
       <div class="form-field">
         <label for="image">Upload Image</label>
@@ -169,7 +153,6 @@
         <mat-label>Yello Fever NO</mat-label>
         <input matInput placeholder="Yellow Fever No" formControlName="yellowFeverNo" />
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Place</mat-label>
@@ -178,7 +161,6 @@
           <mat-option value="Other">Other</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Date</mat-label>
@@ -187,7 +169,6 @@
         <mat-datepicker-toggle matIconSuffix [for]="yellowFeverIssuedDate"></mat-datepicker-toggle>
         <mat-datepicker #yellowFeverIssuedDate></mat-datepicker>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Expired Date</mat-label>
@@ -196,9 +177,6 @@
         <mat-datepicker-toggle matIconSuffix [for]="yellowFeverExpireDate"></mat-datepicker-toggle>
         <mat-datepicker #yellowFeverExpireDate></mat-datepicker>
       </mat-form-field>
-      <br />
-      <br />
-      <br />
 
       <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled">
         {{ saveButtonLabel }}

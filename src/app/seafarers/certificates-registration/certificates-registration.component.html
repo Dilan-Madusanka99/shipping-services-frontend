@@ -27,7 +27,6 @@
           <mat-option *ngFor="let seafarers of seafarersDropdown" [value]="seafarers.id">{{ seafarers.sidNo }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Certificate Name</mat-label>
@@ -50,13 +49,11 @@
           <mat-option value="LR">Lloyd Certificate (LR)</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Certificate No</mat-label>
         <input matInput placeholder="Certificate No" formControlName="cNo" />
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Place</mat-label>
@@ -69,7 +66,6 @@
           <mat-option value="Ministry">Shipping Ministry</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Date</mat-label>
@@ -78,7 +74,6 @@
         <mat-datepicker-toggle matIconSuffix [for]="cIssuedDate"></mat-datepicker-toggle>
         <mat-datepicker #cIssuedDate></mat-datepicker>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Expired Date</mat-label>
@@ -87,7 +82,6 @@
         <mat-datepicker-toggle matIconSuffix [for]="cExpiredDate"></mat-datepicker-toggle>
         <mat-datepicker #cExpiredDate></mat-datepicker>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Verification Status </mat-label>

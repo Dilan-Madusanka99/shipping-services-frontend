@@ -27,13 +27,6 @@
         <mat-option *ngFor="let vessel of vesselDropdown" [value]="vessel.id">{{ vessel.vesselName }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
-
-      <!-- <mat-form-field appearance="outline" class="example-full-width">
-        <mat-label>vessel Type </mat-label>
-          <input matInput placeholder="Vessel Name" formControlName="vesselType">
-      </mat-form-field>
-      <br> -->
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Vessel Type </mat-label>
@@ -46,7 +39,6 @@
           <mat-option value="Container">Container</mat-option>
         </mat-select>
       </mat-form-field>
-      <br>
           
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Position </mat-label>
@@ -62,8 +54,7 @@
           <mat-option value="Cook">Cook</mat-option>
           <mat-option value="Electrician">Electrician</mat-option>
         </mat-select>
-      </mat-form-field>  
-      <br>
+      </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Certificate Name</mat-label>
@@ -86,13 +77,11 @@
           <mat-option value="LR">Lloyd Certificate (LR)</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
           <mat-label> Minimum Experience (Months)</mat-label>
           <input matInput placeholder="Experience (Months)" formControlName="minimumExp" >
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Job Status </mat-label>
@@ -100,14 +89,7 @@
           <mat-option value="Open">Open</mat-option>
           <mat-option value="Close">Close</mat-option>
         </mat-select>
-      </mat-form-field>  
-      <br>
-
-      <!-- <mat-form-field appearance="outline" class="example-full-width">
-          <mat-label> Description </mat-label>
-          <input matInput placeholder="Description" formControlName="jobDescription" >
       </mat-form-field>
-      <br> -->
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Closing Date</mat-label>
@@ -116,7 +98,6 @@
         <mat-datepicker-toggle matIconSuffix [for]="jobClosingDate"></mat-datepicker-toggle>
         <mat-datepicker #jobClosingDate></mat-datepicker>
       </mat-form-field>
-      <br><br>
 
         <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" > {{saveButtonLabel}} </button>
         <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" > Reset </button>

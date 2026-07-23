@@ -31,13 +31,11 @@
           Supplier No is Required
         </span>        
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Supplier Name</mat-label>
           <input matInput placeholder="Supplier Name" formControlName="supplierName">
         </mat-form-field>
-        <br>
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Supplier Category</mat-label>
@@ -48,39 +46,33 @@
             <mat-option value="Other">Other</mat-option>
           </mat-select>
         </mat-form-field>
-        <br>
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Supplier Sub Category (Optional)</mat-label>
           <input matInput placeholder="Supplier Sub Category (optional)" formControlName="supplierSubCategory">
         </mat-form-field>
-        <br>
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Supplier Contact No</mat-label>
           <input matInput placeholder="Supplier Contact No" formControlName="supplierContactNo">
         </mat-form-field>
-        <br>
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Supplier Email</mat-label>
           <input matInput placeholder="Supplier Email" formControlName="supplierEmail">
         </mat-form-field>
-        <br><br>
 
-        <h5>Supplier Bank Details</h5>
+        <h5>Bank Details</h5>
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Bank Account Name</mat-label>
           <input matInput placeholder="Bank Account Name" formControlName="supplierAccName">
         </mat-form-field>
-        <br>
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Bank Account No</mat-label>
           <input matInput placeholder="Bank Account No" formControlName="supplierAccNo">
         </mat-form-field>
-        <br>
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Bank</mat-label>
@@ -107,13 +99,11 @@
             <mat-option value="Sanasa Development Bank PLC">Sanasa Development Bank PLC</mat-option>
           </mat-select>
         </mat-form-field>
-        <br>
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Branch</mat-label>
           <input matInput placeholder="Branch" formControlName="supplierBranch">
         </mat-form-field>
-        <br>
 
         <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" > {{saveButtonLabel}} </button>
         <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" > Reset </button>

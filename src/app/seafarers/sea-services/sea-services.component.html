@@ -16,19 +16,16 @@
           <mat-option *ngFor="let seafarers of seafarersDropdown" [value]="seafarers.id">{{ seafarers.sidNo }}</mat-option>
             </mat-select>
             </mat-form-field>
-            <br>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Company Name</mat-label>
                 <input matInput placeholder="Company Name" formControlName="companyName">
               </mat-form-field>
-              <br>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Vessel Name</mat-label>
                 <input matInput placeholder="Vessel Name" formControlName="vesselName">
             </mat-form-field>
-            <br>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label> Position </mat-label>
@@ -45,35 +42,30 @@
                   <mat-option value="Electrician">Electrician</mat-option>
                 </mat-select>
               </mat-form-field>
-              <br><br>
 
             <mat-label > Vessel Type </mat-label> <br>
-                <mat-radio-group name="Vessel Type" formControlName="vesselType" >
+                <mat-radio-group name="Vessel Type" formControlName="vesselType" class="example-full-width">
                 <mat-radio-button value="Tanker" checked="true">Tanker</mat-radio-button>
                 <mat-radio-button value="Bulk">Bulk</mat-radio-button>
                 <mat-radio-button value="Cargo">Cargo</mat-radio-button>
                 <mat-radio-button value="Container">Container</mat-radio-button>
                 <mat-radio-button value="Passenger">Passenger</mat-radio-button>
             </mat-radio-group> 
-            <br><br>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Flag</mat-label>
                 <input matInput placeholder="Flag" formControlName="flag">
             </mat-form-field>
-            <br>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Gross Tonnage</mat-label>
                 <input matInput placeholder="GRT" formControlName="grt">
             </mat-form-field>
-            <br>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>BHP (KW)</mat-label>
                 <input matInput placeholder="BHP" formControlName="bhp">
             </mat-form-field>
-            <br>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label> Sign On Date </mat-label>
@@ -82,7 +74,6 @@
                 <mat-datepicker-toggle matIconSuffix [for]="signOn"></mat-datepicker-toggle>
                 <mat-datepicker #signOn></mat-datepicker>
             </mat-form-field>
-            <br>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label> Sign Off Date </mat-label>
@@ -91,13 +82,11 @@
                 <mat-datepicker-toggle matIconSuffix [for]="signOff"></mat-datepicker-toggle>
                 <mat-datepicker #signOff></mat-datepicker>
             </mat-form-field>
-            <br>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Total Service</mat-label>
                 <input matInput formControlName="totalMonths" readonly>
             </mat-form-field>
-            <br>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label> Sign Off Reason </mat-label>
@@ -108,7 +97,6 @@
                   <mat-option value="Other">Other</mat-option>
                 </mat-select>
             </mat-form-field>
-            <br><br>
 
             <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" > {{saveButtonLabel}} </button>
             <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" > Reset </button>

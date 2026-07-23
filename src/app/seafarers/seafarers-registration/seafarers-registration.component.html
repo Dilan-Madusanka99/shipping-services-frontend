@@ -28,7 +28,6 @@
              SID No is Required
           </span>
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Position </mat-label>
@@ -45,7 +44,6 @@
           <mat-option value="Electrician">Electrician</mat-option>
         </mat-select>
       </mat-form-field>  
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Applied Date </mat-label>
@@ -54,7 +52,6 @@
         <mat-datepicker-toggle matIconSuffix [for]="appliedDate"></mat-datepicker-toggle>
         <mat-datepicker #appliedDate></mat-datepicker>
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Available Date </mat-label>
@@ -63,19 +60,16 @@
         <mat-datepicker-toggle matIconSuffix [for]="availableDate"></mat-datepicker-toggle>
         <mat-datepicker #availableDate></mat-datepicker>
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Surname </mat-label>
         <input matInput placeholder="Surname" formControlName="surname" >
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Other Names </mat-label>
         <input matInput placeholder="Other Names" formControlName="otherNames" >
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> DOB </mat-label>
@@ -84,19 +78,16 @@
         <mat-datepicker-toggle matIconSuffix [for]="dob"></mat-datepicker-toggle>
         <mat-datepicker #dob></mat-datepicker>
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Birth Place </mat-label>
         <input matInput placeholder="Birth Place" formControlName="birthPlace" >
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> NIC </mat-label>
         <input matInput placeholder="NIC" formControlName="nic" >
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Religion </mat-label>
@@ -108,34 +99,28 @@
           <mat-option value="Other">Other</mat-option>
         </mat-select>
       </mat-form-field>  
-      <br>
 
       <mat-label> Gender </mat-label> <br>
-      <mat-radio-group name="Gender" formControlName="gender">
+      <mat-radio-group name="Gender" formControlName="gender" class="example-full-width">
         <mat-radio-button value="Male" checked="true">Male</mat-radio-button>
         <mat-radio-button value="Female">Female</mat-radio-button>
       </mat-radio-group>
-      <br><br>
 
       <mat-label> Married Status </mat-label> <br>
-      <mat-radio-group name="Married Status" formControlName="marriedStatus">
+      <mat-radio-group name="Married Status" formControlName="marriedStatus" class="example-full-width">
         <mat-radio-button value="Single" checked="true">Single</mat-radio-button>
         <mat-radio-button value="Married">Married</mat-radio-button>
-        <mat-radio-button value="Divorced">Divorced</mat-radio-button>
       </mat-radio-group>  
-      <br><br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> No Of Childern </mat-label>
         <input matInput type="number" matInput placeholder="No Of Children" formControlName="noOfChildren">
       </mat-form-field>
-      <br>      
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Address </mat-label>
         <input matInput placeholder="Address" formControlName="address" >
       </mat-form-field>
-      <br>
 
       <mat-label> English language </mat-label> <br>
       <mat-radio-group name="English language" formControlName="englishLanguage">
@@ -144,7 +129,7 @@
         <mat-radio-button value="Average">Average</mat-radio-button>
         <mat-radio-button value="Not Good">Not Good</mat-radio-button>
       </mat-radio-group> 
-      <br><br><br>
+      <br><br>
 
       <h5>Contact Details</h5>
       
@@ -152,19 +137,16 @@
         <mat-label> Home </mat-label>
         <input matInput placeholder="Home" formControlName="home" >
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Mobile </mat-label>
         <input matInput placeholder="Mobile" formControlName="mobile" >
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> E-mail </mat-label>
         <input matInput placeholder="E-mail" formControlName="email" >
       </mat-form-field>
-      <br><br>
 
       <h5>Next of Kin Details</h5>
 
@@ -172,7 +154,6 @@
         <mat-label> Name </mat-label>
         <input matInput placeholder="Name" formControlName="kinName" >
       </mat-form-field>
-      <br>
       
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Relationship </mat-label>
@@ -184,30 +165,25 @@
           <mat-option value="Sister">Sister</mat-option>
         </mat-select>
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Address </mat-label>
         <input matInput placeholder="Address" formControlName="kinAddress" >
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Mobile </mat-label>
         <input matInput placeholder="Mobile" formControlName="kinMobile" >
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> E-mail </mat-label>
         <input matInput placeholder="E-mail" formControlName="kinEmail" >
       </mat-form-field>
-      <br><br>
 
       <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" > {{saveButtonLabel}} </button>
       <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" > Reset </button>
 
-      <br><br><br>
     
     </form>
   </div>

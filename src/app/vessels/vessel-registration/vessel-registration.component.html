@@ -18,87 +18,79 @@
           </div>
           <br>
 
-          
-            <mat-form-field appearance="outline" class="example-full-width">
-                <mat-label>IMO No</mat-label>
-                <input matInput placeholder="IMO No" formControlName="imoNo">
-                <mat-error *ngIf="vesselRegistrationForm.get('imoNo')?.hasError('required') &&
-                                    (vesselRegistrationForm.get('imoNo')?.touched || submitted)">
-                    IMO is Required.
-                  </mat-error>
-            </mat-form-field>
-            <br>
-
-            <mat-form-field appearance="outline" class="example-full-width">
-             <mat-label>Vessel Name</mat-label>
-             <input matInput placeholder="Vessel Name" formControlName="vesselName">
-              <mat-error *ngIf="vesselRegistrationForm.get('vesselName')?.hasError('required') &&
-                        (vesselRegistrationForm.get('vesselName')?.touched || submitted)">
-              Vessel Name is Required.
-            </mat-error>
-            </mat-form-field>
-            <br>
-
-
-            <mat-form-field appearance="outline" class="example-full-width">
-                <mat-label> Vessel Type </mat-label>
-                <mat-select formControlName="vesselType">
-                  <mat-option value="Tanker">Tanker</mat-option>
-                  <mat-option value="Bulk">Bulk Carrier</mat-option>
-                  <mat-option value="General Cargo">General Cargo</mat-option>
-                  <mat-option value="Reefer Cargo">Reefer Cargo</mat-option>
-                  <mat-option value="Passenger">Passenger</mat-option>
-                  <mat-option value="Container">Container</mat-option>
-                </mat-select>
-                <mat-error *ngIf="vesselRegistrationForm.get('vesselType')?.hasError('required') &&
-                          (vesselRegistrationForm.get('vesselType')?.touched || submitted)">
-                  Vessel Type is Required.
+          <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>IMO No</mat-label>
+              <input matInput placeholder="IMO No" formControlName="imoNo">
+              <mat-error *ngIf="vesselRegistrationForm.get('imoNo')?.hasError('required') &&
+                                  (vesselRegistrationForm.get('imoNo')?.touched || submitted)">
+                  IMO is Required.
                 </mat-error>
-              </mat-form-field>
-              <br>
+          </mat-form-field>
 
-            <mat-form-field appearance="outline" class="example-full-width">
-                <mat-label>Flag</mat-label>
-                <input matInput placeholder="Flag" formControlName="flag">
-                <mat-error *ngIf="vesselRegistrationForm.get('flag')?.hasError('required') &&
-                          (vesselRegistrationForm.get('flag')?.touched || submitted)">
-                  Vessel Flag is Required.
-                </mat-error>
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Vessel Name</mat-label>
+            <input matInput placeholder="Vessel Name" formControlName="vesselName">
+            <mat-error *ngIf="vesselRegistrationForm.get('vesselName')?.hasError('required') &&
+                      (vesselRegistrationForm.get('vesselName')?.touched || submitted)">
+            Vessel Name is Required.
+          </mat-error>
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label> Vessel Type </mat-label>
+              <mat-select formControlName="vesselType">
+                <mat-option value="Tanker">Tanker</mat-option>
+                <mat-option value="Bulk">Bulk Carrier</mat-option>
+                <mat-option value="General Cargo">General Cargo</mat-option>
+                <mat-option value="Reefer Cargo">Reefer Cargo</mat-option>
+                <mat-option value="Passenger">Passenger</mat-option>
+                <mat-option value="Container">Container</mat-option>
+              </mat-select>
+              <mat-error *ngIf="vesselRegistrationForm.get('vesselType')?.hasError('required') &&
+                        (vesselRegistrationForm.get('vesselType')?.touched || submitted)">
+                Vessel Type is Required.
+              </mat-error>
             </mat-form-field>
-            <br>
 
-            <mat-form-field appearance="outline" class="example-full-width">
-                <mat-label>Year of Build</mat-label>
-                <input matInput placeholder="Year of Build" formControlName="yob">
-                <mat-error *ngIf="vesselRegistrationForm.get('yob')?.hasError('required') &&
-                          (vesselRegistrationForm.get('yob')?.touched || submitted)">
-                  Build is Required (Year).
-                </mat-error>
-            </mat-form-field>
-            <br>
+          <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Flag</mat-label>
+              <input matInput placeholder="Flag" formControlName="flag">
+              <mat-error *ngIf="vesselRegistrationForm.get('flag')?.hasError('required') &&
+                        (vesselRegistrationForm.get('flag')?.touched || submitted)">
+                Vessel Flag is Required.
+              </mat-error>
+          </mat-form-field>
 
-            <mat-form-field appearance="outline" class="example-full-width">
-                <mat-label>Gross Tonnage</mat-label>
-                <input matInput placeholder="GRT" formControlName="grt">
-                <mat-error *ngIf="vesselRegistrationForm.get('grt')?.hasError('required') &&
-                          (vesselRegistrationForm.get('grt')?.touched || submitted)">
-                  GRT is Required.
-                </mat-error>
-            </mat-form-field>
-            <br>
+          <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Year of Build</mat-label>
+              <input matInput placeholder="Year of Build" formControlName="yob">
+              <mat-error *ngIf="vesselRegistrationForm.get('yob')?.hasError('required') &&
+                        (vesselRegistrationForm.get('yob')?.touched || submitted)">
+                Build is Required (Year).
+              </mat-error>
+          </mat-form-field>
 
-            <mat-form-field appearance="outline" class="example-full-width">
-                <mat-label>BHP (KW)</mat-label>
-                <input matInput placeholder="BHP (KW)" formControlName="bhp">
-                <mat-error *ngIf="vesselRegistrationForm.get('bhp')?.hasError('required') &&
-                          (vesselRegistrationForm.get('bhp')?.touched || submitted)">
-                  BHP is Required.
-                </mat-error>
-            </mat-form-field>
-            <br>
+          <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Gross Tonnage</mat-label>
+              <input matInput placeholder="GRT" formControlName="grt">
+              <mat-error *ngIf="vesselRegistrationForm.get('grt')?.hasError('required') &&
+                        (vesselRegistrationForm.get('grt')?.touched || submitted)">
+                GRT is Required.
+              </mat-error>
+          </mat-form-field>
 
-            <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" > {{saveButtonLabel}} </button>
-            <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" > Reset </button>
+          <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>BHP (KW)</mat-label>
+              <input matInput placeholder="BHP (KW)" formControlName="bhp">
+              <mat-error *ngIf="vesselRegistrationForm.get('bhp')?.hasError('required') &&
+                        (vesselRegistrationForm.get('bhp')?.touched || submitted)">
+                BHP is Required.
+              </mat-error>
+          </mat-form-field>
+
+          <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" > {{saveButtonLabel}} </button>
+          <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" > Reset </button>
       
         </form>
     </div>

@@ -16,7 +16,6 @@
           <mat-option *ngFor="let seafarers of seafarersDropdown" [value]="seafarers.id">{{ seafarers.sidNo }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Position</mat-label>
@@ -33,7 +32,6 @@
           <mat-option value="Electrician">Electrician</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
 
 
       <mat-form-field appearance="outline" class="example-full-width">
@@ -45,13 +43,11 @@
           <mat-option *ngFor="let vessel of vesselDropdown" [value]="vessel.id">{{ vessel.imoNo }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>vessel Name </mat-label>
           <input matInput placeholder="Vessel Name" formControlName="vesselName">
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Signon Date</mat-label>
@@ -60,7 +56,6 @@
         <mat-datepicker-toggle matIconSuffix [for]="signOnDate"></mat-datepicker-toggle>
         <mat-datepicker #signOnDate></mat-datepicker>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>SignOff Date</mat-label>
@@ -69,7 +64,6 @@
         <mat-datepicker-toggle matIconSuffix [for]="signOffDate"></mat-datepicker-toggle>
         <mat-datepicker #signOffDate></mat-datepicker>
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Status</mat-label>
@@ -78,8 +72,6 @@
           <mat-option value="Inactive">Inactive</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
-      <br />
 
       <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled">
         {{ saveButtonLabel }}

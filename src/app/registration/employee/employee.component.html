@@ -27,7 +27,6 @@
             Required (Ex.E001)
           </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>First Name</mat-label>
@@ -40,7 +39,6 @@
             }}
           </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Last Name</mat-label>
@@ -53,7 +51,6 @@
             }}
           </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Calling Name</mat-label>
@@ -63,7 +60,6 @@
             Can contain letters only.
           </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>NIC</mat-label>
@@ -73,7 +69,6 @@
             Required (Standard format)
           </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>D O B</mat-label>
@@ -82,7 +77,6 @@
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Select a Role</mat-label>
@@ -98,7 +92,6 @@
             Role is Required
           </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Contact No.(Mobile)</mat-label>
@@ -108,7 +101,6 @@
             Contact No is Required
           </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Email</mat-label>
@@ -118,13 +110,11 @@
             Email is Required.
           </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Address</mat-label>
         <input matInput placeholder="Address" formControlName="address" />
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Emergancy Contact Name</mat-label>
@@ -134,14 +124,11 @@
              Address is Required
         </span>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Emergancy Contact No.</mat-label>
         <input matInput placeholder="Emergancy Contact No." formControlName="emergencyContactNo" />
       </mat-form-field>
-      <br />
-      <br />
 
       <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled">
         {{ saveButtonLabel }}
