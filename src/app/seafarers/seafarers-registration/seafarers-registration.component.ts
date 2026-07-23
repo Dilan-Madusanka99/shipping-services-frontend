@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -19,6 +19,43 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: any[] = [{ profileImage: 'Image', sidno: '100', position: 'AB', surname: 'Fernando', mobile: '076', appliedDate: '07/04/2025' }];
+
+// available date validator (only future dates)
+export function futureDateValidator(control: AbstractControl): ValidationErrors | null {
+
+  if (!control.value) {
+    return null;
+  }
+
+  const selectedDate = new Date(control.value);
+  const today = new Date();
+
+  // Remove time part
+  selectedDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  return selectedDate >= today ? null : { pastDate: true };
+}
+
+// DOB validation (above 18 years)
+  export function ageValidator(control: AbstractControl): ValidationErrors | null {
+
+    if (!control.value) {
+      return null;
+    }
+
+    const dob = new Date(control.value);
+    const today = new Date();
+
+    let age = today.getFullYear() - dob.getFullYear();
+    const monthDiff = today.getMonth() - dob.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+      age--;
+    }
+
+    return age >= 18 ? null : { underAge: true };
+  }
 
 @Component({
   selector: 'app-seafarers-registration',
@@ -58,31 +95,29 @@ export class SeafarersRegistrationComponent {
       profileImage: new FormControl('', [Validators.required]),
       profileImageName: new FormControl(''),
       profileImageType: new FormControl(''),
-      sidNo: new FormControl('', [Validators.required, Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/) ]), // letters and numbers only
+      sidNo: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.pattern(/^[A-Za-z0-9]+$/) ]), // letters and numbers only
       position: new FormControl('', [Validators.required]),
       // appliedDate: new FormControl('', [Validators.required]),
       appliedDate: new FormControl({value: new Date(), disabled: true}, [Validators.required]),
-      availableDate: new FormControl('', [Validators.required]),
-      surname: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z .'-]+$/) ]), // letters , - space (name)
-      otherNames: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z .'-]+$/) ]),
-      dob: new FormControl('', []),
-      birthPlace: new FormControl('', [ Validators.maxLength(15), Validators.pattern(/^[A-Za-z .'-]+$/) ]), // only letters, spaces
+      availableDate: new FormControl('', [Validators.required, futureDateValidator]),
+      surname: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/) ]), // letters , spaces
+      otherNames: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/) ]),
+      dob: new FormControl('', [ageValidator]),
+      birthPlace: new FormControl('', [ Validators.pattern(/^[A-Za-z\s]+$/) ]), // only letters, spaces
       nic: new FormControl('', [Validators.pattern(/^([0-9]{9}[vVxX]|[0-9]{12})$/)]),
-      religion: new FormControl('', [Validators.maxLength(15), Validators.pattern(/^[A-Za-z .'-]+$/)]),
+      religion: new FormControl('', []),
       marriedStatus: new FormControl('', []),
-      gender: new FormControl('', []),
-      noOfChildren: new FormControl('', [Validators.required, Validators.min(0), Validators.max(10), Validators.pattern(/^\d+$/)]), //& only digits (whole digit)
-      address: new FormControl('', [Validators.minLength(5), Validators.maxLength(100), Validators.pattern(/^[a-zA-Z0-9\s,.'\-\/#]*$/)]), // letters, numbers, /-,.#'
+      gender: new FormControl('', [Validators.required]),
+      noOfChildren: new FormControl('', [Validators.min(0), Validators.max(10), Validators.pattern(/^\d+$/)]), //& only digits (whole digit)
+      address: new FormControl('', [Validators.pattern(/^[a-zA-Z0-9\s,.'\-\/#]*$/)]), // letters, numbers, /-,.#'
       home: new FormControl('', [Validators.pattern(/^0\d{9}$/)]), // first digit must be 0, others 0-9
       mobile: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]), // 10 digit start with 07
-      email: new FormControl('', [Validators.required, Validators.email]),
-      kinName: new FormControl('', [Validators.minLength(5), Validators.maxLength(25), Validators.pattern(/^[A-Za-z .'-]+$/)]), // letters only
+      email: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/)]),
+      kinName: new FormControl('', [Validators.pattern(/^[A-Za-z\s]+$/)]),
       kinRelationship: new FormControl('', [Validators.required]),
-      kinAddress: new FormControl('', [ Validators.maxLength(100),
-        Validators.pattern(/^[a-zA-Z0-9\s,.'\-\/#]*$/)
-      ]),
-      kinMobile: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]),
-      kinEmail: new FormControl('', [Validators.email]),
+      kinAddress: new FormControl('', [ Validators.pattern(/^[a-zA-Z0-9\s,.'\-\/#]*$/) ]),
+      kinMobile: new FormControl('', [Validators.pattern(/^07[0-9]{8}$/)]),
+      kinEmail: new FormControl('', [Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/)]),
       englishLanguage: new FormControl('')
     });
   }

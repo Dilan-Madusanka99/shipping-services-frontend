@@ -15,10 +15,7 @@
           </mat-form-field>
           <mat-option *ngFor="let emp of employeeDropdown" [value]="emp.id">{{ emp.name }}</mat-option>
         </mat-select>
-          <mat-error *ngIf="employeeAttendenceForm.get('users')?.hasError('required') &&
-                    (employeeAttendenceForm.get('users')?.touched || submitted)">
-            User is required.
-          </mat-error>
+        <mat-error *ngIf="employeeAttendenceForm.get('users')?.hasError('required')"> Username is required. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
@@ -27,10 +24,7 @@
           <mat-option value="Present">Present</mat-option>
           <mat-option value="Absent">Absent</mat-option>
         </mat-select>
-          <mat-error *ngIf="employeeAttendenceForm.get('attendenceStatus')?.hasError('required') &&
-                    (employeeAttendenceForm.get('attendenceStatus')?.touched || submitted)">
-            Attendance is required.
-          </mat-error>
+          <mat-error *ngIf="employeeAttendenceForm.get('attendenceStatus')?.hasError('required')"> Status is required. </mat-error>
       </mat-form-field>
 
       <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled">

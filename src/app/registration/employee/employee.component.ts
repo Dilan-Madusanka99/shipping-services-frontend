@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -20,6 +20,26 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: any[] = [{ profileImage: 'Image', empNo: 1, firstName: 'Hydrogen', nic: 1, roles: 'manager' }];
+
+// DOB validation (above 18 years)
+  export function ageValidator(control: AbstractControl): ValidationErrors | null {
+
+    if (!control.value) {
+      return null;
+    }
+
+    const dob = new Date(control.value);
+    const today = new Date();
+
+    let age = today.getFullYear() - dob.getFullYear();
+    const monthDiff = today.getMonth() - dob.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+      age--;
+    }
+
+    return age >= 18 ? null : { underAge: true };
+  }
 
 @Component({
   selector: 'app-employee',
@@ -56,22 +76,20 @@ export class EmployeeComponent implements OnInit {
     private sanitizer: DomSanitizer // Photo upload [start]
   ) {
     this.employeeForm = this.fb.group({
-      // Photo upload [start]
       profileImage: new FormControl('', [Validators.required]),
       profileImageName: new FormControl(''),
       profileImageType: new FormControl(''),
-      // Photo upload [end]
       empNo: new FormControl('', [Validators.required,Validators.minLength(4),Validators.maxLength(10),Validators.pattern(/^[a-zA-Z0-9]*$/)]), // letter & numbers only
-      firstName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z .'-]+$/)]),
-      lastName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z .'-]+$/)]),
+      firstName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]),
+      lastName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]),
       callingName: new FormControl('', [Validators.pattern(/^[A-Za-z .'-]+$/)]),
       nic: new FormControl('', [Validators.required, Validators.pattern(/^([0-9]{9}[vVxX]|[0-9]{12})$/)]),
-      dob: new FormControl(''),
+      dob: new FormControl('', [ageValidator]),
       roles: new FormControl('', [Validators.required]),
       contactNo: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]), // 10 digits start with 07
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/)]),
       address: new FormControl('', [Validators.pattern(/^[a-zA-Z0-9\s,.'\-\/#]*$/)]), // letters, numbers, /-,.#'
-      emergencyContactName: new FormControl('', [Validators.pattern(/^[A-Za-z .'-]+$/)]),
+      emergencyContactName: new FormControl('', [Validators.pattern(/^[A-Za-z\s]+$/)]),
       emergencyContactNo: new FormControl('', [Validators.pattern(/^0\d{9}$/)]) // 10 digits
     });
   }
@@ -291,4 +309,25 @@ export class EmployeeComponent implements OnInit {
       data: { value: data }
     });
   }
+
+
+  // DOB validation for 18+ years only
+  // ageValidator(control: AbstractControl): ValidationErrors | null {
+
+  //   if (!control.value) {
+  //     return null;
+  //   }
+
+  //   const dob = new Date(control.value);
+  //   const today = new Date();
+
+  //   let age = today.getFullYear() - dob.getFullYear();
+  //   const monthDiff = today.getMonth() - dob.getMonth();
+
+  //   if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+  //     age--;
+  //   }
+
+  //   return age >= 18 ? null : { underAge: true };
+  // }
 }
