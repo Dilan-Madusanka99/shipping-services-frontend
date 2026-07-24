@@ -55,17 +55,17 @@ export class SeaServicesComponent implements OnInit{
     ) {
       this.seaServicesForm = this.fb.group({
         sidNo: new FormControl('', [Validators.required]),
-        companyName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z .'-]+$/)]),
-        vesselName: new FormControl('', [Validators.required]),
+        companyName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z ]+$/)]),
+        vesselName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s\/]+$/)]), // letters spaces /
         position: new FormControl('', [Validators.required,]),
         vesselType: new FormControl('', [Validators.required,]),
-        flag: new FormControl('', [Validators.required, Validators.min(3), Validators.max(20), Validators.pattern(/^[A-Za-z ]+$/)]), // letters & spaces
-        grt: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(10), Validators.pattern(/^\d+$/)]), // whole numbers
-        bhp: new FormControl('', [Validators.minLength(3), Validators.maxLength(10), Validators.pattern(/^\d+$/)]), 
+        flag: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z ]+$/)]), // letters & spaces
+        grt: new FormControl('', [Validators.required,  Validators.pattern(/^\d+$/)]), // numbers only
+        bhp: new FormControl('', [Validators.pattern(/^\d+$/)]), 
         signOn: new FormControl('', [Validators.required]),
         signOff: new FormControl('', [Validators.required]),
         totalMonths: new FormControl({ value: '', disabled: true }),
-        reason: new FormControl('', [Validators.required])
+        reason: new FormControl('', [])
       });
     }
 

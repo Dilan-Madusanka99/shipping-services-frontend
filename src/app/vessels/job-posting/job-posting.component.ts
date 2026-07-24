@@ -69,7 +69,7 @@ export class JobPostingComponent {
           vesselType: new FormControl({ value: '', disabled: true }),
           position: new FormControl('', [Validators.required]),
           cName: new FormControl('', [Validators.required]),
-          minimumExp: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')]),
+          minimumExp: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
           jobStatus: new FormControl('', [Validators.required]),
           jobDescription: new FormControl('', [Validators.minLength(1), Validators.maxLength(255)]),
           jobClosingDate: new FormControl('', [Validators.required])

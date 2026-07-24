@@ -27,13 +27,14 @@
           </mat-form-field>
           <mat-option *ngFor="let seafarers of seafarersDropdown" [value]="seafarers.id">{{ seafarers.sidNo }}</mat-option>
         </mat-select>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('sidNo')?.hasError('required')"> SID No is required. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Place</mat-label>
-        <mat-select formControlName="sidIssuedPlace">
-          <mat-option value="Colombo">Colombo</mat-option>
-        </mat-select>
+        <input matInput placeholder="Issued Place" formControlName="sidIssuedPlace" />
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('sidIssuedPlace')?.hasError('pattern')"> Only letters and spaces. </mat-error>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('sidIssuedPlace')?.hasError('required')"> Issued Place is required. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
@@ -42,6 +43,8 @@
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="sidIssuedDate"></mat-datepicker-toggle>
         <mat-datepicker #sidIssuedDate></mat-datepicker>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('sidIssuedDate')?.hasError('required')"> Issued Date is required. </mat-error>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('sidIssuedDate')?.hasError('futureDate')"> Issued Date cannot be in the future. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
@@ -50,6 +53,8 @@
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="sidExpireDate"></mat-datepicker-toggle>
         <mat-datepicker #sidExpireDate></mat-datepicker>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('sidExpireDate')?.hasError('required')"> Expired Date is required </mat-error>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('sidExpireDate')?.hasError('pastDate')"> Please enter valid certificate date </mat-error>
       </mat-form-field> <br>
 
       <h5>National Passport</h5>
@@ -68,13 +73,15 @@
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Passport NO</mat-label>
         <input matInput placeholder="Passport No" formControlName="ppNo" />
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('ppNo')?.hasError('pattern')"> Please enter valid Passport No. </mat-error>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('ppNo')?.hasError('required')"> Passport No is required. </mat-error>
       </mat-form-field>
-
+  
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Place</mat-label>
-        <mat-select formControlName="ppIssuedPlace">
-          <mat-option value="Colombo">Colombo</mat-option>
-        </mat-select>
+        <input matInput placeholder="Issued Place" formControlName="ppIssuedPlace" />
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('ppIssuedPlace')?.hasError('pattern')"> Only letters and spaces. </mat-error>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('ppIssuedPlace')?.hasError('required')"> Issued Place is required. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
@@ -83,6 +90,8 @@
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="ppIssuedDate"></mat-datepicker-toggle>
         <mat-datepicker #ppIssuedDate></mat-datepicker>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('ppIssuedDate')?.hasError('required')"> Issued Date is required. </mat-error>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('ppIssuedDate')?.hasError('futureDate')"> Issued Date cannot be in the future. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
@@ -91,6 +100,8 @@
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="ppExpireDate"></mat-datepicker-toggle>
         <mat-datepicker #ppExpireDate></mat-datepicker>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('ppExpireDate')?.hasError('required')"> Expired Date is required </mat-error>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('ppExpireDate')?.hasError('pastDate')"> Please enter valid certificate date </mat-error>
       </mat-form-field>
       <br />
 
@@ -110,13 +121,15 @@
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>CDC NO</mat-label>
         <input matInput placeholder="CDC No" formControlName="cdcNo" />
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('cdcNo')?.hasError('pattern')"> Please enter valid CDC No. </mat-error>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('cdcNo')?.hasError('required')"> CDC No is required. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Place</mat-label>
-        <mat-select formControlName="cdcIssuedPlace">
-          <mat-option value="Colombo">Colombo</mat-option>
-        </mat-select>
+        <input matInput placeholder="Issued Place" formControlName="cdcIssuedPlace" />
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('cdcIssuedPlace')?.hasError('pattern')"> Only letters and spaces. </mat-error>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('cdcIssuedPlace')?.hasError('required')"> Issued Place is required. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
@@ -125,6 +138,8 @@
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="cdcIssuedDate"></mat-datepicker-toggle>
         <mat-datepicker #cdcIssuedDate></mat-datepicker>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('cdcIssuedDate')?.hasError('required')"> Issued Date is required. </mat-error>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('cdcIssuedDate')?.hasError('futureDate')"> Issued Date cannot be in the future. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
@@ -133,6 +148,8 @@
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="cdcExpireDate"></mat-datepicker-toggle>
         <mat-datepicker #cdcExpireDate></mat-datepicker>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('cdcExpireDate')?.hasError('required')"> Expired Date is required </mat-error>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('cdcExpireDate')?.hasError('pastDate')"> Please enter valid certificate date </mat-error>
       </mat-form-field>
       <br />
 
@@ -152,14 +169,15 @@
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Yello Fever NO</mat-label>
         <input matInput placeholder="Yellow Fever No" formControlName="yellowFeverNo" />
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('yellowFeverNo')?.hasError('pattern')"> Please enter valid Vaccination. </mat-error>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('yellowFeverNo')?.hasError('required')"> Vaccination No is required. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Place</mat-label>
-        <mat-select formControlName="yellowFeverIssuedPlace">
-          <mat-option value="Colombo">Colombo</mat-option>
-          <mat-option value="Other">Other</mat-option>
-        </mat-select>
+        <input matInput placeholder="Issued Place" formControlName="yellowFeverIssuedPlace" />
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('yellowFeverIssuedPlace')?.hasError('pattern')"> Only letters and spaces. </mat-error>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('yellowFeverIssuedPlace')?.hasError('required')"> Issued Place is required. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
@@ -168,6 +186,8 @@
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="yellowFeverIssuedDate"></mat-datepicker-toggle>
         <mat-datepicker #yellowFeverIssuedDate></mat-datepicker>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('yellowFeverIssuedDate')?.hasError('required')"> Issued Date is required. </mat-error>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('yellowFeverIssuedDate')?.hasError('futureDate')"> Issued Date cannot be in the future. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
@@ -176,6 +196,8 @@
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="yellowFeverExpireDate"></mat-datepicker-toggle>
         <mat-datepicker #yellowFeverExpireDate></mat-datepicker>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('yellowFeverExpireDate')?.hasError('required')"> Expired Date is required </mat-error>
+        <mat-error *ngIf="otherDetailsRegistrationForm.get('yellowFeverExpireDate')?.hasError('pastDate')"> Please enter valid Expired date </mat-error>
       </mat-form-field>
 
       <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled">

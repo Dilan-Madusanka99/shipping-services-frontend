@@ -10,20 +10,15 @@
       <!-- Select Jobs Dropdown -->
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Select Jobs</mat-label>
-
         <mat-select formControlName="selectedJob">
-
           <mat-option *ngFor="let job of jobSuggestions" [value]="job.value">
             {{ job.label }}
           </mat-option>
-
         </mat-select>
-
         <!-- Validation Error -->
         <mat-error *ngIf="jobSuggestionsForm.get('selectedJob')?.hasError('required')">
           Please select a job
         </mat-error>
-
       </mat-form-field>
 
       <!-- Optional Button to Check Selected Value -->

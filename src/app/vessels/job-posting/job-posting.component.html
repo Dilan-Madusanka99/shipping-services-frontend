@@ -26,6 +26,7 @@
       </mat-form-field>
         <mat-option *ngFor="let vessel of vesselDropdown" [value]="vessel.id">{{ vessel.vesselName }}</mat-option>
         </mat-select>
+        <mat-error *ngIf="jobPostingForm.get('vesselName')?.hasError('required')"> Vessel Name is required. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
@@ -54,6 +55,7 @@
           <mat-option value="Cook">Cook</mat-option>
           <mat-option value="Electrician">Electrician</mat-option>
         </mat-select>
+        <mat-error *ngIf="jobPostingForm.get('position')?.hasError('required')"> Position is required. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
@@ -76,11 +78,14 @@
           <mat-option value="6G">Fitter (6G)</mat-option>
           <mat-option value="LR">Lloyd Certificate (LR)</mat-option>
         </mat-select>
+        <mat-error *ngIf="jobPostingForm.get('cName')?.hasError('required')"> Certificates are required. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
           <mat-label> Minimum Experience (Months)</mat-label>
           <input matInput placeholder="Experience (Months)" formControlName="minimumExp" >
+            <mat-error *ngIf="jobPostingForm.get('minimumExp')?.hasError('required')"> Experience (Months) is required. </mat-error>
+            <mat-error *ngIf="jobPostingForm.get('minimumExp')?.hasError('pattern')"> Only Numbers are allowed. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
@@ -89,6 +94,7 @@
           <mat-option value="Open">Open</mat-option>
           <mat-option value="Close">Close</mat-option>
         </mat-select>
+        <mat-error *ngIf="jobPostingForm.get('jobStatus')?.hasError('required')"> Status is required. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
@@ -97,6 +103,7 @@
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="jobClosingDate"></mat-datepicker-toggle>
         <mat-datepicker #jobClosingDate></mat-datepicker>
+        <mat-error *ngIf="jobPostingForm.get('jobClosingDate')?.hasError('required')"> Closing Date is required. </mat-error>
       </mat-form-field>
 
         <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" > {{saveButtonLabel}} </button>

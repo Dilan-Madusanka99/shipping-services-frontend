@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -19,6 +19,39 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: any[] = [{ sidNo: 'S001', cName: 'AFF', cIssuedDate: '07/04/2025', cExpiredDate: '07/04/2030', verificationStatus: 'valid' }];
+
+// validator for issued date (shoud not be future one)
+export function notFutureDateValidator(control: AbstractControl): ValidationErrors | null {
+
+  if (!control.value) {
+    return null;
+  }
+
+  const selectedDate = new Date(control.value);
+  const today = new Date();
+
+  // Remove time
+  selectedDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  return selectedDate <= today ? null : { futureDate: true };
+}
+
+// validator for expired date (only future dates)
+export function futureDateValidator(control: AbstractControl): ValidationErrors | null {
+
+  if (!control.value) {
+    return null;
+  }
+
+  const selectedDate = new Date(control.value);
+  const today = new Date();
+
+  selectedDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  return selectedDate > today ? null : { pastDate: true };
+}
 
 @Component({
   selector: 'app-certificates-registration',
@@ -62,10 +95,10 @@ export class CertificatesRegistrationComponent {
       certificateImageType: new FormControl(''),
       sidNo: new FormControl('', [Validators.required]),
       cName: new FormControl('', [Validators.required]),
-      cNo: new FormControl('', [Validators.required]), // difficult for validate
+      cNo: new FormControl('', []), // difficult for validate
       cIssuedPlace: new FormControl('', [Validators.required]),
-      cIssuedDate: new FormControl('', [Validators.required]),
-      cExpiredDate: new FormControl('', [Validators.required]),
+      cIssuedDate: new FormControl('', [Validators.required, notFutureDateValidator]),
+      cExpiredDate: new FormControl('', [Validators.required, futureDateValidator]),
       verificationStatus: new FormControl([''])
     });
   }
