@@ -292,6 +292,10 @@ export class SeafarersRegistrationComponent {
   // }
 
   public resetData(): void {
+  const appliedDate = this.seafarersForm.get('appliedDate')?.value; // saved current applied date
+  this.seafarersForm.patchValue({appliedDate: appliedDate}); // Restore the previous Applied Date
+  this.seafarersForm.get('appliedDate')?.disable();
+
   this.seafarersForm.reset();
 
   this.saveButtonLabel = 'Save';
@@ -304,13 +308,6 @@ export class SeafarersRegistrationComponent {
   // Reset image preview
   this.previewUrl = null;
   this.isFileSelected = false;
-
-  // Set Applied Date to today and keep it disabled
-  this.seafarersForm.patchValue({
-    appliedDate: new Date()
-  });
-
-  this.seafarersForm.get('appliedDate')?.disable();
 
   this.seafarersForm.setErrors(null);
   this.seafarersForm.updateValueAndValidity();
@@ -328,10 +325,11 @@ export class SeafarersRegistrationComponent {
 
     this.seafarersForm.patchValue({
       noOfChildren: Number(data.noOfChildren),
-      appliedDate: new Date(data.appliedDate).toISOString().substring(0, 10),
+      // appliedDate: new Date(data.appliedDate).toISOString().substring(0, 10),
       availableDate: new Date(data.availableDate).toISOString().substring(0, 10),
-      dob: new Date(data.dob).toISOString().substring(0, 10)
+      dob: new Date(data.dob).toISOString().substring(0, 10),
     });
+    this.seafarersForm.patchValue({appliedDate: new Date()});
   }
 
   public deleteData(data: any): void {

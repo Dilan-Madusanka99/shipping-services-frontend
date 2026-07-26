@@ -397,21 +397,25 @@ export class OtherDetailsRegistrationComponent {
     this.isSidFileSelected = false;
     this.otherDetailsRegistrationForm.setErrors = null!;
     this.otherDetailsRegistrationForm.updateValueAndValidity();
+    this.otherDetailsRegistrationForm.get('sidIssuedPlace')?.disable();
 
     this.previewUrlPp = null;
     this.isSPpFileSelected = false;
     this.otherDetailsRegistrationForm.setErrors = null!;
     this.otherDetailsRegistrationForm.updateValueAndValidity();
+    this.otherDetailsRegistrationForm.get('ppIssuedPlace')?.disable();
 
     this.previewUrlCdc = null;
     this.isCdcFileSelected = false;
     this.otherDetailsRegistrationForm.setErrors = null!;
     this.otherDetailsRegistrationForm.updateValueAndValidity();
+    this.otherDetailsRegistrationForm.get('cdcIssuedPlace')?.disable();
 
     this.previewUrlYf = null;
     this.isYfFileSelected = false;
     this.otherDetailsRegistrationForm.setErrors = null!;
     this.otherDetailsRegistrationForm.updateValueAndValidity();
+    this.otherDetailsRegistrationForm.get('yellowFeverIssuedPlace')?.disable();
   }
 
   public editData(data: any): void {

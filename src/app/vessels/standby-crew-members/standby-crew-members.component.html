@@ -15,9 +15,10 @@
           </mat-form-field>
           <mat-option *ngFor="let seafarers of seafarersDropdown" [value]="seafarers.id">{{ seafarers.sidNo }}</mat-option>
         </mat-select>
+        <mat-error *ngIf="standbyCrewMembersForm.get('sidNo')?.hasError('required')"> SID No is required. </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="example-full-width">
+      <!-- <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Position</mat-label>
         <mat-select [(ngModel)]="selectedSeafarers" formControlName="position" (valueChange)="onSeafarersSelect($event)">
           <mat-option *ngFor="let seafarers of seafarersDropdown" [value]="seafarers.id">{{ seafarers.position }}</mat-option>
@@ -29,7 +30,7 @@
         <mat-select [(ngModel)]="selectedSeafarers" formControlName="surname" (valueChange)="onSeafarersSelect($event)">
           <mat-option *ngFor="let seafarers of seafarersDropdown" [value]="seafarers.id">{{ seafarers.surname }}</mat-option>
         </mat-select>
-      </mat-form-field>
+      </mat-form-field> -->
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Status</mat-label>
@@ -37,6 +38,7 @@
           <mat-option value="Active">Active</mat-option>
           <mat-option value="Inactive">Inactive</mat-option>
         </mat-select>
+        <mat-error *ngIf="standbyCrewMembersForm.get('status')?.hasError('required')"> Status is required. </mat-error>
       </mat-form-field>
 
       <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled">

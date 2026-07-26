@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -19,6 +19,23 @@ export interface PeriodicElement {
 const ELEMENT_DATA: any[] = [ 
   {sidNo: 'S123', vesselName: 'souselas', vesselType: 'bulk', position: 'AB', totalMonths:'09'},
 ];
+
+// validator for Sign on | Sign off dates (shoud not be future one)
+export function notFutureDateValidator(control: AbstractControl): ValidationErrors | null {
+
+  if (!control.value) {
+    return null;
+  }
+
+  const selectedDate = new Date(control.value);
+  const today = new Date();
+
+  // Remove time
+  selectedDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  return selectedDate <= today ? null : { futureDate: true };
+}
 
 @Component({
   selector: 'app-sea-services',
@@ -62,8 +79,8 @@ export class SeaServicesComponent implements OnInit{
         flag: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z ]+$/)]), // letters & spaces
         grt: new FormControl('', [Validators.required,  Validators.pattern(/^\d+$/)]), // numbers only
         bhp: new FormControl('', [Validators.pattern(/^\d+$/)]), 
-        signOn: new FormControl('', [Validators.required]),
-        signOff: new FormControl('', [Validators.required]),
+        signOn: new FormControl('', [Validators.required, notFutureDateValidator]),
+        signOff: new FormControl('', [Validators.required, notFutureDateValidator]),
         totalMonths: new FormControl({ value: '', disabled: true }),
         reason: new FormControl('', [])
       });

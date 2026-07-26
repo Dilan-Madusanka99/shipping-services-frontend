@@ -32,7 +32,7 @@
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> SID No </mat-label>
         <input matInput placeholder="SID No" formControlName="sidNo" >
-          <mat-error *ngIf="(seafarersForm.get('sidNo')?.touched || submitted) && seafarersForm.get('sidNo')?.hasError('required')"> SID Number is required. </mat-error>
+          <mat-error *ngIf="seafarersForm.get('sidNo')?.hasError('required')"> SID No is required. </mat-error>
           <mat-error *ngIf="(seafarersForm.get('sidNo')?.touched || submitted) && seafarersForm.get('sidNo')?.hasError('maxlength')"> Cannot exceed 10 characters. </mat-error>
           <mat-error *ngIf="(seafarersForm.get('sidNo')?.touched || submitted) && seafarersForm.get('sidNo')?.hasError('pattern')">Can Contain letters and numbers only.</mat-error>
       </mat-form-field>
@@ -51,7 +51,7 @@
           <mat-option value="Cook">Cook</mat-option>
           <mat-option value="Electrician">Electrician</mat-option>
         </mat-select>
-        <mat-error *ngIf="(seafarersForm.get('position')?.touched || submitted) && seafarersForm.get('position')?.hasError('required')"> Position is required. </mat-error>
+        <mat-error *ngIf="seafarersForm.get('position')?.hasError('required')"> position is required. </mat-error>      
       </mat-form-field>  
 
       <!-- <mat-form-field appearance="outline" class="example-full-width">
