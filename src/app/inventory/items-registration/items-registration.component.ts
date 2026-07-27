@@ -47,9 +47,9 @@ export class ItemsRegistrationComponent {
   ) {
       this.itemsRegistrationForm = this.fb.group({
         
-        itemNo: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
-        emNo: new FormControl('', [Validators.minLength(4), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
-        itemName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), Validators.pattern(/^[A-Za-z0-9.,\- ]+$/)]),
+        itemNo: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(10), Validators.pattern(/^[A-Za-z0-9]+$/)]), // letter & no
+        emNo: new FormControl('', [Validators.pattern(/^[A-Za-z0-9]+$/)]), // letters & no
+        itemName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(10), Validators.pattern(/^[A-Za-z0-9.,\- ]+$/)]), // letters number .,-
         itemCategory: new FormControl('', [Validators.required]),
         profileImage: new FormControl('', [Validators.required]),
         profileImageName: new FormControl(''),

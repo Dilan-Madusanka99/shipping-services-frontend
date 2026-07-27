@@ -67,7 +67,7 @@ export class StocksComponent {
     ) {
       this.stocksForm = this.fb.group({
         itemNo : new FormControl('', [Validators.required, ]),
-        itemName: new FormControl('', [Validators.required]),
+        itemName: new FormControl({value: '', disabled: true}),
         supplierName : new FormControl('', [Validators.required]),
         quantity : new FormControl('', [Validators.required, Validators.min(0)]),
         qtyMeasure : new FormControl('', [Validators.required]),
@@ -160,7 +160,7 @@ export class StocksComponent {
       }
     }
   
-    onSubmit() {
+   onSubmit() {
         try {
           console.log('mode' + this.mode);
           console.log('Form Submitted');
@@ -168,7 +168,7 @@ export class StocksComponent {
   
           if(!this.stocksForm.valid) return;
           if (this.mode === 'add'){
-            this.stocksService.serviceCall(this.stocksForm.value).subscribe({
+            this.stocksService.serviceCall(this.stocksForm.getRawValue()).subscribe({
               next: (response: any) => {
                 if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {
                   this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
@@ -184,7 +184,7 @@ export class StocksComponent {
             });
           }
           else if (this.mode === 'edit'){
-            this.stocksService.editData(this.selectedData?.id, this.stocksForm.value).subscribe ({
+            this.stocksService.editData( this.selectedData?.id, this.stocksForm.getRawValue()).subscribe ({
               next: (response: any) => {
                 let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
                 this.dataSource.data[elementIndex] = response;
@@ -204,12 +204,14 @@ export class StocksComponent {
           this.messageService.showError('Action Failed With Error' + error);
         }
       }
+
   
       public resetData(): void {
         this.stocksForm.reset();
         this.saveButtonLabel = 'Save';
         this.stocksForm.enable();
         this.isButtonDisabled = false;
+        this.stocksForm.get('itemName')?.disable();
       }
   
       public editData(data: any): void {

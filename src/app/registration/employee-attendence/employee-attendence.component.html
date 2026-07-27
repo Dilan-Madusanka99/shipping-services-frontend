@@ -23,6 +23,9 @@
         <mat-select formControlName="attendenceStatus">
           <mat-option value="Present">Present</mat-option>
           <mat-option value="Absent">Absent</mat-option>
+          <mat-option value="Half Day - Morning">Half Day - Morning</mat-option>
+          <mat-option value="Half Day - Evening">Half Day - Evening</mat-option>
+          
         </mat-select>
           <mat-error *ngIf="employeeAttendenceForm.get('attendenceStatus')?.hasError('required')"> Status is required. </mat-error>
       </mat-form-field>

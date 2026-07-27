@@ -479,16 +479,16 @@ const NavigationItems = [
         auth: [authenticationEnum.Vessle_Registration_Chart],
         breadcrumbs: false
       },
-      // {
-      //   id: 'employeeAttendenceMonthChart',
-      //   title: 'Employee Attendance',
-      //   type: 'item',
-      //   url: '/charts/employeeAttendanceByMonth',
-      //   icon: 'feather icon-bar-chart',
-      //   classes: 'nav-item',
-      //   auth: [authenticationEnum.Employee_Attendence_Chart],
-      //   breadcrumbs: false
-      // },
+      {
+        id: 'employeeAttendenceMonthChart',
+        title: 'Employee Attendance',
+        type: 'item',
+        url: '/charts/employeeAttendanceByMonth',
+        icon: 'feather icon-bar-chart',
+        classes: 'nav-item',
+        auth: [authenticationEnum.Employee_Attendence_Chart],
+        breadcrumbs: false
+      },
       {
         id: 'paymentsMonthChart',
         title: 'Supplier Payments',

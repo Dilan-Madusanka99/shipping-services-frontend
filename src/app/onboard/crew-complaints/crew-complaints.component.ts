@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -18,6 +18,24 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: any[] = [{ sidNo: 'S001', vesselName: 'M/T DonJuan', complaintDate: '9/7/2025', complaintType: 'Drug & Alcohol' }];
+
+
+// validator for complaint date (shoud not be future one)
+export function notFutureDateValidator(control: AbstractControl): ValidationErrors | null {
+
+  if (!control.value) {
+    return null;
+  }
+
+  const selectedDate = new Date(control.value);
+  const today = new Date();
+
+  // Remove time
+  selectedDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  return selectedDate <= today ? null : { futureDate: true };
+}
 
 @Component({
   selector: 'app-crew-complaints',
@@ -59,11 +77,11 @@ export class CrewComplaintsComponent {
     this.crewComplaintsForm = this.fb.group({
       sidNo: new FormControl('', [Validators.required]),
       imoNo: new FormControl('', [Validators.required]),
-      vesselName: new FormControl(''),
-      complaintorName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\- ]+$/)]),
-      complaintDate: new FormControl('', [Validators.required,]),
+      vesselName: new FormControl({value: '', disabled: true}),
+      complaintorName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z -]+$/)]), // letter spaces -
+      complaintDate: new FormControl('', [Validators.required,notFutureDateValidator]),
       complaintType: new FormControl('', [Validators.required]),
-      complaint: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(255)])
+      complaint: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern(/^[A-Za-z0-9\s.,\/-]+$/)]) // A 9 , . / -
     });
   }
 
@@ -72,6 +90,7 @@ export class CrewComplaintsComponent {
     this.getVesselList();
   }
 
+  // seafarer list
   public getSeafarersList(): void {
     this.seafarerService.getData().subscribe((response: any) => {
       if (response && response.length > 0) {
@@ -96,6 +115,7 @@ export class CrewComplaintsComponent {
     this.populateData();
   }
 
+  // vessel link
   public getVesselList(): void {
     this.vesselRegistrationService.getData().subscribe((response: any) => {
       if (response && response.length > 0) {
@@ -165,10 +185,11 @@ export class CrewComplaintsComponent {
       console.log('mode' + this.mode);
       console.log('Form Submitted');
       console.log(this.crewComplaintsForm.value);
+      
 
       if(!this.crewComplaintsForm.valid) return;
       if (this.mode === 'add') {
-        this.crewComplaintsService.serviceCall(this.crewComplaintsForm.value).subscribe({
+        this.crewComplaintsService.serviceCall(this.crewComplaintsForm.getRawValue()).subscribe({
           next: (response: any) => {
             if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {
               this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
@@ -183,7 +204,7 @@ export class CrewComplaintsComponent {
           }
         });
       } else if (this.mode === 'edit') {
-        this.crewComplaintsService.editData(this.selectedData?.id, this.crewComplaintsForm.value).subscribe({
+        this.crewComplaintsService.editData( this.selectedData?.id, this.crewComplaintsForm.getRawValue()).subscribe({
           next: (response: any) => {
             let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
             this.dataSource.data[elementIndex] = response;
@@ -208,6 +229,7 @@ export class CrewComplaintsComponent {
     this.crewComplaintsForm.reset();
     this.saveButtonLabel = 'Save';
     this.crewComplaintsForm.enable();
+    this.crewComplaintsForm.get('vesselName')?.disable();
     this.isButtonDisabled = false;
   }
 
@@ -220,8 +242,10 @@ export class CrewComplaintsComponent {
     this.crewComplaintsForm.patchValue({
     sidNo: +data.sidNo,
     imoNo: +data.imoNo,
+    
     complaintDate: new Date(data.complaintDate).toISOString().substring(0, 10)
     });
+    this.patchFormVesselValues(+data.imoNo);
   }
 
   public deleteData(data: any): void {

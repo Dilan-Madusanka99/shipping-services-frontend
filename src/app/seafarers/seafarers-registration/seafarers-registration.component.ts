@@ -285,6 +285,8 @@ export class SeafarersRegistrationComponent {
   //   this.seafarersForm.enable();
   //   this.isButtonDisabled = false;
 
+    
+
   //   this.previewUrl = null;
   //   this.isFileSelected = false;
   //   this.seafarersForm.setErrors = null!;

@@ -10,10 +10,10 @@
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Item No.</mat-label>
         <input matInput placeholder="Item No." formControlName="itemNo" >
-        <span class="text-danger" 
-          *ngIf="(itemsRegistrationForm.get('itemNo').touched || submitted) && itemsRegistrationForm.get('itemNo').errors && itemsRegistrationForm.get('itemNo').errors['required'] ">
-          Item No is Required
-        </span>
+        <mat-error *ngIf="itemsRegistrationForm.get('itemNo')?.hasError('required')"> Item No is required. </mat-error>
+        <mat-error *ngIf="itemsRegistrationForm.get('itemNo')?.hasError('minlength')"> Must be at least 3 characters. </mat-error>
+        <mat-error *ngIf="itemsRegistrationForm.get('itemNo')?.hasError('maxlength')"> Cannot exceed 10 characters. </mat-error>
+        <mat-error *ngIf="itemsRegistrationForm.get('itemNo')?.hasError('pattern')"> Only letters and numbers. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
@@ -24,6 +24,10 @@
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Item Name</mat-label>
           <input matInput placeholder="Item Name" formControlName="itemName">
+          <mat-error *ngIf="itemsRegistrationForm.get('itemName')?.hasError('required')"> Item Name is required. </mat-error>
+          <mat-error *ngIf="itemsRegistrationForm.get('itemName')?.hasError('minlength')"> Must be at least 3 characters. </mat-error>
+          <mat-error *ngIf="itemsRegistrationForm.get('itemName')?.hasError('maxlength')"> Cannot exceed 10 characters. </mat-error>
+          <mat-error *ngIf="itemsRegistrationForm.get('itemName')?.hasError('pattern')"> Only letters and numbers .,- </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="example-full-width">
@@ -34,6 +38,7 @@
             <mat-option value="Food Items">Food Items</mat-option>
             <mat-option value="Other">Other</mat-option>
           </mat-select>
+          <mat-error *ngIf="itemsRegistrationForm.get('itemCategory')?.hasError('required')"> Item No is required. </mat-error>
         </mat-form-field>
         
         <div class="form-field">

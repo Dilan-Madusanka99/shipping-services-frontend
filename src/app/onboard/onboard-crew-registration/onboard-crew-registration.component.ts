@@ -4,6 +4,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { position } from 'html2canvas/dist/types/css/property-descriptors/position';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { OnboardCrewRegistrationService } from 'src/app/services/onboard/onboard-crew-registration.service';
 import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.service';
@@ -134,6 +135,7 @@ export class OnboardCrewRegistrationComponent {
           const seafarersData = {
             id: seafarers.id,
             sidNo: seafarers.sidNo,
+            position: seafarers.position,
             profileImage: seafarers.profileImage
           };
           this.allSeafarersDropdown.push(seafarersData);
@@ -225,7 +227,7 @@ export class OnboardCrewRegistrationComponent {
 
       if(!this.onboardCrewRegistrationForm.valid) return;
       if (this.mode === 'add') {
-        this.onboardCrewRegistrationService.serviceCall(this.onboardCrewRegistrationForm.value).subscribe({
+        this.onboardCrewRegistrationService.serviceCall(this.onboardCrewRegistrationForm.getRawValue()).subscribe({
           next: (response: any) => {
             if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {
               this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
@@ -240,9 +242,7 @@ export class OnboardCrewRegistrationComponent {
           }
         });
       } else if (this.mode === 'edit') {
-        this.onboardCrewRegistrationService.editData(
-          this.selectedData?.id, this.onboardCrewRegistrationForm.value
-        ).subscribe({
+        this.onboardCrewRegistrationService.editData( this.selectedData?.id, this.onboardCrewRegistrationForm.getRawValue()).subscribe({
           next: (response: any) => {
             let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
             this.dataSource.data[elementIndex] = response;
@@ -370,9 +370,23 @@ export class OnboardCrewRegistrationComponent {
     this.patchFormSeafarersValues(selectedSeafarersId);
   }
 
+  // public patchFormSeafarersValues(seafarersId: number): void {
+  //   this.onboardCrewRegistrationForm.patchValue({
+  //     sidNo: seafarersId,
+  //   });
+  // }
+
   public patchFormSeafarersValues(seafarersId: number): void {
-    this.onboardCrewRegistrationForm.patchValue({
-      sidNo: seafarersId
-    });
+
+    const seafarer = this.allSeafarersListDetails.find(
+      (item: any) => item.id === seafarersId
+    );
+
+    if (seafarer) {
+      this.onboardCrewRegistrationForm.patchValue({
+        sidNo: seafarersId,
+        position: seafarer.position
+      });
+    }
   }
 }
