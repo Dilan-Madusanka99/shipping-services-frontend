@@ -103,4 +103,59 @@ export class JobPostingServiceService {
   
       return this.http.get(requestUrl, { headers: headers }).toPromise();
     }
+
+  apply(jobApplyObject: any) {
+    const requestUrl = environment.baseUrl + '/job_posting/apply';
+
+    let headers = {};
+
+    if (this.httpService.getAuthToken() !== null) {
+      headers = {
+        Authorization: 'Bearer ' + this.httpService.getAuthToken()
+      };
+    }
+
+    return this.http.post(requestUrl, jobApplyObject, { headers: headers });
+  }
+
+  getAppliedJobsByRole(sId: number) {
+    const requestUrl = environment.baseUrl + '/job_posting/apply/' + sId;
+
+    let headers = {};
+
+    if (this.httpService.getAuthToken() !== null) {
+      headers = {
+        Authorization: 'Bearer ' + this.httpService.getAuthToken()
+      };
+    }
+
+    return this.http.get(requestUrl, headers);
+  }
+
+  getAllAppliedJobs() {
+    const requestUrl = environment.baseUrl + '/job_posting/apply/get_all';
+
+    let headers = {};
+
+    if (this.httpService.getAuthToken() !== null) {
+      headers = {
+        Authorization: 'Bearer ' + this.httpService.getAuthToken()
+      };
+    }
+
+    return this.http.get(requestUrl, headers);
+  }
+
+  updateStatus(jobId: number, job: any) {
+    const requestUrl = environment.baseUrl + '/job_posting/apply/staus_update/' + jobId;
+    let headers = {};
+
+    if (this.httpService.getAuthToken() !== null) {
+      headers = {
+        Authorization: 'Bearer ' + this.httpService.getAuthToken()
+      };
+    }
+
+    return this.http.put(requestUrl, job , { headers: headers });
+  }
 }

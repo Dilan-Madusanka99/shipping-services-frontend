@@ -1,0 +1,76 @@
+<div class="job-dialog">
+
+  <!-- Header -->
+  <div class="dialog-header">
+    <span class="dialog-title">{{ job.vesselName }} — {{ job.position }}</span>
+    <button mat-icon-button
+            class="close-btn"
+            aria-label="Close dialog"
+            (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Job image (optional) -->
+  <div class="dialog-image" *ngIf="job.imageSrc">
+    <img [src]="job.imageSrc"
+         [alt]="job.vesselName"
+         (error)="onImageError($event)" />
+  </div>
+
+  <mat-dialog-content class="dialog-body">
+
+    <!-- Perfect match banner: rendered only when the backend says so.
+         The score itself is never received, held, or displayed here. -->
+    <div class="match-banner" *ngIf="perfectMatch" role="status">
+      <mat-icon>stars</mat-icon>
+      <span>You are a perfect match for this job</span>
+    </div>
+
+    <!-- Already applied notice -->
+    <div class="applied-banner" *ngIf="applied" role="status">
+      <mat-icon>check_circle</mat-icon>
+      <span>You have already applied for this job</span>
+    </div>
+
+    <!-- Details -->
+    <dl class="details-grid">
+      <dt>Vessel type</dt>
+      <dd>{{ job.vesselType }}</dd>
+
+      <dt>Position</dt>
+      <dd>{{ job.position }}</dd>
+
+      <dt>Required certificates</dt>
+      <dd>
+        <span class="cert-chip" *ngFor="let cert of job.requiredCertificates">{{ cert }}</span>
+        <span *ngIf="!job.requiredCertificates?.length">—</span>
+      </dd>
+
+      <dt>Minimum experience</dt>
+      <dd>{{ job.minimumExperience }} year{{ job.minimumExperience === 1 ? '' : 's' }}</dd>
+
+      <dt>Closing date</dt>
+      <dd>{{ job.closingDate | date:'dd MMM yyyy' }}</dd>
+    </dl>
+
+    <div class="description" *ngIf="job.description">
+      <h3>Description</h3>
+      <p>{{ job.description }}</p>
+    </div>
+
+  </mat-dialog-content>
+
+  <!-- Footer -->
+  <mat-dialog-actions class="dialog-footer">
+    <button mat-stroked-button class="btn-close" (click)="close()">Close</button>
+    <button mat-flat-button
+            class="btn-apply"
+            [disabled]="applying || applied || !isSeafarerRole"
+            [hidden]="!isSeafarerRole"
+            (click)="apply()">
+      <mat-spinner *ngIf="applying" diameter="18" class="btn-spinner"></mat-spinner>
+      <span *ngIf="!applying">{{ applied ? 'Applied' : 'Apply' }}</span>
+    </button>
+  </mat-dialog-actions>
+</div>

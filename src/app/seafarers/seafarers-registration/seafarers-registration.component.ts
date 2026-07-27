@@ -8,6 +8,7 @@ import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.se
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
 
 export interface PeriodicElement {
   profileImage: string;
@@ -88,7 +89,8 @@ export class SeafarersRegistrationComponent {
     private fb: FormBuilder,
     private seafarersService: SeafarersServiceService,
     private messageService: MessageServiceService,
-    private sanitizer: DomSanitizer // Photo upload [start]
+    private sanitizer: DomSanitizer, // Photo upload [start]
+    private route: ActivatedRoute
   ) {
     this.seafarersForm = this.fb.group({
 
@@ -124,6 +126,13 @@ export class SeafarersRegistrationComponent {
 
   ngOnInit(): void {
     this.populateData();
+
+    this.route.queryParams.subscribe(params => {
+    const id = params['id'];
+    if (id) {
+      this.loadSeafarer(id);
+    }
+  });
   }
 
   applyFilter(event: Event) {
@@ -172,6 +181,18 @@ export class SeafarersRegistrationComponent {
     } catch (error) {
       this.messageService.showError('Action Failed With Error ' + error);
     }
+  }
+
+  loadSeafarer(id: number): void {
+  this.seafarersService.getSeafarerDataById(id).subscribe({
+    next: (data: any) => {
+      this.editData(data);
+      this.seafarersForm.disable();
+    },
+    error: (err: any) => {
+      this.messageService.showError(err);
+    }
+  });
   }
 
   // Photo upload [start]
@@ -295,8 +316,6 @@ export class SeafarersRegistrationComponent {
 
   public resetData(): void {
   const appliedDate = this.seafarersForm.get('appliedDate')?.value; // saved current applied date
-  this.seafarersForm.patchValue({appliedDate: appliedDate}); // Restore the previous Applied Date
-  this.seafarersForm.get('appliedDate')?.disable();
 
   this.seafarersForm.reset();
 
@@ -305,6 +324,10 @@ export class SeafarersRegistrationComponent {
   this.selectedData = null;
 
   this.seafarersForm.enable();
+
+  this.seafarersForm.patchValue({appliedDate: appliedDate}); // Restore the previous Applied Date
+  this.seafarersForm.get('appliedDate')?.disable();
+
   this.isButtonDisabled = false;
 
   // Reset image preview

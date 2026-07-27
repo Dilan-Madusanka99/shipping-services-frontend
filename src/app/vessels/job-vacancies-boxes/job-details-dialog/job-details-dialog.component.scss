@@ -1,0 +1,171 @@
+// Theme
+$navy: #3f4d67;
+$navy-dark: #2c3547;
+$navy-muted: #7a8499;
+$navy-tint: #e8ebf1;
+$border: #e3e6ec;
+$white: #ffffff;
+$match-green: #1c6b43;
+$match-green-bg: #e6f3ec;
+$match-green-border: #9fd4b6;
+
+.job-dialog {
+  display: flex;
+  flex-direction: column;
+  // Pull against MatDialog's default container padding so the
+  // navy header and image run edge to edge.
+  // margin: -24px;
+}
+
+// ---------- Header ----------
+.dialog-header {
+  background: $navy;
+  color: $white;
+  padding: 12px 12px 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  .dialog-title {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .close-btn {
+    color: rgba($white, 0.8);
+    flex-shrink: 0;
+
+    &:hover { color: $white; }
+  }
+}
+
+// ---------- Image ----------
+.dialog-image {
+  height: 160px;
+  background: $navy-tint;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+// ---------- Body ----------
+.dialog-body {
+  padding: 18px 20px;
+  max-height: 55vh;
+}
+
+.match-banner,
+.applied-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  font-weight: 500;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.match-banner {
+  background: $match-green-bg;
+  border: 1px solid $match-green-border;
+  color: $match-green;
+}
+
+.applied-banner {
+  background: $navy-tint;
+  border: 1px solid darken($navy-tint, 8%);
+  color: $navy;
+}
+
+// ---------- Details ----------
+.details-grid {
+  display: grid;
+  grid-template-columns: 42% 1fr;
+  row-gap: 10px;
+  margin: 0;
+  font-size: 13px;
+
+  dt {
+    color: $navy-muted;
+  }
+
+  dd {
+    margin: 0;
+    color: $navy-dark;
+  }
+}
+
+.cert-chip {
+  display: inline-block;
+  background: $navy-tint;
+  color: $navy;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin: 0 4px 4px 0;
+}
+
+.description {
+  margin-top: 14px;
+
+  h3 {
+    font-size: 13px;
+    font-weight: 500;
+    color: $navy;
+    margin: 0 0 6px;
+  }
+
+  p {
+    font-size: 13px;
+    color: lighten($navy-dark, 12%);
+    line-height: 1.6;
+    margin: 0;
+    white-space: pre-line; // preserve line breaks typed by the admin
+  }
+}
+
+// ---------- Footer ----------
+.dialog-footer {
+  border-top: 1px solid $border;
+  padding: 12px 20px;
+  justify-content: flex-end;
+  gap: 10px;
+
+  .btn-close {
+    color: $navy;
+    border-color: #c8cfdd;
+  }
+
+  .btn-apply {
+    background: $navy;
+    color: $white;
+    min-width: 96px;
+
+    &[disabled] {
+      background: rgba($navy, 0.45);
+      color: rgba($white, 0.9);
+    }
+  }
+
+  .btn-spinner {
+    display: inline-block;
+
+    ::ng-deep circle {
+      stroke: $white;
+    }
+  }
+}

@@ -22,6 +22,12 @@ export class MessageServiceService {
     });
   }
 
+  showWarn(message: string, duration: number = 8000) {
+    this.toastrService.warning(this.extractUserMessage(message), '', {
+      timeOut: duration
+    });
+  }
+
   extractUserMessage(fullMessage: string): string {
     // Extract text after last colon (':')
     const lastColonIndex = fullMessage.lastIndexOf(':');

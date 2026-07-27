@@ -1,0 +1,100 @@
+<div class="vacancy-page">
+
+  <!-- Page header -->
+  <div class="page-header">
+    <div class="header-title">
+      <mat-icon>anchor</mat-icon>
+      <h1>Job vacancies</h1>
+    </div>
+    <span class="header-subtitle">Seafarer Job portal</span>
+  </div>
+
+  <!-- Filters -->
+  <div class="filter-bar">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search by vessel or position</mat-label>
+      <input matInput
+             [(ngModel)]="searchTerm"
+             (ngModelChange)="applyFilters()"
+             placeholder="e.g. Chief Officer" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="type-field">
+      <mat-label>Vessel type</mat-label>
+      <mat-select [(ngModel)]="selectedVesselType" (selectionChange)="applyFilters()">
+        <mat-option value="ALL">All vessel types</mat-option>
+        <mat-option *ngFor="let type of vesselTypes" [value]="type">{{ type }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- Loading -->
+  <div class="state-panel" *ngIf="loading">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Loading vacancies…</p>
+  </div>
+
+  <!-- Load error -->
+  <div class="state-panel" *ngIf="loadError && !loading">
+    <mat-icon class="state-icon">cloud_off</mat-icon>
+    <p>Couldn't load vacancies. Check your connection.</p>
+    <button mat-stroked-button (click)="loadJobs()">Retry</button>
+  </div>
+
+  <!-- Empty -->
+  <div class="state-panel" *ngIf="!loading && !loadError && filteredJobs.length === 0">
+    <mat-icon class="state-icon">work_off</mat-icon>
+    <p>No open vacancies match your search.</p>
+  </div>
+
+  <!-- Job cards -->
+  <div class="job-grid" *ngIf="!loading && !loadError">
+    <mat-card class="job-card"
+              *ngFor="let job of filteredJobs; trackBy: trackByJobId"
+              (click)="openJobDetails(job)"
+              tabindex="0"
+              role="button"
+              [attr.aria-label]="'View details for ' + job.position + ' on ' + job.vesselName"
+              (keydown.enter)="openJobDetails(job)">
+
+      <!-- Job image with placeholder fallback -->
+      <!-- <div class="job-image">
+        <img *ngIf="job.image"
+             [src]="job.image"
+             [alt]="job.vesselName"
+             loading="lazy"
+             (error)="onImageError($event)" />
+        <mat-icon class="image-placeholder-icon">directions_boat</mat-icon>
+        <span class="applied-badge" *ngIf="appliedJobIds.has(job.id)">Applied</span>
+      </div> -->
+
+      <div class="job-body">
+        <div class="vessel-line">
+          <span class="vessel-name">{{ job.vesselName }}</span>
+          <span class="vessel-type">{{ job.vesselType }}</span>
+        </div>
+
+        <h2 class="position">{{ job.position }}</h2>
+
+        <div class="chips">
+          <span class="chip">Min {{ job.minimumExperience }} yrs</span>
+          <span class="chip" *ngFor="let cert of job.requiredCertificates | slice:0:2">{{ cert }}</span>
+          <span class="chip chip-more" *ngIf="job.requiredCertificates?.length > 2">
+            +{{ job.requiredCertificates.length - 2 }}
+          </span>
+        </div>
+
+        <div class="closing-line"
+          [class.closing-soon]="daysUntilClosing(job.closingDate) >= 0 && daysUntilClosing(job.closingDate) <= 3">
+          <mat-icon>event</mat-icon>
+          <span>Closes {{ job.closingDate | date:'dd MMM yyyy' }}</span>
+          <span class="days-left"
+          *ngIf="daysUntilClosing(job.closingDate) >= 0 && daysUntilClosing(job.closingDate) <= 3">
+            · {{ daysUntilClosing(job.closingDate) }} day{{ daysUntilClosing(job.closingDate) === 1 ? '' : 's' }} left
+          </span>
+      </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
