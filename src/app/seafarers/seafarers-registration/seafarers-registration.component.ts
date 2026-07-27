@@ -293,8 +293,6 @@ export class SeafarersRegistrationComponent {
 
   public resetData(): void {
   const appliedDate = this.seafarersForm.get('appliedDate')?.value; // saved current applied date
-  this.seafarersForm.patchValue({appliedDate: appliedDate}); // Restore the previous Applied Date
-  this.seafarersForm.get('appliedDate')?.disable();
 
   this.seafarersForm.reset();
 
@@ -303,6 +301,10 @@ export class SeafarersRegistrationComponent {
   this.selectedData = null;
 
   this.seafarersForm.enable();
+
+  this.seafarersForm.patchValue({appliedDate: appliedDate}); // Restore the previous Applied Date
+  this.seafarersForm.get('appliedDate')?.disable();
+
   this.isButtonDisabled = false;
 
   // Reset image preview
