@@ -1,1 +1,99 @@
-<p>applied-jobs works!</p>
+<div class="header">
+  <h3>Applied Jobs</h3>
+  <!-- <i class="feather icon-user"></i> -->
+</div>
+
+<div class="container">
+  <div class="table-section">
+    <div class="refresh-filter-section">
+      <div class="refresh-button">
+        <button mat-raised-button color="primary" (click)="refreshData()">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </div>
+      <mat-form-field appearance="outline" class="filter">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
+      </mat-form-field>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+      <ng-container matColumnDef="seafarerName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Seafarer Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.seafarerName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="vesselName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Vessel Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.vesselName}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="vesselType">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Vessel Type </th>
+        <td mat-cell *matCellDef="let element"> {{element.vesselType}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> Position </th>
+        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+      </ng-container>
+
+    <ng-container matColumnDef="appliedDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Applied Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.appliedDate | date: 'dd/MM/yyyy'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="jobCloseDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Job Close Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.jobCloseDate | date: 'dd/MM/yyyy'}} </td>
+      </ng-container>
+
+    <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field appearance="outline" class="status-field">
+                <mat-select
+                  [(value)]="element.status"
+                  [disabled]="isSeafarerRole">
+
+                  <mat-option *ngFor="let status of statusOptions" [value]="status">
+                    {{ status }}
+                  </mat-option>
+              
+                </mat-select>
+              </mat-form-field>
+            </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="action" *ngIf="!isSeafarerRole">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+
+            <td mat-cell *matCellDef="let element">
+              <button
+                 mat-icon-button color="warn"
+                (click)="updateStatus(element)"
+                matTooltip="edit">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button
+                 mat-icon-button color="warn"
+                (click)="openSeafarerProfile(element)"
+                matTooltip="view">
+                <mat-icon>open_in_new</mat-icon>
+              </button>
+            </td>
+    </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
+</div>
+    
+
+        
+

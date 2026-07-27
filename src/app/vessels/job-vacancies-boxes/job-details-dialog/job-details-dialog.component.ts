@@ -69,7 +69,8 @@ export class JobDetailsDialogComponent implements OnInit {
       vesselName: this.data.job.vesselName,
       vesselType: this.data.job.vesselType,
       status: 'PENDING',
-      appliedDate: new Date()
+      appliedDate: new Date(),
+      jobCloseDate: new Date(this.data.job.closingDate)
     };
 
     /* Save to backend the data (Job ID, Seafarer ID, User ID, Status)*/
