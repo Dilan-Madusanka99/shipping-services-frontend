@@ -121,7 +121,7 @@ const NavigationItems = [
     title: 'vessels',
     type: 'group',
     icon: 'icon-navigation',
-    auth: [authenticationEnum.Vessle_Details, authenticationEnum.Job_Vacancies],
+    auth: [authenticationEnum.Vessle_Details, authenticationEnum.Job_Vacancies,authenticationEnum.Job_Suggestions, authenticationEnum.Job_Listings, authenticationEnum.Applied_Jobs],
     children: [
       {
         id: 'VesselRegistrationDet',
@@ -153,6 +153,28 @@ const NavigationItems = [
         icon: 'feather icon-briefcase',
         classes: 'nav-item',
         auth: [authenticationEnum.Job_Suggestions],
+        breadcrumbs: false
+      },
+
+      {
+        id: 'JobBoxes',
+        title: 'Job Listings',
+        type: 'item',
+        url: '/vessels/jobVacancies',
+        icon: 'feather icon-briefcase',
+        classes: 'nav-item',
+        auth: [authenticationEnum.Job_Listings],
+        breadcrumbs: false
+      },
+
+      {
+        id: 'AppliedJobs',
+        title: 'Applied Jobs',
+        type: 'item',
+        url: '/vessels/appliedJobs',
+        icon: 'feather icon-briefcase',
+        classes: 'nav-item',
+        auth: [authenticationEnum.Applied_Jobs],
         breadcrumbs: false
       }
     ]

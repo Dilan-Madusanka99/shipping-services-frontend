@@ -36,5 +36,7 @@ export enum authenticationEnum {
   Seafarer_Reistration_Chart = 31,
   Vessle_Registration_Chart = 32,
   Employee_Attendence_Chart = 33,
-  Supplier_Payment_Chart = 34
+  Supplier_Payment_Chart = 34,
+  Job_Listings = 42,
+  Applied_Jobs = 42 // should be 43
 }

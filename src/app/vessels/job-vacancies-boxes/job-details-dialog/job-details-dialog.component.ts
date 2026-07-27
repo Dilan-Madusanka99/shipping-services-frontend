@@ -29,6 +29,7 @@ export class JobDetailsDialogComponent implements OnInit {
 
   applying = false;
   applied = false;
+  isSeafarerRole = false;
 
   constructor(
     private dialogRef: MatDialogRef<JobDetailsDialogComponent>,
@@ -47,6 +48,7 @@ export class JobDetailsDialogComponent implements OnInit {
     //   next: res => this.perfectMatch = res.perfectMatch,
     //   error: () => this.perfectMatch = false // fail silently — banner just doesn't show
     // });
+    this.isSeafarerRole = this.httpService.getUserRole() === 'SEAFARER';
   }
 
   apply(): void {
@@ -66,7 +68,8 @@ export class JobDetailsDialogComponent implements OnInit {
       position: this.data.job.position,
       vesselName: this.data.job.vesselName,
       vesselType: this.data.job.vesselType,
-      status: 'PENDING'
+      status: 'PENDING',
+      appliedDate: new Date()
     };
 
     /* Save to backend the data (Job ID, Seafarer ID, User ID, Status)*/
@@ -79,8 +82,8 @@ export class JobDetailsDialogComponent implements OnInit {
           this._messageService.showSuccess('You have successfully applied to the job! We will contact you soon!');
           this.dialogRef.close({ applied: true });
         },
-        error: () => {
-            this._messageService.showError('Could not submit your application. Please try again.');
+        error: (error: any) => {
+            this._messageService.showWarn(error);
           // this.snackBar.open(
           //   'Could not submit your application. Please try again.',
           //   'OK',

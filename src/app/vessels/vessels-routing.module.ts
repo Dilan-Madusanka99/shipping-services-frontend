@@ -4,6 +4,7 @@ import { JobPostingComponent } from './job-posting/job-posting.component'
 import { StandbyCrewMembersComponent } from './standby-crew-members/standby-crew-members.component'
 import { JobSuggestionsComponent } from './job-suggestions/job-suggestions.component'
 import { JobVacanciesBoxesComponent } from './job-vacancies-boxes/job-vacancies-boxes.component'
+import { AppliedJobsComponent } from './applied-jobs/applied-jobs.component'
 
 
 export const RegistrationRoutes: Routes = [
@@ -12,4 +13,5 @@ export const RegistrationRoutes: Routes = [
     { path: 'standbyCrewMembers', component: StandbyCrewMembersComponent },
     { path: 'jobSuggestions', component: JobSuggestionsComponent },
     { path: 'jobVacancies', component: JobVacanciesBoxesComponent },
+    { path: 'appliedJobs', component: AppliedJobsComponent },
 ]
