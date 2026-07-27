@@ -52,6 +52,7 @@ export class JobDetailsDialogComponent implements OnInit {
 
     this.applying = true;
 
+    /* Save to backend the data (Job ID, Seafarer ID, User ID, Status)*/
     // this.jobService.apply({ jobId: this.job.id })
     //   .pipe(finalize(() => this.applying = false))
     //   .subscribe({
