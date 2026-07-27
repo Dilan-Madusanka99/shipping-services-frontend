@@ -15,12 +15,8 @@
           </mat-form-field>
           <mat-option *ngFor="let emp of employeeDropdown" [value]="emp.id">{{ emp.name }}</mat-option>
         </mat-select>
-          <mat-error *ngIf="employeeAttendenceForm.get('users')?.hasError('required') &&
-                    (employeeAttendenceForm.get('users')?.touched || submitted)">
-            User is required.
-          </mat-error>
+        <mat-error *ngIf="employeeAttendenceForm.get('users')?.hasError('required')"> Username is required. </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Attendence Status</mat-label>
@@ -28,13 +24,8 @@
           <mat-option value="Present">Present</mat-option>
           <mat-option value="Absent">Absent</mat-option>
         </mat-select>
-          <mat-error *ngIf="employeeAttendenceForm.get('attendenceStatus')?.hasError('required') &&
-                    (employeeAttendenceForm.get('attendenceStatus')?.touched || submitted)">
-            Attendance is required.
-          </mat-error>
+          <mat-error *ngIf="employeeAttendenceForm.get('attendenceStatus')?.hasError('required')"> Status is required. </mat-error>
       </mat-form-field>
-      <br />
-      <br />
 
       <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled">
         {{ saveButtonLabel }}
@@ -86,9 +77,9 @@
             <mat-icon>edit</mat-icon>
           </button>
 
-          <button mat-icon-button color="warn" (click)="deleteData(element)" matTooltip="delete">
+          <!-- <button mat-icon-button color="warn" (click)="deleteData(element)" matTooltip="delete">
             <mat-icon>delete</mat-icon>
-          </button>
+          </button> -->
           
         </td>
       </ng-container>

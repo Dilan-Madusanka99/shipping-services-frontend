@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -19,6 +19,23 @@ export interface PeriodicElement {
 const ELEMENT_DATA: any[] = [ 
   {sidNo: 'S123', vesselName: 'souselas', vesselType: 'bulk', position: 'AB', totalMonths:'09'},
 ];
+
+// validator for Sign on | Sign off dates (shoud not be future one)
+export function notFutureDateValidator(control: AbstractControl): ValidationErrors | null {
+
+  if (!control.value) {
+    return null;
+  }
+
+  const selectedDate = new Date(control.value);
+  const today = new Date();
+
+  // Remove time
+  selectedDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  return selectedDate <= today ? null : { futureDate: true };
+}
 
 @Component({
   selector: 'app-sea-services',
@@ -55,23 +72,24 @@ export class SeaServicesComponent implements OnInit{
     ) {
       this.seaServicesForm = this.fb.group({
         sidNo: new FormControl('', [Validators.required]),
-        companyName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z .'-]+$/)]),
-        vesselName: new FormControl('', [Validators.required]),
+        companyName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z ]+$/)]),
+        vesselName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s\/]+$/)]), // letters spaces /
         position: new FormControl('', [Validators.required,]),
         vesselType: new FormControl('', [Validators.required,]),
-        flag: new FormControl('', [Validators.required, Validators.min(3), Validators.max(20), Validators.pattern(/^[A-Za-z ]+$/)]), // letters & spaces
-        grt: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(10), Validators.pattern(/^\d+$/)]), // whole numbers
-        bhp: new FormControl('', [Validators.minLength(3), Validators.maxLength(10), Validators.pattern(/^\d+$/)]), 
-        signOn: new FormControl('', [Validators.required]),
-        signOff: new FormControl('', [Validators.required]),
-        totalMonths: new FormControl('', [Validators.required, Validators.min(1), Validators.max(100), Validators.pattern(/^\d+$/)]), // whole numbers
-        reason: new FormControl('', [Validators.required])
+        flag: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z ]+$/)]), // letters & spaces
+        grt: new FormControl('', [Validators.required,  Validators.pattern(/^\d+$/)]), // numbers only
+        bhp: new FormControl('', [Validators.pattern(/^\d+$/)]), 
+        signOn: new FormControl('', [Validators.required, notFutureDateValidator]),
+        signOff: new FormControl('', [Validators.required, notFutureDateValidator]),
+        totalMonths: new FormControl({ value: '', disabled: true }),
+        reason: new FormControl('', [])
       });
     }
 
     ngOnInit(): void{
       this.populateData();
       this.getSeafarersList();
+      this.calculateTotalMonths();
     }
 
     public getSeafarersList(): void {
@@ -273,6 +291,78 @@ export class SeaServicesComponent implements OnInit{
       this.seaServicesForm.patchValue({
         sidNo: seafarersId
       });
+    }
+
+    private calculateTotalMonths(): void {
+
+      this.seaServicesForm.get('signOn')?.valueChanges.subscribe(() => {
+        this.updateTotalMonths();
+      });
+
+      this.seaServicesForm.get('signOff')?.valueChanges.subscribe(() => {
+        this.updateTotalMonths();
+      });
+
+    }
+
+    private updateTotalMonths(): void {
+
+      const signOn = this.seaServicesForm.get('signOn')?.value;
+      const signOff = this.seaServicesForm.get('signOff')?.value;
+
+      if (!signOn || !signOff) {
+        this.seaServicesForm.patchValue(
+          {
+            totalMonths: ''
+          },
+          { emitEvent: false }
+        );
+        return;
+      }
+
+      const start = new Date(signOn);
+      const end = new Date(signOff);
+
+      if (end < start) {
+        this.seaServicesForm.patchValue(
+          {
+            totalMonths: ''
+          },
+          { emitEvent: false }
+        );
+        return;
+      }
+
+      let months =
+        (end.getFullYear() - start.getFullYear()) * 12 +
+        (end.getMonth() - start.getMonth());
+
+      let days = end.getDate() - start.getDate();
+
+      // Borrow days from previous month
+      if (days < 0) {
+        months--;
+
+        const previousMonthDays = new Date(
+          end.getFullYear(),
+          end.getMonth(),
+          0
+        ).getDate();
+
+        days += previousMonthDays;
+      }
+
+      if (months < 0) {
+        months = 0;
+      }
+
+      this.seaServicesForm.patchValue(
+        {
+          totalMonths: `${months} M ${days} D`
+        },
+        { emitEvent: false }
+      );
+
     }
 
 }

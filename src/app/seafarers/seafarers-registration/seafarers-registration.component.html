@@ -11,6 +11,7 @@
        <div class="form-field">
         <label for="image">Upload Image</label>
         <input type="file" (change)="onFileSelected($event)" accept="image/*"/>
+          <mat-error *ngIf="(seafarersForm.get('profileImage')?.touched || submitted) && seafarersForm.get('profileImage')?.hasError('required')"> Profile image is required. </mat-error>
        </div>
         
       <div *ngIf="previewUrl">
@@ -21,14 +22,20 @@
       <!-- Photo upload - End -->
 
       <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label> Applied Date </mat-label>
+        <input matInput [matDatepicker]="appliedDate" formControlName="appliedDate"/>
+        <mat-hint> MM/DD/YYYY </mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="appliedDate"></mat-datepicker-toggle>
+        <mat-datepicker #appliedDate></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> SID No </mat-label>
         <input matInput placeholder="SID No" formControlName="sidNo" >
-          <span class="text-danger" 
-            *ngIf="(seafarersForm.get('sidNo').touched || submitted) && seafarersForm.get('sidNo').errors && seafarersForm.get('sidNo').errors['required'] ">
-             SID No is Required
-          </span>
+          <mat-error *ngIf="seafarersForm.get('sidNo')?.hasError('required')"> SID No is required. </mat-error>
+          <mat-error *ngIf="(seafarersForm.get('sidNo')?.touched || submitted) && seafarersForm.get('sidNo')?.hasError('maxlength')"> Cannot exceed 10 characters. </mat-error>
+          <mat-error *ngIf="(seafarersForm.get('sidNo')?.touched || submitted) && seafarersForm.get('sidNo')?.hasError('pattern')">Can Contain letters and numbers only.</mat-error>
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Position </mat-label>
@@ -44,38 +51,32 @@
           <mat-option value="Cook">Cook</mat-option>
           <mat-option value="Electrician">Electrician</mat-option>
         </mat-select>
+        <mat-error *ngIf="seafarersForm.get('position')?.hasError('required')"> position is required. </mat-error>      
       </mat-form-field>  
-      <br>
 
-      <mat-form-field appearance="outline" class="example-full-width">
-        <mat-label> Applied Date </mat-label>
-        <input matInput [matDatepicker]="appliedDate" formControlName="appliedDate"/>
-        <mat-hint> MM/DD/YYYY </mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="appliedDate"></mat-datepicker-toggle>
-        <mat-datepicker #appliedDate></mat-datepicker>
-      </mat-form-field>
-      <br>
-
-      <mat-form-field appearance="outline" class="example-full-width">
+      <!-- <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Available Date </mat-label>
         <input matInput [matDatepicker]="availableDate" formControlName="availableDate"/>
         <mat-hint> MM/DD/YYYY </mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="availableDate"></mat-datepicker-toggle>
         <mat-datepicker #availableDate></mat-datepicker>
-      </mat-form-field>
-      <br>
+          <mat-error *ngIf="seafarersForm.get('availableDate')?.hasError('required')"> Available Date is required. </mat-error>
+          <mat-error *ngIf="seafarersForm.get('availableDate')?.hasError('pastDate')"> Cannot be in the past. </mat-error>
+      </mat-form-field> -->
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Surname </mat-label>
         <input matInput placeholder="Surname" formControlName="surname" >
+          <mat-error *ngIf="seafarersForm.get('surname')?.hasError('required')"> SurName is required. </mat-error>
+          <mat-error *ngIf="seafarersForm.get('surname')?.hasError('pattern')"> Only letters and spaces. </mat-error>
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Other Names </mat-label>
         <input matInput placeholder="Other Names" formControlName="otherNames" >
+          <mat-error *ngIf="seafarersForm.get('otherNames')?.hasError('required')"> Other Names is required. </mat-error>
+          <mat-error *ngIf="seafarersForm.get('otherNames')?.hasError('pattern')"> Only letters and spaces. </mat-error>
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> DOB </mat-label>
@@ -83,20 +84,20 @@
         <mat-hint> MM/DD/YYYY </mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="dob"></mat-datepicker-toggle>
         <mat-datepicker #dob></mat-datepicker>
+          <mat-error *ngIf="seafarersForm.get('dob')?.hasError('underAge')"> Must be at least 18 years old. </mat-error>
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Birth Place </mat-label>
         <input matInput placeholder="Birth Place" formControlName="birthPlace" >
+          <mat-error *ngIf="seafarersForm.get('birthPlace')?.hasError('pattern')"> Only letters and spaces. </mat-error>
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> NIC </mat-label>
         <input matInput placeholder="NIC" formControlName="nic" >
+          <mat-error *ngIf="seafarersForm.get('nic')?.hasError('pattern')"> Enter a valid NIC number. </mat-error>
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Religion </mat-label>
@@ -107,35 +108,34 @@
           <mat-option value="Islam">Islam</mat-option>
           <mat-option value="Other">Other</mat-option>
         </mat-select>
-      </mat-form-field>  
-      <br>
+      </mat-form-field>
+      
+      <mat-label> Married Status </mat-label> <br>
+      <mat-radio-group name="Married Status" formControlName="marriedStatus" class="example-full-width">
+        <mat-radio-button value="Single" checked="true">Single</mat-radio-button>
+        <mat-radio-button value="Married">Married</mat-radio-button>
+      </mat-radio-group>  
 
       <mat-label> Gender </mat-label> <br>
-      <mat-radio-group name="Gender" formControlName="gender">
+      <mat-radio-group name="Gender" formControlName="gender" class="example-full-width">
         <mat-radio-button value="Male" checked="true">Male</mat-radio-button>
         <mat-radio-button value="Female">Female</mat-radio-button>
       </mat-radio-group>
-      <br><br>
-
-      <mat-label> Married Status </mat-label> <br>
-      <mat-radio-group name="Married Status" formControlName="marriedStatus">
-        <mat-radio-button value="Single" checked="true">Single</mat-radio-button>
-        <mat-radio-button value="Married">Married</mat-radio-button>
-        <mat-radio-button value="Divorced">Divorced</mat-radio-button>
-      </mat-radio-group>  
-      <br><br>
+      <mat-error *ngIf="(seafarersForm.get('gender')?.touched || submitted) && seafarersForm.get('gender')?.hasError('required')"> Gender is required. </mat-error>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> No Of Childern </mat-label>
         <input matInput type="number" matInput placeholder="No Of Children" formControlName="noOfChildren">
+          <mat-error *ngIf="(seafarersForm.get('noOfChildren')?.touched || submitted) && seafarersForm.get('noOfChildren')?.hasError('min')"> Cannot be less than 0. </mat-error>
+          <mat-error *ngIf="(seafarersForm.get('noOfChildren')?.touched || submitted) && seafarersForm.get('noOfChildren')?.hasError('max')"> Cannot exceed 10. </mat-error>
+          <mat-error *ngIf="(seafarersForm.get('noOfChildren')?.touched || submitted) && seafarersForm.get('noOfChildren')?.hasError('pattern')">Whole digits only are allowed.</mat-error>  
       </mat-form-field>
-      <br>      
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Address </mat-label>
         <input matInput placeholder="Address" formControlName="address" >
+          <mat-error *ngIf="(seafarersForm.get('address')?.touched || submitted) && seafarersForm.get('address')?.hasError('pattern')">Enter valid Address. </mat-error>
       </mat-form-field>
-      <br>
 
       <mat-label> English language </mat-label> <br>
       <mat-radio-group name="English language" formControlName="englishLanguage">
@@ -144,35 +144,38 @@
         <mat-radio-button value="Average">Average</mat-radio-button>
         <mat-radio-button value="Not Good">Not Good</mat-radio-button>
       </mat-radio-group> 
-      <br><br><br>
+      <br><br>
 
       <h5>Contact Details</h5>
       
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Home </mat-label>
         <input matInput placeholder="Home" formControlName="home" >
+          <mat-error *ngIf="(seafarersForm.get('home')?.touched || submitted) && seafarersForm.get('home')?.hasError('pattern')">Enter a valid contact number.</mat-error>
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Mobile </mat-label>
         <input matInput placeholder="Mobile" formControlName="mobile" >
+          <mat-error *ngIf="seafarersForm.get('mobile')?.hasError('required')"> mobile number is required. </mat-error>
+          <mat-error *ngIf="(seafarersForm.get('mobile')?.touched || submitted) && seafarersForm.get('mobile')?.hasError('pattern')">Enter a valid mobile number.</mat-error>
+
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> E-mail </mat-label>
         <input matInput placeholder="E-mail" formControlName="email" >
+          <mat-error *ngIf="seafarersForm.get('email')?.hasError('required')"> Email is required. </mat-error>
+          <mat-error *ngIf="seafarersForm.get('email')?.hasError('pattern')"> Enter a valid email address. </mat-error>
       </mat-form-field>
-      <br><br>
 
       <h5>Next of Kin Details</h5>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Name </mat-label>
         <input matInput placeholder="Name" formControlName="kinName" >
+        <mat-error *ngIf="seafarersForm.get('kinName')?.hasError('pattern')"> Only letters and spaces. </mat-error>
       </mat-form-field>
-      <br>
       
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Relationship </mat-label>
@@ -183,31 +186,31 @@
           <mat-option value="Brother">Brother</mat-option>
           <mat-option value="Sister">Sister</mat-option>
         </mat-select>
+        <mat-error *ngIf="seafarersForm.get('kinRelationship')?.hasError('required')"> Relationship is required. </mat-error>
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Address </mat-label>
         <input matInput placeholder="Address" formControlName="kinAddress" >
+          <mat-error *ngIf="(seafarersForm.get('kinAddress')?.touched || submitted) && seafarersForm.get('kinAddress')?.hasError('pattern')">Enter valid Address. </mat-error>
+
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Mobile </mat-label>
         <input matInput placeholder="Mobile" formControlName="kinMobile" >
+          <mat-error *ngIf="(seafarersForm.get('kinMobile')?.touched || submitted) && seafarersForm.get('kinMobile')?.hasError('pattern')">Enter a valid mobile number.</mat-error>
       </mat-form-field>
-      <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> E-mail </mat-label>
         <input matInput placeholder="E-mail" formControlName="kinEmail" >
+        <mat-error *ngIf="seafarersForm.get('kinEmail')?.hasError('pattern')"> Enter a valid email address. </mat-error>
       </mat-form-field>
-      <br><br>
 
       <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" > {{saveButtonLabel}} </button>
       <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" > Reset </button>
 
-      <br><br><br>
     
     </form>
   </div>

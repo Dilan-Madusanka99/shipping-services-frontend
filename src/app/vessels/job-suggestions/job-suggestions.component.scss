@@ -22,7 +22,7 @@ h3{
 }
 
 .form-section {
-  width: 500px;
+  width: 300px;
 }
 
 .jobSuggestionsForm {
@@ -32,8 +32,10 @@ h3{
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
 }
 
-.example-full-width{
-    width: 55%;
+.example-full-width {
+    margin-bottom: 5px;
+    width: 100% !important;
+    display: block;
 }
 
 .button{

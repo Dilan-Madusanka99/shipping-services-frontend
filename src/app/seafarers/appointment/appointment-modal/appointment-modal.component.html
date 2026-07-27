@@ -4,7 +4,7 @@
     <div style="
   background: #ffffff;
   border-radius: 12px;
-  width: 450px;
+  width: 550px;
   max-width: calc(100vw - 32px);
   max-height: calc(100vh - 40px);
   overflow-y: auto;
@@ -12,13 +12,55 @@
   animation: slideUp 0.18s ease;
 " role="dialog" [attr.aria-label]="isEditing ? 'Edit appointment' : 'New appointment'">
 
-    <div class="modal-header">
+    <!-- <div class="modal-header">
       <h2 class="modal-title">{{ isEditing ? 'Edit appointment' : 'New appointment' }}</h2>
       <button class="icon-btn" (click)="onClose()" aria-label="Close">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
           <line x1="3" y1="3" x2="13" y2="13"/><line x1="13" y1="3" x2="3" y2="13"/>
         </svg>
       </button>
+    </div> -->
+
+      <!-- <div class="header-left">
+        <div class="header-icon">
+          <mat-icon>event</mat-icon>
+        </div>
+
+        <div class="header-text">
+          <h2 class="modal-title">
+            {{ isEditing ? 'Edit appointment' : 'New Appointment' }}
+          </h2>
+          <p class="modal-subtitle">
+            Add a new appointment to the schedule
+          </p>
+        </div>
+      </div>
+
+      <button class="icon-btn" (click)="onClose()" aria-label="Close">
+        <mat-icon>close</mat-icon>
+      </button>  -->
+
+    <div class="modal-header">
+
+      <div class="header-left">
+        <div class="header-icon">
+          <mat-icon>event</mat-icon>
+        </div>
+
+        <div class="header-text">
+          <h2 class="modal-title">
+            {{ isEditing ? 'Edit appointment' : 'New Appointment' }}
+          </h2>
+          <p class="modal-subtitle">
+            Add a new appointment to the schedule
+          </p>
+        </div>
+      </div>
+
+      <button class="icon-btn" (click)="onClose()" aria-label="Close">
+        <mat-icon>close</mat-icon>
+      </button>
+
     </div>
 
     <div class="modal-body">
@@ -28,19 +70,23 @@
       <div class="field" [class.has-error]="(appointmentForm.get('sidNo').touched || submitted) && appointmentForm.get('sidNo').errors && appointmentForm.get('sidNo').errors['required']">
         <label>SID</label>
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <input matInput placeholder="" formControlName="sidNo">
+        <mat-icon matPrefix>badge</mat-icon>
+        <input matInput placeholder="Enter SID" formControlName="sidNo">
       </mat-form-field>
         <div *ngIf="(appointmentForm.get('sidNo').touched || submitted) && appointmentForm.get('sidNo').errors">
           <span  class="error-msg" *ngIf="appointmentForm.get('sidNo').errors['required']">Sid No is required</span>
-           <span  class="error-msg" *ngIf="appointmentForm.get('sidNo').errors['minlength']">Minimum length for SID no is 5</span>
-           <span  class="error-msg" *ngIf="appointmentForm.get('sidNo').errors['maxlength']">Maximum length for SID no is 15</span>
+          <!-- <span  class="error-msg" *ngIf="appointmentForm.get('sidNo').errors['minlength']">Minimum 5 Charactors Required</span>
+          <span  class="error-msg" *ngIf="appointmentForm.get('sidNo').errors['maxlength']">Maximum 15 Charactors Required</span> -->
+          <span  class="error-msg" *ngIf="appointmentForm.get('sidNo').errors['pattern']">Only letters & Numbers allowed</span>
         </div>
       </div>
 
       <div class="field" [class.has-error]="(appointmentForm.get('position').touched || submitted) && appointmentForm.get('position').errors && appointmentForm.get('position').errors['required']">
         <label>Position</label>
           <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-icon matPrefix>work</mat-icon>
             <mat-select formControlName="position">
+              <mat-option value="" disabled>Select Position</mat-option>
               <mat-option *ngFor="let position of positions" [value]="position.value">{{position.label}}</mat-option>
             </mat-select>
         </mat-form-field>
@@ -54,12 +100,14 @@
       <div class="field" [class.has-error]="(appointmentForm.get('firstName').touched || submitted) && appointmentForm.get('firstName').errors && appointmentForm.get('firstName').errors['required']">
         <label>First Name</label>
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <input matInput placeholder="" formControlName="firstName">
+        <mat-icon matPrefix>person</mat-icon>
+        <input matInput placeholder="Enter First Name" formControlName="firstName">
       </mat-form-field>
       <div *ngIf="(appointmentForm.get('firstName').touched || submitted) && appointmentForm.get('firstName').errors">
         <span *ngIf="appointmentForm.get('firstName').errors['required']"  class="error-msg">First name is required</span>
-        <span *ngIf="appointmentForm.get('firstName').errors['minlength']"  class="error-msg">Minimum length for first name is 5</span>
-        <span *ngIf="appointmentForm.get('firstName').errors['maxlength']"  class="error-msg">Maximum length for first name is 100</span>
+        <!-- <span *ngIf="appointmentForm.get('firstName').errors['minlength']"  class="error-msg">Minimum 4 Charactors Required</span>
+        <span *ngIf="appointmentForm.get('firstName').errors['maxlength']"  class="error-msg">Maximum 20 Charactors Required</span> -->
+        <span *ngIf="appointmentForm.get('firstName').errors['pattern']"  class="error-msg">Only letters & Spaces allowed</span>
       </div>
       </div>
 
@@ -67,12 +115,14 @@
       <div class="field" [class.has-error]="(appointmentForm.get('lastName').touched || submitted) && appointmentForm.get('lastName').errors && appointmentForm.get('lastName').errors['required']">
         <label>Last Name</label>
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <input matInput placeholder="" formControlName="lastName">
+        <mat-icon matPrefix>person_outline</mat-icon>
+        <input matInput placeholder="Enter Last Name" formControlName="lastName">
       </mat-form-field>
       <div *ngIf="(appointmentForm.get('lastName').touched || submitted) && appointmentForm.get('lastName').errors">
-        <span  class="error-msg" *ngIf="appointmentForm.get('lastName').errors['required']">Last name is required</span>
-        <span  class="error-msg" *ngIf="appointmentForm.get('lastName').errors['minlength']">Minimum length for first name is 5</span>
-        <span  class="error-msg" *ngIf="appointmentForm.get('lastName').errors['maxlength']">Maximum length for first name is 100</span>
+        <span *ngIf="appointmentForm.get('lastName').errors['required']"  class="error-msg">First name is required</span> 
+        <!-- <span *ngIf="appointmentForm.get('lastName').errors['minlength']"  class="error-msg">Minimum 4 Charactors Required</span> 
+        <span *ngIf="appointmentForm.get('lastName').errors['maxlength']"  class="error-msg">Maximum 25 Charactors Required</span> -->
+        <span *ngIf="appointmentForm.get('lastName').errors['pattern']"  class="error-msg">Only letters & Spaces allowed</span>
       </div>
       </div>
       </div>
@@ -82,11 +132,12 @@
       <div class="field" [class.has-error]="(appointmentForm.get('mobile').touched || submitted) && appointmentForm.get('mobile').errors">
         <label>Mobile</label>
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <input matInput placeholder="" formControlName="mobile">
+        <mat-icon matPrefix>call</mat-icon>
+        <input matInput placeholder="Enter Mobile Number" formControlName="mobile">
       </mat-form-field>
       <div *ngIf="(appointmentForm.get('mobile').touched || submitted) && appointmentForm.get('mobile').errors">
         <span  class="error-msg" *ngIf="appointmentForm.get('mobile').errors['required']">Mobile is required</span>
-        <span  class="error-msg" *ngIf="appointmentForm.get('mobile').errors['pattern']">Invalid Format</span>
+        <span  class="error-msg" *ngIf="appointmentForm.get('mobile').errors['pattern']">Please enter valid Mobile No.</span>
       </div>
         
       </div>
@@ -95,7 +146,8 @@
       <div class="field" [class.has-error]="(appointmentForm.get('email').touched || submitted) && appointmentForm.get('email').errors">
         <label>Email</label>
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <input matInput placeholder="" formControlName="email">
+        <mat-icon matPrefix>mail</mat-icon>
+        <input matInput placeholder="Enter Email Address" formControlName="email">
       </mat-form-field>
       <div *ngIf="(appointmentForm.get('email').touched || submitted) && appointmentForm.get('email').errors">
         <span  class="error-msg" *ngIf="appointmentForm.get('email').errors['required']">Email is required</span>
@@ -108,12 +160,8 @@
       <div class="field" [class.has-error]="(appointmentForm.get('appointmentDate').touched || submitted) && appointmentForm.get('appointmentDate').errors && appointmentForm.get('appointmentDate').errors['appointmentDate']">
         <label>Date</label>
           <mat-form-field appearance="outline" subscriptSizing="dynamic">
-            <input 
-              matInput 
-              [matDatepicker]="appointmentDate" 
-              formControlName="appointmentDate" 
-              placeholder="MM/DD/YYYY"
-            />
+          <mat-icon matPrefix>event</mat-icon>
+            <input matInput [matDatepicker]="appointmentDate" formControlName="appointmentDate" placeholder="MM/DD/YYYY" />
             <mat-datepicker-toggle matIconSuffix [for]="appointmentDate"></mat-datepicker-toggle>
             <mat-datepicker #appointmentDate></mat-datepicker>
           </mat-form-field>
@@ -123,8 +171,10 @@
       <div class="field" [class.has-error]="(appointmentForm.get('appointmentTime').touched || submitted) && appointmentForm.get('appointmentTime').errors && appointmentForm.get('appointmentTime').errors['appointmentTime']">
         <label>Time</label>
           <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-icon matPrefix>schedule</mat-icon>
             <mat-select formControlName="appointmentTime">
               <mat-option *ngFor="let time of times" [value]="time.value">{{time.label}}</mat-option>
+              <mat-option value="" disabled>Select Time</mat-option>
             </mat-select>
         </mat-form-field>
         <span  class="error-msg" 
@@ -136,7 +186,9 @@
       <div class="field" [class.has-error]="(appointmentForm.get('appointmentStatus').touched || submitted) && appointmentForm.get('appointmentStatus').errors && appointmentForm.get('appointmentStatus').errors['required']">
         <label>Status</label>
           <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-icon matPrefix>flag</mat-icon>
             <mat-select formControlName="appointmentStatus">
+              <mat-option value="" disabled>Select Status</mat-option>
               <mat-option *ngFor="let status of statuses" [value]="status.value">{{status.label}}</mat-option>
             </mat-select>
         </mat-form-field>
@@ -148,7 +200,9 @@
       <div class="field" [class.has-error]="(appointmentForm.get('appointmentTypes').touched || submitted) && appointmentForm.get('appointmentTypes').errors && appointmentForm.get('appointmentTypes').errors['required']">
         <label>Type</label>
           <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-icon matPrefix>label</mat-icon>
             <mat-select formControlName="appointmentTypes">
+              <mat-option value="" disabled>Select Type</mat-option>
               <mat-option *ngFor="let type of types" [value]="type.value">{{type.label}}</mat-option>
             </mat-select>
         </mat-form-field>
@@ -164,6 +218,14 @@
         {{ isEditing ? 'Save changes' : 'Add appointment' }}
       </button>
     </div>
+    
+  <div class="info-box">
+
+      <mat-icon>info</mat-icon>
+
+      Please verify all appointment details before saving.
+
+  </div>
 
   </div>
   </form>

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -18,6 +18,39 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: any[] = [{ sidno: '123', ppNo: 'N123', cdcNo: 'C123', yellowFeverNo: 'AB123' }];
+
+// validator for issued date (shoud not be future one)
+export function notFutureDateValidator(control: AbstractControl): ValidationErrors | null {
+
+  if (!control.value) {
+    return null;
+  }
+
+  const selectedDate = new Date(control.value);
+  const today = new Date();
+
+  // Remove time
+  selectedDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  return selectedDate <= today ? null : { futureDate: true };
+}
+
+// validator for expired date (only future dates)
+export function futureDateValidator(control: AbstractControl): ValidationErrors | null {
+
+  if (!control.value) {
+    return null;
+  }
+
+  const selectedDate = new Date(control.value);
+  const today = new Date();
+
+  selectedDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  return selectedDate > today ? null : { pastDate: true };
+}
 
 @Component({
   selector: 'app-other-details-registration',
@@ -53,6 +86,7 @@ export class OtherDetailsRegistrationComponent {
   seafarersDropdown: any = [];
   allSeafarersListDetails: any;
   sidMap = new Map<number, string>();
+  submitted: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -66,45 +100,30 @@ export class OtherDetailsRegistrationComponent {
       sidImageName: new FormControl(''),
       sidImageType: new FormControl(''),
       sidNo: new FormControl('', [Validators.required]),
-      sidIssuedPlace: new FormControl('', [Validators.required]),
-      sidIssuedDate: new FormControl('', [Validators.required]),
-      sidExpireDate: new FormControl('', [Validators.required]),
+      sidIssuedPlace: new FormControl({ value: 'Colombo', disabled: true }, [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]),
+      sidIssuedDate: new FormControl('', [Validators.required, notFutureDateValidator]),
+      sidExpireDate: new FormControl('', [Validators.required, futureDateValidator]),
       ppImage: new FormControl('', [Validators.required]),
       ppImageName: new FormControl(''),
       ppImageType: new FormControl(''),
-      ppNo: new FormControl('', [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(15),
-        Validators.pattern(/^[A-Za-z0-9]+$/)
-      ]),
-      ppIssuedPlace: new FormControl('', [Validators.required]),
-      ppIssuedDate: new FormControl('', [Validators.required]),
-      ppExpireDate: new FormControl('', [Validators.required]),
+      ppNo: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.pattern(/^[NnPp]\d+$/)]),
+      ppIssuedPlace: new FormControl({ value: 'Colombo', disabled: true }, [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]),
+      ppIssuedDate: new FormControl('', [Validators.required, notFutureDateValidator]),
+      ppExpireDate: new FormControl('', [Validators.required, futureDateValidator]),
       cdcImage: new FormControl('', [Validators.required]),
       cdcImageName: new FormControl(''),
       cdcImageType: new FormControl(''),
-      cdcNo: new FormControl('', [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(15),
-        Validators.pattern(/^[A-Za-z0-9]+$/)
-      ]),
-      cdcIssuedPlace: new FormControl('', [Validators.required]),
-      cdcIssuedDate: new FormControl('', [Validators.required]),
-      cdcExpireDate: new FormControl('', [Validators.required]),
+      cdcNo: new FormControl('C', [Validators.required, Validators.maxLength(10), Validators.pattern(/^[Cc]\d+$/)]),
+      cdcIssuedPlace: new FormControl({ value: 'Colombo', disabled: true }, [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]),
+      cdcIssuedDate: new FormControl('', [Validators.required, notFutureDateValidator]),
+      cdcExpireDate: new FormControl('', [Validators.required, futureDateValidator]),
       yellowFeverImage: new FormControl('', [Validators.required]),
       yellowFeverImageName: new FormControl(''),
       yellowFeverImageType: new FormControl(''),
-      yellowFeverNo: new FormControl('', [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(15),
-        Validators.pattern(/^[A-Za-z0-9]+$/)
-      ]),
-      yellowFeverIssuedPlace: new FormControl('', [Validators.required]),
-      yellowFeverIssuedDate: new FormControl('', [Validators.required]),
-      yellowFeverExpireDate: new FormControl('', [Validators.required])
+      yellowFeverNo: new FormControl('AB', [Validators.required, Validators.maxLength(10), Validators.pattern(/^AB\d+$/i)]),
+      yellowFeverIssuedPlace: new FormControl({ value: 'Colombo', disabled: true }, [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]),
+      yellowFeverIssuedDate: new FormControl('', [Validators.required, notFutureDateValidator]),
+      yellowFeverExpireDate: new FormControl('', [Validators.required, futureDateValidator])
     });
   }
 
@@ -378,21 +397,25 @@ export class OtherDetailsRegistrationComponent {
     this.isSidFileSelected = false;
     this.otherDetailsRegistrationForm.setErrors = null!;
     this.otherDetailsRegistrationForm.updateValueAndValidity();
+    this.otherDetailsRegistrationForm.get('sidIssuedPlace')?.disable();
 
     this.previewUrlPp = null;
     this.isSPpFileSelected = false;
     this.otherDetailsRegistrationForm.setErrors = null!;
     this.otherDetailsRegistrationForm.updateValueAndValidity();
+    this.otherDetailsRegistrationForm.get('ppIssuedPlace')?.disable();
 
     this.previewUrlCdc = null;
     this.isCdcFileSelected = false;
     this.otherDetailsRegistrationForm.setErrors = null!;
     this.otherDetailsRegistrationForm.updateValueAndValidity();
+    this.otherDetailsRegistrationForm.get('cdcIssuedPlace')?.disable();
 
     this.previewUrlYf = null;
     this.isYfFileSelected = false;
     this.otherDetailsRegistrationForm.setErrors = null!;
     this.otherDetailsRegistrationForm.updateValueAndValidity();
+    this.otherDetailsRegistrationForm.get('yellowFeverIssuedPlace')?.disable();
   }
 
   public editData(data: any): void {

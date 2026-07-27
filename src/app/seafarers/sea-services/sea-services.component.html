@@ -15,20 +15,22 @@
           </mat-form-field>
           <mat-option *ngFor="let seafarers of seafarersDropdown" [value]="seafarers.id">{{ seafarers.sidNo }}</mat-option>
             </mat-select>
+          <mat-error *ngIf="seaServicesForm.get('sidNo')?.hasError('required')"> SID No is required. </mat-error>
             </mat-form-field>
-            <br>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Company Name</mat-label>
                 <input matInput placeholder="Company Name" formControlName="companyName">
+                <mat-error *ngIf="seaServicesForm.get('companyName')?.hasError('required')"> Company Name is required. </mat-error>
+                <mat-error *ngIf="seaServicesForm.get('companyName')?.hasError('pattern')"> Only letters and spaces. </mat-error>
               </mat-form-field>
-              <br>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Vessel Name</mat-label>
                 <input matInput placeholder="Vessel Name" formControlName="vesselName">
+                <mat-error *ngIf="seaServicesForm.get('vesselName')?.hasError('required')"> Vessel Name is required. </mat-error>
+                <mat-error *ngIf="seaServicesForm.get('vesselName')?.hasError('pattern')"> Letters Spaces / are only allowed. </mat-error>
             </mat-form-field>
-            <br>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label> Position </mat-label>
@@ -44,36 +46,41 @@
                   <mat-option value="Cook">Cook</mat-option>
                   <mat-option value="Electrician">Electrician</mat-option>
                 </mat-select>
+                <mat-error *ngIf="seaServicesForm.get('position')?.hasError('required')"> Position is required. </mat-error>
               </mat-form-field>
-              <br><br>
 
-            <mat-label > Vessel Type </mat-label> <br>
-                <mat-radio-group name="Vessel Type" formControlName="vesselType" >
-                <mat-radio-button value="Tanker" checked="true">Tanker</mat-radio-button>
-                <mat-radio-button value="Bulk">Bulk</mat-radio-button>
-                <mat-radio-button value="Cargo">Cargo</mat-radio-button>
-                <mat-radio-button value="Container">Container</mat-radio-button>
-                <mat-radio-button value="Passenger">Passenger</mat-radio-button>
-            </mat-radio-group> 
-            <br><br>
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label> Vessel Type </mat-label>
+              <mat-select formControlName="vesselType">
+                <mat-option value="Tanker">Tanker</mat-option>
+                <mat-option value="Bulk">Bulk Carrier</mat-option>
+                <mat-option value="General Cargo">General Cargo</mat-option>
+                <mat-option value="Reefer Cargo">Reefer Cargo</mat-option>
+                <mat-option value="Passenger">Passenger</mat-option>
+                <mat-option value="Container">Container</mat-option>
+              </mat-select>
+              <mat-error *ngIf="seaServicesForm.get('vesselType')?.hasError('required')"> Vessel type is required. </mat-error>
+            </mat-form-field>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Flag</mat-label>
                 <input matInput placeholder="Flag" formControlName="flag">
+                <mat-error *ngIf="seaServicesForm.get('flag')?.hasError('required')"> Vessel flag is required. </mat-error>
+                <mat-error *ngIf="seaServicesForm.get('flag')?.hasError('pattern')"> Only letters and spaces. </mat-error>
             </mat-form-field>
-            <br>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Gross Tonnage</mat-label>
                 <input matInput placeholder="GRT" formControlName="grt">
+                <mat-error *ngIf="seaServicesForm.get('grt')?.hasError('required')"> GRT is required. </mat-error>
+                <mat-error *ngIf="seaServicesForm.get('grt')?.hasError('pattern')"> Only letters are allowed. </mat-error>
             </mat-form-field>
-            <br>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>BHP (KW)</mat-label>
                 <input matInput placeholder="BHP" formControlName="bhp">
+                <mat-error *ngIf="seaServicesForm.get('bhp')?.hasError('pattern')"> Only letters are allowed. </mat-error>
             </mat-form-field>
-            <br>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label> Sign On Date </mat-label>
@@ -81,8 +88,9 @@
                 <mat-hint> MM/DD/YYYY </mat-hint>
                 <mat-datepicker-toggle matIconSuffix [for]="signOn"></mat-datepicker-toggle>
                 <mat-datepicker #signOn></mat-datepicker>
+                <mat-error *ngIf="seaServicesForm.get('signOn')?.hasError('required')"> SignOn Date is required. </mat-error>
+                <mat-error *ngIf="seaServicesForm.get('signOn')?.hasError('futureDate')"> Please enter the valid Signon Date. </mat-error>
             </mat-form-field>
-            <br>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label> Sign Off Date </mat-label>
@@ -90,14 +98,14 @@
                 <mat-hint> MM/DD/YYYY </mat-hint>
                 <mat-datepicker-toggle matIconSuffix [for]="signOff"></mat-datepicker-toggle>
                 <mat-datepicker #signOff></mat-datepicker>
+                <mat-error *ngIf="seaServicesForm.get('signOff')?.hasError('required')"> SignOff Date is required. </mat-error>
+                <mat-error *ngIf="seaServicesForm.get('signOff')?.hasError('futureDate')"> Please enter the valid Signoff Date. </mat-error>
             </mat-form-field>
-            <br>
 
             <mat-form-field appearance="outline" class="example-full-width">
-                <mat-label>Total Months</mat-label>
-                <input matInput type="number" matInput placeholder="Total Months" formControlName="totalMonths" [min]="1" [max]="100">
+                <mat-label>Total Service</mat-label>
+                <input matInput formControlName="totalMonths" readonly>
             </mat-form-field>
-            <br>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label> Sign Off Reason </mat-label>
@@ -108,7 +116,6 @@
                   <mat-option value="Other">Other</mat-option>
                 </mat-select>
             </mat-form-field>
-            <br><br>
 
             <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" > {{saveButtonLabel}} </button>
             <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" > Reset </button>

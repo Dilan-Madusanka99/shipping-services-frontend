@@ -26,8 +26,8 @@
           </mat-form-field>
           <mat-option *ngFor="let seafarers of seafarersDropdown" [value]="seafarers.id">{{ seafarers.sidNo }}</mat-option>
         </mat-select>
+        <mat-error *ngIf="certificatesRegistrationForm.get('sidNo')?.hasError('required')"> SID No is required. </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Certificate Name</mat-label>
@@ -49,14 +49,13 @@
           <mat-option value="6G">Fitter (6G)</mat-option>
           <mat-option value="LR">Lloyd Certificate (LR)</mat-option>
         </mat-select>
+        <mat-error *ngIf="certificatesRegistrationForm.get('cName')?.hasError('required')"> Certificate is required. </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Certificate No</mat-label>
         <input matInput placeholder="Certificate No" formControlName="cNo" />
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Place</mat-label>
@@ -68,8 +67,8 @@
           <mat-option value="UNK">UNK Global Maritime Institiute</mat-option>
           <mat-option value="Ministry">Shipping Ministry</mat-option>
         </mat-select>
+        <mat-error *ngIf="certificatesRegistrationForm.get('cIssuedPlace')?.hasError('required')"> Institue is required. </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Issued Date</mat-label>
@@ -77,8 +76,9 @@
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="cIssuedDate"></mat-datepicker-toggle>
         <mat-datepicker #cIssuedDate></mat-datepicker>
+        <mat-error *ngIf="certificatesRegistrationForm.get('cIssuedDate')?.hasError('required')"> Issued Date is required. </mat-error>
+        <mat-error *ngIf="certificatesRegistrationForm.get('cIssuedDate')?.hasError('futureDate')"> Issued Date cannot be in the future. </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Expired Date</mat-label>
@@ -86,8 +86,9 @@
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="cExpiredDate"></mat-datepicker-toggle>
         <mat-datepicker #cExpiredDate></mat-datepicker>
+        <mat-error *ngIf="certificatesRegistrationForm.get('cExpiredDate')?.hasError('required')"> Expired Date is required </mat-error>
+        <mat-error *ngIf="certificatesRegistrationForm.get('cExpiredDate')?.hasError('pastDate')"> Please enter valid certificate date </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Verification Status </mat-label>

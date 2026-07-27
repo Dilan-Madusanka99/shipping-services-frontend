@@ -16,7 +16,6 @@
           <mat-option *ngFor="let seafarers of seafarersDropdown" [value]="seafarers.id">{{ seafarers.sidNo }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>IMO No</mat-label>
@@ -27,19 +26,16 @@
           <mat-option *ngFor="let vessel of vesselDropdown" [value]="vessel.id">{{ vessel.imoNo }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Vessel Name</mat-label>
         <input matInput placeholder="Vessel Name" formControlName="vesselName" />
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Complaintor Name</mat-label>
         <input matInput placeholder="Complaintor Name" formControlName="complaintorName" />
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Complaint Date</mat-label>
@@ -48,7 +44,6 @@
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Complaint Type</mat-label>
@@ -61,14 +56,11 @@
           <mat-option value="Other">other</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Complaint</mat-label>
         <input matInput placeholder="Complaint" formControlName="complaint" />
       </mat-form-field>
-      <br />
-      <br />
 
       <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled">
         {{ saveButtonLabel }}

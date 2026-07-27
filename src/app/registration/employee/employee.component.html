@@ -10,6 +10,7 @@
       <div class="form-field">
         <label for="image">Upload Image</label>
         <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+        <mat-error *ngIf="(employeeForm.get('profileImage')?.touched || submitted) && employeeForm.get('profileImage')?.hasError('required')"> Profile image is required. </mat-error>
       </div>
 
       <div *ngIf="previewUrl">
@@ -22,58 +23,38 @@
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Emp No.</mat-label>
         <input matInput placeholder="Emp No." formControlName="empNo" />
-        <mat-error *ngIf="employeeForm.get('empNo')?.hasError('required') &&
-                            (employeeForm.get('empNo')?.touched || submitted)">
-            Required (Ex.E001)
-          </mat-error>
+          <mat-error *ngIf="employeeForm.get('empNo')?.hasError('required')"> Employee Number is required. </mat-error>
+          <mat-error *ngIf="employeeForm.get('empNo')?.hasError('minlength')"> Must be at least 4 characters. </mat-error>
+          <mat-error *ngIf="employeeForm.get('empNo')?.hasError('maxlength')"> Cannot exceed 10 characters. </mat-error>
+          <mat-error *ngIf="employeeForm.get('empNo')?.hasError('pattern')"> Can contain only letters and numbers.</mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>First Name</mat-label>
         <input matInput placeholder="First Name" formControlName="firstName" />
-          <mat-error *ngIf="employeeForm.get('firstName')?.invalid && (employeeForm.get('firstName')?.touched || submitted)">
-            {{
-              employeeForm.get('firstName')?.hasError('required') ? 'First Name is Required.'
-                : employeeForm.get('firstName')?.hasError('pattern') ? 'Can contain letters only.'
-                : ''
-            }}
-          </mat-error>
+          <mat-error *ngIf="employeeForm.get('firstName')?.hasError('required')"> First Name is required. </mat-error>
+          <mat-error *ngIf="employeeForm.get('firstName')?.hasError('pattern')"> Only letters and spaces. </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Last Name</mat-label>
         <input matInput placeholder="Last Name" formControlName="lastName" />
-          <mat-error *ngIf="employeeForm.get('lastName')?.invalid && (employeeForm.get('lastName')?.touched || submitted)">
-            {{
-              employeeForm.get('lastName')?.hasError('required') ? 'Last Name is Required.'
-                : employeeForm.get('lastName')?.hasError('pattern') ? 'Can contain letters only.'
-                : ''
-            }}
-          </mat-error>
+          <mat-error *ngIf="employeeForm.get('lastName')?.hasError('required')"> Last Name is required. </mat-error>
+          <mat-error *ngIf="employeeForm.get('lastName')?.hasError('pattern')"> Only letters and spaces. </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Calling Name</mat-label>
         <input matInput placeholder="Calling Name" formControlName="callingName" />
-          <mat-error *ngIf="employeeForm.get('callingName')?.hasError('pattern') &&
-                            (employeeForm.get('callingName')?.touched || submitted)">
-            Can contain letters only.
-          </mat-error>
+          <mat-error *ngIf="employeeForm.get('lastName')?.hasError('pattern')"> Only letters and spaces. </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>NIC</mat-label>
         <input matInput placeholder="NIC" formControlName="nic" />
-        <mat-error *ngIf="employeeForm.get('nic')?.hasError('required') &&
-                            (employeeForm.get('nic')?.touched || submitted)">
-            Required (Standard format)
-          </mat-error>
+          <mat-error *ngIf="employeeForm.get('nic')?.hasError('required')"> NIC is required. </mat-error>
+          <mat-error *ngIf="employeeForm.get('nic')?.hasError('pattern')"> Enter a valid NIC number. </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>D O B</mat-label>
@@ -81,8 +62,8 @@
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="employeeForm.get('dob')?.hasError('underAge')"> Must be at least 18 years old. </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Select a Role</mat-label>
@@ -93,55 +74,40 @@
           <mat-option value="Shipping Executive">Shipping Executive</mat-option>
           <mat-option value="Accounts & HR Executive">Accounts & HR Executive</mat-option>
         </mat-select>
-        <mat-error *ngIf="employeeForm.get('roles')?.hasError('required') &&
-                            (employeeForm.get('roles')?.touched || submitted)">
-            Role is Required
-          </mat-error>
+          <mat-error *ngIf="employeeForm.get('roles')?.hasError('required')"> Role is required. </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Contact No.(Mobile)</mat-label>
         <input matInput placeholder="Contact No." formControlName="contactNo" />
-        <mat-error *ngIf="employeeForm.get('contactNo')?.hasError('required') &&
-                            (employeeForm.get('contactNo')?.touched || submitted)">
-            Contact No is Required
-          </mat-error>
+          <mat-error *ngIf="employeeForm.get('contactNo')?.hasError('required')"> Contact Number is required. </mat-error>
+          <mat-error *ngIf="employeeForm.get('contactNo')?.hasError('pattern')"> Valid Sri Lankan mobile number. </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Email</mat-label>
         <input matInput placeholder="Email" formControlName="email" />
-        <mat-error *ngIf="employeeForm.get('email')?.hasError('required') &&
-                            (employeeForm.get('email')?.touched || submitted)">
-            Email is Required.
-          </mat-error>
+          <mat-error *ngIf="employeeForm.get('email')?.hasError('required')"> Email is required. </mat-error>
+          <mat-error *ngIf="employeeForm.get('email')?.hasError('pattern')"> Enter a valid email address. </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Address</mat-label>
         <input matInput placeholder="Address" formControlName="address" />
+          <mat-error *ngIf="(employeeForm.get('address')?.touched || submitted) && employeeForm.get('address')?.hasError('pattern')">Enter valid Address. </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Emergancy Contact Name</mat-label>
         <input matInput placeholder="Emergancy Contact Name" formControlName="emergencyContactName" />
-        <span class="text-danger" 
-            *ngIf="(employeeForm.get('emergencyContactName').touched || submitted) && employeeForm.get('emergencyContactName').errors && employeeForm.get('emergencyContactName').errors['required'] ">
-             Address is Required
-        </span>
+          <mat-error *ngIf="employeeForm.get('emergencyContactName')?.hasError('pattern')"> Only letters and spaces. </mat-error>
       </mat-form-field>
-      <br />
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Emergancy Contact No.</mat-label>
         <input matInput placeholder="Emergancy Contact No." formControlName="emergencyContactNo" />
+          <mat-error *ngIf="(employeeForm.get('emergencyContactNo')?.touched || submitted) && employeeForm.get('emergencyContactNo')?.hasError('pattern')">Enter a valid contact number.</mat-error>
       </mat-form-field>
-      <br />
-      <br />
 
       <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled">
         {{ saveButtonLabel }}
@@ -219,3 +185,13 @@
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
   </div>
 </div>
+
+
+
+  <!-- <mat-error *ngIf="employeeForm.get('dob')?.hasError('required')">
+    Date of Birth is required.
+  </mat-error>
+
+  <mat-error *ngIf="employeeForm.get('dob')?.hasError('underAge')">
+    Employee must be at least 18 years old.
+  </mat-error> -->

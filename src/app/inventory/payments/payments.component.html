@@ -15,7 +15,6 @@
           Payment No is Required
         </span>           
         </mat-form-field>
-        <br>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Item No</mat-label>
@@ -26,13 +25,11 @@
           <mat-option *ngFor="let itm of itemDropdown" [value]="itm.id">{{ itm.no }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Item Name </mat-label>
           <input matInput placeholder="Item Name" formControlName="itemName">
         </mat-form-field>
-        <br>
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Supplier Name</mat-label>
@@ -43,27 +40,23 @@
             <mat-option *ngFor="let sup of supplierDropdown" [value]="sup.id">{{ sup.supplierName }}</mat-option>
           </mat-select>
         </mat-form-field>
-        <br />
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label> Quantity </mat-label>
           <input matInput type="number" matInput placeholder="Qty  " formControlName="quantity" [min]="1" [max]="100">
         </mat-form-field>
-        <br>
 
         <mat-label> Quantity Measurement </mat-label> <br>
-          <mat-radio-group name="qtyMeasure" formControlName="qtyMeasure">
+          <mat-radio-group name="qtyMeasure" formControlName="qtyMeasure" class="example-full-width">
             <mat-radio-button value="Kg" checked="true">Kg</mat-radio-button>
             <mat-radio-button value="G">G</mat-radio-button>
             <mat-radio-button value="Psc">Pcs</mat-radio-button>
           </mat-radio-group>
-        <br><br>
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label> Amount (Rs:)  </mat-label>
           <input matInput placeholder="(Rs:)" formControlName="amount">
         </mat-form-field>
-        <br>
         
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Payment Date </mat-label>
@@ -72,7 +65,6 @@
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
-        <br>
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Payment Status  </mat-label>
@@ -81,7 +73,6 @@
             <mat-option value="Not Paid">Not Paid</mat-option>
           </mat-select>
         </mat-form-field>
-        <br> 
         
         <div class="form-field">
             <label for="image">Upload Item Image</label>
@@ -92,7 +83,7 @@
             <p>Image Preview:</p>
             <img [src]="previewUrl" alt="Image preview" width="200" />
         </div>
-        <br><br>
+        <br>
 
         <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" > {{saveButtonLabel}} </button>
         <button type="reset" mat-raised-button color="secondary" class="form-button" (click)="resetData()" > Reset </button>

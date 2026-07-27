@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -20,13 +20,50 @@ export interface PeriodicElement {
 
 const ELEMENT_DATA: any[] = [{ profileImage: 'Image', sidno: '100', position: 'AB', surname: 'Fernando', mobile: '076', appliedDate: '07/04/2025' }];
 
+// available date validator (only future dates)
+export function futureDateValidator(control: AbstractControl): ValidationErrors | null {
+
+  if (!control.value) {
+    return null;
+  }
+
+  const selectedDate = new Date(control.value);
+  const today = new Date();
+
+  // Remove time part
+  selectedDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  return selectedDate >= today ? null : { pastDate: true };
+}
+
+// DOB validation (above 18 years)
+  export function ageValidator(control: AbstractControl): ValidationErrors | null {
+
+    if (!control.value) {
+      return null;
+    }
+
+    const dob = new Date(control.value);
+    const today = new Date();
+
+    let age = today.getFullYear() - dob.getFullYear();
+    const monthDiff = today.getMonth() - dob.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+      age--;
+    }
+
+    return age >= 18 ? null : { underAge: true };
+  }
+
 @Component({
   selector: 'app-seafarers-registration',
   standalone: false,
   templateUrl: './seafarers-registration.component.html',
   styleUrl: './seafarers-registration.component.scss',
   providers: [provideNativeDateAdapter()],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SeafarersRegistrationComponent {
   seafarersForm: FormGroup;
@@ -54,68 +91,33 @@ export class SeafarersRegistrationComponent {
     private sanitizer: DomSanitizer // Photo upload [start]
   ) {
     this.seafarersForm = this.fb.group({
-      // Photo upload [start]
+
       profileImage: new FormControl('', [Validators.required]),
       profileImageName: new FormControl(''),
       profileImageType: new FormControl(''),
-      // Photo upload [end]
-      sidNo: new FormControl('', [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(15),
-        Validators.pattern(/^[A-Za-z0-9]+$/)
-      ]), // letters and numbers only
+      sidNo: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.pattern(/^[A-Za-z0-9]+$/) ]), // letters and numbers only
       position: new FormControl('', [Validators.required]),
-      appliedDate: new FormControl('', [Validators.required]),
-      availableDate: new FormControl('', [Validators.required]), // Validators.pattern(/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/)
-      surname: new FormControl('', [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(100),
-        Validators.pattern(/^[A-Za-z .'-]+$/)
-      ]), // letters , - space (name)
-      otherNames: new FormControl('', [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(100),
-        Validators.pattern(/^[A-Za-z .'-]+$/)
-      ]),
-      dob: new FormControl('', [Validators.required]),
-      birthPlace: new FormControl('', [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(15),
-        Validators.pattern(/^[A-Za-z .'-]+$/)
-      ]),
-      nic: new FormControl('', [Validators.required, Validators.pattern(/^([0-9]{9}[vVxX]|[0-9]{12})$/)]),
-      religion: new FormControl('', [Validators.required]),
-      marriedStatus: new FormControl('', [Validators.required]),
+      // appliedDate: new FormControl('', [Validators.required]),
+      appliedDate: new FormControl({value: new Date(), disabled: true}, [Validators.required]),
+      availableDate: new FormControl('', [Validators.required, futureDateValidator]),
+      surname: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/) ]), // letters , spaces
+      otherNames: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/) ]),
+      dob: new FormControl('', [ageValidator]),
+      birthPlace: new FormControl('', [ Validators.pattern(/^[A-Za-z\s]+$/) ]), // only letters, spaces
+      nic: new FormControl('', [Validators.pattern(/^([0-9]{9}[vVxX]|[0-9]{12})$/)]),
+      religion: new FormControl('', []),
+      marriedStatus: new FormControl('', []),
       gender: new FormControl('', [Validators.required]),
-      noOfChildren: new FormControl('', [Validators.required, Validators.min(0), Validators.max(10), Validators.pattern(/^\d+$/)]), //min & max & only digits (whole digit)
-      address: new FormControl('', [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(100),
-        Validators.pattern(/^[a-zA-Z0-9\s,.'\-\/#]*$/)
-      ]),
-      home: new FormControl('', [Validators.pattern(/^0\d{9}$/)]),
-      mobile: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      kinName: new FormControl('', [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(100),
-        Validators.pattern(/^[A-Za-z .'-]+$/)
-      ]), // letters only
+      noOfChildren: new FormControl('', [Validators.min(0), Validators.max(10), Validators.pattern(/^\d+$/)]), //& only digits (whole digit)
+      address: new FormControl('', [Validators.pattern(/^[a-zA-Z0-9\s,.'\-\/#]*$/)]), // letters, numbers, /-,.#'
+      home: new FormControl('', [Validators.pattern(/^0\d{9}$/)]), // first digit must be 0, others 0-9
+      mobile: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]), // 10 digit start with 07
+      email: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/)]),
+      kinName: new FormControl('', [Validators.pattern(/^[A-Za-z\s]+$/)]),
       kinRelationship: new FormControl('', [Validators.required]),
-      kinAddress: new FormControl('', [
-        Validators.required,
-        Validators.minLength(0),
-        Validators.maxLength(100),
-        Validators.pattern(/^[a-zA-Z0-9\s,.'\-\/#]*$/)
-      ]),
-      kinMobile: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]),
-      kinEmail: new FormControl('', [Validators.email]),
+      kinAddress: new FormControl('', [ Validators.pattern(/^[a-zA-Z0-9\s,.'\-\/#]*$/) ]),
+      kinMobile: new FormControl('', [Validators.pattern(/^07[0-9]{8}$/)]),
+      kinEmail: new FormControl('', [Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/)]),
       englishLanguage: new FormControl('')
     });
   }
@@ -177,7 +179,9 @@ export class SeafarersRegistrationComponent {
     const seafarersFormData = new FormData();
     seafarersFormData.append(
       'seafarersForm',
-      new Blob([JSON.stringify(this.seafarersForm.value)], {
+      // new Blob([JSON.stringify(this.seafarersForm.value)], {
+      new Blob([JSON.stringify(this.seafarersForm.getRawValue())],
+      {
         type: 'application/json'
       })
     );
@@ -191,10 +195,10 @@ export class SeafarersRegistrationComponent {
     } else {
       const imageBlob = this.base64ToBlob(
         this.seafarersForm.get('profileImage')?.value,
-        this.seafarersForm.get('profileImageImageType')?.value
+        this.seafarersForm.get('profileImageType')?.value
       );
-      const file = new File([imageBlob], this.seafarersForm.get('profileImageImageName')?.value, {
-        type: this.seafarersForm.get('profileImageImageType')?.value
+      const file = new File([imageBlob], this.seafarersForm.get('profileImageName')?.value, {
+        type: this.seafarersForm.get('profileImageType')?.value
       });
       seafarersFormData.append('profileImage', file, file.name);
     }
@@ -228,7 +232,7 @@ export class SeafarersRegistrationComponent {
       console.log('Form Submitted');
       console.log(this.seafarersForm.value);
 
-      // if(!this.seafarersForm.valid) return;
+      if(!this.seafarersForm.valid) return;
       if (this.mode === 'add') {
         this.seafarersService
           .serviceCall(
@@ -275,16 +279,38 @@ export class SeafarersRegistrationComponent {
     }
   }
 
-  public resetData(): void {
-    this.seafarersForm.reset();
-    this.saveButtonLabel = 'Save';
-    this.seafarersForm.enable();
-    this.isButtonDisabled = false;
+  // public resetData(): void {
+  //   this.seafarersForm.reset();
+  //   this.saveButtonLabel = 'Save';
+  //   this.seafarersForm.enable();
+  //   this.isButtonDisabled = false;
 
-    this.previewUrl = null;
-    this.isFileSelected = false;
-    this.seafarersForm.setErrors = null!;
-    this.seafarersForm.updateValueAndValidity();
+  //   this.previewUrl = null;
+  //   this.isFileSelected = false;
+  //   this.seafarersForm.setErrors = null!;
+  //   this.seafarersForm.updateValueAndValidity();
+  // }
+
+  public resetData(): void {
+  const appliedDate = this.seafarersForm.get('appliedDate')?.value; // saved current applied date
+  this.seafarersForm.patchValue({appliedDate: appliedDate}); // Restore the previous Applied Date
+  this.seafarersForm.get('appliedDate')?.disable();
+
+  this.seafarersForm.reset();
+
+  this.saveButtonLabel = 'Save';
+  this.mode = 'add';
+  this.selectedData = null;
+
+  this.seafarersForm.enable();
+  this.isButtonDisabled = false;
+
+  // Reset image preview
+  this.previewUrl = null;
+  this.isFileSelected = false;
+
+  this.seafarersForm.setErrors(null);
+  this.seafarersForm.updateValueAndValidity();
   }
 
   public editData(data: any): void {
@@ -299,10 +325,11 @@ export class SeafarersRegistrationComponent {
 
     this.seafarersForm.patchValue({
       noOfChildren: Number(data.noOfChildren),
-      appliedDate: new Date(data.appliedDate).toISOString().substring(0, 10),
+      // appliedDate: new Date(data.appliedDate).toISOString().substring(0, 10),
       availableDate: new Date(data.availableDate).toISOString().substring(0, 10),
-      dob: new Date(data.dob).toISOString().substring(0, 10)
+      dob: new Date(data.dob).toISOString().substring(0, 10),
     });
+    this.seafarersForm.patchValue({appliedDate: new Date()});
   }
 
   public deleteData(data: any): void {

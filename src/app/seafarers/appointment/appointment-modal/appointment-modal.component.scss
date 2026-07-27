@@ -27,11 +27,52 @@
   z-index: 1;
 }
 
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Circle icon like your UI */
+.header-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #EAF2FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-icon mat-icon {
+  color: #2563eb;
+  font-size: 22px;
+}
+
+/* Text */
+.header-text {
+  display: flex;
+  flex-direction: column;
+}
+
 .modal-title {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
+  margin: 0;
   color: var(--text);
 }
+
+.modal-subtitle {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 2px 0 0;
+}
+
+// .modal-title {
+//   font-size: 16px;
+//   font-weight: 600;
+//   color: var(--text);
+// }
 
 .icon-btn {
   display: flex;
@@ -152,6 +193,17 @@
   background: var(--surface);
 }
 
+.info-box{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:#EEF4FF;
+  color:#365CB8;
+  border-radius:10px;
+  padding:15px;
+  font-size:14px;
+}
+
 .btn-secondary {
   padding: 9px 18px;
   border: 1px solid var(--border);
@@ -204,11 +256,12 @@
       }
 
       // Remove Material outline border
-      .mdc-notched-outline__leading,
-      .mdc-notched-outline__notch,
-      .mdc-notched-outline__trailing {
-        border: none !important;
-      }
+      // .mdc-notched-outline__leading,
+      // .mdc-notched-outline__notch,
+      // .mdc-notched-outline__trailing {
+      //   border: none !important;
+      // }
+      
 
       // Remove internal padding
       .mat-mdc-form-field-infix {

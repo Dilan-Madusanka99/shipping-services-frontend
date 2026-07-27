@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -19,7 +19,40 @@ export interface PeriodicElement {
   status: String;
 }
 
-const ELEMENT_DATA: any[] = [{ sidNo: 'S123', position: 'AB', vesselName: 'souselas', signOnDate: '8/7/2025', signOffDate: '8/5/2026', status: 'active' }];
+const ELEMENT_DATA: any[] = [{sidNo: 'S123', position: 'AB', vesselName: 'souselas', signOnDate: '8/7/2025', signOffDate: '8/5/2026', status: 'active' }];
+
+// validator for Sign on dates (shoud not be future one)
+export function notFutureDateValidator(control: AbstractControl): ValidationErrors | null {
+
+  if (!control.value) {
+    return null;
+  }
+
+  const selectedDate = new Date(control.value);
+  const today = new Date();
+
+  // Remove time
+  selectedDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  return selectedDate <= today ? null : { futureDate: true };
+}
+
+// validator for Sign off dates (shoud be future one)
+export function futureDateValidator(control: AbstractControl): ValidationErrors | null {
+
+  if (!control.value) {
+    return null;
+  }
+
+  const selectedDate = new Date(control.value);
+  const today = new Date();
+
+  selectedDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  return selectedDate > today ? null : { pastDate: true };
+}
 
 @Component({
   selector: 'app-onboard-crew-registration',
@@ -63,9 +96,9 @@ export class OnboardCrewRegistrationComponent {
       sidNo: new FormControl('', [Validators.required]),
       position: new FormControl('', [Validators.required]),
       imoNo: new FormControl('', [Validators.required]),
-      vesselName: new FormControl('', [Validators.required]),
-      signOnDate: new FormControl('', [Validators.required]),
-      signOffDate: new FormControl('', [Validators.required]),
+      vesselName: new FormControl({value: '', disabled: true}),
+      signOnDate: new FormControl('', [Validators.required, notFutureDateValidator]),
+      signOffDate: new FormControl('', [Validators.required, futureDateValidator]),
       status: new FormControl('', [Validators.required])
     });
   }
@@ -100,7 +133,8 @@ export class OnboardCrewRegistrationComponent {
         response.forEach((seafarers: any) => {
           const seafarersData = {
             id: seafarers.id,
-            sidNo: seafarers.sidNo
+            sidNo: seafarers.sidNo,
+            profileImage: seafarers.profileImage
           };
           this.allSeafarersDropdown.push(seafarersData);
         });
@@ -189,7 +223,7 @@ export class OnboardCrewRegistrationComponent {
       console.log('Form Submitted');
       console.log(this.onboardCrewRegistrationForm.value);
 
-      // if(!this.onboardCrewRegistrationForm.valid) return;
+      if(!this.onboardCrewRegistrationForm.valid) return;
       if (this.mode === 'add') {
         this.onboardCrewRegistrationService.serviceCall(this.onboardCrewRegistrationForm.value).subscribe({
           next: (response: any) => {
@@ -233,6 +267,7 @@ export class OnboardCrewRegistrationComponent {
     this.onboardCrewRegistrationForm.reset();
     this.saveButtonLabel = 'Save';
     this.onboardCrewRegistrationForm.enable();
+    this.onboardCrewRegistrationForm.get('vesselName')?.disable();
     this.isButtonDisabled = false;
   }
 
