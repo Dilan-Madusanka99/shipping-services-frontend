@@ -4,6 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { finalize } from 'rxjs/operators';
 import { JobPostingServiceService } from 'src/app/services/vessels/job-posting-service.service';
 import { Job } from '../job-vacancies-model';
+import { HttpService } from 'src/app/services/http.service';
+import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
 
 export interface JobDetailsDialogData {
   job: Job & { imageSrc?: string | null };
@@ -31,6 +33,8 @@ export class JobDetailsDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<JobDetailsDialogComponent>,
     private jobService: JobPostingServiceService,
+    private httpService: HttpService,
+    private _messageService: MessageServiceService,
     private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: JobDetailsDialogData
   ) {
@@ -52,23 +56,38 @@ export class JobDetailsDialogComponent implements OnInit {
 
     this.applying = true;
 
+
+    console.log(this.data.job);
+
+    const saveObject = {
+      seafarerId: this.httpService.getUserId(),
+      seafarerName: this.httpService.getLoginNameFromCache(),
+      jobId: this.data.job.id,
+      position: this.data.job.position,
+      vesselName: this.data.job.vesselName,
+      vesselType: this.data.job.vesselType,
+      status: 'PENDING'
+    };
+
     /* Save to backend the data (Job ID, Seafarer ID, User ID, Status)*/
-    // this.jobService.apply({ jobId: this.job.id })
-    //   .pipe(finalize(() => this.applying = false))
-    //   .subscribe({
-    //     next: () => {
-    //       this.applied = true;
-    //       // Close and let the list show the snackbar + badge the card
-    //       this.dialogRef.close({ applied: true });
-    //     },
-    //     error: () => {
-    //       this.snackBar.open(
-    //         'Could not submit your application. Please try again.',
-    //         'OK',
-    //         { duration: 4000 }
-    //       );
-    //     }
-    //   });
+    this.jobService.apply(saveObject)
+      .pipe(finalize(() => this.applying = false))
+      .subscribe({
+        next: () => {
+          this.applied = true;
+          // Close and let the list show the snackbar + badge the card
+          this._messageService.showSuccess('You have successfully applied to the job! We will contact you soon!');
+          this.dialogRef.close({ applied: true });
+        },
+        error: () => {
+            this._messageService.showError('Could not submit your application. Please try again.');
+          // this.snackBar.open(
+          //   'Could not submit your application. Please try again.',
+          //   'OK',
+          //   { duration: 4000 }
+          // );
+        }
+      });
   }
 
   close(): void {
