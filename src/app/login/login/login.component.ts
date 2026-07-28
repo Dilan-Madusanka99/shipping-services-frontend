@@ -55,8 +55,8 @@ export class LoginComponent implements OnInit {
       users: new FormControl('', [Validators.required]),
       firstName: new FormControl({ value: '', disabled: true }),
       lastName: new FormControl({ value: '', disabled: true }),
-      userName: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required]),
+      userName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z.]+$/)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(5), Validators.pattern(/^[0-9]+$/)]),
       role: new FormControl({ value: '', disabled: true })
     });
   }

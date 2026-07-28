@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -23,6 +23,23 @@ export interface PeriodicElement {
 const ELEMENT_DATA: any[] = [ 
   {paymentImage: 'image', paymentNo: '001', supplierName: 'fish city', amount: '10000', paymentDate: '8/7/2025', paymentStatus: 'paid'},
 ]; 
+
+// validator for Payment Date (shoud not be future one)
+export function notFutureDateValidator(control: AbstractControl): ValidationErrors | null {
+
+  if (!control.value) {
+    return null;
+  }
+
+  const selectedDate = new Date(control.value);
+  const today = new Date();
+
+  // Remove time
+  selectedDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  return selectedDate <= today ? null : { futureDate: true };
+}
 
 @Component({
   selector: 'app-payments',
@@ -70,16 +87,16 @@ export class PaymentsComponent {
       private supplierRegistrationService: SupplierRegistrationService
       ) {
         this.paymentsForm = this.fb.group({
-          paymentNo: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(10), Validators.pattern(/^[A-Za-z0-9]+$/)]),
+          paymentNo: new FormControl('', [Validators.required, Validators.pattern(/^[Pp][0-9]{3}$/)]),
           itemNo : new FormControl('', [Validators.required]),
-          itemName: new FormControl('', [Validators.required]),
+          itemName: new FormControl({value: '', disabled: true}),
           supplierName : new FormControl('', [Validators.required]),
-          quantity : new FormControl('', [Validators.required, Validators.min(1)]),
+          quantity : new FormControl('', [Validators.required, Validators.min(1), Validators.max(100)]),
           qtyMeasure : new FormControl('', [Validators.required]),
-          amount : new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]), // numbers & .
-          paymentDate: new FormControl('', [Validators.required,]),
+          amount : new FormControl('', [Validators.required, Validators.min(1), Validators.pattern(/^\d+(\.\d+)?$/)]), // numbers & . min 1
+          paymentDate: new FormControl('', [Validators.required, notFutureDateValidator]),
           paymentStatus : new FormControl('', [Validators.required]),
-          paymentImage: new FormControl(''),
+          paymentImage: new FormControl('', [Validators.required]),
           paymentImageName: new FormControl(''),
           paymentImageType: new FormControl('')
         });
@@ -271,6 +288,7 @@ export class PaymentsComponent {
       this.saveButtonLabel = 'Save';
       this.paymentsForm.enable();
       this.isButtonDisabled = false;
+      this.paymentsForm.get('itemName')?.disable();
 
       this.previewUrl = null;
       this.isFileSelected = false;

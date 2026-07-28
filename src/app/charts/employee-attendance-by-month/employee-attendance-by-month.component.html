@@ -2,6 +2,41 @@
   <div class="charts-grid">
     <div class="chart-card">
       <h3>Monthly Employee Attendance</h3>
+
+<div class="filter-section">
+
+  <mat-form-field appearance="outline">
+    <mat-label>Select Month</mat-label>
+
+    <mat-select
+      [(value)]="selectedMonth"
+      (selectionChange)="filterChanged()">
+
+      <mat-option *ngFor="let month of months"
+                  [value]="month.value">
+        {{ month.name }}
+      </mat-option>
+
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Select Year</mat-label>
+
+    <mat-select
+      [(value)]="selectedYear"
+      (selectionChange)="filterChanged()">
+
+      <mat-option *ngFor="let year of years"
+                  [value]="year">
+        {{ year }}
+      </mat-option>
+
+    </mat-select>
+  </mat-form-field>
+
+</div>
+
       <apx-chart
         [series]="employeeAttendanceByMonthOptions.series"
         [chart]="employeeAttendanceByMonthOptions.chart"

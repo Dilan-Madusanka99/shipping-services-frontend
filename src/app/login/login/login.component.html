@@ -14,6 +14,7 @@
           </mat-form-field>
           <mat-option *ngFor="let emp of employeeDropdown" [value]="emp.id">{{ emp.name }}</mat-option>
         </mat-select>
+      <mat-error *ngIf="LoginForm.get('users')?.hasError('required')"> User is required. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
@@ -29,10 +30,8 @@
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>User Name</mat-label>
         <input matInput placeholder="User Name" formControlName="userName" />
-        <span class="text-danger" 
-          *ngIf="(LoginForm.get('userName').touched || submitted) && LoginForm.get('userName').errors && LoginForm.get('userName').errors['required'] ">
-          User Name is Required
-        </span> 
+        <mat-error *ngIf="LoginForm.get('userName')?.hasError('required')">User Name is required.</mat-error>
+        <mat-error *ngIf="LoginForm.get('userName')?.hasError('pattern')">Letters and periods (.) Only</mat-error>
       </mat-form-field>
 
       <!-- password -->
@@ -40,16 +39,19 @@
         <mat-label>Password</mat-label>
         <input matInput [type]="hide ? 'password' : 'text'" placeholder="Enter password" formControlName="password" />
         <button
-          type="button"
-          mat-icon-button
-          matSuffix
-          (click)="hide = !hide"
-          [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hide"
-        >
+          type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" >
           <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
+        <mat-error *ngIf="LoginForm.get('password')?.hasError('required')"> Password is required. </mat-error>
+        <mat-error *ngIf="LoginForm.get('password')?.hasError('minlength')"> Minimum 3 digits are required. </mat-error>
+        <mat-error *ngIf="LoginForm.get('password')?.hasError('maxlength')"> Maximum 5 digits are allowed. </mat-error>
+        <mat-error *ngIf="LoginForm.get('password')?.hasError('pattern')"> Only numbers are allowed. </mat-error>
       </mat-form-field>
+
+     <!-- Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#_-])[A-Za-z\d@$!%*?&.#_-]{8,20}$/)
+    <mat-error *ngIf="LoginForm.get('password')?.hasError('pattern')">
+      Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.
+    </mat-error> -->
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Roles</mat-label>

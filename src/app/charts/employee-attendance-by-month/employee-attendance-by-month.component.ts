@@ -12,18 +12,45 @@ import { MessageServiceService } from 'src/app/services/message-service/message-
 export class EmployeeAttendanceByMonthComponent {
   @ViewChild('chart') chart: ChartComponent;
   employeeAttendanceByMonthOptions: any = {};
+  selectedMonth = new Date().getMonth() + 1;
+  selectedYear = new Date().getFullYear();
+  years: number[] = [];
+  
+months = [
+  {name:'January',value:1},
+  {name:'February',value:2},
+  {name:'March',value:3},
+  {name:'April',value:4},
+  {name:'May',value:5},
+  {name:'June',value:6},
+  {name:'July',value:7},
+  {name:'August',value:8},
+  {name:'September',value:9},
+  {name:'October',value:10},
+  {name:'November',value:11},
+  {name:'December',value:12}
+];
 
   constructor(
     private commonDataService: CommonDataServiceService,
     private messageService: MessageServiceService
-  ) {
-    this.employeeAttendanceByMonth();
+  ) {}
+
+  ngOnInit(): void {
+
+    const currentYear = new Date().getFullYear();
+
+    for (let year = currentYear - 5; year <= currentYear + 5; year++) {
+      this.years.push(year);
+    }
+
+    this.employeeAttendanceByEmployee();
   }
 
-  public employeeAttendanceByMonth(): void {
-    this.commonDataService.getEmployeeAttendanceByMonth().subscribe({
+  public employeeAttendanceByEmployee(): void {
+    this.commonDataService.getEmployeeAttendanceByEmployee(this.selectedMonth, this.selectedYear).subscribe({
       next: (response: any) => {
-        this.updateEmployeeAttendanceByMonth(response);
+        this.updateEmployeeAttendanceByEmployee(response);
       },
       error: (error: any) => {
         this.messageService.showError(error);
@@ -31,16 +58,21 @@ export class EmployeeAttendanceByMonthComponent {
     });
   }
 
-  public updateEmployeeAttendanceByMonth(data: any): void {
-    const employeeAttendanceByMonthData = data.map((data: any) => {
+  filterChanged(){
+      this.employeeAttendanceByEmployee();
+  }
+
+
+  public updateEmployeeAttendanceByEmployee(data: any): void {
+    const employeeAttendanceByEmployeeData = data.map((data: any) => {
       return {
-        x: data.month,
+        x: data.employeeName,
         y: data.cnt
       };
     });
 
     this.employeeAttendanceByMonthOptions = {
-      series: [{ name: 'Employee Attendance Per Month', data: employeeAttendanceByMonthData }],
+      series: [{name: 'Employee Attendance Count', data: employeeAttendanceByEmployeeData}],
       chart: {
         type: 'bar',
         height: 350,
@@ -81,7 +113,7 @@ export class EmployeeAttendanceByMonthComponent {
         borderColor: '#e5e7eb'
       },
       title: {
-        text: 'Employee Attendance Per Month',
+        text: 'Employee Attendance Count',
         align: 'center',
         style: {
           color: '#1f2937',

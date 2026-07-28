@@ -57,16 +57,16 @@ export class SupplierRegistrationComponent {
         profileImage: new FormControl('', [Validators.required]),
         profileImageName: new FormControl(''),
         profileImageType: new FormControl(''),
-        supplierNo: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
-        supplierName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(25), Validators.pattern(/^[A-Za-z0-9.,\- ]+$/)]),
+        supplierNo: new FormControl('', [Validators.required, Validators.pattern(/^[Ss][0-9]{3}$/)]), // S or s and others numbers only and 4 charactors only
+        supplierName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]),
         supplierCategory: new FormControl('', [Validators.required]),
-        supplierSubCategory: new FormControl('', [Validators.minLength(1), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9.,\- ]+$/)]),
+        supplierSubCategory: new FormControl('', [Validators.pattern(/^[A-Za-z\s]+$/)]),
         supplierContactNo: new FormControl('', [Validators.required, Validators.pattern(/^0\d{9}$/)]),
-        supplierEmail: new FormControl('', [Validators.required, Validators.email]), 
-        supplierAccName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(25), Validators.pattern(/^[A-Za-z0-9.,\- ]+$/)]),
-        supplierAccNo: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(20), Validators.pattern(/^\d+$/)]),
+        supplierEmail: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/)]), 
+        supplierAccName: new FormControl('', [Validators.required,Validators.pattern(/^[A-Za-z.\s]+$/)]),
+        supplierAccNo: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]{8,16}$/)]), // min 8, max 16, letters only
         supplierBank: new FormControl('', [Validators.required]),
-        supplierBranch: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z0-9 ]+$/)]),
+        supplierBranch: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s-]+$/)]), // letters spaces - only
       });
     }
 

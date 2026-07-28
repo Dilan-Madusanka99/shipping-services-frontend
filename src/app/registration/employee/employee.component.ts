@@ -79,7 +79,7 @@ export class EmployeeComponent implements OnInit {
       profileImage: new FormControl('', [Validators.required]),
       profileImageName: new FormControl(''),
       profileImageType: new FormControl(''),
-      empNo: new FormControl('', [Validators.required,Validators.minLength(4),Validators.maxLength(10),Validators.pattern(/^[a-zA-Z0-9]*$/)]), // letter & numbers only
+      empNo: new FormControl('', [Validators.required, Validators.pattern(/^[Ee][0-9]{3}$/)]), // letter & numbers only
       firstName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]),
       lastName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]),
       callingName: new FormControl('', [Validators.pattern(/^[A-Za-z .'-]+$/)]),

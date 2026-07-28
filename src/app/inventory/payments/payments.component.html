@@ -10,10 +10,8 @@
       <mat-form-field appearance="outline" class="example-full-width">
           <mat-label> Payment No </mat-label>
           <input matInput placeholder="Payment No" formControlName="paymentNo">
-        <span class="text-danger" 
-          *ngIf="(paymentsForm.get('paymentNo').touched || submitted) && paymentsForm.get('paymentNo').errors && paymentsForm.get('paymentNo').errors['required'] ">
-          Payment No is Required
-        </span>           
+        <mat-error *ngIf="paymentsForm.get('paymentNo')?.hasError('required')"> Payment No is required. </mat-error>
+        <mat-error *ngIf="paymentsForm.get('paymentNo')?.hasError('pattern')">Must start with 'P' (Ex P001).</mat-error>         
         </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
@@ -24,6 +22,7 @@
           </mat-form-field>
           <mat-option *ngFor="let itm of itemDropdown" [value]="itm.id">{{ itm.no }}</mat-option>
         </mat-select>
+        <mat-error *ngIf="paymentsForm.get('itemNo')?.hasError('required')"> Item No is required. </mat-error>
       </mat-form-field>
 
         <mat-form-field appearance="outline" class="example-full-width">
@@ -39,11 +38,15 @@
             </mat-form-field>
             <mat-option *ngFor="let sup of supplierDropdown" [value]="sup.id">{{ sup.supplierName }}</mat-option>
           </mat-select>
+          <mat-error *ngIf="paymentsForm.get('supplierName')?.hasError('required')"> Supplier Name is required. </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label> Quantity </mat-label>
           <input matInput type="number" matInput placeholder="Qty  " formControlName="quantity" [min]="1" [max]="100">
+          <mat-error *ngIf="paymentsForm.get('quantity')?.hasError('required')"> Quantity is required. </mat-error>
+          <mat-error *ngIf="paymentsForm.get('quantity')?.hasError('min')"> Must be more than 0. </mat-error>
+          <mat-error *ngIf="paymentsForm.get('quantity')?.hasError('max')"> Maximum is 100. </mat-error>
         </mat-form-field>
 
         <mat-label> Quantity Measurement </mat-label> <br>
@@ -55,7 +58,10 @@
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label> Amount (Rs:)  </mat-label>
-          <input matInput placeholder="(Rs:)" formControlName="amount">
+          <input matInput type="number" matInput placeholder="(Rs:)" formControlName="amount">
+          <mat-error *ngIf="paymentsForm.get('amount')?.hasError('required')"> Amount is required. </mat-error>
+          <mat-error *ngIf="paymentsForm.get('amount')?.hasError('pattern')"> Numbers and . only allowed </mat-error>
+          <mat-error *ngIf="paymentsForm.get('amount')?.hasError('min')"> Must be more than 1. </mat-error>
         </mat-form-field>
         
         <mat-form-field appearance="outline" class="example-full-width">
@@ -64,6 +70,8 @@
           <mat-hint>MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="paymentsForm.get('paymentDate')?.hasError('required')"> Payment Date is required. </mat-error>
+          <mat-error *ngIf="paymentsForm.get('paymentDate')?.hasError('futureDate')"> Not be the Future Date </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="example-full-width">
@@ -72,11 +80,15 @@
             <mat-option value="Paid">Paid</mat-option>
             <mat-option value="Not Paid">Not Paid</mat-option>
           </mat-select>
+          <mat-error *ngIf="paymentsForm.get('paymentStatus')?.hasError('required')"> Payment Status is required. </mat-error>
         </mat-form-field>
         
         <div class="form-field">
-            <label for="image">Upload Item Image</label>
+            <label for="image">Upload Payment Image</label>
             <input type="file" (change)="onFileSelected($event)" accept="image/*"/>
+            <mat-error *ngIf="paymentsForm.get('paymentImage')?.hasError('required') && paymentsForm.get('paymentImage')?.touched">
+              Payment Image is required.
+            </mat-error>
         </div>
         
         <div *ngIf="previewUrl">

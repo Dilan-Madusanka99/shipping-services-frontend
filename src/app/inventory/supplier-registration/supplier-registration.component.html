@@ -26,15 +26,15 @@
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Supplier No</mat-label>
         <input matInput placeholder="Supplier No" formControlName="supplierNo" >
-        <span class="text-danger" 
-          *ngIf="(supplierRegistrationForm.get('supplierNo').touched || submitted) && supplierRegistrationForm.get('supplierNo').errors && supplierRegistrationForm.get('supplierNo').errors['required'] ">
-          Supplier No is Required
-        </span>        
+        <mat-error *ngIf="supplierRegistrationForm.get('supplierNo')?.hasError('required')"> Supplier No is required. </mat-error>
+        <mat-error *ngIf="supplierRegistrationForm.get('supplierNo')?.hasError('pattern')">Must start with 'S' (Ex S001).</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Supplier Name</mat-label>
           <input matInput placeholder="Supplier Name" formControlName="supplierName">
+          <mat-error *ngIf="supplierRegistrationForm.get('supplierName')?.hasError('required')"> Supplier Name is required. </mat-error>
+          <mat-error *ngIf="supplierRegistrationForm.get('supplierName')?.hasError('pattern')"> Only letters and spaces. </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="example-full-width">
@@ -45,21 +45,28 @@
             <mat-option value="Foods">Foods</mat-option>
             <mat-option value="Other">Other</mat-option>
           </mat-select>
+          <mat-error *ngIf="supplierRegistrationForm.get('supplierCategory')?.hasError('required')"> Supplier Name is required. </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Supplier Sub Category (Optional)</mat-label>
           <input matInput placeholder="Supplier Sub Category (optional)" formControlName="supplierSubCategory">
+          <mat-error *ngIf="supplierRegistrationForm.get('supplierSubCategory')?.hasError('pattern')"> Only letters and spaces. </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Supplier Contact No</mat-label>
           <input matInput placeholder="Supplier Contact No" formControlName="supplierContactNo">
+          <mat-error *ngIf="supplierRegistrationForm.get('supplierContactNo')?.hasError('required')"> Contact No is required. </mat-error>
+          <mat-error *ngIf="supplierRegistrationForm.get('supplierContactNo')?.hasError('pattern')">Invalid contact number.
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Supplier Email</mat-label>
           <input matInput placeholder="Supplier Email" formControlName="supplierEmail">
+          <mat-error *ngIf="supplierRegistrationForm.get('supplierEmail')?.hasError('required')"> Email is required. </mat-error>
+          <mat-error *ngIf="supplierRegistrationForm.get('supplierEmail')?.hasError('pattern')"> Enter a valid email address. </mat-error>
         </mat-form-field>
 
         <h5>Bank Details</h5>
@@ -67,11 +74,15 @@
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Bank Account Name</mat-label>
           <input matInput placeholder="Bank Account Name" formControlName="supplierAccName">
+          <mat-error *ngIf="supplierRegistrationForm.get('supplierAccName')?.hasError('required')"> Account Name is required. </mat-error>
+          <mat-error *ngIf="supplierRegistrationForm.get('supplierAccName')?.hasError('pattern')"> Letters . Spaces only Allowed </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Bank Account No</mat-label>
           <input matInput placeholder="Bank Account No" formControlName="supplierAccNo">
+          <mat-error *ngIf="supplierRegistrationForm.get('supplierAccNo')?.hasError('required')"> Account No is required. </mat-error>
+          <mat-error *ngIf="supplierRegistrationForm.get('supplierAccNo')?.hasError('pattern')"> Enter Valid Account No </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="example-full-width">
@@ -98,11 +109,14 @@
             <mat-option value="Regional Development Bank">Regional Development Bank</mat-option>
             <mat-option value="Sanasa Development Bank PLC">Sanasa Development Bank PLC</mat-option>
           </mat-select>
+        <mat-error *ngIf="supplierRegistrationForm.get('supplierBank')?.hasError('required')"> Choose a Bank.</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Branch</mat-label>
           <input matInput placeholder="Branch" formControlName="supplierBranch">
+          <mat-error *ngIf="supplierRegistrationForm.get('supplierBranch')?.hasError('required')"> Branch is required. </mat-error>
+          <mat-error *ngIf="supplierRegistrationForm.get('supplierBranch')?.hasError('pattern')"> Letters, Spaces and - only </mat-error>
         </mat-form-field>
 
         <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" > {{saveButtonLabel}} </button>

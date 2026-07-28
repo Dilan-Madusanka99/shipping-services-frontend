@@ -104,8 +104,8 @@ export class CommonDataServiceService implements OnInit {
   } 
 
   // employee attendance monthly chart
-  public getEmployeeAttendanceByMonth() {
-    const requestUrl = environment.baseUrl + '/common-data-service/employee_AttendanceByMonth';
+  public getEmployeeAttendanceByEmployee(month:number, year:number) {
+    const requestUrl = environment.baseUrl + '/common-data-service/employee_AttendanceByEmployee' + '?month=' + month + '&year=' + year;
 
     let headers = {};
     if (this.httpService.getAuthToken() !== null) {

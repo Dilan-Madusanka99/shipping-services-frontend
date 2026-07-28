@@ -24,9 +24,10 @@
         <mat-label>Emp No.</mat-label>
         <input matInput placeholder="Emp No." formControlName="empNo" />
           <mat-error *ngIf="employeeForm.get('empNo')?.hasError('required')"> Employee Number is required. </mat-error>
-          <mat-error *ngIf="employeeForm.get('empNo')?.hasError('minlength')"> Must be at least 4 characters. </mat-error>
+          <!-- <mat-error *ngIf="employeeForm.get('empNo')?.hasError('minlength')"> Must be at least 4 characters. </mat-error>
           <mat-error *ngIf="employeeForm.get('empNo')?.hasError('maxlength')"> Cannot exceed 10 characters. </mat-error>
-          <mat-error *ngIf="employeeForm.get('empNo')?.hasError('pattern')"> Can contain only letters and numbers.</mat-error>
+          <mat-error *ngIf="employeeForm.get('empNo')?.hasError('pattern')"> Can contain only letters and numbers.</mat-error> -->
+        <mat-error *ngIf="employeeForm.get('empNo')?.hasError('pattern')">Must start with 'E' (Ex E001).</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
