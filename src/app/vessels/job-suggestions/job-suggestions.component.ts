@@ -61,7 +61,11 @@ export class JobSuggestionsComponent implements OnInit {
   // Load job postings and map to dropdown
   loadJobs(): void {
   this.jobService.getData().subscribe((data: any[]) => {
-    this.jobSuggestions = data.map(job => ({
+    let openJobs: any[] = data.filter(job => {
+      const jobStatus: string = job.jobStatus;
+      return jobStatus.toLowerCase() === 'open';
+    });
+    this.jobSuggestions = openJobs.map(job => ({
       label: `${this.vesselMap.get(+job.vesselName)} ~ ${job.position}`, // ✅ FIX
       value: job
     }));
