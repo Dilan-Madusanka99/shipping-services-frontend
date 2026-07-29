@@ -101,7 +101,7 @@ export class SeafarersRegistrationComponent {
       position: new FormControl('', [Validators.required]),
       // appliedDate: new FormControl('', [Validators.required]),
       appliedDate: new FormControl({value: new Date(), disabled: true}, [Validators.required]),
-      availableDate: new FormControl(new Date(), [Validators.required, futureDateValidator]),
+      availableDate: new FormControl(new Date()),
       surname: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/) ]), // letters , spaces
       otherNames: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/) ]),
       dob: new FormControl('', [ageValidator]),

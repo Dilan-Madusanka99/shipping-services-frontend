@@ -3,11 +3,8 @@
 </div>
 
 <div class="container">
-  <div class="form-section">
-
+  <aside class="form-section">
     <form [formGroup]="jobSuggestionsForm" class="jobSuggestionsForm">
-
-      <!-- Select Jobs Dropdown -->
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Select Jobs</mat-label>
         <mat-select formControlName="selectedJob">
@@ -15,42 +12,45 @@
             {{ job.label }}
           </mat-option>
         </mat-select>
-        <!-- Validation Error -->
         <mat-error *ngIf="jobSuggestionsForm.get('selectedJob')?.hasError('required')">
           Please select a job
         </mat-error>
       </mat-form-field>
 
-      <!-- Optional Button to Check Selected Value -->
       <button mat-raised-button color="primary" class="button" (click)="getSelectedJob()">
         Get Job Suggestions
       </button>
-
     </form>
-  </div>
-  
+  </aside>
 
-  
+  <section class="results">
+    <div class="results-grid">
+      <div class="profile-card" *ngFor="let user of users">
+        <div class="profile-header">
+          <img
+            class="avatar"
+            [src]="user?.profileImage ? 'data:image/jpeg;base64,' + user.profileImage : 'assets/default-avatar.png'"
+            [alt]="user.surname + ' avatar'"
+          />
+          <div class="user-info">
+            <h4>{{ user.surname }}</h4>
+            <p class="sidNo">{{ user.sidNo }}</p>
+            <p class="position">{{ user.position }}</p>
+            <p class="email">{{ user.email }}</p>
+            <p class="mobile">{{ user.mobile }}</p>
+          </div>
+        </div>
 
-  <div class="profile-card" *ngFor="let user of users">
-
-  <div class="profile-header">
-    <img class="avatar" [src]="'data:image/jpeg;base64,' + user?.profileImage || 'assets/default-avatar.png'" alt="img" />
-
-    <div class="user-info">
-      <h4>{{ user.surname }}</h4>
-      <p class="sidNo">{{ user.sidNo }}</p>
-      <p class="position">{{ user.position }}</p>
-      <p class="email">{{ user.email }}</p>
-      <p class="mobile">{{ user.mobile }}</p>
+        <div class="profile-footer">
+          <button mat-stroked-button class="profile-button" (click)="openProfile(user)">
+            View Profile
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div class="profile-footer">
-    <!-- <button mat-raised-button color="primary" class="profile-button" type="select">Select</button> -->
-    <button mat-stroked-button color="warn" class="profile-button" type="view"  (click)="openProfile(user)">View</button>
-  </div>
-</div>
-
-
+    <div class="empty-state" *ngIf="!users?.length">
+      <p>Select a job and click "Get Job Suggestions" to see matching candidates.</p>
+    </div>
+  </section>
 </div>
