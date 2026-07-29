@@ -32,6 +32,7 @@
     "html2canvas": "^1.4.1",
     "jspdf": "^3.0.1",
     "material-icons": "^1.13.14",
+    "material-symbols": "^0.45.9",
     "ng-apexcharts": "^1.11.0",
     "ngx-scrollbar": "^15.0.1",
     "ngx-toastr": "^19.0.0",
