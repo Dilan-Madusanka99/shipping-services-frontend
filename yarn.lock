@@ -4527,6 +4527,11 @@ material-icons@^1.13.14:
   resolved "https://registry.npmjs.org/material-icons/-/material-icons-1.13.14.tgz"
   integrity sha512-kZOfc7xCC0rAT8Q3DQixYAeT+tBqZnxkseQtp2bxBxz7q5pMAC+wmit7vJn1g/l7wRU+HEPq23gER4iPjGs5Cg==
 
+material-symbols@^0.45.9:
+  version "0.45.9"
+  resolved "https://registry.npmjs.org/material-symbols/-/material-symbols-0.45.9.tgz"
+  integrity sha512-CuNJwHm/c13L2NDGvap4k90iFBZFoMQrjBU+GHO/9bh9sUOe5tm3WHFPLa3BEWukMw6dAxwu5PvtlfWh3NppYA==
+
 math-intrinsics@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/math-intrinsics/-/math-intrinsics-1.1.0.tgz"
