@@ -104,6 +104,7 @@
         <mat-datepicker-toggle matIconSuffix [for]="jobClosingDate"></mat-datepicker-toggle>
         <mat-datepicker #jobClosingDate></mat-datepicker>
         <mat-error *ngIf="jobPostingForm.get('jobClosingDate')?.hasError('required')"> Closing Date is required. </mat-error>
+        <mat-error *ngIf="jobPostingForm.get('jobClosingDate')?.hasError('pastDate')"> Enter Future Date. </mat-error>
       </mat-form-field>
 
         <button type="submit" mat-raised-button color="primary" class="form-button" [disabled]="isButtonDisabled" > {{saveButtonLabel}} </button>

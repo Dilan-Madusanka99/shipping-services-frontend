@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -21,6 +21,22 @@ export interface PeriodicElement {
 const ELEMENT_DATA: any[] = [ 
   {jobPostImage: 'Image', vesselName: 'M/T Don Juan', position: 'AB', jobStatus: 'open', jobClosingDate: '1/1/2026'},
 ];
+
+// validator for closing date (only future dates)
+export function futureDateValidator(control: AbstractControl): ValidationErrors | null {
+
+  if (!control.value) {
+    return null;
+  }
+
+  const selectedDate = new Date(control.value);
+  const today = new Date();
+
+  selectedDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  return selectedDate > today ? null : { pastDate: true };
+}
 
 @Component({
   selector: 'app-job-posting',
@@ -72,7 +88,7 @@ export class JobPostingComponent {
           minimumExp: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
           jobStatus: new FormControl('', [Validators.required]),
           jobDescription: new FormControl('', [Validators.minLength(1), Validators.maxLength(255)]),
-          jobClosingDate: new FormControl('', [Validators.required])
+          jobClosingDate: new FormControl('', [Validators.required, futureDateValidator])
         });
   }
 

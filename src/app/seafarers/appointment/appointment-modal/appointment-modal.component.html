@@ -166,6 +166,7 @@
             <mat-datepicker #appointmentDate></mat-datepicker>
           </mat-form-field>
         <span class="error-msg" *ngIf="(appointmentForm.get('appointmentDate').touched || submitted) && appointmentForm.get('appointmentDate').errors && appointmentForm.get('appointmentDate').errors['required']">Date is required</span>
+        <span class="error-msg" *ngIf="(appointmentForm.get('appointmentDate').touched || submitted) && appointmentForm.get('appointmentDate').errors && appointmentForm.get('appointmentDate').errors['pastDate']">Insert Future Date</span>
       </div>
 
       <div class="field" [class.has-error]="(appointmentForm.get('appointmentTime').touched || submitted) && appointmentForm.get('appointmentTime').errors && appointmentForm.get('appointmentTime').errors['appointmentTime']">

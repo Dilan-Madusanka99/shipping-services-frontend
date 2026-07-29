@@ -78,7 +78,7 @@
         <h2 class="position">{{ job.position }}</h2>
 
         <div class="chips">
-          <span class="chip">Min {{ job.minimumExperience }} yrs</span>
+          <span class="chip">Min {{ job.minimumExperience }} Months </span>
           <span class="chip" *ngFor="let cert of job.requiredCertificates | slice:0:2">{{ cert }}</span>
           <span class="chip chip-more" *ngIf="job.requiredCertificates?.length > 2">
             +{{ job.requiredCertificates.length - 2 }}
