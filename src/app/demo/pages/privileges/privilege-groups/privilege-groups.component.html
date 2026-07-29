@@ -41,6 +41,13 @@
           <td mat-cell *matCellDef="let row">{{ row.groupDescription }}</td>
         </ng-container>
 
+        <ng-container matColumnDef="seafarerDefault">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Seafarer Default Group
+          </th>
+          <td mat-cell *matCellDef="let row">{{ row.seafarerDefault == 1 ? 'Yes': 'No' }}</td>
+        </ng-container>
+
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
           <td mat-cell *matCellDef="let row">
@@ -88,6 +95,9 @@
           </li>
           <li (click)="onAddRemoveUsersClick()">
             <a><i class="fa fa-eye" aria-hidden="true"></i>Add Remove Users</a>
+          </li>
+          <li (click)="onSetSeafarerDefault()">
+            <a><i class="fa fa-eye" aria-hidden="true"></i>Set Customer Default Group</a>
           </li>
         </ul>
       </ng-template>

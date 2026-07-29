@@ -18,7 +18,7 @@ import Swal from 'sweetalert2';
   styleUrl: './privilege-groups.component.scss'
 })
 export class PrivilegeGroupsComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'groupName', 'groupDescription', 'action'];
+  displayedColumns: string[] = ['id', 'groupName', 'groupDescription', 'seafarerDefault', 'action'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -215,5 +215,38 @@ export class PrivilegeGroupsComponent implements OnInit {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  onSetSeafarerDefault() {
+    if (!this.selectedRecord?.id) {
+      this._messageService.showError('No record selected');
+      return;
+    }
+
+      Swal.fire({
+        title: 'Set Seafarer Default?',
+        text: 'Newly added Seafarers will use this group?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, Continue',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+          if (!result.isConfirmed) {
+            return;
+          }
+
+          this._privilegesService.setDefaultSeafarerGroup(this.selectedRecord.id)
+            .subscribe({
+              next: () => {
+                this._messageService.showSuccess(
+                  'Set Default Seafarer Group Successfully!'
+                );
+                this.getPrivilegeGroupList();
+              },
+              error: (error: any) => {
+                this._messageService.showError(error);
+              }
+            });
+      });
   }
 }
