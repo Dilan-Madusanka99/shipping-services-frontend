@@ -17,6 +17,9 @@ export class MessageServiceService {
   }
 
   showError(message: string, duration: number = 8000) {
+    if (message == null || message == undefined || message == '') {
+      message = 'Something went wrong! Please try again';
+    }
     this.toastrService.error(this.extractUserMessage(message), 'Error', {
       timeOut: duration
     });

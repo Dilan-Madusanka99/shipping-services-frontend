@@ -18,7 +18,7 @@ import Swal from 'sweetalert2';
   styleUrl: './privilege-groups.component.scss'
 })
 export class PrivilegeGroupsComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'groupName', 'groupDescription', 'action'];
+  displayedColumns: string[] = ['id', 'groupName', 'groupDescription', 'seafarerDefault', 'action'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -104,27 +104,32 @@ export class PrivilegeGroupsComponent implements OnInit {
   }
 
   public onDeletePrivilageGroupClick(id: number, data: any): void {
-    try {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You want to delete this?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
 
-      Swal.fire({
-        title: 'Are you sure?',
-        text: 'You want to delete this?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'Cancel',
-      }).then((result) => {
-        if (result && !result.isConfirmed) {
-          return;
-        }
-      });
-      this._privilegesService.deletePrivilegeGroup(id, data).then((response) => {
-        console.log(response);
-        this.getPrivilegeGroupList();
-      });
-    } catch (error) {
-      console.log(error);
-    }
+      if (!result.isConfirmed) {
+        return;
+      }
+
+      this._privilegesService.deletePrivilegeGroup(id, data)
+        .then(() => {
+          this._messageService.showSuccess(
+            'You have successfully deleted the privilege group!'
+          );
+          this.getPrivilegeGroupList();
+        })
+        .catch((error) => {
+          console.log(error);
+          this._messageService.showWarn(error);
+        });
+
+    });
   }
 
   public handleCatch(): void {
@@ -215,5 +220,38 @@ export class PrivilegeGroupsComponent implements OnInit {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  onSetSeafarerDefault() {
+    if (!this.selectedRecord?.id) {
+      this._messageService.showError('No record selected');
+      return;
+    }
+
+      Swal.fire({
+        title: 'Set Seafarer Default?',
+        text: 'Newly added Seafarers will use this group?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, Continue',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+          if (!result.isConfirmed) {
+            return;
+          }
+
+          this._privilegesService.setDefaultSeafarerGroup(this.selectedRecord.id)
+            .subscribe({
+              next: () => {
+                this._messageService.showSuccess(
+                  'Set Default Seafarer Group Successfully!'
+                );
+                this.getPrivilegeGroupList();
+              },
+              error: (error: any) => {
+                this._messageService.showError(error);
+              }
+            });
+      });
   }
 }

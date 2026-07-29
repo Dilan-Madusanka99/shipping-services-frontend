@@ -73,4 +73,18 @@ export class PrivilegesService {
       .put(requestUrl, priviegeGroup, { headers: headers })
       .toPromise();
   }
+
+  setDefaultSeafarerGroup(groupId: number) {
+        const requestUrl = environment.baseUrl + '/privilege-groups/set-seafarer-default/' + groupId;
+        
+        let headers = {};
+    
+        if (this.httpService.getAuthToken() !== null) {
+          headers = {
+            Authorization: 'Bearer ' + this.httpService.getAuthToken(),
+          };
+        }
+        
+        return this.http.put(requestUrl, {headers: headers});
+  }
 }

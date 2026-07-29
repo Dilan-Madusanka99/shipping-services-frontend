@@ -1,8 +1,42 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { of } from 'rxjs';
 import { HttpService } from 'src/app/services/http.service';
 
+function seafarerIdExistsValidator(httpService: HttpService): AsyncValidatorFn {
+  return (control: AbstractControl) => {
+
+    if (!control.value) {
+      return of(null);
+    }
+
+    return httpService.checkSeafarerIdUniqueness(control.value)
+      .then((response: any) => {
+        return response ? { seafarerExists: true } : null;
+      })
+      .catch(() => {
+        return null;
+      });
+  };
+}
+
+function loginNameExistsValidator(httpService: HttpService): AsyncValidatorFn {
+  return (control: AbstractControl) => {
+
+    if (!control.value) {
+      return of(null);
+    }
+
+    return httpService.checkLoginNameUniqueness(control.value)
+      .then((response: any) => {
+        return response ? { loginExists: true } : null;
+      })
+      .catch(() => {
+        return null;
+      });
+  };
+}
 @Component({
   selector: 'app-auth-signup',
   standalone: false,
@@ -22,8 +56,8 @@ export default class AuthSignupComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      sid: ['', [Validators.required]],
-      login: ['', [Validators.required]],
+      sid: ['', [Validators.required],[seafarerIdExistsValidator(this.httpService)]],
+      login: ['', [Validators.required],[loginNameExistsValidator(this.httpService)]],
       password: ['', [Validators.required]]
     });
   }

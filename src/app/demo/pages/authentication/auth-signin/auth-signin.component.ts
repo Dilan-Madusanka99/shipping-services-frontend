@@ -62,6 +62,8 @@ export default class AuthSigninComponent implements OnInit {
         type = 'DETAIL_REGISTER';
         title = 'Details Registration Notification';
         this.sendLoginNotificationToUser(msg, type, title, name);
+
+        this._messageService.showSuccess('You have successfully registered!');
       }
     }
   }
