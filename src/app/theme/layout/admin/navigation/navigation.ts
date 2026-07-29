@@ -276,7 +276,7 @@ const NavigationItems = [
     children: [
       {
         id: 'OnboardDet',
-        title: 'Onboard Crew Details',
+        title: 'Crew Details',
         type: 'item',
         url: '/onboard/onboardCrewRegistration',
         icon: 'feather icon-home',
