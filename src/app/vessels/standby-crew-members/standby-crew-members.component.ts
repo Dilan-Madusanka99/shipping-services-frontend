@@ -10,14 +10,12 @@ import { StandbyCrewMembersServiceService } from 'src/app/services/vessels/stand
 import Swal from 'sweetalert2';
 
 export interface PeriodicElement {
-  profileImage: String;
   sidNo: String;
-  surname: string;
   position: String;
   status: String;
 }
 
-const ELEMENT_DATA: any[] = [{ profileImage: 'Image', sidNo: 'S123', surname: 'malwaththa', position: 'AB', status: 'active' }];
+const ELEMENT_DATA: any[] = [{ sidNo: 'S123', position: 'AB', status: 'active' }];
 
 @Component({
   selector: 'app-standby-crew-members',
@@ -28,7 +26,7 @@ const ELEMENT_DATA: any[] = [{ profileImage: 'Image', sidNo: 'S123', surname: 'm
 export class StandbyCrewMembersComponent {
   standbyCrewMembersForm: FormGroup;
   
-    displayedColumns: string[] = ['profileImage', 'sidNo', 'surname', 'position', 'status', 'actions'];
+    displayedColumns: string[] = ['sidNo', 'position', 'status', 'actions'];
   
     dataSource: MatTableDataSource<any>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -50,14 +48,13 @@ export class StandbyCrewMembersComponent {
   
     constructor(
       private fb: FormBuilder,
-      private standbyCrewMembersServiceService: StandbyCrewMembersServiceService,
+      private standbyCrewMembersServiceService: OnboardCrewRegistrationService,
       private messageService: MessageServiceService,
       private seafarerService: SeafarersServiceService
     ) {
       this.standbyCrewMembersForm = this.fb.group({
         sidNo: new FormControl('', [Validators.required]),
-        position: new FormControl({ value: '', disabled: true }),
-        surname: new FormControl({ value: '', disabled: true }),
+        position: new FormControl('', [Validators.required]),
         status: new FormControl('', [Validators.required])
       });
     }
@@ -65,7 +62,7 @@ export class StandbyCrewMembersComponent {
     ngOnInit(): void {
       this.getSeafarersList();
     }
-
+  
     // sid link
     public getSeafarersList(): void {
       this.seafarerService.getData().subscribe((response: any) => {
@@ -74,9 +71,7 @@ export class StandbyCrewMembersComponent {
           response.forEach((seafarers: any) => {
             const seafarersData = {
               id: seafarers.id,
-              sidNo: seafarers.sidNo,
-              position: seafarers.position,
-              surname: seafarers.surname,
+              sidNo: seafarers.sidNo
             };
             this.allSeafarersDropdown.push(seafarersData);
           });
@@ -120,136 +115,45 @@ export class StandbyCrewMembersComponent {
       }
     }
 
-    public populateData(): void {
-    try {
-      if (window.localStorage.getItem('role') === 'SEAFARER') {
-        /* If the role is seafarer then get only details related to SID no*/
-        this.standbyCrewMembersServiceService.getSeafarerData(window.localStorage.getItem('sid')).subscribe({
-          next: (data: any) => {
-            if (!data) {
-              return;
+      public populateData(): void {
+      try {
+        if (window.localStorage.getItem('role') === 'SEAFARER') {
+          /* If the role is seafarer then get only details related to SID no*/ 
+          this.standbyCrewMembersServiceService.getSeafarerData(window.localStorage.getItem('sid')).subscribe({
+            next: (data) => {
+              if (!data) {
+                return;
+              }
+  
+              this.dataSource = new MatTableDataSource([data]);
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
+            },
+            error: (error) => {
+              this.messageService.showError('Action Failed With Error ' + error);
             }
-
-            this.dataSource = new MatTableDataSource(data);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-          },
-          error: (error) => {
-            this.messageService.showError('Action Failed With Error ' + error);
-          }
-        });
-      } else {
-        this.standbyCrewMembersServiceService.getData().subscribe({
-          next: (dataList: any[]) => {
-            if (dataList.length <= 0) {
-              return;
+          });
+        } else {
+          this.standbyCrewMembersServiceService.getInactiveData().subscribe({
+            next: (dataList: any[]) => {
+              if (dataList.length <= 0) {
+                return;
+              }
+  
+              this.dataSource = new MatTableDataSource(dataList);
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
+            },
+            error: (error) => {
+              this.messageService.showError('Action Failed With Error ' + error);
             }
-
-            this.dataSource = new MatTableDataSource(dataList);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-          },
-          error: (error) => {
-            this.messageService.showError('Action Failed With Error ' + error);
-          }
-        });
+          });
+        }
+      } catch (error) {
+        this.messageService.showError('Action Failed With Error ' + error);
       }
-    } catch (error) {
-      this.messageService.showError('Action Failed With Error ' + error);
     }
-  }
-
-    //   public populateData(): void {
-    //   try {
-    //     if (window.localStorage.getItem('role') === 'SEAFARER') {
-    //       /* If the role is seafarer then get only details related to SID no*/ 
-    //       this.standbyCrewMembersServiceService.getSeafarerData(window.localStorage.getItem('sid')).subscribe({
-    //         next: (data) => {
-    //           if (!data) {
-    //             return;
-    //           }
   
-    //           this.dataSource = new MatTableDataSource([data]);
-    //           this.dataSource.paginator = this.paginator;
-    //           this.dataSource.sort = this.sort;
-    //         },
-    //         error: (error) => {
-    //           this.messageService.showError('Action Failed With Error ' + error);
-    //         }
-    //       });
-    //     } else {
-    //       this.standbyCrewMembersServiceService.getInactiveData().subscribe({
-    //         next: (dataList: any[]) => {
-    //           if (dataList.length <= 0) {
-    //             return;
-    //           }
-  
-    //           this.dataSource = new MatTableDataSource(dataList);
-    //           this.dataSource.paginator = this.paginator;
-    //           this.dataSource.sort = this.sort;
-    //         },
-    //         error: (error) => {
-    //           this.messageService.showError('Action Failed With Error ' + error);
-    //         }
-    //       });
-    //     }
-    //   } catch (error) {
-    //     this.messageService.showError('Action Failed With Error ' + error);
-    //   }
-    // }
-  
-
-//     public populateData(): void {
-//     try {
-//     if (window.localStorage.getItem('role') === 'SEAFARER') {
-
-//       this.seafarerService
-//         .getSeafarerData(window.localStorage.getItem('sid'))
-//         .subscribe({
-//           next: (data) => {
-
-//             if (!data) {
-//               return;
-//             }
-
-//             this.dataSource = new MatTableDataSource([data]);
-//             this.dataSource.paginator = this.paginator;
-//             this.dataSource.sort = this.sort;
-//           },
-//           error: (error) => {
-//             this.messageService.showError('Action Failed With Error ' + error);
-//           }
-//         });
-
-//     } else {
-
-//       this.seafarerService.getData().subscribe({
-//         next: (dataList: any[]) => {
-
-//           // if (dataList.length <= 0) {
-//           //   return;
-//           // }
-
-//           dataList.forEach((item: any) => {
-//             item.status = 'Inactive';
-//           });
-
-//           this.dataSource = new MatTableDataSource(dataList);
-//           this.dataSource.paginator = this.paginator;
-//           this.dataSource.sort = this.sort;
-//         },
-//         error: (error) => {
-//           this.messageService.showError('Action Failed With Error ' + error);
-//         }
-//       });
-
-//     }
-
-//   } catch (error) {
-//     this.messageService.showError('Action Failed With Error ' + error);
-//   }
-// }
-
     onSubmit() {
       try {
         console.log('mode' + this.mode);
@@ -310,7 +214,10 @@ export class StandbyCrewMembersComponent {
       this.selectedData = data;
   
       this.standbyCrewMembersForm.patchValue({
-        sidNo: data.id,
+        sidNo: +data.sidNo,
+        imoNo: +data.imoNo,
+        signOnDate: new Date(data.signOnDate).toISOString().substring(0, 10),
+        signOffDate: new Date(data.signOffDate).toISOString().substring(0, 10)
       });
     }
   

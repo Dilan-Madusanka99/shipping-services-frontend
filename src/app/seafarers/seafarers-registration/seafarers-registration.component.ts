@@ -101,7 +101,7 @@ export class SeafarersRegistrationComponent {
       position: new FormControl('', [Validators.required]),
       // appliedDate: new FormControl('', [Validators.required]),
       appliedDate: new FormControl({value: new Date(), disabled: true}, [Validators.required]),
-      availableDate: new FormControl('', [Validators.required, futureDateValidator]),
+      availableDate: new FormControl(new Date(), [Validators.required, futureDateValidator]),
       surname: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/) ]), // letters , spaces
       otherNames: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/) ]),
       dob: new FormControl('', [ageValidator]),
@@ -157,6 +157,10 @@ export class SeafarersRegistrationComponent {
             this.dataSource = new MatTableDataSource([data]);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
+            this.mode = 'edit';
+            this.saveButtonLabel = 'Edit';
+            
+            this.editData(data);
           },
           error: (error) => {
             const errorMessage = error;
@@ -268,8 +272,10 @@ export class SeafarersRegistrationComponent {
             next: (response: any) => {
               if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {
                 this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
-              } else {
+              } else if (this.dataSource && this.dataSource.data) {
                 this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
+              } else {
+                this.dataSource = new MatTableDataSource([response]);
               }
 
               this.messageService.showSuccess('Data Saved Successfully!');
@@ -296,7 +302,11 @@ export class SeafarersRegistrationComponent {
             }
           });
       }
-      this.mode = 'add';
+      if (window.localStorage.getItem('role') === 'SEAFARER') {
+        this.mode = 'edit';
+      } else {
+        this.mode = 'add';
+      }
       this.seafarersForm.disable();
       this.isButtonDisabled = true;
     } catch (error) {
@@ -325,7 +335,11 @@ export class SeafarersRegistrationComponent {
   this.seafarersForm.reset();
 
   this.saveButtonLabel = 'Save';
-  this.mode = 'add';
+  if (window.localStorage.getItem('role') === 'SEAFARER' && this.dataSource?.data?.length > 0) {
+    this.mode = 'edit';
+  } else {
+    this.mode = 'add';
+  }
   this.selectedData = null;
 
   this.seafarersForm.enable();
