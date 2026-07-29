@@ -91,7 +91,7 @@ months = [
       },
       yaxis: {
         title: {
-          text: 'Count',
+          text: 'Days',
           style: {
             color: '#6b7280'
           }

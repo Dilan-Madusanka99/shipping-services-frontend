@@ -59,7 +59,7 @@ export class PaymentsByMonthlyComponent {
         },
         yaxis: {
           title: {
-            text: 'Count',
+            text: 'Rs :',
             style: {
               color: '#6b7280'
             }
