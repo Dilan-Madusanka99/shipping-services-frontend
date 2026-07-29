@@ -104,27 +104,32 @@ export class PrivilegeGroupsComponent implements OnInit {
   }
 
   public onDeletePrivilageGroupClick(id: number, data: any): void {
-    try {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You want to delete this?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
 
-      Swal.fire({
-        title: 'Are you sure?',
-        text: 'You want to delete this?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'Cancel',
-      }).then((result) => {
-        if (result && !result.isConfirmed) {
-          return;
-        }
-      });
-      this._privilegesService.deletePrivilegeGroup(id, data).then((response) => {
-        console.log(response);
-        this.getPrivilegeGroupList();
-      });
-    } catch (error) {
-      console.log(error);
-    }
+      if (!result.isConfirmed) {
+        return;
+      }
+
+      this._privilegesService.deletePrivilegeGroup(id, data)
+        .then(() => {
+          this._messageService.showSuccess(
+            'You have successfully deleted the privilege group!'
+          );
+          this.getPrivilegeGroupList();
+        })
+        .catch((error) => {
+          console.log(error);
+          this._messageService.showWarn(error);
+        });
+
+    });
   }
 
   public handleCatch(): void {
