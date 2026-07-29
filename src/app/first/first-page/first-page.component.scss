@@ -525,3 +525,25 @@ textarea.form-control {
         padding: 2rem 1.5rem;
     }
 }
+
+
+.jobs-section {
+  position: relative;
+  background-image: url('/assets/images/user/firstpage opacity.jpg');
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.jobs-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.45); /* Increase value for more fade */
+  z-index: 0;
+}
+
+.jobs-section > * {
+  position: relative;
+  z-index: 1;
+}

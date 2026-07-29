@@ -2,6 +2,12 @@
 <div class="auth-wrapper">
   <div class="auth-content">
 
+  <div class="home-button">
+    <button mat-mini-fab color="primary" routerLink="/">
+      <mat-icon>home</mat-icon>
+    </button>
+  </div>
+
     <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
       <div class="card">
         <div class="card-body text-center">
@@ -14,13 +20,7 @@
             <input type="login" class="form-control" placeholder="Username" formControlName="loginName" />
           </div>
           <span
-            class="text-danger"
-            *ngIf="
-              (formControl['loginName'].touched || submitted) &&
-              formControl['loginName'].errors &&
-              formControl['loginName'].errors['required']
-            "
-          >
+            class="text-danger" *ngIf="(formControl['loginName'].touched || submitted) && formControl['loginName'].errors && formControl['loginName'].errors['required']">
             User name is required
           </span>
           <div class="input-group mb-4">
@@ -28,10 +28,7 @@
           </div>
           <span
             class="text-danger"
-            *ngIf="
-              (formControl['password'].touched || submitted) && formControl['password'].errors && formControl['password'].errors['required']
-            "
-          >
+            *ngIf="(formControl['password'].touched || submitted) && formControl['password'].errors && formControl['password'].errors['required']" >
             Password is required
           </span>
           <div class="form-group text-start mb-4">
@@ -43,11 +40,14 @@
           <button class="btn btn-dark mb-4">Login</button>
           <p class="mb-0 text-muted">
             Don't have an account?
-          <a [routerLink]="['/auth/signup']">Sign Up</a>
-          </p>
+            <a [routerLink]="['/auth/signup']">Sign Up</a>
         </div>
       </div>
     </form>
   </div>
 </div>
 </div>
+
+
+
+

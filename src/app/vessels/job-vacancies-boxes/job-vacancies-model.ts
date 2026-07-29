@@ -13,7 +13,7 @@ export interface Job {
   jobStatus: JobStatus;
   description: string;
   closingDate: string;      // ISO date string from backend, e.g. "2026-07-30"
-  image?: string | null | undefined;        // URL served by backend for the uploaded job image
+  image?: string | null | undefined;        // URL served by backend for the uploadedaf job image
 }
 
 /**

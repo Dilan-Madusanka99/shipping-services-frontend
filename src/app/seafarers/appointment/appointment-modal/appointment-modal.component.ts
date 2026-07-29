@@ -3,7 +3,7 @@ import {
   SimpleChanges, HostListener
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
 export interface Appointment {
@@ -28,6 +28,22 @@ export interface Appointment {
 }
 
 export type AppointmentCategory = 'work' | 'personal' | 'health' | 'social' | 'other';
+
+// validator for appointment dates (shoud be future one)
+export function futureDateValidator(control: AbstractControl): ValidationErrors | null {
+
+  if (!control.value) {
+    return null;
+  }
+
+  const selectedDate = new Date(control.value);
+  const today = new Date();
+
+  selectedDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  return selectedDate > today ? null : { pastDate: true };
+}
 
 export const APPOINTMENT_COLORS: string[] = [
   '#1a56db', // blue
@@ -145,13 +161,13 @@ export class AppointmentModalComponent implements OnInit, OnChanges {
       private fb: FormBuilder
     ) {
       this.appointmentForm = this.fb.group({
-        sidNo: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
-        firstName: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(20),Validators.pattern(/^[A-Za-z\s]+$/)]),
-        lastName: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(25), Validators.pattern(/^[A-Za-z\s]+$/)]),
+        sidNo: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z0-9]+$/)]),
+        firstName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]),
+        lastName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]),
         position: new FormControl('', [Validators.required]),
         mobile: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]),
         email: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/)]),
-        appointmentDate: new FormControl('', [Validators.required]),
+        appointmentDate: new FormControl('', [Validators.required, futureDateValidator]),
         appointmentTime: new FormControl('', [ Validators.required]),
         appointmentStatus: new FormControl('', [Validators.required]),
         appointmentTypes: new FormControl('', [Validators.required]),
@@ -240,6 +256,7 @@ export class AppointmentModalComponent implements OnInit, OnChanges {
     // if (this.dateError || this.sidError || this.firstNameError
     //   || this.lastNameError || this.positionError || this.mobileError || this.emailError || this.statusError || this.timeError
     // ) return;
+
     if (this.appointmentForm.invalid) return;
     this.save.emit(this.appointmentForm);
   }
