@@ -146,4 +146,32 @@ export class HttpService {
   getSid() {
     return window.localStorage.getItem('sid');
   }
+
+  checkSeafarerIdUniqueness(sidNo: String): Promise<any> {
+    const requestUrl = environment.baseUrl + '/seafarers_registration/check-uniqueness/' + sidNo;
+
+    let headers = {};
+
+    if (this.getAuthToken() !== null) {
+      headers = {
+        Authorization: 'Bearer ' + this.getAuthToken()
+      };
+    }
+
+    return this.http.get(requestUrl, headers).toPromise();
+  }
+
+  checkLoginNameUniqueness(login: String): Promise<any> {
+    const requestUrl = environment.baseUrl + '/seafarers_registration/check-login-uniqueness/' + login;
+
+    let headers = {};
+
+    if (this.getAuthToken() !== null) {
+      headers = {
+        Authorization: 'Bearer ' + this.getAuthToken()
+      };
+    }
+
+    return this.http.get(requestUrl, headers).toPromise();
+  }
 }

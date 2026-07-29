@@ -47,6 +47,12 @@
           >
             Seafarer Id is required
           </span>
+          <span
+            class="text-danger"
+            *ngIf="(formControl['sid'].touched || submitted) && formControl['sid'].errors && formControl['sid'].errors['seafarerExists']"
+          >
+            Seafarer Id already exists
+          </span>
 
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="User Name" formControlName="login" />
@@ -56,6 +62,12 @@
             *ngIf="(formControl['login'].touched || submitted) && formControl['login'].errors && formControl['login'].errors['required']"
           >
             User name is required
+          </span>
+          <span
+            class="text-danger"
+            *ngIf="(formControl['login'].touched || submitted) && formControl['login'].errors && formControl['login'].errors['loginExists']"
+          >
+            User name already exists
           </span>
           <div class="input-group mb-4">
             <input type="password" class="form-control" placeholder="Password" formControlName="password" />
@@ -74,11 +86,13 @@
               <label for="checkbox-fill-1" class="cr">Save Details</label>
             </div>
           </div> -->
-          <button class="btn btn-primary shadow-2 mb-4">Sign up</button>
-          <p class="mb-0 text-muted">
-            Already have an account?
-            <a [routerLink]="['/auth/signin']">Log in</a>
-          </p>
+          <div>
+            <button class="btn btn-primary shadow-2 mb-4">Sign up</button>
+              <p class="mb-0 text-muted">
+                Already have an account?
+                <a [routerLink]="['/auth/signin']">Log in</a>
+              </p>
+          </div>
         </div>
       </div>
     </form>
