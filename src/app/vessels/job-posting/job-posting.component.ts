@@ -232,8 +232,7 @@ export class JobPostingComponent {
           });
         }
         else if (this.mode === 'edit'){
-          this.seafarersService.editData(this.selectedData?.id, this.prepareSeafarerData())
-          .subscribe ({
+          this.seafarersService.editData(this.selectedData?.id, this.prepareSeafarerData()).subscribe ({
             next: (response: any) => {
               let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
               this.dataSource.data[elementIndex] = response;

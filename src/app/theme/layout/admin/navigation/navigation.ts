@@ -45,50 +45,10 @@ const NavigationItems = [
       }
     ]
   },
-  {
-    id: 'privileges',
-    title: 'Privileges Section',
-    type: 'group',
-    icon: 'icon-navigation',
-    isVisible: false,
-    auth: [authenticationEnum.System_Privileges, authenticationEnum.Privilege_Groups],
-    children: [
-      {
-        id: 'privilegeDetails',
-        title: 'Privileges',
-        type: 'collapse',
-        icon: 'feather icon-user-check',
-        auth: [authenticationEnum.System_Privileges, authenticationEnum.Privilege_Groups],
-        isVisible: false,
-        children: [
-          {
-            id: 'systemPrivileges',
-            title: 'System Privileges',
-            type: 'item',
-            url: '/privileges/system-privileges',
-            icon: 'ti ti-dashboard',
-            breadcrumbs: false,
-            auth: [authenticationEnum.System_Privileges],
-            isVisible: false
-          },
-          {
-            id: 'privilegeGroups',
-            title: 'Privilege Grops',
-            type: 'item',
-            url: '/privileges/privilege-groups',
-            icon: 'ti ti-dashboard',
-            breadcrumbs: false,
-            auth: [authenticationEnum.Privilege_Groups],
-            isVisible: false
-          }
-        ]
-      }
-    ]
-  },
 
   {
     id: 'registration',
-    title: 'Employee',
+    title: 'Staff Employees',
     type: 'group',
     icon: 'icon-navigation',
     auth: [authenticationEnum.Employee_Details, authenticationEnum.Employee_Attendence],
@@ -117,72 +77,8 @@ const NavigationItems = [
   },
 
   {
-    id: 'vessels',
-    title: 'vessels',
-    type: 'group',
-    icon: 'icon-navigation',
-    auth: [authenticationEnum.Vessle_Details, authenticationEnum.Job_Vacancies,authenticationEnum.Job_Suggestions, authenticationEnum.Job_Listings, authenticationEnum.Applied_Jobs],
-    children: [
-      {
-        id: 'VesselRegistrationDet',
-        title: 'Vessel Details',
-        type: 'item',
-        url: '/vessels/vesselRegistration',
-        icon: 'feather icon-anchor',
-        classes: 'nav-item',
-        auth: [authenticationEnum.Vessle_Details],
-        breadcrumbs: false
-      },
-      
-      {
-        id: 'VesselRegistrationDet',
-        title: 'Job Vacancies',
-        type: 'item',
-        url: '/vessels/jobPosting',
-        icon: 'feather icon-briefcase',
-        classes: 'nav-item',
-        auth: [authenticationEnum.Job_Vacancies],
-        breadcrumbs: false
-      },
-
-      {
-        id: 'VesselRegistrationDet',
-        title: 'Job Suggestions',
-        type: 'item',
-        url: '/vessels/jobSuggestions',
-        icon: 'feather icon-briefcase',
-        classes: 'nav-item',
-        auth: [authenticationEnum.Job_Suggestions],
-        breadcrumbs: false
-      },
-
-      {
-        id: 'JobBoxes',
-        title: 'Job Listings',
-        type: 'item',
-        url: '/vessels/jobVacancies',
-        icon: 'feather icon-briefcase',
-        classes: 'nav-item',
-        auth: [authenticationEnum.Job_Listings],
-        breadcrumbs: false
-      },
-
-      {
-        id: 'AppliedJobs',
-        title: 'Applied Jobs',
-        type: 'item',
-        url: '/vessels/appliedJobs',
-        icon: 'feather icon-briefcase',
-        classes: 'nav-item',
-        auth: [authenticationEnum.Applied_Jobs],
-        breadcrumbs: false
-      }
-    ]
-  },
-
-  {
     id: 'Seafarers',
-    title: 'Seafarers',
+    title: 'Seafarers Registration',
     type: 'group',
     icon: 'icon-navigation',
     auth: [
@@ -268,22 +164,76 @@ const NavigationItems = [
   },
 
   {
-    id: 'Onboard',
-    title: 'Onboard Crew',
+    id: 'vessels',
+    title: 'Jobs & Vessels',
     type: 'group',
     icon: 'icon-navigation',
-    auth: [authenticationEnum.Certificate_Details, authenticationEnum.Crew_Complaints, authenticationEnum.Standby_Crew_Members],
-    children: [
+    auth: [authenticationEnum.Vessle_Details, authenticationEnum.Job_Vacancies,authenticationEnum.Job_Suggestions, authenticationEnum.Job_Listings, authenticationEnum.Applied_Jobs],
+    children: [     
       {
-        id: 'OnboardDet',
-        title: 'Crew Details',
+        id: 'VesselRegistrationDet',
+        title: 'Job Vacancies',
         type: 'item',
-        url: '/onboard/onboardCrewRegistration',
-        icon: 'feather icon-home',
+        url: '/vessels/jobPosting',
+        icon: 'feather icon-briefcase',
         classes: 'nav-item',
-        auth: authenticationEnum.Certificate_Details,
+        auth: [authenticationEnum.Job_Vacancies],
         breadcrumbs: false
       },
+
+      {
+        id: 'JobBoxes',
+        title: 'Job Listings',
+        type: 'item',
+        url: '/vessels/jobVacancies',
+        icon: 'feather icon-briefcase',
+        classes: 'nav-item',
+        auth: [authenticationEnum.Job_Listings],
+        breadcrumbs: false
+      },
+
+      {
+        id: 'AppliedJobs',
+        title: 'Applied Jobs',
+        type: 'item',
+        url: '/vessels/appliedJobs',
+        icon: 'feather icon-briefcase',
+        classes: 'nav-item',
+        auth: [authenticationEnum.Applied_Jobs],
+        breadcrumbs: false
+      },
+
+      {
+        id: 'VesselRegistrationDet',
+        title: 'Job Suggestions',
+        type: 'item',
+        url: '/vessels/jobSuggestions',
+        icon: 'feather icon-briefcase',
+        classes: 'nav-item',
+        auth: [authenticationEnum.Job_Suggestions],
+        breadcrumbs: false
+      },
+
+      {
+        id: 'VesselRegistrationDet',
+        title: 'Vessel Details',
+        type: 'item',
+        url: '/vessels/vesselRegistration',
+        icon: 'feather icon-anchor',
+        classes: 'nav-item',
+        auth: [authenticationEnum.Vessle_Details],
+        breadcrumbs: false
+      },
+    ]
+  },
+
+  {
+    id: 'Onboard',
+    title: 'Crew Details',
+    type: 'group',
+    icon: 'icon-navigation',
+    auth: [authenticationEnum.Onboard_Crew_Details, authenticationEnum.Crew_Complaints, authenticationEnum.Standby_Crew_Members],
+    children: [
       {
         id: 'OnboardDet',
         title: 'Standby Crew Details',
@@ -292,6 +242,16 @@ const NavigationItems = [
         icon: 'feather icon-briefcase',
         classes: 'nav-item',
         auth: [authenticationEnum.Standby_Crew_Members],
+        breadcrumbs: false
+      },
+      {
+        id: 'OnboardDet',
+        title: 'Onboard Crew Details',
+        type: 'item',
+        url: '/onboard/onboardCrewRegistration',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Onboard_Crew_Details,
         breadcrumbs: false
       },
       {
@@ -309,7 +269,7 @@ const NavigationItems = [
 
   {
     id: 'Inventory',
-    title: 'Inventory & Supplier & Payment',
+    title: 'Inventory Section',
     type: 'group',
     icon: 'icon-navigation',
     auth: [
@@ -331,22 +291,22 @@ const NavigationItems = [
       },
       {
         id: 'InventoryDet',
-        title: 'Stocks',
-        type: 'item',
-        url: '/inventory/stocks',
-        icon: 'feather icon-box',
-        classes: 'nav-item',
-        auth: [authenticationEnum.Stocks],
-        breadcrumbs: false
-      },
-      {
-        id: 'InventoryDet',
         title: 'Supplier Details',
         type: 'item',
         url: '/inventory/supplierRegistration',
         icon: 'feather icon-user-plus',
         classes: 'nav-item',
         auth: [authenticationEnum.Supplier_Details],
+        breadcrumbs: false
+      },
+      {
+        id: 'InventoryDet',
+        title: 'Stocks',
+        type: 'item',
+        url: '/inventory/stocks',
+        icon: 'feather icon-box',
+        classes: 'nav-item',
+        auth: [authenticationEnum.Stocks],
         breadcrumbs: false
       },
       {
@@ -381,6 +341,48 @@ const NavigationItems = [
       }
     ]
   },
+
+  {
+    id: 'privileges',
+    title: 'Privileges Section',
+    type: 'group',
+    icon: 'icon-navigation',
+    isVisible: false,
+    auth: [authenticationEnum.System_Privileges, authenticationEnum.Privilege_Groups],
+    children: [
+      {
+        id: 'privilegeDetails',
+        title: 'Privileges',
+        type: 'collapse',
+        icon: 'feather icon-user-check',
+        auth: [authenticationEnum.System_Privileges, authenticationEnum.Privilege_Groups],
+        isVisible: false,
+        children: [
+          {
+            id: 'systemPrivileges',
+            title: 'System Privileges',
+            type: 'item',
+            url: '/privileges/system-privileges',
+            icon: 'ti ti-dashboard',
+            breadcrumbs: false,
+            auth: [authenticationEnum.System_Privileges],
+            isVisible: false
+          },
+          {
+            id: 'privilegeGroups',
+            title: 'Privilege Grops',
+            type: 'item',
+            url: '/privileges/privilege-groups',
+            icon: 'ti ti-dashboard',
+            breadcrumbs: false,
+            auth: [authenticationEnum.Privilege_Groups],
+            isVisible: false
+          }
+        ]
+      }
+    ]
+  },
+
   {
     id: 'reports',
     title: 'Reports',
