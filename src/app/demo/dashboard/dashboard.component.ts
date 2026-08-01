@@ -37,10 +37,16 @@ interface MenuItem {
 export default class DashboardComponent implements OnInit {
   menuItems: MenuItem[] = [
     {
-      title: 'Onboard Crew Registration',
-      description: 'Register the crew to be onboard',
-      icon: '®️',
-      route: '/onboard/onboardCrewRegistration'
+      title: 'Appointment',
+      description: 'Get the Appointment',
+      icon: '📅',
+      route: '/seafarers/appointment'
+    },
+    {
+      title: 'Job Portal',
+      description: 'View the Seafarer Job Portal',
+      icon: '💼',
+      route: '/vessels/jobVacancies'
     },
     {
       title: 'Employee Registration',
@@ -51,21 +57,33 @@ export default class DashboardComponent implements OnInit {
     {
       title: 'Employee Attendance',
       description: 'Mark Employee Attendance',
-      icon: '📚',
+      icon: '⏰',
       route: '/register/employeeAttendence'
-    },
-    {
-      title: 'Employee List',
-      description: 'Get Employee List Report',
-      icon: '👨‍🏫',
-      route: '/reports/employee-list'
     },
     {
       title: 'Get Appointment List Report',
       description: 'Appointements made',
       icon: '📚',
       route: '/reports/appointment-list'
-    }
+    },
+    {
+      title: 'Crew Registration Details',
+      description: 'Register the crew to be onboard',
+      icon: '⚓',
+      route: '/onboard/onboardCrewRegistration'
+    },
+    {
+      title: 'Stock',
+      description: 'View Stock Details',
+      icon: '📦',
+      route: '/inventory/stocks'
+    },
+    {
+      title: 'Login',
+      description: 'Create the Login',
+      icon: '🔑',
+      route: '/login/log'
+    },
   ];
 
   constructor(private router: Router) {}

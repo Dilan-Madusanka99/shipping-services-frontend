@@ -236,22 +236,22 @@ const NavigationItems = [
     children: [
       {
         id: 'OnboardDet',
+        title: 'Crew Details',
+        type: 'item',
+        url: '/onboard/onboardCrewRegistration',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+        auth: authenticationEnum.Onboard_Crew_Details,
+        breadcrumbs: false
+      },
+      {
+        id: 'OnboardDet',
         title: 'Standby Crew Details',
         type: 'item',
         url: '/vessels/standbyCrewMembers',
         icon: 'feather icon-briefcase',
         classes: 'nav-item',
         auth: [authenticationEnum.Standby_Crew_Members],
-        breadcrumbs: false
-      },
-      {
-        id: 'OnboardDet',
-        title: 'Onboard Crew Details',
-        type: 'item',
-        url: '/onboard/onboardCrewRegistration',
-        icon: 'feather icon-home',
-        classes: 'nav-item',
-        auth: authenticationEnum.Onboard_Crew_Details,
         breadcrumbs: false
       },
       {
