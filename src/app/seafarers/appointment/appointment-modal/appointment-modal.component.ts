@@ -167,7 +167,7 @@ export class AppointmentModalComponent implements OnInit, OnChanges {
         position: new FormControl('', [Validators.required]),
         mobile: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]),
         email: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/)]),
-        appointmentDate: new FormControl('', [Validators.required, futureDateValidator]),
+        appointmentDate: new FormControl({value:'', disabled: true}),
         appointmentTime: new FormControl('', [ Validators.required]),
         appointmentStatus: new FormControl('', [Validators.required]),
         appointmentTypes: new FormControl('', [Validators.required]),
@@ -206,37 +206,79 @@ export class AppointmentModalComponent implements OnInit, OnChanges {
     };
   }
 
-  private resetForm(): void {
-    this.titleError = false;
-    this.dateError = false;
-    this.sidError = false;
-    this.firstNameError = false;
-    this.lastNameError = false;
-    this.positionError = false;
-    this.mobileError = false;
-    this.emailError = false;
-    this.statusError = false;
-    this.timeError = false;
-    this.typeError = false;
+  // private resetForm(): void {
+  //   this.titleError = false;
+  //   this.dateError = false;
+  //   this.sidError = false;
+  //   this.firstNameError = false;
+  //   this.lastNameError = false;
+  //   this.positionError = false;
+  //   this.mobileError = false;
+  //   this.emailError = false;
+  //   this.statusError = false;
+  //   this.timeError = false;
+  //   this.typeError = false;
 
-    if (this.appointment) {
-      this.form = {
-        title: this.appointment.title,
-        date: this.appointment.date,
-        time: this.appointment.time,
-        duration: this.appointment.duration,
-        category: this.appointment.category,
-        color: this.appointment.color,
-        notes: this.appointment.notes,
-      };
-      this.appointmentForm.patchValue(this.appointment.formData.value);
-    } else {
-      this.form = {
-        ...this.defaultForm(),
-        date: this.prefillDate || this.todayStr(),
-      };
-    }
+  //   if (this.appointment) {
+  //     this.form = {
+  //       title: this.appointment.title,
+  //       date: this.appointment.date,
+  //       time: this.appointment.time,
+  //       duration: this.appointment.duration,
+  //       category: this.appointment.category,
+  //       color: this.appointment.color,
+  //       notes: this.appointment.notes,
+  //     };
+  //     this.appointmentForm.patchValue(this.appointment.formData.value);
+  //   } else {
+  //     this.form = {
+  //       ...this.defaultForm(),
+  //       date: this.prefillDate || this.todayStr(),
+  //     };
+  //   }
+  // }
+
+private resetForm(): void {
+  this.titleError = false;
+  this.dateError = false;
+  this.sidError = false;
+  this.firstNameError = false;
+  this.lastNameError = false;
+  this.positionError = false;
+  this.mobileError = false;
+  this.emailError = false;
+  this.statusError = false;
+  this.timeError = false;
+  this.typeError = false;
+
+  if (this.appointment) {
+    this.form = {
+      title: this.appointment.title,
+      date: this.appointment.date,
+      time: this.appointment.time,
+      duration: this.appointment.duration,
+      category: this.appointment.category,
+      color: this.appointment.color,
+      notes: this.appointment.notes,
+    };
+
+    this.appointmentForm.patchValue(this.appointment.formData.value);
+
+  } else {
+    const dateToSet = this.prefillDate || this.todayStr();
+
+    this.form = {
+      ...this.defaultForm(),
+      date: dateToSet,
+    };
+
+    // patch into form control
+    this.appointmentForm.patchValue({
+      appointmentDate: new Date(dateToSet)
+    });
   }
+}
+
 
   selectColor(color: string): void {
     this.form.color = color;
@@ -244,6 +286,7 @@ export class AppointmentModalComponent implements OnInit, OnChanges {
 
   onSave(): void {
     this.submitted = true;
+
     // this.dateError = !this.form.date;
     // this.sidError = !this.form.sid?.trim();
     // this.firstNameError = !this.form.firstName?.trim();
@@ -257,7 +300,7 @@ export class AppointmentModalComponent implements OnInit, OnChanges {
     //   || this.lastNameError || this.positionError || this.mobileError || this.emailError || this.statusError || this.timeError
     // ) return;
 
-    if (this.appointmentForm.invalid) return;
+    // if (this.appointmentForm.invalid) return;
     this.save.emit(this.appointmentForm);
   }
 
