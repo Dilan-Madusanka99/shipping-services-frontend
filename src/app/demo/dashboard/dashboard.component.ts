@@ -18,13 +18,28 @@ import '../../../assets/charts/amchart/worldLow.js';
 
 import dataJson from 'src/fake-data/map_data';
 import mapColor from 'src/fake-data/map-color-data.json';
+
 import { Router } from '@angular/router';
+import { EmployeeServiceService } from 'src/app/services/employee/employee-service.service';
+import { OnboardCrewRegistrationService } from 'src/app/services/onboard/onboard-crew-registration.service';
+import { JobPostingServiceService } from 'src/app/services/vessels/job-posting-service.service';
+import { EmployeeAttendenceService } from 'src/app/services/employee/employee-attendence.service';
 
 interface MenuItem {
   title: string;
   description: string;
   icon: string;
   route: string;
+}
+
+interface DashboardStat {
+  value: number;
+  title: string;
+  change: string;
+  compare: string;
+  icon: string;
+  color: string;
+  trend: 'up' | 'down';
 }
 
 @Component({
@@ -35,6 +50,46 @@ interface MenuItem {
   styleUrls: ['./dashboard.component.scss']
 })
 export default class DashboardComponent implements OnInit {
+
+  stats: DashboardStat []  = [
+    {
+      value: 256,
+      title: 'Total Employees',
+      change: '+12%',
+      compare: 'vs last month',
+      icon: 'fas fa-users',
+      color: 'blue',
+      trend: 'up'
+    },
+    {
+      value: 152,
+      title: 'Active Seafarers',
+      change: '+8%',
+      compare: 'vs last month',
+      icon: 'fas fa-anchor',
+      color: 'green',
+      trend: 'up'
+    },
+    {
+      value: 18,
+      title: 'Open Vacancies',
+      change: '-5%',
+      compare: 'vs last month',
+      icon: 'fas fa-briefcase',
+      color: 'purple',
+      trend: 'down'
+    },
+    {
+      value: 34,
+      title: "Today's Attendance",
+      change: '+6%',
+      compare: 'vs yesterday',
+      icon: 'far fa-calendar-check',
+      color: 'orange',
+      trend: 'up'
+    }
+  ];
+
   menuItems: MenuItem[] = [
     {
       title: 'Appointment',
@@ -60,14 +115,15 @@ export default class DashboardComponent implements OnInit {
       icon: '⏰',
       route: '/register/employeeAttendence'
     },
+
     {
-      title: 'Get Appointment List Report',
-      description: 'Appointements made',
+      title: 'Appointment Report',
+      description: 'Appointements View',
       icon: '📚',
       route: '/reports/appointment-list'
     },
     {
-      title: 'Crew Registration Details',
+      title: 'Crew Details',
       description: 'Register the crew to be onboard',
       icon: '⚓',
       route: '/onboard/onboardCrewRegistration'
@@ -82,13 +138,93 @@ export default class DashboardComponent implements OnInit {
       title: 'Login',
       description: 'Create the Login',
       icon: '🔑',
-      route: '/login/log'
+      route: '/login/login'
     },
   ];
 
-  constructor(private router: Router) {}
+
+// this.stats[0].value = employeeCount;
+// this.stats[1].value = activeSeafarerCount;
+// this.stats[2].value = vacancyCount;
+// this.stats[3].value = attendanceCount;
+  
+
+  constructor(
+    private router: Router,
+    private employeeService: EmployeeServiceService,
+    private onboardCrewRegistrationService: OnboardCrewRegistrationService,
+    private jobPosingService: JobPostingServiceService,
+    private employeeAttendanceService: EmployeeAttendenceService
+  ) {}
+
+  loadEmployeeCount(): void {
+    this.employeeService.getData().subscribe({
+      next: (response: any) => {
+        this.stats[0].value = response.length;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
+  loadStandbyCrewCount(): void {
+    this.onboardCrewRegistrationService.getData().subscribe({
+      next: (response: any) => {
+        this.stats[1].value = response.length;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
+  loadOpenVacanciesCount(): void {
+    this.jobPosingService.getData().subscribe({
+      next: (response: any) => {
+        const openJobs = response.filter(
+          (job: any) => job.jobStatus === 'Open'
+        );
+
+        this.stats[2].value = openJobs.length;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
+loadEmployeeAttendanceToday(): void {
+  this.employeeAttendanceService.getData().subscribe({
+    next: (response: any) => {
+
+      const today = new Date();
+
+      const year = today.getFullYear();
+      const month = today.getMonth() + 1;   // JavaScript months are 0-11
+      const day = today.getDate();
+
+      const todayAttendance = response.filter((attendance: any) =>
+        attendance.attendenceStatus === 'Present' &&
+        attendance.attandenceDate[0] === year &&
+        attendance.attandenceDate[1] === month &&
+        attendance.attandenceDate[2] === day
+      );
+
+      this.stats[3].value = todayAttendance.length;
+    },
+    error: (error) => {
+      console.error(error);
+    }
+  });
+}
 
   ngOnInit() {
+    this.loadEmployeeCount();
+    this.loadStandbyCrewCount();
+    this.loadOpenVacanciesCount();
+    this.loadEmployeeAttendanceToday();
+
     setTimeout(() => {
       const latlong = dataJson;
 
@@ -135,22 +271,10 @@ export default class DashboardComponent implements OnInit {
           latitude: latlong[id].latitude,
           title: dataItem.name + '</br> [ ' + value + ' ]',
           value: value
-        });
+        }, 500);
       }
 
-      // world-low chart
-      AmCharts.makeChart('world-low', {
-        type: 'map',
-        projection: 'eckert6',
-
-        dataProvider: {
-          map: 'worldLow',
-          images: images
-        },
-        export: {
-          enabled: true
-        }
-      });
+ 
 
       const chartDatac = [
         {

@@ -300,7 +300,7 @@ private resetForm(): void {
     //   || this.lastNameError || this.positionError || this.mobileError || this.emailError || this.statusError || this.timeError
     // ) return;
 
-    // if (this.appointmentForm.invalid) return;
+    if (this.appointmentForm.invalid) return;
     this.save.emit(this.appointmentForm);
   }
 
