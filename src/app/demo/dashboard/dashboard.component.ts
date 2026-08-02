@@ -30,6 +30,7 @@ interface MenuItem {
   description: string;
   icon: string;
   route: string;
+  cardColor: string;
 }
 
 interface DashboardStat {
@@ -53,7 +54,7 @@ export default class DashboardComponent implements OnInit {
 
   stats: DashboardStat []  = [
     {
-      value: 256,
+      value: 0,
       title: 'Total Employees',
       change: '+12%',
       compare: 'vs last month',
@@ -62,7 +63,7 @@ export default class DashboardComponent implements OnInit {
       trend: 'up'
     },
     {
-      value: 152,
+      value: 0,
       title: 'Active Seafarers',
       change: '+8%',
       compare: 'vs last month',
@@ -71,7 +72,7 @@ export default class DashboardComponent implements OnInit {
       trend: 'up'
     },
     {
-      value: 18,
+      value: 0,
       title: 'Open Vacancies',
       change: '-5%',
       compare: 'vs last month',
@@ -80,7 +81,7 @@ export default class DashboardComponent implements OnInit {
       trend: 'down'
     },
     {
-      value: 34,
+      value: 0,
       title: "Today's Attendance",
       change: '+6%',
       compare: 'vs yesterday',
@@ -95,50 +96,58 @@ export default class DashboardComponent implements OnInit {
       title: 'Appointment',
       description: 'Get the Appointment',
       icon: '📅',
-      route: '/seafarers/appointment'
+      route: '/seafarers/appointment',
+      cardColor: 'blue-card'
     },
     {
       title: 'Job Portal',
       description: 'View the Seafarer Job Portal',
       icon: '💼',
-      route: '/vessels/jobVacancies'
+      route: '/vessels/jobVacancies',
+      cardColor: 'sky-card'
     },
     {
       title: 'Employee Registration',
       description: 'Register Employees to the system',
       icon: '👨‍🏫',
-      route: '/register/employee'
+      route: '/register/employee',
+      cardColor: 'green-card'
     },
     {
       title: 'Employee Attendance',
       description: 'Mark Employee Attendance',
       icon: '⏰',
-      route: '/register/employeeAttendence'
+      route: '/register/employeeAttendence',
+      cardColor: 'purple-card'
     },
 
     {
       title: 'Appointment Report',
       description: 'Appointements View',
       icon: '📚',
-      route: '/reports/appointment-list'
+      route: '/reports/appointment-list',
+      cardColor: 'orange-card'
     },
     {
       title: 'Crew Details',
       description: 'Register the crew to be onboard',
       icon: '⚓',
-      route: '/onboard/onboardCrewRegistration'
+      route: '/onboard/onboardCrewRegistration',
+      cardColor: 'blue-card'
     },
     {
       title: 'Stock',
       description: 'View Stock Details',
       icon: '📦',
-      route: '/inventory/stocks'
+      route: '/inventory/stocks',
+      cardColor: 'orange-card'
     },
     {
       title: 'Login',
       description: 'Create the Login',
       icon: '🔑',
-      route: '/login/login'
+      route: '/login/login',
+      cardColor: 'green-card'
     },
   ];
 

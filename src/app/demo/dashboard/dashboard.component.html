@@ -32,6 +32,7 @@
   <div class="cards-grid">
     <div
       class="menu-card"
+      [ngClass]="item.cardColor"
       *ngFor="let item of menuItems"
       (click)="navigateToSection(item.route)"
     >
