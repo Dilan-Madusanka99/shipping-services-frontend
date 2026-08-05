@@ -4,6 +4,7 @@
   height: 100%;
   background: var(--surface);
   overflow: hidden;
+  height: calc(100vh - 180px);
 }
 
 /* Navigation */
@@ -80,9 +81,9 @@
 
 .day-header {
   text-align: center;
-  padding: 8px 0;
-  font-size: 11px;
-  font-weight: 600;
+  padding: 12px 0;
+  font-size: 15px;
+  font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text-3);
@@ -94,35 +95,51 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  min-height: 0;
 }
 
 .week-row {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  flex: 1;
+
+  flex: 1;               /* Every week gets equal height */
+  min-height: 0;
+
   border-bottom: 1px solid var(--border);
 
-  &:last-child { border-bottom: none; }
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 .day-cell {
   border-right: 1px solid var(--border);
-  padding: 14px 7px;
-  cursor: pointer;
+
+  padding: 12px 10px;
+
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  transition: background 0.1s;
-  min-height: 0;
+
+  cursor: pointer;
+
+  transition: background .2s;
+
   overflow: hidden;
 
-  &:last-child { border-right: none; }
+  &:last-child {
+    border-right: none;
+  }
 
-  &:hover { background: var(--surface-2); }
+  &:hover {
+    background: var(--surface-2);
+  }
 
   &.other-month {
     background: var(--surface-3);
-    .day-num { color: var(--text-3); }
+
+    .day-num {
+      color: var(--text-3);
+    }
   }
 
   &.is-today {
@@ -130,29 +147,28 @@
   }
 }
 
-/* Day number */
 .day-num-wrap {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 1px;
+  margin-bottom: 8px;
 }
 
 .day-num {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text);
-  width: 24px;
-  height: 24px;
+  width: 40px;
+  height: 40px;
+
+  font-size: 22px;
+  font-weight: 700;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   border-radius: 50%;
-  flex-shrink: 0;
 
   &.today-badge {
     background: var(--primary);
-    color: #fff;
-    font-weight: 600;
+    color: white;
   }
 }
 

@@ -64,6 +64,15 @@ export default class DashboardComponent implements OnInit {
     },
     {
       value: 0,
+      title: "Today's Attendance",
+      change: '+6%',
+      compare: 'vs yesterday',
+      icon: 'far fa-calendar-check',
+      color: 'orange',
+      trend: 'up'
+    },
+    {
+      value: 0,
       title: 'Active Seafarers',
       change: '+8%',
       compare: 'vs last month',
@@ -79,15 +88,6 @@ export default class DashboardComponent implements OnInit {
       icon: 'fas fa-briefcase',
       color: 'purple',
       trend: 'down'
-    },
-    {
-      value: 0,
-      title: "Today's Attendance",
-      change: '+6%',
-      compare: 'vs yesterday',
-      icon: 'far fa-calendar-check',
-      color: 'orange',
-      trend: 'up'
     }
   ];
 
