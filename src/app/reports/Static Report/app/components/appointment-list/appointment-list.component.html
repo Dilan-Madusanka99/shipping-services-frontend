@@ -1,67 +1,185 @@
 <div class="appointment-report-container">
   <div class="report-header">
-    <h1>Appointment Report</h1>
-  </div>
+    <div class="title-section">
 
-  <div class="actions-bar">
-    <button class="print-button" (click)="printReport()">
-      <span class="print-icon"></span>
-      Print Report
-    </button>
-  </div>
-
-  <div class="table-section">
-    <div class="refresh-filter-section">
-      <div class="refresh-button">
-        <button mat-raised-button color="primary" (click)="refreshData()">
-          <mat-icon>refresh</mat-icon>
-        </button>
+      <div class="title-icon">
+        <mat-icon>event</mat-icon>
       </div>
-      <mat-form-field class="filter">
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input />
-      </mat-form-field>
+
+      <div>
+        <h1>Appointment List</h1>
+        <p>View and manage appointment information</p>
+      </div>
     </div>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-            <ng-container matColumnDef="sidNo">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> SID </th>
-              <td mat-cell *matCellDef="let element"> {{element.sidNo}} </td>
-            </ng-container>
+    <div class="actions-bar">
+      <button mat-raised-button class="print-btn" (click)="printReport()">
+        <mat-icon>print</mat-icon>
+        Print Report
+      </button>
+    </div>
+  </div>
 
-            <ng-container matColumnDef="firstName">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
-              <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
-            </ng-container>
+  <div class="toolbar">
+    <button
+      mat-icon-button class="refresh-btn" (click)="refreshData()" matTooltip="Refresh">
+      <mat-icon>refresh</mat-icon>
+    </button>
 
-            <ng-container matColumnDef="lastName">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
-              <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
-            </ng-container>
 
-            <ng-container matColumnDef="position">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Position </th>
-              <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-            </ng-container>
+    <mat-form-field appearance="outline" class="search-box">
 
-            <ng-container matColumnDef="appointmentDate">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Appointment Date </th>
-                <td mat-cell *matCellDef="let element"> {{element.appointmentDate | date: 'dd/MM/yyyy'}} </td>
-              </ng-container>
+      <mat-icon matPrefix class="search-icon">
+        search
+      </mat-icon>
 
-              <ng-container matColumnDef="appointmentTime">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Appointment Time </th>
-                <td mat-cell *matCellDef="let element"> {{element.appointmentTime}} </td>
-              </ng-container>
+      <input
+        matInput
+        placeholder="Search appointment by SID, Name or Position..."
+        (keyup)="applyFilter($event)">
+    </mat-form-field>
+  </div>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+  <div class="table-card">
+    <table mat-table [dataSource]="dataSource" matSort class="appointment-table">
+
+      <!-- SID -->
+      <ng-container matColumnDef="sidNo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> SID </th>
+
+        <td mat-cell *matCellDef="let element">
+          {{ element.sidNo }}
+        </td>
+      </ng-container>
+
+
+      <!-- FIRST NAME -->
+      <ng-container matColumnDef="firstName">
+
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.firstName }}
+        </td>
+      </ng-container>
+
+
+      <!-- LAST NAME -->
+      <ng-container matColumnDef="lastName">
+        <th  mat-header-cell  *matHeaderCellDef  mat-sort-header> Last Name </th>
+        <td
+          mat-cell *matCellDef="let element">
+          {{ element.lastName }}
+        </td>
+      </ng-container>
+
+
+      <!-- POSITION -->
+      <ng-container matColumnDef="position">
+
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header>
+
+          Position
+
+        </th>
+
+        <td
+          mat-cell
+          *matCellDef="let element">
+
+          {{ element.position }}
+
+        </td>
+
+      </ng-container>
+
+
+      <!-- APPOINTMENT DATE -->
+      <ng-container matColumnDef="appointmentDate">
+
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header>
+
+          Appointment Date
+
+        </th>
+
+        <td
+          mat-cell
+          *matCellDef="let element">
+
+          {{ element.appointmentDate | date:'dd/MM/yyyy' }}
+
+        </td>
+
+      </ng-container>
+
+
+      <!-- APPOINTMENT TIME -->
+      <ng-container matColumnDef="appointmentTime">
+
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header>
+
+          Appointment Time
+
+        </th>
+
+        <td
+          mat-cell
+          *matCellDef="let element">
+
+          {{ element.appointmentTime }}
+
+        </td>
+
+      </ng-container>
+
+
+      <!-- HEADER / ROW -->
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns">
+      </tr>
+
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        class="appointment-row">
+      </tr>
+
     </table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
   </div>
 
+
+  <!-- ================= PAGINATOR ================= -->
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="Select page of appointments">
+  </mat-paginator>
+
+  
   <div class="report-footer">
-    <p>Generated on {{ getDate() }}</p>
+  <div class="appointment-count">
+      <mat-icon>groups</mat-icon>
+      Total Appointments:
+      <strong>{{dataSource?.filteredData.length}}</strong>
   </div>
+  <div class="generated-date">
+      <mat-icon>event</mat-icon>
+      Generated on {{getDate()}}
+  </div>
+  </div>
+
 </div>
+
+
+

@@ -1,34 +1,55 @@
 <div class="vessel-report-container">
   <div class="report-header">
-    <h1>Vessel Report</h1>
-  </div>
+    <div class="title-section">
 
-  <div class="actions-bar">
-    <button class="print-button" (click)="printReport()">
-      <span class="print-icon"></span>
-      Print Report
-    </button>
-  </div>
-
-  <div class="table-section">
-    <div class="refresh-filter-section">
-      <div class="refresh-button">
-        <button mat-raised-button color="primary" (click)="refreshData()">
-          <mat-icon>refresh</mat-icon>
-        </button>
+      <div class="title-icon">
+        <mat-icon>anchor</mat-icon>
       </div>
-      <mat-form-field class="filter">
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input />
-      </mat-form-field>
+
+      <div>
+        <h1>Vessel List</h1>
+        <p>View and manage vessel information</p>
+      </div>
     </div>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+    <div class="actions-bar">
+      <button mat-raised-button class="print-btn" (click)="printReport()">
+        <mat-icon>print</mat-icon>
+        Print Report
+      </button>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <button
+      mat-icon-button class="refresh-btn" (click)="refreshData()" matTooltip="Refresh">
+      <mat-icon>refresh</mat-icon>
+    </button>
+
+
+    <mat-form-field appearance="outline" class="search-box">
+
+      <mat-icon matPrefix class="search-icon">
+        search
+      </mat-icon>
+
+      <input
+        matInput
+        placeholder="Search vessel by IMO, Vessel Name..."
+        (keyup)="applyFilter($event)">
+    </mat-form-field>
+  </div>
+
+
+  <div class="table-card">
+    <table mat-table [dataSource]="dataSource" matSort class="vessel-table">
+
+      
       <ng-container matColumnDef="imoNo">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> IMO No </th>
           <td mat-cell *matCellDef="let element"> {{element.imoNo}} </td>
-
       </ng-container>
+
       <ng-container matColumnDef="vesselName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Vessel Name </th>
           <td mat-cell *matCellDef="let element"> {{element.vesselName}} </td>
@@ -59,14 +80,42 @@
           <td mat-cell *matCellDef="let element"> {{element.bhp}} </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <!-- HEADER / ROW -->
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns">
+      </tr>
+
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        class="appointment-row">
+      </tr>
+
     </table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
   </div>
 
+
+  <!-- ================= PAGINATOR ================= -->
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="Select page of appointments">
+  </mat-paginator>
+
+
   <div class="report-footer">
-    <p>Generated on {{ getDate() }}</p>
+  <div class="vessel-count">
+      <mat-icon>groups</mat-icon>
+      Total Vessels:
+      <strong>{{dataSource?.filteredData.length}}</strong>
   </div>
+  <div class="generated-date">
+      <mat-icon>event</mat-icon>
+      Generated on {{getDate()}}
+  </div>
+  </div>
+
+
 </div>
