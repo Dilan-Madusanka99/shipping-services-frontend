@@ -9,6 +9,8 @@ import { MessageServiceService } from 'src/app/services/message-service/message-
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { JobPostingServiceService } from 'src/app/services/vessels/job-posting-service.service';
 import { Router } from '@angular/router';
+import { SeafarerProfileComponent } from 'src/app/seafarers/seafarer-profile/seafarer-profile.component';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-applied-jobs',
@@ -143,4 +145,18 @@ export class AppliedJobsComponent {
 
     window.open(this.router.serializeUrl(urlTree), '_blank');
   }
+
+  goToAppointment(job: any): void {
+    const urlTree = this.router.createUrlTree(
+      ['/seafarers/appointment'],
+      {
+        queryParams: {
+          id: job.seafarerId
+        }
+      }
+    );
+
+    window.open(this.router.serializeUrl(urlTree), '_blank');
+  }
+
 }

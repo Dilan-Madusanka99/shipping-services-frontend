@@ -75,11 +75,14 @@
       </mat-form-field>
         <div *ngIf="(appointmentForm.get('sidNo').touched || submitted) && appointmentForm.get('sidNo').errors">
           <span  class="error-msg" *ngIf="appointmentForm.get('sidNo').errors['required']">Sid No is required</span>
-          <!-- <span  class="error-msg" *ngIf="appointmentForm.get('sidNo').errors['minlength']">Minimum 5 Charactors Required</span>
-          <span  class="error-msg" *ngIf="appointmentForm.get('sidNo').errors['maxlength']">Maximum 15 Charactors Required</span> -->
           <span  class="error-msg" *ngIf="appointmentForm.get('sidNo').errors['pattern']">Only letters & Numbers allowed</span>
         </div>
       </div>
+          <!-- <span  class="error-msg" *ngIf="appointmentForm.get('sidNo').errors['minlength']">Minimum 5 Charactors Required</span>
+          <span  class="error-msg" *ngIf="appointmentForm.get('sidNo').errors['maxlength']">Maximum 15 Charactors Required</span> -->
+
+
+
 
       <div class="field" [class.has-error]="(appointmentForm.get('position').touched || submitted) && appointmentForm.get('position').errors && appointmentForm.get('position').errors['required']">
         <label>Position</label>
