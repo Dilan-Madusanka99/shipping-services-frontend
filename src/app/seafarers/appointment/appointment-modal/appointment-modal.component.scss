@@ -245,134 +245,195 @@
 }
 
 :host ::ng-deep {
+
   .field {
+
     mat-form-field {
       width: 100%;
-
-      // Remove Material wrapper styling
-      .mat-mdc-text-field-wrapper {
-        padding: 0;
-        background: transparent;
-      }
-
-      // Remove Material outline border
-      // .mdc-notched-outline__leading,
-      // .mdc-notched-outline__notch,
-      // .mdc-notched-outline__trailing {
-      //   border: none !important;
-      // }
-      
-
-      // Remove internal padding
-      .mat-mdc-form-field-infix {
-        padding: 0 !important;
-        min-height: unset !important;
-        display: flex;
-        align-items: center;
-      }
-
-      // Hide floating label
-      .mat-mdc-floating-label,
-      .mdc-floating-label {
-        display: none !important;
-      }
-
-      // Hide underline/ripple
-      .mdc-line-ripple {
-        display: none !important;
-      }
-
-      // Native input (SID / text fields)
-      input.mat-mdc-input-element {
-        padding: 9px 12px;
-        border: 1px solid var(--border);
-        border-radius: var(--radius-md);
-        font-size: 14px;
-        color: var(--text);
-        background: var(--surface);
-        outline: none;
-        transition: border-color 0.15s, box-shadow 0.15s;
-        width: 100%;
-        box-sizing: border-box;
-
-        &:hover { border-color: var(--border-hover); }
-        &:focus {
-          border-color: var(--primary);
-          box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.12);
-        }
-      }
-
-      // mat-select trigger
-      .mat-mdc-select-trigger {
-        padding: 9px 12px;
-        border: 1px solid var(--border);
-        border-radius: var(--radius-md);
-        font-size: 14px;
-        color: var(--text);
-        background: var(--surface);
-        outline: none;
-        transition: border-color 0.15s, box-shadow 0.15s;
-        width: 100%;
-        box-sizing: border-box;
-
-        &:hover { border-color: var(--border-hover); }
-      }
-
-      .mat-mdc-select-arrow-wrapper {
-        height: unset;
-      }
-
-      .mat-mdc-select-arrow {
-        color: var(--text-2);
-      }
-
-      // Datepicker calendar toggle
-      .mat-mdc-form-field-icon-suffix {
-        position: absolute;
-        right: 4px;
-        top: 50%;
-        transform: translateY(-50%);
-        padding: 0;
-
-        .mat-mdc-icon-button {
-          width: 32px;
-          height: 32px;
-          padding: 4px;
-          color: var(--text-2);
-        }
-      }
-
-      // Hint text
-      .mat-mdc-form-field-hint-wrapper {
-        padding: 0;
-        margin-top: 2px;
-      }
-
-      .mat-mdc-form-field-hint {
-        font-size: 11px;
-        color: var(--text-2);
-      }
-
-      // Subscript wrapper (error spacing)
-      .mat-mdc-form-field-subscript-wrapper {
-        margin-top: 2px !important;
-      }
-
-      .mat-mdc-form-field-error-wrapper {
-        padding: 0 !important;
-      }
+      margin: 0;
     }
 
-    // Error state for all field types
+    /* =========================================
+       REMOVE ANGULAR MATERIAL OUTER OUTLINE
+       ========================================= */
+
+    .mat-mdc-text-field-wrapper {
+      padding: 0 !important;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    .mdc-notched-outline {
+      display: none !important;
+    }
+
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border: none !important;
+      display: none !important;
+    }
+
+    /* Remove Material's internal padding */
+    .mat-mdc-form-field-infix {
+      padding: 0 !important;
+      min-height: unset !important;
+      height: auto !important;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Hide Material floating label */
+    .mat-mdc-floating-label,
+    .mdc-floating-label {
+      display: none !important;
+    }
+
+    /* Remove Material underline/ripple */
+    .mdc-line-ripple {
+      display: none !important;
+    }
+
+
+    /* =========================================
+       NORMAL INPUT
+       ========================================= */
+
+    input.mat-mdc-input-element {
+      padding: 9px 12px !important;
+      border: 1px solid var(--border) !important;
+      border-radius: var(--radius-md) !important;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--surface);
+      outline: none !important;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    input.mat-mdc-input-element:hover {
+      border-color: var(--border-hover) !important;
+    }
+
+    input.mat-mdc-input-element:focus {
+      border-color: var(--primary) !important;
+      box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.12) !important;
+    }
+
+
+    /* =========================================
+       MAT-SELECT
+       ========================================= */
+
+    .mat-mdc-select-trigger {
+      min-height: 44px;
+      padding: 9px 12px !important;
+
+      border: 1px solid var(--border) !important;
+      border-radius: var(--radius-md) !important;
+
+      font-size: 14px;
+      color: var(--text);
+      background: var(--surface);
+
+      outline: none !important;
+      box-sizing: border-box;
+
+      width: 100%;
+
+      transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+    }
+
+    .mat-mdc-select-trigger:hover {
+      border-color: var(--border-hover) !important;
+    }
+
+    /* Select arrow */
+    .mat-mdc-select-arrow-wrapper {
+      height: auto !important;
+      display: flex;
+      align-items: center;
+    }
+
+    .mat-mdc-select-arrow {
+      color: var(--text-2) !important;
+    }
+
+
+    /* =========================================
+       PREFIX ICON
+       ========================================= */
+
+    .mat-mdc-form-field-icon-prefix {
+      padding-left: 12px !important;
+      padding-right: 8px !important;
+    }
+
+    .mat-mdc-form-field-icon-prefix mat-icon {
+      color: #475569;
+      font-size: 21px;
+      width: 21px;
+      height: 21px;
+    }
+
+
+    /* =========================================
+       DATE PICKER ICON
+       ========================================= */
+
+    .mat-mdc-form-field-icon-suffix {
+      padding: 0 !important;
+      display: flex;
+      align-items: center;
+    }
+
+    .mat-mdc-icon-button {
+      width: 36px !important;
+      height: 36px !important;
+      padding: 6px !important;
+      color: var(--text-2);
+    }
+
+
+    /* =========================================
+       ERROR STATE
+       ========================================= */
+
     &.has-error {
+
       input.mat-mdc-input-element,
       .mat-mdc-select-trigger {
         border-color: var(--accent) !important;
+      }
 
-        &:focus {
-          box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.12);
-        }
+      input.mat-mdc-input-element:focus,
+      .mat-mdc-select-trigger:focus {
+        box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.12) !important;
       }
     }
+
+
+    /* =========================================
+       ERROR MESSAGE
+       ========================================= */
+
+    .mat-mdc-form-field-subscript-wrapper {
+      margin-top: 2px !important;
+      padding: 0 !important;
+    }
+
+    .mat-mdc-form-field-error-wrapper {
+      padding: 0 !important;
+    }
+
+    .mat-mdc-form-field-hint-wrapper {
+      padding: 0 !important;
+      margin-top: 2px;
+    }
+
   }
 }
