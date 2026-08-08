@@ -82,6 +82,7 @@ export default class AuthSignupComponent implements OnInit {
           firstName: this.registerForm.value.firstName,
           lastName: this.registerForm.value.lastName,
           sid: this.registerForm.value.sid,
+          role: 'SEAFARER',
           login: this.registerForm.value.login,
           password: this.registerForm.value.password
         })
