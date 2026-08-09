@@ -161,13 +161,13 @@ export class AppointmentModalComponent implements OnInit, OnChanges {
       private fb: FormBuilder
     ) {
       this.appointmentForm = this.fb.group({
-        sidNo: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z0-9]+$/)]),
-        firstName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]),
-        lastName: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]),
+        sidNo: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
+        firstName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern(/^[A-Za-z .'-]+$/)]),
+        lastName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern(/^[A-Za-z .'-]+$/)]),
         position: new FormControl('', [Validators.required]),
         mobile: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]),
-        email: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/)]),
-        appointmentDate: new FormControl({value:'', disabled: true}),
+        email: new FormControl('', [Validators.required, Validators.email]),
+        appointmentDate: new FormControl('', [Validators.required]),
         appointmentTime: new FormControl('', [ Validators.required]),
         appointmentStatus: new FormControl('', [Validators.required]),
         appointmentTypes: new FormControl('', [Validators.required]),
