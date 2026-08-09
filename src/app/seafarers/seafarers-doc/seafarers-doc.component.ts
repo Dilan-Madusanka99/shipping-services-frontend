@@ -6,6 +6,7 @@ import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.se
 import { OtherDetailsRegistrationService } from 'src/app/services/seafarers/other-details-registration.service';
 import { CertificatesRegistrationService } from 'src/app/services/seafarers/certificates-registration.service';
 import { SeaServicesService } from 'src/app/services/seafarers/sea-services.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-seafarers-doc',
@@ -207,22 +208,26 @@ export class SeafarersDocComponent {
   }
 
   public patchFormSeafarersValues(seafarersId: number): void {
-    const seaFarer = this.allSeafarersListDetails.find((item: any) => item.id == seafarersId);
-
+    const seaFarer = this.allSeafarersListDetails.find(
+      (item: any) => item.id == seafarersId
+    );
+    if (!seaFarer) {
+      return;
+    }
     this.userForm.patchValue({
-      ...seaFarer
-    });
-
-    /* patch kin details */
-
-    this.userForm.patchValue({
+      ...seaFarer,
+      // Format dates
+      appliedDate: this.formatDateValue(seaFarer.appliedDate),
+      availableDate: this.formatDateValue(seaFarer.availableDate),
+      birthDate: this.formatDateValue(seaFarer.birthDate),
+      dob: this.formatDateValue(seaFarer.dob),
+      // Kin details
       kinName: seaFarer.kinName,
       kinRelationship: seaFarer.kinRelationship,
       kinAddress: seaFarer.kinAddress,
       kinMobile: seaFarer.kinMobile,
       kinEmail: seaFarer.kinEmail
     });
-
     console.log(this.userForm.value);
   }
 
@@ -242,24 +247,31 @@ export class SeafarersDocComponent {
   private loadOtherDetails(selectedSeafarersId: number): void {
   this.otherDetailsService.getBySeafarerId(selectedSeafarersId).subscribe((otherDetails: any) => {
     if (otherDetails) {
-      this.userForm.patchValue({
-        sidNo: otherDetails.sidNo,
-        sidIssuedPlace: otherDetails.sidIssuedPlace,
-        sidIssuedDate: otherDetails.sidIssuedDate,
-        sidExpireDate: otherDetails.sidExpireDate,
-        ppNo: otherDetails.ppNo,
-        ppIssuedPlace: otherDetails.ppIssuedPlace,
-        ppIssuedDate: otherDetails.ppIssuedDate,
-        ppExpireDate: otherDetails.ppExpireDate,
-        cdcNo: otherDetails.cdcNo,
-        cdcIssuedPlace: otherDetails.cdcIssuedPlace,
-        cdcIssuedDate: otherDetails.cdcIssuedDate,
-        cdcExpireDate: otherDetails.cdcExpireDate,
-        yellowFeverNo: otherDetails.yellowFeverNo,
-        yellowFeverIssuedPlace: otherDetails.yellowFeverIssuedPlace,
-        kiyellowFeverIssuedDatenName: otherDetails.kiyellowFeverIssuedDatenName,
-        yellowFeverExpireDate: otherDetails.yellowFeverExpireDate
-      });
+        this.userForm.patchValue({
+          sidNo: otherDetails.sidNo,
+          sidIssuedPlace: otherDetails.sidIssuedPlace,
+          sidIssuedDate: this.formatDateValue(otherDetails.sidIssuedDate),
+          sidExpireDate: this.formatDateValue(otherDetails.sidExpireDate),
+
+          ppNo: otherDetails.ppNo,
+          ppIssuedPlace: otherDetails.ppIssuedPlace,
+          ppIssuedDate: this.formatDateValue(otherDetails.ppIssuedDate),
+          ppExpireDate: this.formatDateValue(otherDetails.ppExpireDate),
+
+          cdcNo: otherDetails.cdcNo,
+          cdcIssuedPlace: otherDetails.cdcIssuedPlace,
+          cdcIssuedDate: this.formatDateValue(otherDetails.cdcIssuedDate),
+          cdcExpireDate: this.formatDateValue(otherDetails.cdcExpireDate),
+
+          yellowFeverNo: otherDetails.yellowFeverNo,
+          yellowFeverIssuedPlace: otherDetails.yellowFeverIssuedPlace,
+          kiyellowFeverIssuedDatenName: this.formatDateValue(
+            otherDetails.kiyellowFeverIssuedDatenName
+          ),
+          yellowFeverExpireDate: this.formatDateValue(
+            otherDetails.yellowFeverExpireDate
+          )
+        });
     }
   });
   }
@@ -267,13 +279,13 @@ export class SeafarersDocComponent {
   private loadCertificateDetails(selectedSeafarersId: number): void {
   this.certificateDetailsService.getBySeafarerId(selectedSeafarersId).subscribe((certificate: any) => {
     if (certificate) {
-      this.userForm.patchValue({
-        cName: certificate.cName,
-        cNo: certificate.cNo,
-        cIssuedPlace: certificate.cIssuedPlace,
-        cIssuedDate: certificate.cIssuedDate,
-        cExpiredDate: certificate.cExpiredDate
-      });
+        this.userForm.patchValue({
+          cName: certificate.cName,
+          cNo: certificate.cNo,
+          cIssuedPlace: certificate.cIssuedPlace,
+          cIssuedDate: this.formatDateValue(certificate.cIssuedDate),
+          cExpiredDate: this.formatDateValue(certificate.cExpiredDate)
+        });
     }
   });
   }
@@ -281,19 +293,35 @@ export class SeafarersDocComponent {
   private loadSeaServiceDetails(seafarersId: number): void {
   this.seaServicesService.getBySeafarerId(seafarersId).subscribe((seaService: any) => {
     if (seaService) {
-      this.userForm.patchValue({
-        companyName: seaService.companyName,
-        vesselName: seaService.vesselName,
-        vesselType: seaService.vesselType,
-        flag: seaService.flag,
-        grt: seaService.grt,
-        bhp: seaService.bhp,
-        signOn: seaService.signOn,
-        signOff: seaService.signOff,
-        totalMonths: seaService.totalMonths,
-        reason: seaService.reason
-      });
+        this.userForm.patchValue({
+          companyName: seaService.companyName,
+          vesselName: seaService.vesselName,
+          vesselType: seaService.vesselType,
+          flag: seaService.flag,
+          grt: seaService.grt,
+          bhp: seaService.bhp,
+
+          signOn: this.formatDateValue(seaService.signOn),
+          signOff: this.formatDateValue(seaService.signOff),
+
+          totalMonths: seaService.totalMonths,
+          reason: seaService.reason
+        });
     }
   });
+  }
+
+ // dates formated
+  private formatDateValue(value: any): string {
+    if (!value) {
+      return '';
+    }
+
+    try {
+      return formatDate(value, 'dd/MM/yyyy', 'en-GB');
+    } catch (error) {
+      console.error('Invalid date:', value);
+      return '';
+    }
   }
 }
