@@ -149,6 +149,8 @@ export class AppointmentComponent implements OnInit{
                 }        
         
                 this.messageService.showSuccess('Data Saved Successfully!');  
+
+                this.closeModal();
               },
               error: (error) => {
                 this.messageService.showError('Action Failed With Error' + error);
@@ -162,6 +164,7 @@ export class AppointmentComponent implements OnInit{
                 this.dataSource.data[elementIndex] = response;
                 this.dataSource = new MatTableDataSource(this.dataSource.data);
                 this.messageService.showSuccess('Data Edited Successfully!');
+                this.closeModal();
               },
               error: (error) => {
                 this.messageService.showError('Action Failed With Error' + error);
@@ -336,7 +339,7 @@ export class AppointmentComponent implements OnInit{
     }
     this.appointmentForm.updateValueAndValidity();
     this.onSubmit();
-    this.closeModal();
+    // this.closeModal();
   }
 
   deleteAppointment(id: string): void {

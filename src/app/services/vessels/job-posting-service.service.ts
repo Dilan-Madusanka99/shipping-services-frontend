@@ -74,6 +74,23 @@ export class JobPostingServiceService {
     return this.http.delete(requestUrl, { headers: headers });
   }
 
+  deleteAppliedJob(id: number) {
+    console.log('In delete applied job');
+
+    const requestUrl =
+      environment.baseUrl + '/job_posting/apply/' + id;
+
+    let headers = {};
+
+    if (this.httpService.getAuthToken() !== null) {
+      headers = {
+        Authorization: 'Bearer ' + this.httpService.getAuthToken()
+      };
+    }
+
+    return this.http.delete(requestUrl, { headers: headers });
+  }
+
   getOpenJobs() {
     const requestUrl = environment.baseUrl + '/job_posting/open';
 

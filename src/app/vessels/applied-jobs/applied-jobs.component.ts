@@ -135,7 +135,7 @@ export class AppliedJobsComponent {
 
   openSeafarerProfile(job: any): void {
     const urlTree = this.router.createUrlTree(
-      ['/seafarers/seafarersRegistration'],
+      ['/seafarers/seafarerDoc'],
       {
         queryParams: {
           id: job.seafarerId

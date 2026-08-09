@@ -2,7 +2,7 @@
    MAIN CONTAINER
    ========================================================= */
 
-.item-report-container {
+.supplier-report-container {
   width: calc(100% - 32px);
   max-width: 1450px;
   margin: 0 auto;
