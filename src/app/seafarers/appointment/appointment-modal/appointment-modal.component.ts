@@ -5,6 +5,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.service';
 
 export interface Appointment {
   id: string;
@@ -98,6 +99,7 @@ export class AppointmentModalComponent implements OnInit, OnChanges {
   @Output() close = new EventEmitter<void>();
 
   appointmentForm : FormGroup;
+  sidList: any[] = [];
   readonly colors = APPOINTMENT_COLORS;
   readonly categories = Object.entries(CATEGORY_LABELS) as [AppointmentCategory, string][];
 
@@ -158,7 +160,8 @@ export class AppointmentModalComponent implements OnInit, OnChanges {
   submitted: boolean;
 
   constructor(
-      private fb: FormBuilder
+      private fb: FormBuilder,
+      private seafarersService: SeafarersServiceService
     ) {
       this.appointmentForm = this.fb.group({
         sidNo: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15), Validators.pattern(/^[A-Za-z0-9]+$/)]),
@@ -180,7 +183,41 @@ export class AppointmentModalComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.resetForm();
+    this.loadSidNumbers();
     console.log(this.appointment);
+  }
+
+  private loadSidNumbers(): void {
+    this.seafarersService.getData().subscribe({
+      next: (data: any[]) => {
+        this.sidList = data;
+        console.log('SID List:', this.sidList);
+      },
+      error: (error) => {
+        console.error('Error loading SID numbers:', error);
+      }
+    });
+  }
+
+  onSidChange(selectedSid: string): void {
+
+    const selectedSeafarer = this.sidList.find(
+      seafarer => seafarer.sidNo === selectedSid
+    );
+
+    if (!selectedSeafarer) {
+      return;
+    }
+
+    console.log('Selected Seafarer:', selectedSeafarer);
+
+    this.appointmentForm.patchValue({
+      position: selectedSeafarer.position,
+      firstName: selectedSeafarer.otherNames,
+      lastName: selectedSeafarer.surname,
+      mobile: selectedSeafarer.mobile,
+      email: selectedSeafarer.email
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -283,6 +320,7 @@ private resetForm(): void {
   selectColor(color: string): void {
     this.form.color = color;
   }
+
 
   onSave(): void {
     this.submitted = true;

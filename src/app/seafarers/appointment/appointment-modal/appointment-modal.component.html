@@ -66,23 +66,22 @@
     <div class="modal-body">
 
       <div class="row-2">
-        <!-- Sid No -->
       <div class="field" [class.has-error]="(appointmentForm.get('sidNo').touched || submitted) && appointmentForm.get('sidNo').errors && appointmentForm.get('sidNo').errors['required']">
         <label>SID</label>
-        <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <mat-icon matPrefix>badge</mat-icon>
-        <input matInput placeholder="Enter SID" formControlName="sidNo">
-      </mat-form-field>
-        <div *ngIf="(appointmentForm.get('sidNo').touched || submitted) && appointmentForm.get('sidNo').errors">
-          <span  class="error-msg" *ngIf="appointmentForm.get('sidNo').errors['required']">Sid No is required</span>
-          <span  class="error-msg" *ngIf="appointmentForm.get('sidNo').errors['pattern']">Only letters & Numbers allowed</span>
-        </div>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-icon matPrefix>badge</mat-icon>
+            <input matInput type="text" placeholder="Select or enter SID" formControlName="sidNo" [matAutocomplete]="sidAuto">
+            <mat-autocomplete #sidAuto="matAutocomplete" (optionSelected)="onSidChange($event.option.value)">
+              <mat-option *ngFor="let seafarer of sidList" [value]="seafarer.sidNo" >
+                {{ seafarer.sidNo }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <span  class="error-msg" 
+                    *ngIf="(appointmentForm.get('sidNo').touched || submitted) && appointmentForm.get('sidNo').errors && appointmentForm.get('sidNo').errors['required'] ">
+                    SID No is Required
+          </span>
       </div>
-          <!-- <span  class="error-msg" *ngIf="appointmentForm.get('sidNo').errors['minlength']">Minimum 5 Charactors Required</span>
-          <span  class="error-msg" *ngIf="appointmentForm.get('sidNo').errors['maxlength']">Maximum 15 Charactors Required</span> -->
-
-
-
 
       <div class="field" [class.has-error]="(appointmentForm.get('position').touched || submitted) && appointmentForm.get('position').errors && appointmentForm.get('position').errors['required']">
         <label>Position</label>
@@ -165,7 +164,7 @@
           <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-icon matPrefix>event</mat-icon>
             <input matInput [matDatepicker]="appointmentDate" formControlName="appointmentDate" placeholder="MM/DD/YYYY"/>
-            <mat-datepicker-toggle matIconSuffix [for]="appointmentDate"></mat-datepicker-toggle>
+            <!-- <mat-datepicker-toggle matIconSuffix [for]="appointmentDate"></mat-datepicker-toggle> -->
             <mat-datepicker #appointmentDate></mat-datepicker>
           </mat-form-field>
         <span class="error-msg" *ngIf="(appointmentForm.get('appointmentDate').touched || submitted) && appointmentForm.get('appointmentDate').errors && appointmentForm.get('appointmentDate').errors['required']">Date is required</span>
@@ -187,6 +186,7 @@
       </div>
       </div>
 
+      <div class="row-2">
       <div class="field" [class.has-error]="(appointmentForm.get('appointmentStatus').touched || submitted) && appointmentForm.get('appointmentStatus').errors && appointmentForm.get('appointmentStatus').errors['required']">
         <label>Status</label>
           <mat-form-field appearance="outline" subscriptSizing="dynamic">
@@ -214,6 +214,8 @@
           *ngIf="(appointmentForm.get('appointmentTypes').touched || submitted) && appointmentForm.get('appointmentTypes').errors && appointmentForm.get('appointmentTypes').errors['required'] ">
                                                                                                                           Type is required</span>
       </div>
+      </div>
+
     </div>
 
     <div class="modal-footer">
