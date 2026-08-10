@@ -349,6 +349,22 @@ export class CalendarComponent {
     );
   }
 
+  getAppointmentTooltip(appt: Appointment): string {
+    const fullName = [
+      appt.firstName,
+      appt.lastName
+    ]
+      .filter(name => !!name)
+      .join(' ');
+
+    return [
+      fullName || 'Unknown Name',
+      `SID: ${appt.sid || 'N/A'}`,
+      `Position: ${appt.position || 'N/A'}`,
+      `Time: ${this.formatTime(appt.time)}`
+    ].join('\n');
+  }
+
 // booked sid 
   getBookedSids(
     day: CalendarDay

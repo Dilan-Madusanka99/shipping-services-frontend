@@ -87,20 +87,21 @@
       *ngIf="day.appointments && day.appointments.length > 0"
     >
 
-      <div
-        *ngFor="
-          let appt of getVisibleAppointments(day.appointments);
-          trackBy: trackById
-        "
-        class="time-slot"
-        (click)="onAppointmentClick(appt, $event)"
-        [title]="'SID: ' + appt.sid"
-      >
-        <span class="time-dot"></span>
-        <span class="time-text">
-          {{ formatTime(appt.time) }}
-        </span>
-      </div>
+    <div
+      *ngFor="
+        let appt of getVisibleAppointments(day.appointments);
+        trackBy: trackById
+      "
+      class="time-slot"
+      (click)="onAppointmentClick(appt, $event)"
+      [title]="getAppointmentTooltip(appt)"
+    >
+      <span class="time-dot"></span>
+
+      <span class="time-text">
+        {{ formatTime(appt.time) }}
+      </span>
+    </div>
 
       <!-- More appointments -->
       <div
