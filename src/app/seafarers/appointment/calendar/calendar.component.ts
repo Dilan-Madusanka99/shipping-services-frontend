@@ -1,20 +1,26 @@
-import { Component, Output, EventEmitter, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Output, EventEmitter} from '@angular/core';
 import { CalendarService } from '../../../services/calendar-service/calendar.service';
+import { AppointmentService } from 'src/app/services/seafarers/appointment.service';
 import { FormGroup } from '@angular/forms';
 
-export type AppointmentCategory = 'work' | 'personal' | 'health' | 'social' | 'other';
+export type AppointmentCategory =
+  'work'
+  | 'personal'
+  | 'health'
+  | 'social'
+  | 'other';
 
 export interface Appointment {
+
   id: string;
   title: string;
-  date: string;       // ISO date string: YYYY-MM-DD
-  time: string;       // HH:mm
-  duration: number;   // minutes; 0 = all-day
+  date: string;
+  time: string;
+  duration: number;
   category: AppointmentCategory;
-  color: string;      // hex color
+  color: string;
   notes: string;
-  createdAt: number;  // timestamp
+  createdAt: number;
   sid?: string;
   firstName?: string;
   lastName?: string;
@@ -23,105 +29,360 @@ export interface Appointment {
   email?: string;
   status?: string;
   type?: string;
-  formData?: FormGroup
+  formData?: FormGroup;
 }
+
 
 export interface CalendarDay {
   date: Date;
-  dateStr: string;    // YYYY-MM-DD
+  dateStr: string;
   day: number;
   isCurrentMonth: boolean;
   isToday: boolean;
   appointments: Appointment[];
 }
 
+
 @Component({
   selector: 'app-calendar',
   standalone: false,
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss'],
+  styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent {
-  @Output() dayClick = new EventEmitter<string>();        // dateStr
-  @Output() appointmentClick = new EventEmitter<Appointment>();
-  @Output() openAddModalFromJobSuggestions = new EventEmitter<Appointment>();
 
-  readonly weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  @Output()
+  dayClick =
+    new EventEmitter<string>();
 
-  readonly monthLabel = this.calSvc.monthLabel;
-  readonly calendarMonth = this.calSvc.calendarMonth;
-  readonly isCurrentMonth = this.calSvc.isCurrentMonth;
+  @Output()
+  appointmentClick =
+    new EventEmitter<Appointment>();
+
+  @Output()
+  openAddModalFromJobSuggestions =
+    new EventEmitter();
+
+  readonly weekDays = [
+    'Sun',
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat'
+  ];
+
+// calender data
+  readonly monthLabel =
+    this.calSvc.monthLabel;
+
+  readonly calendarMonth =
+    this.calSvc.calendarMonth;
+
+  readonly isCurrentMonth =
+    this.calSvc.isCurrentMonth;
 
   MAX_BOOKINGS = 5;
 
-  constructor(private calSvc: CalendarService) {}
+  constructor(
+    private calSvc: CalendarService,
+    private appointmentService: AppointmentService
+  ) {}
 
-  prevMonth(): void { this.calSvc.goToPreviousMonth(); }
-  nextMonth(): void { this.calSvc.goToNextMonth(); }
-  goToday(): void { this.calSvc.goToToday(); }
 
-  // checked past dates
-   isPastDate(date: Date): boolean {
-    const today = new Date();
-    today.setHours(0,0,0,0);
+// month navigatioin
+  prevMonth(): void {
+    this.calSvc.goToPreviousMonth();
+  }
 
-    const d = new Date(date);
-    d.setHours(0,0,0,0);
+  nextMonth(): void {
+    this.calSvc.goToNextMonth();
+  }
+
+  goToday(): void {
+    this.calSvc.goToToday();
+  }
+
+
+
+// refresh calender
+  refreshCalendar(): void {
+    this.calSvc.refreshAppointments();
+  }
+
+// check past date
+  isPastDate(
+    date: Date
+  ): boolean {
+
+    const today =
+      new Date();
+
+    today.setHours(
+      0,
+      0,
+      0,
+      0
+    );
+
+    const d =
+      new Date(date);
+
+    d.setHours(
+      0,
+      0,
+      0,
+      0
+    );
 
     return d < today;
   }
 
-  //checked weekends
-  isWeekend(date: Date): boolean {
-    const day = date.getDay();
-    return day === 0 || day === 6; // Sunday or Saturday
+// check data more than one month
+  isAfterOneMonth(
+    date: Date
+  ): boolean {
+
+    const today =
+      new Date();
+
+    today.setHours(
+      0,
+      0,
+      0,
+      0
+    );
+
+    const maxDate =
+      new Date(today);
+
+    maxDate.setMonth(
+      maxDate.getMonth() + 1
+    );
+
+    if (
+      maxDate.getDate() !==
+      today.getDate()
+    ) {
+
+      maxDate.setDate(0);
+    }
+
+    const d =
+      new Date(date);
+
+    d.setHours(
+      0,
+      0,
+      0,
+      0
+    );
+
+    return d > maxDate;
   }
 
-  //checked fully booked
-  isFullyBooked(day: CalendarDay): boolean {
-    return day.appointments.length >= this.MAX_BOOKINGS;
-  }
+  // check weekend
+  isWeekend(
+    date: Date
+  ): boolean {
 
-  //disabled logic
-  isDisabled(day: CalendarDay): boolean {
+    const day =
+      date.getDay();
+
     return (
-      this.isPastDate(day.date) ||
-      this.isWeekend(day.date) ||
-      this.isFullyBooked(day)
+      day === 0 ||
+      day === 6
     );
   }
 
-  onDayClick(day: CalendarDay): void {
-    if (this.isDisabled(day)) {
-      // optional message
-      alert('This date is not available');
+// checked fully booked
+  isFullyBooked(
+    day: CalendarDay
+  ): boolean {
+
+    return (
+      day.appointments.length >=
+      this.MAX_BOOKINGS
+    );
+  }
+
+// disabled dates
+  isDisabled(
+    day: CalendarDay
+  ): boolean {
+    return (
+      this.isPastDate(
+        day.date
+      )
+
+      ||
+
+      this.isAfterOneMonth(
+        day.date
+      )
+
+      ||
+
+      this.isWeekend(
+        day.date
+      )
+
+      ||
+
+      this.isFullyBooked(
+        day
+      )
+    );
+  }
+
+  // day click
+  onDayClick(
+    day: CalendarDay
+  ): void {
+    if (
+      this.isDisabled(day)
+    ) {
+      alert(
+        'This date is not available'
+      );
       return;
     }
-    this.dayClick.emit(day.dateStr);
+
+    this.dayClick.emit(
+      day.dateStr
+    );
   }
 
-  onAppointmentClick(appt: Appointment, event: MouseEvent): void {
+ // appointment click
+  onAppointmentClick(
+    appt: Appointment,
+    event: MouseEvent
+  ): void {
     event.stopPropagation();
-    this.appointmentClick.emit(appt);
+    this.appointmentClick.emit(
+      appt
+    );
   }
 
-  trackByDate(_: number, day: CalendarDay): string {
+ // track date
+  trackByDate(
+    _: number,
+    day: CalendarDay
+  ): string {
     return day.dateStr;
   }
 
-  trackByWeek(index: number): number {
+ // track week
+  trackByWeek(
+    index: number
+  ): number {
     return index;
   }
 
-  trackById(_: number, appt: Appointment): string {
+ // track appointment
+  trackById(
+    _: number,
+    appt: Appointment
+  ): string {
+
     return appt.id;
   }
 
-  getVisibleAppointments(appts: Appointment[]): Appointment[] {
-    return appts.slice(0, 3);
+  // visible appointments
+  getVisibleAppointments(
+    appts: Appointment[]
+  ): Appointment[] {
+    return appts.slice(0, 2);
   }
 
-  getOverflowCount(appts: Appointment[]): number {
-    return Math.max(0, appts.length - 3);
+  // overflow count
+  getOverflowCount(
+    appts: Appointment[]
+  ): number {
+    return Math.max(
+      0,
+      appts.length - 2
+    );
+  }
+
+  // format time
+  formatTime(
+    time: string
+  ): string {
+    if (!time) {
+      return '';
+    }
+
+    const parts =
+      time.split(':');
+
+    const hours =
+      Number(parts[0]);
+
+    const minutes =
+      Number(parts[1]);
+
+    if (
+      isNaN(hours) ||
+      isNaN(minutes)
+    ) {
+
+      return time;
+    }
+
+    const date =
+      new Date();
+
+    date.setHours(
+      hours,
+      minutes,
+      0,
+      0
+    );
+    return date.toLocaleTimeString(
+      'en-US',
+      {
+        hour: 'numeric',
+        minute: '2-digit'
+      }
+    );
+  }
+
+// booked sid 
+  getBookedSids(
+    day: CalendarDay
+  ): string {
+    if (
+      !day.appointments ||
+      day.appointments.length === 0
+    ) {
+
+      return 'No appointments booked';
+    }
+
+    const sids =
+      day.appointments
+        .map(
+          appt => appt.sid
+        )
+        .filter(
+          (
+            sid
+          ): sid is string =>
+            !!sid
+        );
+
+    if (
+      sids.length === 0
+    ) {
+
+      return 'No SID information';
+    }
+
+    return (
+      'Booked SID:\n' +
+      sids.join('\n')
+    );
   }
 }

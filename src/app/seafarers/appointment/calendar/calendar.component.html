@@ -15,72 +15,103 @@
         </svg>
       </button>
     </div>
-    <h1 class="month-label">{{ monthLabel() }}</h1>
+    <div class="month-label">
+      <span class="month-badge">
+        {{ monthLabel() }}
+      </span>
+    </div>
     <div class="nav-right">
       <!-- Placeholder for future view switcher -->
       <span class="view-label">Month</span>
     </div>
   </div>
 
-  <!-- Day-of-week headers -->
+  <!-- Weekday headers -->
   <div class="day-headers">
-    <div class="day-header" *ngFor="let d of weekDays">{{ d }}</div>
+
+    <div
+      class="day-header"
+      *ngFor="let day of weekDays; let i = index"
+      [class.weekend-header]="i === 0 || i === 6"
+    >
+      <span class="day-header-text">
+        {{ day }}
+      </span>
+    </div>
+
   </div>
 
   <!-- Calendar grid -->
-  <div class="cal-grid">
-    <div
-      class="week-row"
-      *ngFor="let week of calendarMonth().weeks; let wi = index; trackBy: trackByWeek"
-    >
-      <div
-        class="day-cell"
-        *ngFor="let day of week; trackBy: trackByDate"
-        [class.other-month]="!day.isCurrentMonth"
-        [class.is-today]="day.isToday"
-        [class.has-events]="day.appointments.length > 0"
+<div class="cal-grid">
 
-        [class.disabled-day]="isDisabled(day)"
-        [class.weekend]="isWeekend(day.date)"
-        [class.fully-booked]="isFullyBooked(day)"
+  <!-- 6 weeks -->
+  <div
+    class="week-row"
+    *ngFor="let week of calendarMonth().weeks; trackBy: trackByWeek"
+  >
 
-        (click)="onDayClick(day)"
-        [attr.aria-label]="day.dateStr"
+  <!-- 7 days -->
+  <div
+    class="day-cell"
+    *ngFor="let day of week; trackBy: trackByDate"
+
+    [class.disabled-day]="isDisabled(day)"
+    [class.weekend]="isWeekend(day.date)"
+    [class.fully-booked]="isFullyBooked(day)"
+
+    (click)="onDayClick(day)"
+    [attr.aria-label]="day.dateStr"
+  >
+
+    <!-- Day number -->
+    <div class="day-num-wrap">
+      <span
+        class="day-num"
+        [class.today-badge]="day.isToday"
       >
-        <!-- Day number -->
-        <div class="day-num-wrap">
-          <span class="day-num" [class.today-badge]="day.isToday">{{ day.day }}</span>
-        </div>
+        {{ day.day }}
+      </span>
+    </div>
 
-        <!-- Optional label -->
-        <div class="status-label" *ngIf="isFullyBooked(day)">
-          Full
-        </div>
+    <!-- Fully booked -->
+    <div
+      class="status-label"
+      *ngIf="isFullyBooked(day)"
+    >
+      Full
+    </div>
 
-        <!-- Appointment pills -->
-        <!-- <div class="events-area">
-          <div
-            *ngFor="let appt of getVisibleAppointments(day.appointments); trackBy: trackById"
-            class="event-pill"
-            [style.background]="appt.color + '20'"
-            [style.color]="appt.color"
-            [style.border-color]="appt.color + '40'"
-            (click)="onAppointmentClick(appt, $event)"
-            [title]="appt.title"
-          >
-            <span class="event-dot" [style.background]="appt.color"></span>
-            <span class="event-name">{{ appt.title }}</span>
-          </div>
+    <!-- Booked appointments -->
+    <div
+      class="events-area"
+      *ngIf="day.appointments && day.appointments.length > 0"
+    >
 
-          <div
-            *ngIf="getOverflowCount(day.appointments) > 0"
-            class="overflow-label"
-          >
-            +{{ getOverflowCount(day.appointments) }} more
-          </div>
-        </div> -->
+      <div
+        *ngFor="
+          let appt of getVisibleAppointments(day.appointments);
+          trackBy: trackById
+        "
+        class="time-slot"
+        (click)="onAppointmentClick(appt, $event)"
+        [title]="'SID: ' + appt.sid"
+      >
+        <span class="time-dot"></span>
+        <span class="time-text">
+          {{ formatTime(appt.time) }}
+        </span>
+      </div>
+
+      <!-- More appointments -->
+      <div
+        *ngIf="getOverflowCount(day.appointments) > 0"
+        class="overflow-label"
+        (click)="$event.stopPropagation()"
+      >
+        +{{ getOverflowCount(day.appointments) }} more
       </div>
     </div>
   </div>
-
+  </div>
+</div>
 </div>

@@ -1,108 +1,294 @@
 .calendar-wrapper {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  background: var(--surface);
-  overflow: hidden;
   height: calc(100vh - 180px);
+
+  background: var(--surface);
+
+  overflow: hidden;
 }
 
-/* Navigation */
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
 .cal-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   padding: 14px 24px 12px;
+
   border-bottom: 1px solid var(--border);
+
   flex-shrink: 0;
+
+  background: #ffffff;
 }
 
-.nav-left, .nav-right {
+.nav-left,
+.nav-right {
   display: flex;
   align-items: center;
+
   gap: 6px;
+
   min-width: 120px;
 }
 
-.nav-right { justify-content: flex-end; }
+.nav-right {
+  justify-content: flex-end;
+}
+
+
+/* =========================================================
+   MONTH
+   ========================================================= */
 
 .month-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   font-size: 17px;
-  font-weight: 600;
-  color: var(--text);
+  font-weight: 700;
+
+  color: #ffffff;
+
   text-align: center;
 }
+
+.month-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 150px;
+
+  padding: 8px 22px;
+
+  border-radius: 10px;
+
+  background: linear-gradient(
+    135deg,
+    #2563eb 0%,
+    #3b82f6 50%,
+    #6366f1 100%
+  );
+
+  color: #ffffff;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  letter-spacing: 0.01em;
+
+  box-shadow:
+    0 4px 12px rgba(37, 99, 235, 0.20);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.month-badge:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 6px 16px rgba(37, 99, 235, 0.25);
+}
+
+
+/* =========================================================
+   NAVIGATION BUTTONS
+   ========================================================= */
 
 .nav-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  color: var(--text);
-  transition: background 0.12s, border-color 0.12s;
 
-  &:hover {
-    background: var(--surface-2);
-    border-color: var(--border-hover);
-  }
+  width: 34px;
+  height: 34px;
+
+  background: #ffffff;
+
+  border: 1px solid #d9e2f2;
+
+  border-radius: 8px;
+
+  color: #1e3a8a;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.nav-btn:hover {
+  background: #eff6ff;
+
+  border-color: #93c5fd;
+
+  transform: translateY(-1px);
 }
 
 .today-btn {
   width: auto;
-  padding: 0 12px;
-  font-size: 13px;
-  font-weight: 500;
 
-  &.active {
-    background: var(--primary-light);
-    border-color: rgba(26, 86, 219, 0.3);
-    color: var(--primary);
-  }
+  padding: 0 14px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  color: #2563eb;
+
+  background: #eff6ff;
+
+  border: 1px solid #bfdbfe;
+
+  border-radius: 8px;
+}
+
+.today-btn:hover {
+  background: #dbeafe;
+}
+
+.today-btn.active {
+  background: #2563eb;
+
+  border-color: #2563eb;
+
+  color: #ffffff;
 }
 
 .view-label {
   font-size: 13px;
-  font-weight: 500;
-  color: var(--text-2);
+  font-weight: 600;
+
+  color: #64748b;
+
   padding: 0 8px;
 }
 
-/* Day headers */
+
+/* =========================================================
+   WEEKDAY HEADERS
+   ========================================================= */
+
 .day-headers {
   display: grid;
+
   grid-template-columns: repeat(7, 1fr);
-  border-bottom: 1px solid var(--border);
+
+  padding: 6px 0;
+
+  border-bottom: 1px solid #dbe5f2;
+
   flex-shrink: 0;
+
+  background: linear-gradient(
+    180deg,
+    #f8fbff 0%,
+    #eef5ff 100%
+  );
 }
 
 .day-header {
-  text-align: center;
-  padding: 12px 0;
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 38px;
+
+  position: relative;
 }
 
-/* Grid */
+.day-header-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 78px;
+
+  padding: 7px 14px;
+
+  border-radius: 8px;
+
+  background: linear-gradient(
+    135deg,
+    #eaf2ff 0%,
+    #dbeafe 100%
+  );
+
+  border: 1px solid #c7dbf7;
+
+  color: #3563a8;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  letter-spacing: 0.06em;
+
+  text-transform: uppercase;
+
+  box-shadow:
+    0 2px 5px rgba(37, 99, 235, 0.06);
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.day-header-text:hover {
+  background: linear-gradient(
+    135deg,
+    #dbeafe 0%,
+    #c7dfff 100%
+  );
+
+  transform: translateY(-1px);
+}
+
+
+/* Weekend headers */
+
+.day-header.weekend-header .day-header-text {
+  background: linear-gradient(
+    135deg,
+    #f1f5f9 0%,
+    #e2e8f0 100%
+  );
+
+  border-color: #d5dde8;
+
+  color: #64748b;
+}
+
+
+/* =========================================================
+   CALENDAR GRID
+   ========================================================= */
+
 .cal-grid {
   flex: 1;
+
   display: flex;
   flex-direction: column;
+
   overflow: hidden;
+
   min-height: 0;
 }
 
 .week-row {
   display: grid;
+
   grid-template-columns: repeat(7, 1fr);
 
-  flex: 1;               /* Every week gets equal height */
+  flex: 1;
+
   min-height: 0;
 
   border-bottom: 1px solid var(--border);
@@ -112,139 +298,258 @@
   }
 }
 
+
+/* =========================================================
+   DAY CELL
+   ========================================================= */
+
 .day-cell {
   border-right: 1px solid var(--border);
 
-  padding: 12px 10px;
+  padding: 6px 8px;
 
   display: flex;
   flex-direction: column;
 
   cursor: pointer;
 
-  transition: background .2s;
+  transition:
+    background 0.2s ease,
+    box-shadow 0.2s ease;
 
   overflow: hidden;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
 
   &:last-child {
     border-right: none;
   }
 
   &:hover {
-    background: var(--surface-2);
+    background: #f8fbff;
+
+    box-shadow:
+      inset 0 0 0 1px rgba(37, 99, 235, 0.08);
   }
 
   &.other-month {
-    background: var(--surface-3);
+    background: #fafcff;
 
     .day-num {
-      color: var(--text-3);
+      color: #c4cad4;
     }
   }
 
   &.is-today {
-    background: var(--primary-light);
+    background: linear-gradient(
+      180deg,
+      #f5f9ff 0%,
+      #ffffff 100%
+    );
   }
 }
 
+
+/* =========================================================
+   DAY NUMBER
+   ========================================================= */
+
 .day-num-wrap {
   display: flex;
+
   justify-content: flex-end;
-  margin-bottom: 8px;
+
+  margin-bottom: 3px;
 }
 
 .day-num {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
 
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 700;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
   border-radius: 50%;
 
+  color: #64748b;
+
   &.today-badge {
-    background: var(--primary);
-    color: white;
+    background: linear-gradient(
+      135deg,
+      #2563eb 0%,
+      #4f46e5 100%
+    );
+
+    color: #ffffff;
+
+    box-shadow:
+      0 4px 10px rgba(37, 99, 235, 0.25);
   }
 }
 
-/* Events */
+
+/* =========================================================
+   BOOKED TIME SLOTS
+   ========================================================= */
+
 .events-area {
   display: flex;
   flex-direction: column;
+
   gap: 2px;
+
+  margin-top: 2px;
+
+  width: 100%;
+
   overflow: hidden;
-  flex: 1;
 }
 
-.event-pill {
+.time-slot {
   display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 11px;
-  font-weight: 500;
-  padding: 2px 6px;
-  border-radius: 4px;
-  border: 1px solid transparent;
-  white-space: nowrap;
-  overflow: hidden;
-  cursor: pointer;
-  transition: filter 0.1s;
 
-  &:hover { filter: brightness(0.92); }
+  align-items: center;
+
+  width: 100%;
+
+  height: 20px;
+  min-height: 20px;
+
+  padding: 2px 5px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #c7d8ff;
+
+  border-radius: 4px;
+
+  background: linear-gradient(
+    90deg,
+    #f0f6ff 0%,
+    #f7faff 100%
+  );
+
+  cursor: pointer;
+
+  overflow: hidden;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
 }
 
-.event-dot {
+.time-slot:hover {
+  background: linear-gradient(
+    90deg,
+    #dbeafe 0%,
+    #eef2ff 100%
+  );
+
+  border-color: #8db5ff;
+
+  transform: translateX(1px);
+}
+
+.time-dot {
+  flex: 0 0 5px;
+
   width: 5px;
   height: 5px;
+
+  margin-right: 5px;
+
   border-radius: 50%;
-  flex-shrink: 0;
+
+  background: #2563eb;
+
+  box-shadow:
+    0 0 0 2px rgba(37, 99, 235, 0.10);
 }
 
-.event-name {
-  overflow: hidden;
-  text-overflow: ellipsis;
+.time-text {
+  display: block;
+
+  min-width: 0;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  color: #3563a8;
+
   white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
 }
+
+
+/* =========================================================
+   MORE APPOINTMENTS
+   ========================================================= */
 
 .overflow-label {
+  margin-top: 1px;
+
+  padding-left: 3px;
+
   font-size: 10px;
-  color: var(--text-3);
-  padding: 1px 6px;
-  font-weight: 500;
+
+  font-weight: 700;
+
+  color: #2563eb;
+
+  cursor: pointer;
+
+  transition: color 0.15s ease;
+}
+
+.overflow-label:hover {
+  color: #1d4ed8;
+
+  text-decoration: underline;
 }
 
 
-/* 🔒 Disabled general */
+/* =========================================================
+   DISABLED DATES
+   ========================================================= */
+
 .disabled-day {
-  pointer-events: none;
-  opacity: 0.4;
+  opacity: 0.45;
+
   cursor: not-allowed;
+
+  background-color: #f8f9fb;
 }
 
-/* 📅 Weekend style */
+
+/* =========================================================
+   WEEKEND
+   ========================================================= */
+
 .weekend {
   background-color: #fafafa;
 }
 
-/* 🚫 Fully booked */
-.fully-booked {
-  background-color: #ffe5e5;
+.weekend .day-num {
+  color: #b7bdc7;
 }
 
-/* 🔥 Label */
-.status-label {
-  font-size: 10px;
-  color: red;
-  text-align: center;
-  margin-top: 5px;
-}
 
-/* Optional better look */
+/* =========================================================
+   DISABLED DAY NUMBER
+   ========================================================= */
+
 .disabled-day .day-num {
   color: #999;
 }
