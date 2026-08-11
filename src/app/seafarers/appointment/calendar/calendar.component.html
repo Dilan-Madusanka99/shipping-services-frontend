@@ -60,17 +60,22 @@
     [class.fully-booked]="isFullyBooked(day)"
 
     (click)="onDayClick(day)"
+
     [attr.aria-label]="day.dateStr"
+
+    [title]="getDayTooltip(day)"
   >
 
     <!-- Day number -->
     <div class="day-num-wrap">
+
       <span
         class="day-num"
         [class.today-badge]="day.isToday"
       >
         {{ day.day }}
       </span>
+
     </div>
 
     <!-- Fully booked -->
@@ -84,34 +89,42 @@
     <!-- Booked appointments -->
     <div
       class="events-area"
-      *ngIf="day.appointments && day.appointments.length > 0"
-    >
-
-    <div
-      *ngFor="
-        let appt of getVisibleAppointments(day.appointments);
-        trackBy: trackById
+      *ngIf="
+        day.appointments &&
+        day.appointments.length > 0
       "
-      class="time-slot"
-      (click)="onAppointmentClick(appt, $event)"
-      [title]="getAppointmentTooltip(appt)"
     >
-      <span class="time-dot"></span>
-
-      <span class="time-text">
-        {{ formatTime(appt.time) }}
-      </span>
-    </div>
-
-      <!-- More appointments -->
+      <!-- Only show first 2 -->
       <div
-        *ngIf="getOverflowCount(day.appointments) > 0"
+        *ngFor="
+          let appt of getVisibleAppointments(day.appointments);
+          trackBy: trackById
+        "
+        class="time-slot"
+        (click)="onAppointmentClick(appt, $event)"
+      >
+
+        <span class="time-dot"></span>
+
+        <span class="time-text">
+          {{ formatTime(appt.time) }}
+        </span>
+
+      </div>
+
+      <!-- Show remaining count -->
+      <div
+        *ngIf="
+          getOverflowCount(day.appointments) > 0
+        "
         class="overflow-label"
         (click)="$event.stopPropagation()"
       >
         +{{ getOverflowCount(day.appointments) }} more
       </div>
+
     </div>
+
   </div>
   </div>
 </div>

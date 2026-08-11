@@ -349,20 +349,36 @@ export class CalendarComponent {
     );
   }
 
-  getAppointmentTooltip(appt: Appointment): string {
-    const fullName = [
-      appt.firstName,
-      appt.lastName
-    ]
-      .filter(name => !!name)
-      .join(' ');
+  // Tooltip for all appointments in a day
+  getDayTooltip(day: CalendarDay): string {
 
-    return [
-      fullName || 'Unknown Name',
-      `SID: ${appt.sid || 'N/A'}`,
-      `Position: ${appt.position || 'N/A'}`,
-      `Time: ${this.formatTime(appt.time)}`
-    ].join('\n');
+    if (
+      !day.appointments ||
+      day.appointments.length === 0
+    ) {
+      return '';
+    }
+
+    return day.appointments
+      .map((appt, index) => {
+
+        const fullName = [
+          appt.firstName,
+          appt.lastName
+        ]
+          .filter(name => !!name)
+          .join(' ');
+
+        return [
+          `${index + 1}. ${fullName || 'Unknown Name'}`,
+          `SID: ${appt.sid || 'N/A'}`,
+          `Position: ${appt.position || 'N/A'}`,
+          `Time: ${this.formatTime(appt.time)}`,
+          `Status: ${appt.status || 'N/A'}`
+        ].join('\n');
+
+      })
+      .join('\n\n');
   }
 
 // booked sid 
