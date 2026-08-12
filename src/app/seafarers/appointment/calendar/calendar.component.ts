@@ -65,13 +65,7 @@ export class CalendarComponent {
     new EventEmitter();
 
   readonly weekDays = [
-    'Sun',
-    'Mon',
-    'Tue',
-    'Wed',
-    'Thu',
-    'Fri',
-    'Sat'
+    'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
   ];
 
 // calender data
@@ -106,38 +100,22 @@ export class CalendarComponent {
   }
 
 
-
 // refresh calender
   refreshCalendar(): void {
     this.calSvc.refreshAppointments();
   }
 
-// check past date
-  isPastDate(
-    date: Date
-  ): boolean {
 
-    const today =
-      new Date();
+// check past date and today
+  isPastDate(date: Date): boolean {
 
-    today.setHours(
-      0,
-      0,
-      0,
-      0
-    );
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-    const d =
-      new Date(date);
+    const d = new Date(date);
+    d.setHours(0, 0, 0, 0);
 
-    d.setHours(
-      0,
-      0,
-      0,
-      0
-    );
-
-    return d < today;
+    return d <= today;
   }
 
 // check data more than one month
@@ -149,10 +127,7 @@ export class CalendarComponent {
       new Date();
 
     today.setHours(
-      0,
-      0,
-      0,
-      0
+      0, 0, 0, 0
     );
 
     const maxDate =
@@ -174,10 +149,7 @@ export class CalendarComponent {
       new Date(date);
 
     d.setHours(
-      0,
-      0,
-      0,
-      0
+      0, 0, 0, 0
     );
 
     return d > maxDate;
@@ -213,27 +185,7 @@ export class CalendarComponent {
     day: CalendarDay
   ): boolean {
     return (
-      this.isPastDate(
-        day.date
-      )
-
-      ||
-
-      this.isAfterOneMonth(
-        day.date
-      )
-
-      ||
-
-      this.isWeekend(
-        day.date
-      )
-
-      ||
-
-      this.isFullyBooked(
-        day
-      )
+      this.isPastDate(day.date) || this.isAfterOneMonth(day.date) || this.isWeekend(day.date) || this.isFullyBooked(day)
     );
   }
 
@@ -241,7 +193,6 @@ export class CalendarComponent {
   onDayClick(day: CalendarDay): void {
 
     if (this.isFullyBooked(day)) {
-
       Swal.fire({
         icon: 'warning',
         title: 'Date Fully Booked',
@@ -249,12 +200,10 @@ export class CalendarComponent {
         confirmButtonText: 'OK',
         confirmButtonColor: '#2563eb'
       });
-
       return;
     }
 
     if (this.isWeekend(day.date)) {
-
       Swal.fire({
         icon: 'info',
         title: 'Weekend',
@@ -262,12 +211,10 @@ export class CalendarComponent {
         confirmButtonText: 'OK',
         confirmButtonColor: '#2563eb'
       });
-
       return;
     }
 
     if (this.isPastDate(day.date)) {
-
       Swal.fire({
         icon: 'warning',
         title: 'Date Not Available',
@@ -275,12 +222,10 @@ export class CalendarComponent {
         confirmButtonText: 'OK',
         confirmButtonColor: '#2563eb'
       });
-
       return;
     }
 
     if (this.isAfterOneMonth(day.date)) {
-
       Swal.fire({
         icon: 'warning',
         title: 'Date Not Available',
@@ -288,7 +233,6 @@ export class CalendarComponent {
         confirmButtonText: 'OK',
         confirmButtonColor: '#2563eb'
       });
-
       return;
     }
 
@@ -363,8 +307,7 @@ export class CalendarComponent {
     date.setHours(
       hours,
       minutes,
-      0,
-      0
+      0, 0
     );
     return date.toLocaleTimeString(
       'en-US',
@@ -407,40 +350,5 @@ export class CalendarComponent {
       .join('\n\n');
   }
 
-// booked sid 
-  getBookedSids(
-    day: CalendarDay
-  ): string {
-    if (
-      !day.appointments ||
-      day.appointments.length === 0
-    ) {
 
-      return 'No appointments booked';
-    }
-
-    const sids =
-      day.appointments
-        .map(
-          appt => appt.sid
-        )
-        .filter(
-          (
-            sid
-          ): sid is string =>
-            !!sid
-        );
-
-    if (
-      sids.length === 0
-    ) {
-
-      return 'No SID information';
-    }
-
-    return (
-      'Booked SID:\n' +
-      sids.join('\n')
-    );
-  }
 }

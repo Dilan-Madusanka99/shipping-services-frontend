@@ -54,17 +54,11 @@
   <div
     class="day-cell"
     *ngFor="let day of week; trackBy: trackByDate"
-
     [class.disabled-day]="isDisabled(day) && !isFullyBooked(day)"
-
     [class.weekend]="isWeekend(day.date)"
-
     [class.fully-booked]="isFullyBooked(day)"
-
     (click)="onDayClick(day)"
-
     [attr.aria-label]="day.dateStr"
-
     [title]="getDayTooltip(day)"
   >
 
@@ -88,35 +82,29 @@
       Full
     </div>
 
-<!-- =========================================================
-     BOOKED APPOINTMENTS
-========================================================= -->
 
-<div
-  class="events-area"
-  *ngIf="day.appointments?.length"
->
+   <!-- booked appointment -->
+    <div
+      class="events-area"
+      *ngIf="day.appointments?.length"
+    >
 
-  <!-- Show ALL booked appointments -->
-  <div
-    *ngFor="
-      let appt of day.appointments;
-      trackBy: trackById
-    "
-    class="time-slot"
-    (click)="onAppointmentClick(appt, $event)"
-  >
+      <!-- Show ALL booked appointments -->
+      <div
+        *ngFor="
+          let appt of day.appointments;
+          trackBy: trackById
+        "
+        class="time-slot"
+        (click)="onAppointmentClick(appt, $event)"
+      >
+        <span class="time-dot"></span>
+        <span class="time-text">
+          {{ formatTime(appt.time) }}
+        </span>
 
-    <span class="time-dot"></span>
-
-    <span class="time-text">
-      {{ formatTime(appt.time) }}
-    </span>
-
-  </div>
-
-</div>
-
+      </div>
+    </div>
   </div>
   </div>
 </div>
