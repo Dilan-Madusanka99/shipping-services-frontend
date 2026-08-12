@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter} from '@angular/core';
 import { CalendarService } from '../../../services/calendar-service/calendar.service';
 import { AppointmentService } from 'src/app/services/seafarers/appointment.service';
 import { FormGroup } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 export type AppointmentCategory =
   'work'
@@ -237,21 +238,62 @@ export class CalendarComponent {
   }
 
   // day click
-  onDayClick(
-    day: CalendarDay
-  ): void {
-    if (
-      this.isDisabled(day)
-    ) {
-      alert(
-        'This date is not available'
-      );
+  onDayClick(day: CalendarDay): void {
+
+    if (this.isFullyBooked(day)) {
+
+      Swal.fire({
+        icon: 'warning',
+        title: 'Date Fully Booked',
+        text: 'All appointment slots for this date have already been booked.',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#2563eb'
+      });
+
       return;
     }
 
-    this.dayClick.emit(
-      day.dateStr
-    );
+    if (this.isWeekend(day.date)) {
+
+      Swal.fire({
+        icon: 'info',
+        title: 'Weekend',
+        text: 'Appointments cannot be scheduled on weekends.',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#2563eb'
+      });
+
+      return;
+    }
+
+    if (this.isPastDate(day.date)) {
+
+      Swal.fire({
+        icon: 'warning',
+        title: 'Date Not Available',
+        text: 'You cannot schedule an appointment for a past date.',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#2563eb'
+      });
+
+      return;
+    }
+
+    if (this.isAfterOneMonth(day.date)) {
+
+      Swal.fire({
+        icon: 'warning',
+        title: 'Date Not Available',
+        text: 'Appointments can only be scheduled within one month from today.',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#2563eb'
+      });
+
+      return;
+    }
+
+    // Date is available
+    this.dayClick.emit(day.dateStr);
   }
 
  // appointment click
@@ -289,22 +331,6 @@ export class CalendarComponent {
     return appt.id;
   }
 
-  // visible appointments
-  getVisibleAppointments(
-    appts: Appointment[]
-  ): Appointment[] {
-    return appts.slice(0, 2);
-  }
-
-  // overflow count
-  getOverflowCount(
-    appts: Appointment[]
-  ): number {
-    return Math.max(
-      0,
-      appts.length - 2
-    );
-  }
 
   // format time
   formatTime(

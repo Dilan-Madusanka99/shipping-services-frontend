@@ -55,8 +55,10 @@
     class="day-cell"
     *ngFor="let day of week; trackBy: trackByDate"
 
-    [class.disabled-day]="isDisabled(day)"
+    [class.disabled-day]="isDisabled(day) && !isFullyBooked(day)"
+
     [class.weekend]="isWeekend(day.date)"
+
     [class.fully-booked]="isFullyBooked(day)"
 
     (click)="onDayClick(day)"
@@ -86,44 +88,34 @@
       Full
     </div>
 
-    <!-- Booked appointments -->
-    <div
-      class="events-area"
-      *ngIf="
-        day.appointments &&
-        day.appointments.length > 0
-      "
-    >
-      <!-- Only show first 2 -->
-      <div
-        *ngFor="
-          let appt of getVisibleAppointments(day.appointments);
-          trackBy: trackById
-        "
-        class="time-slot"
-        (click)="onAppointmentClick(appt, $event)"
-      >
+<!-- =========================================================
+     BOOKED APPOINTMENTS
+========================================================= -->
 
-        <span class="time-dot"></span>
+<div
+  class="events-area"
+  *ngIf="day.appointments?.length"
+>
 
-        <span class="time-text">
-          {{ formatTime(appt.time) }}
-        </span>
+  <!-- Show ALL booked appointments -->
+  <div
+    *ngFor="
+      let appt of day.appointments;
+      trackBy: trackById
+    "
+    class="time-slot"
+    (click)="onAppointmentClick(appt, $event)"
+  >
 
-      </div>
+    <span class="time-dot"></span>
 
-      <!-- Show remaining count -->
-      <div
-        *ngIf="
-          getOverflowCount(day.appointments) > 0
-        "
-        class="overflow-label"
-        (click)="$event.stopPropagation()"
-      >
-        +{{ getOverflowCount(day.appointments) }} more
-      </div>
+    <span class="time-text">
+      {{ formatTime(appt.time) }}
+    </span>
 
-    </div>
+  </div>
+
+</div>
 
   </div>
   </div>
