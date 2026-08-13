@@ -59,7 +59,6 @@
         <mat-datepicker-toggle matIconSuffix [for]="signOnDate"></mat-datepicker-toggle>
         <mat-datepicker #signOnDate></mat-datepicker>
         <mat-error *ngIf="onboardCrewRegistrationForm.get('signOnDate')?.hasError('required')"> Signon Date is required. </mat-error>
-        <mat-error *ngIf="onboardCrewRegistrationForm.get('signOnDate')?.hasError('futureDate')"> Please enter the valid Signon Date. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">
@@ -69,7 +68,7 @@
         <mat-datepicker-toggle matIconSuffix [for]="signOffDate"></mat-datepicker-toggle>
         <mat-datepicker #signOffDate></mat-datepicker>
         <mat-error *ngIf="onboardCrewRegistrationForm.get('signOffDate')?.hasError('required')"> Signoff Date is required. </mat-error>
-        <mat-error *ngIf="onboardCrewRegistrationForm.get('signOffDate')?.hasError('pastDate')"> Please enter the valid Signoff Date. </mat-error>
+        <mat-error *ngIf="onboardCrewRegistrationForm.get('signOffDate')?.hasError('signOffBeforeSignOn')">Can't be before sign-on date.</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">

@@ -22,39 +22,6 @@ export interface PeriodicElement {
 
 const ELEMENT_DATA: any[] = [{sidNo: 'S123', position: 'AB', vesselName: 'souselas', signOnDate: '8/7/2025', signOffDate: '8/5/2026', status: 'active' }];
 
-// validator for Sign on dates (shoud not be future one)
-export function notFutureDateValidator(control: AbstractControl): ValidationErrors | null {
-
-  if (!control.value) {
-    return null;
-  }
-
-  const selectedDate = new Date(control.value);
-  const today = new Date();
-
-  // Remove time
-  selectedDate.setHours(0, 0, 0, 0);
-  today.setHours(0, 0, 0, 0);
-
-  return selectedDate <= today ? null : { futureDate: true };
-}
-
-// validator for Sign off dates (shoud be future one)
-export function futureDateValidator(control: AbstractControl): ValidationErrors | null {
-
-  if (!control.value) {
-    return null;
-  }
-
-  const selectedDate = new Date(control.value);
-  const today = new Date();
-
-  selectedDate.setHours(0, 0, 0, 0);
-  today.setHours(0, 0, 0, 0);
-
-  return selectedDate > today ? null : { pastDate: true };
-}
-
 @Component({
   selector: 'app-onboard-crew-registration',
   standalone: false,
@@ -98,8 +65,8 @@ export class OnboardCrewRegistrationComponent {
       position: new FormControl('', [Validators.required]),
       imoNo: new FormControl('', [Validators.required]),
       vesselName: new FormControl({value: '', disabled: true}),
-      signOnDate: new FormControl('', [Validators.required, notFutureDateValidator]),
-      signOffDate: new FormControl('', [Validators.required, futureDateValidator]),
+      signOnDate: new FormControl('', [Validators.required]),
+      signOffDate: new FormControl('', [Validators.required, this.signOffDateValidator]),
       status: new FormControl('', [Validators.required])
     });
   }
@@ -370,12 +337,6 @@ export class OnboardCrewRegistrationComponent {
     this.patchFormSeafarersValues(selectedSeafarersId);
   }
 
-  // public patchFormSeafarersValues(seafarersId: number): void {
-  //   this.onboardCrewRegistrationForm.patchValue({
-  //     sidNo: seafarersId,
-  //   });
-  // }
-
   public patchFormSeafarersValues(seafarersId: number): void {
 
     const seafarer = this.allSeafarersListDetails.find(
@@ -389,4 +350,27 @@ export class OnboardCrewRegistrationComponent {
       });
     }
   }
+
+  // Validator for signoff date can't be the past dates from singon date
+  private signOffDateValidator = (control: AbstractControl): ValidationErrors | null => {
+    const signOffDate = control.value;
+    const signOnDate = this.onboardCrewRegistrationForm?.get('signOnDate')?.value;
+
+    if (!signOffDate || !signOnDate) {
+      return null;
+    }
+
+    const signOn = new Date(signOnDate);
+    const signOff = new Date(signOffDate);
+
+    // Remove time part
+    signOn.setHours(0, 0, 0, 0);
+    signOff.setHours(0, 0, 0, 0);
+
+    // Sign-off cannot be before sign-on
+    if (signOff < signOn) {
+      return { signOffBeforeSignOn: true };
+    }
+    return null;
+  };
 }
