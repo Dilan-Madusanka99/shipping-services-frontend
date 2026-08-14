@@ -179,7 +179,12 @@ export class OtherDetailsRegistrationComponent {
             this.dataSource.sort = this.sort;
           },
           error: (error) => {
-            this.messageService.showError('Action Failed With Error ' + error);
+            const errorMessage = error;
+            if (errorMessage.replace(/\s+/g, ' ').includes('Seafarers Registration Does Not Exists')) {
+              this.messageService.showWarn('Please add your data!');
+            } else {
+              this.messageService.showError('Action Failed With Error ' + error);
+            }
           }
         });
       } else {
