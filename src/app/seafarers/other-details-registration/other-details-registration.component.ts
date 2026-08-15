@@ -177,6 +177,12 @@ export class OtherDetailsRegistrationComponent {
             this.dataSource = new MatTableDataSource([data]);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
+
+            this.mode = 'edit';
+            this.saveButtonLabel = 'Edit';
+
+            this.editData(data);
+            this.otherDetailsRegistrationForm.get('sidNo')?.disable();
           },
           error: (error) => {
             const errorMessage = error;
@@ -421,6 +427,19 @@ export class OtherDetailsRegistrationComponent {
     this.otherDetailsRegistrationForm.setErrors = null!;
     this.otherDetailsRegistrationForm.updateValueAndValidity();
     this.otherDetailsRegistrationForm.get('yellowFeverIssuedPlace')?.disable();
+
+    if (window.localStorage.getItem('role') === 'SEAFARER' && this.dataSource?.data?.length > 0) {
+      this.mode = 'edit';
+      this.saveButtonLabel = 'Edit';
+      this.otherDetailsRegistrationForm.get('sidNo')?.disable();
+    } else if (window.localStorage.getItem('role') === 'SEAFARER' && this.dataSource?.data?.length == 0) {
+      this.mode = 'add';
+      this.saveButtonLabel = 'Save';
+    } else {
+      this.saveButtonLabel = 'Edit';
+      this.mode = 'edit';
+      this.otherDetailsRegistrationForm.get('sidNo')?.disable();
+    }
   }
 
   public editData(data: any): void {

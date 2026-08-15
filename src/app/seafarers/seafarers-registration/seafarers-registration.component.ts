@@ -172,6 +172,12 @@ export class SeafarersRegistrationComponent {
           }
         });
       } else {
+
+        /* if the user is not seafarer don't let user add new data. */
+        this.mode = 'edit';
+        this.saveButtonLabel = 'Edit';
+        this.isButtonDisabled = true;
+
         this.seafarersService.getData().subscribe({
           next: (dataList: any[]) => {
             if (dataList.length <= 0) {
@@ -305,7 +311,7 @@ export class SeafarersRegistrationComponent {
       if (window.localStorage.getItem('role') === 'SEAFARER') {
         this.mode = 'edit';
       } else {
-        this.mode = 'add';
+        this.mode = 'edit';
       }
       this.seafarersForm.disable();
       this.isButtonDisabled = true;
@@ -333,13 +339,6 @@ export class SeafarersRegistrationComponent {
   const appliedDate = this.seafarersForm.get('appliedDate')?.value; // saved current applied date
 
   this.seafarersForm.reset();
-
-  this.saveButtonLabel = 'Save';
-  if (window.localStorage.getItem('role') === 'SEAFARER' && this.dataSource?.data?.length > 0) {
-    this.mode = 'edit';
-  } else {
-    this.mode = 'add';
-  }
   this.selectedData = null;
 
   this.seafarersForm.enable();
@@ -353,6 +352,18 @@ export class SeafarersRegistrationComponent {
   this.previewUrl = null;
   this.isFileSelected = false;
 
+  if (window.localStorage.getItem('role') === 'SEAFARER' && this.dataSource?.data?.length > 0) {
+      this.mode = 'edit';
+      this.saveButtonLabel = 'Edit';
+  } else if (window.localStorage.getItem('role') === 'SEAFARER' && this.dataSource?.data?.length == 0) {
+      this.mode = 'add';
+      this.saveButtonLabel = 'Save';
+  } else {
+      this.saveButtonLabel = 'Edit';
+      this.mode = 'edit';
+      this.isButtonDisabled = true;
+  }
+
   this.seafarersForm.setErrors(null);
   this.seafarersForm.updateValueAndValidity();
   }
@@ -360,6 +371,7 @@ export class SeafarersRegistrationComponent {
   public editData(data: any): void {
     this.seafarersForm.patchValue(data);
     this.saveButtonLabel = 'Edit';
+    this.isButtonDisabled = false;
     this.mode = 'edit';
     this.selectedData = data;
 
