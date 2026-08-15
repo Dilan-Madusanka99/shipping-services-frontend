@@ -7,7 +7,7 @@
   </div>
 
  
-  <div class="stats-grid">
+  <div class="stats-grid" *ngIf="role !== 'SEAFARER'">
     <div class="stat-card" *ngFor="let stat of stats">
 
       <div class="stat-icon" [ngClass]="stat.color">
@@ -30,34 +30,31 @@
 
 
   <div class="cards-grid">
+  <ng-container *ngFor="let item of menuItems">
     <div
       class="menu-card"
       [ngClass]="item.cardColor"
-      *ngFor="let item of menuItems"
+      *ngIf="item.isShow"
       (click)="navigateToSection(item.route)"
     >
-
       <div class="card-top">
         <div class="icon-box">
           {{item.icon}}
         </div>
       </div>
-
       <h6>{{item.title}}</h6>
       <p> {{item.description}} </p>
-
       <div class="card-footer">
         <div class="arrow">
           <span>→</span>
         </div>
-
         <button
           class="open-btn"
           (click)="navigateToSection(item.route); $event.stopPropagation()">
           Open
-
         </button>
       </div>
     </div>
-  </div>
+  </ng-container>
+</div>
 </section>

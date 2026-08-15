@@ -24,6 +24,7 @@ import { EmployeeServiceService } from 'src/app/services/employee/employee-servi
 import { OnboardCrewRegistrationService } from 'src/app/services/onboard/onboard-crew-registration.service';
 import { JobPostingServiceService } from 'src/app/services/vessels/job-posting-service.service';
 import { EmployeeAttendenceService } from 'src/app/services/employee/employee-attendence.service';
+import { HttpService } from 'src/app/services/http.service';
 
 interface MenuItem {
   title: string;
@@ -31,6 +32,7 @@ interface MenuItem {
   icon: string;
   route: string;
   cardColor: string;
+  isShow?: boolean
 }
 
 interface DashboardStat {
@@ -91,66 +93,9 @@ export default class DashboardComponent implements OnInit {
     }
   ];
 
-  menuItems: MenuItem[] = [
-    {
-      title: 'Appointment',
-      description: 'Get the Appointment',
-      icon: '📅',
-      route: '/seafarers/appointment',
-      cardColor: 'blue-card'
-    },
-    {
-      title: 'Job Portal',
-      description: 'View the Seafarer Job Portal',
-      icon: '💼',
-      route: '/vessels/jobVacancies',
-      cardColor: 'sky-card'
-    },
-    {
-      title: 'Employee Registration',
-      description: 'Register Employees to the system',
-      icon: '👨‍🏫',
-      route: '/register/employee',
-      cardColor: 'green-card'
-    },
-    {
-      title: 'Employee Attendance',
-      description: 'Mark Employee Attendance',
-      icon: '⏰',
-      route: '/register/employeeAttendence',
-      cardColor: 'purple-card'
-    },
+  menuItems: MenuItem[] = [];
 
-    {
-      title: 'Appointment Report',
-      description: 'Appointements View',
-      icon: '📚',
-      route: '/reports/appointment-list',
-      cardColor: 'orange-card'
-    },
-    {
-      title: 'Crew Details',
-      description: 'Register the crew to be onboard',
-      icon: '⚓',
-      route: '/onboard/onboardCrewRegistration',
-      cardColor: 'blue-card'
-    },
-    {
-      title: 'Stock',
-      description: 'View Stock Details',
-      icon: '📦',
-      route: '/inventory/stocks',
-      cardColor: 'orange-card'
-    },
-    {
-      title: 'Login',
-      description: 'Create the Login',
-      icon: '🔑',
-      route: '/login/login',
-      cardColor: 'green-card'
-    },
-  ];
-
+  role: string | null = '';
 
 // this.stats[0].value = employeeCount;
 // this.stats[1].value = activeSeafarerCount;
@@ -163,7 +108,8 @@ export default class DashboardComponent implements OnInit {
     private employeeService: EmployeeServiceService,
     private onboardCrewRegistrationService: OnboardCrewRegistrationService,
     private jobPosingService: JobPostingServiceService,
-    private employeeAttendanceService: EmployeeAttendenceService
+    private employeeAttendanceService: EmployeeAttendenceService,
+    private httpService: HttpService
   ) {}
 
   loadEmployeeCount(): void {
@@ -229,6 +175,7 @@ loadEmployeeAttendanceToday(): void {
 }
 
   ngOnInit() {
+    this.loadRole();
     this.loadEmployeeCount();
     this.loadStandbyCrewCount();
     this.loadOpenVacanciesCount();
@@ -572,5 +519,80 @@ loadEmployeeAttendanceToday(): void {
 
   navigateToSection(route: string) {
     this.router.navigate([route]);
+  }
+
+  public loadRole(): void {
+    this.role = this.httpService.getUserRole();
+    this.loadMenuItems();
+  }
+
+  public loadMenuItems(): void {
+    this.menuItems = [
+    {
+      title: 'Appointment',
+      description: 'Get the Appointment',
+      icon: '📅',
+      route: '/seafarers/appointment',
+      cardColor: 'blue-card',
+      isShow: true
+    },
+    {
+      title: 'Job Portal',
+      description: 'View the Seafarer Job Portal',
+      icon: '💼',
+      route: '/vessels/jobVacancies',
+      cardColor: 'sky-card',
+      isShow: true
+    },
+    {
+      title: 'Employee Registration',
+      description: 'Register Employees to the system',
+      icon: '👨‍🏫',
+      route: '/register/employee',
+      cardColor: 'green-card',
+      isShow: this.role !== 'SEAFARER'
+    },
+    {
+      title: 'Employee Attendance',
+      description: 'Mark Employee Attendance',
+      icon: '⏰',
+      route: '/register/employeeAttendence',
+      cardColor: 'purple-card',
+      isShow: this.role !== 'SEAFARER'
+    },
+
+    {
+      title: 'Appointment Report',
+      description: 'Appointements View',
+      icon: '📚',
+      route: '/reports/appointment-list',
+      cardColor: 'orange-card',
+      isShow: this.role !== 'SEAFARER'
+    },
+    {
+      title: 'Crew Details',
+      description: 'Register the crew to be onboard',
+      icon: '⚓',
+      route: '/onboard/onboardCrewRegistration',
+      cardColor: 'blue-card',
+      isShow: this.role !== 'SEAFARER'
+    },
+    {
+      title: 'Stock',
+      description: 'View Stock Details',
+      icon: '📦',
+      route: '/inventory/stocks',
+      cardColor: 'orange-card',
+      isShow: this.role !== 'SEAFARER'
+    },
+    {
+      title: 'Login',
+      description: 'Create the Login',
+      icon: '🔑',
+      route: '/login/login',
+      cardColor: 'green-card',
+      isShow: this.role !== 'SEAFARER'
+    },
+  ];
   }
 }
