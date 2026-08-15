@@ -147,6 +147,7 @@ export class SeafarersRegistrationComponent {
   public populateData(): void {
     try {
       if (window.localStorage.getItem('role') === 'SEAFARER') {
+        this.patchSid();
         /* If the role is seafarer then get only details related to SID no*/
         this.seafarersService.getSeafarerData(window.localStorage.getItem('sid')).subscribe({
           next: (data) => {
@@ -196,6 +197,14 @@ export class SeafarersRegistrationComponent {
     } catch (error) {
       this.messageService.showError('Action Failed With Error ' + error);
     }
+  }
+
+  patchSid(): void {
+    const sidNo = window.localStorage.getItem('sid');
+    this.seafarersForm.get('sidNo')?.disable();
+    this.seafarersForm.patchValue({
+      sidNo: sidNo
+    });
   }
 
   loadSeafarer(id: number): void {
