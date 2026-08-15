@@ -7,6 +7,7 @@ import { OtherDetailsRegistrationService } from 'src/app/services/seafarers/othe
 import { CertificatesRegistrationService } from 'src/app/services/seafarers/certificates-registration.service';
 import { SeaServicesService } from 'src/app/services/seafarers/sea-services.service';
 import { formatDate } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-seafarers-doc',
@@ -24,12 +25,15 @@ export class SeafarersDocComponent {
 
   certificatesList: any[] = []; // added
 
+  isSidDisabled = false;
+
   constructor(
     private fb: FormBuilder,
     private seafarersService: SeafarersServiceService,
     private otherDetailsService: OtherDetailsRegistrationService,
     private certificateDetailsService: CertificatesRegistrationService,
-    private seaServicesService: SeaServicesService
+    private seaServicesService: SeaServicesService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -53,6 +57,13 @@ export class SeafarersDocComponent {
       }
       // this.certificatesList = certs;
       this.seafarersDropdown = this.allSeafarersDropdown;
+      this.isSeafarerView();
+      this.route.queryParams.subscribe(params => {
+      const seafarerId = params['id'];
+        if (seafarerId) {
+          this.isRouteFromAppliedJobs(seafarerId);
+        }
+      });
     });
   }
 
@@ -125,6 +136,40 @@ export class SeafarersDocComponent {
     this.userForm.disable();
   }
 
+  public isSeafarerView(): void {
+    const sid = window.localStorage.getItem('sid');
+  
+    if (sid) {
+      const selectedObject = this.seafarersDropdown.find(
+        (seaFarer: any) => seaFarer.sidNo === sid
+      );
+    
+      if (selectedObject) {
+        this.selectedSeafarers = selectedObject.id;
+        this.isSidDisabled = true;
+        this.onSeafarersSelect(selectedObject.id);
+      }
+    } else {
+        this.isSidDisabled = false;
+      }
+  }
+
+  public isRouteFromAppliedJobs(sidNo: any): void {
+    if (sidNo) {
+      const selectedObject = this.seafarersDropdown.find(
+        (seaFarer: any) => seaFarer.sidNo === sidNo
+      );
+    console.log('selectedObject: ' + selectedObject);
+      if (selectedObject) {
+        this.selectedSeafarers = selectedObject.id;
+        this.isSidDisabled = true;
+        this.onSeafarersSelect(selectedObject.id);
+      }
+    } else {
+        this.isSidDisabled = false;
+      }
+  }
+
   isFieldInvalid(fieldName: string): boolean {
     const field = this.userForm.get(fieldName);
     return !!(field && field.invalid && (field.dirty || field.touched));
@@ -154,49 +199,57 @@ export class SeafarersDocComponent {
     });
   }
 
-  async downloadPDF() {
-    const element = document.getElementById('formToPrint');
-    if (!element) return;
+  downloadPDF() {
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const v = this.userForm.value;
+    let y = 20;
 
-    try {
-      // Hide action buttons temporarily
-      const actions = document.querySelector('.form-actions') as HTMLElement;
-      const originalDisplay = actions?.style.display;
-      if (actions) actions.style.display = 'none';
+    const section = (title: string) => {
+      pdf.setFontSize(14); pdf.setFont('', 'bold');
+      pdf.text(title, 15, y); y += 8;
+      pdf.setFontSize(11); pdf.setFont('', 'normal');
+    };
 
-      const canvas = await html2canvas(element, {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: '#ffffff'
-      });
+    const row = (label: string, value: any) => {
+      if (y > 280) { pdf.addPage(); y = 20; }
+      pdf.text(`${label}:`, 15, y);
+      pdf.text(`${value ?? ''}`, 70, y);
+      y += 7;
+    };
 
-      // Restore action buttons
-      if (actions) actions.style.display = originalDisplay || 'flex';
+    pdf.setFontSize(18); pdf.text('Seafarer Document', 15, y); y += 12;
 
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4');
+    section('Personal Details');
+    row('Position', v.position);
+    row('Applied Date', v.appliedDate);
+    row('Available Date', v.availableDate);
+    row('Surname', v.surname);
+    row('Other Names', v.otherNames);
+    row('Date of Birth', v.dob);
+    row('Birth Place', v.birthPlace);
+    row('NIC', v.nic);
+    row('Religion', v.religion);
+    row('Gender', v.gender);
+    row('Married Status', v.marriedStatus);
+    row('No of Children', v.noOfChildren);
+    y += 4;
 
-      const imgWidth = 210;
-      const pageHeight = 295;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
-      let position = 0;
+    section('Contact Details');
+    row('Address', v.address);
+    row('Home', v.home);
+    row('Mobile', v.mobile);
+    row('Email', v.email);
+    y += 4;
 
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
+    section('Next of Kin Details');
+    row('Kin Name', v.kinName);
+    row('Kin Relationship', v.kinRelationship);
+    row('Kin Address', v.kinAddress);
+    row('Kin Mobile', v.kinMobile);
+    row('Kin Email', v.kinEmail);
 
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
-
-      pdf.save('user-details-form.pdf');
-    } catch (error) {
-      console.error('Error generating PDF:', error);
-    }
-  }
+    pdf.save('seafarer-document.pdf');
+}
 
   public onSeafarersSelect(event): void {
     let selectedSeafarersId = event;

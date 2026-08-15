@@ -134,16 +134,25 @@ export class AppliedJobsComponent {
   }
 
   openSeafarerProfile(job: any): void {
-    const urlTree = this.router.createUrlTree(
-      ['/seafarers/seafarerDoc'],
-      {
-        queryParams: {
-          id: job.seafarerId
-        }
-      }
+    const userId = job.seafarerId;
+
+    this.seafarersService.getSeafarerDataById(userId).subscribe({
+      next: (data: any) => {
+        const urlTree = this.router.createUrlTree(
+          ['/seafarers/seafarerDoc'],
+          {
+              queryParams: {
+              id: data.sidNo
+            }
+          }
     );
 
     window.open(this.router.serializeUrl(urlTree), '_blank');
+      },
+      error: (err: any) => {
+        this.messageService.showError(err);
+      }
+    });
   }
 
   goToAppointment(job: any): void {

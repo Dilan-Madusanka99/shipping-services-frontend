@@ -4,22 +4,33 @@
 </div>
 
 <div class="container">
-  <div class="form-header">
+  <div class="sid-selector">
     <mat-form-field appearance="outline" class="example-full-width">
       <mat-label>SID No</mat-label>
-      <mat-select [(ngModel)]="selectedSeafarers" formControlName="sidNo" (valueChange)="onSeafarersSelect($event)">
-        <mat-form-field class="w-100">
-          <input matInput placeholder="Search for Seafarers..." (keyup)="onKey($event.target)" />
+
+      <mat-select
+        [(ngModel)]="selectedSeafarers"
+        (valueChange)="onSeafarersSelect($event)"
+        [disabled]="isSidDisabled">
+
+        <mat-form-field class="search-field">
+          <input
+            matInput
+            placeholder="Search for Seafarers..."
+            (keyup)="onKey($event.target)" />
         </mat-form-field>
-        <mat-option *ngFor="let seafarers of seafarersDropdown" [value]="seafarers.id">{{ seafarers.sidNo }}</mat-option>
+
+        <mat-option
+          *ngFor="let seafarers of seafarersDropdown"
+          [value]="seafarers.id">
+          {{ seafarers.sidNo }}
+        </mat-option>
+
       </mat-select>
     </mat-form-field>
-    
-    <div class="refresh-button">
-      <button mat-raised-button color="primary" (click)="refreshData()">
-        <mat-icon>refresh</mat-icon>
-      </button>
-    </div>
+    <button mat-raised-button color="primary" (click)="refreshData()" class="refresh-button">
+      <mat-icon>refresh</mat-icon>
+    </button>
     <button type="button" class="download-btn" (click)="downloadPDF()">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>

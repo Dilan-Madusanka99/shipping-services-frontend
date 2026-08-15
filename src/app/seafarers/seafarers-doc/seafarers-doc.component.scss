@@ -7,20 +7,37 @@ h3{
   font-weight: 580; 
 }
 
-.example-full-width {
-    width: 30%;
+.sid-selector {
+    display: flex;
+    align-items: center;
+    gap: 15px;
     margin-top: 2%;
+    padding: 16px 20px;
     background: #f5f7fa;
-  padding: 20px;
-  border-radius: 14px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
 }
 
-* {
+.sid-selector .example-full-width {
+    width: 350px;
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
 }
+
+.sid-selector .example-full-width ::ng-deep .mat-mdc-form-field-subscript-wrapper,
+.sid-selector .example-full-width ::ng-deep .mat-form-field-wrapper {
+    display: none;
+}
+
+
+.search-field {
+    width: 100%;
+}
+
+// * {
+//     margin: 0;
+//     padding: 0;
+//     box-sizing: border-box;
+// }
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -46,18 +63,42 @@ body {
     letter-spacing: -0.5px;
 }
 
-.refresh-button{
-    margin-left: -400px;
+// .refresh-button {
+//     min-width: 48px;
+//     width: 48px;
+//     height: 48px;
+//     padding: 0;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     line-height: 1;
+// }
+
+.refresh-button {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: #e9edf3;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.refresh-button mat-icon {
+  color: #2563eb;
 }
 
 .download-btn {
-    display: flex;
+    margin-left: auto;
+    height: 48px;
+    display: inline-flex;
     align-items: center;
     gap: 8px;
     background: #3498db;
     color: white;
     border: none;
-    padding: 12px 20px;
+    padding: 0 22px;
     border-radius: 8px;
     font-size: 0.95rem;
     font-weight: 500;
