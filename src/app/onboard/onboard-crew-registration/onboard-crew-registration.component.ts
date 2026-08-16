@@ -300,16 +300,16 @@ export class OnboardCrewRegistrationComponent {
     this.vesselDropdown = this.vesselSearch(eventTarget.value);
     }
 
-    vesselSearch(value: string) {
-      let filter = value.toLowerCase();
-       return this.allVesselDropdown.filter((option: any) => option.imoNo.toLowerCase().startsWith(filter));
-    }
+  vesselSearch(value: string) {
+    let filter = value.toLowerCase();
+      return this.allVesselDropdown.filter((option: any) => option.imoNo.toLowerCase().startsWith(filter));
+  }
 
-    public onVesselSelect(event): void {
-      let selectVesselId = event;
+  public onVesselSelect(event): void {
+    let selectVesselId = event;
 
-      this.patchFormVesselValues(selectVesselId);
-    }
+    this.patchFormVesselValues(selectVesselId);
+  }
 
   public patchFormVesselValues(vesselId: number): void {
     this.allVesselListDetails.forEach((vessel) => {
@@ -338,11 +338,9 @@ export class OnboardCrewRegistrationComponent {
   }
 
   public patchFormSeafarersValues(seafarersId: number): void {
-
     const seafarer = this.allSeafarersListDetails.find(
       (item: any) => item.id === seafarersId
     );
-
     if (seafarer) {
       this.onboardCrewRegistrationForm.patchValue({
         sidNo: seafarersId,

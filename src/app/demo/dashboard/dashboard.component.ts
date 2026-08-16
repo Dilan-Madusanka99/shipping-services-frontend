@@ -94,13 +94,14 @@ export default class DashboardComponent implements OnInit {
   ];
 
   menuItems: MenuItem[] = [];
-
   role: string | null = '';
+ userName = '';
 
 // this.stats[0].value = employeeCount;
-// this.stats[1].value = activeSeafarerCount;
-// this.stats[2].value = vacancyCount;
-// this.stats[3].value = attendanceCount;
+// this.stats[1].value = attendanceCount;
+// this.stats[2].value = activeSeafarerCount;
+// this.stats[3].value = vacancyCount;
+
   
 
   constructor(
@@ -123,10 +124,35 @@ export default class DashboardComponent implements OnInit {
     });
   }
 
+  loadEmployeeAttendanceToday(): void {
+    this.employeeAttendanceService.getData().subscribe({
+      next: (response: any) => {
+
+        const today = new Date();
+
+        const year = today.getFullYear();
+        const month = today.getMonth() + 1;   // JavaScript months are 0-11
+        const day = today.getDate();
+
+        const todayAttendance = response.filter((attendance: any) =>
+          attendance.attendenceStatus === 'Present' &&
+          attendance.attandenceDate[0] === year &&
+          attendance.attandenceDate[1] === month &&
+          attendance.attandenceDate[2] === day
+        );
+
+        this.stats[1].value = todayAttendance.length;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
   loadStandbyCrewCount(): void {
     this.onboardCrewRegistrationService.getData().subscribe({
       next: (response: any) => {
-        this.stats[1].value = response.length;
+        this.stats[2].value = response.length;
       },
       error: (error) => {
         console.error(error);
@@ -141,7 +167,7 @@ export default class DashboardComponent implements OnInit {
           (job: any) => job.jobStatus === 'Open'
         );
 
-        this.stats[2].value = openJobs.length;
+        this.stats[3].value = openJobs.length;
       },
       error: (error) => {
         console.error(error);
@@ -149,30 +175,6 @@ export default class DashboardComponent implements OnInit {
     });
   }
 
-loadEmployeeAttendanceToday(): void {
-  this.employeeAttendanceService.getData().subscribe({
-    next: (response: any) => {
-
-      const today = new Date();
-
-      const year = today.getFullYear();
-      const month = today.getMonth() + 1;   // JavaScript months are 0-11
-      const day = today.getDate();
-
-      const todayAttendance = response.filter((attendance: any) =>
-        attendance.attendenceStatus === 'Present' &&
-        attendance.attandenceDate[0] === year &&
-        attendance.attandenceDate[1] === month &&
-        attendance.attandenceDate[2] === day
-      );
-
-      this.stats[3].value = todayAttendance.length;
-    },
-    error: (error) => {
-      console.error(error);
-    }
-  });
-}
 
   ngOnInit() {
     this.loadRole();
@@ -180,6 +182,7 @@ loadEmployeeAttendanceToday(): void {
     this.loadStandbyCrewCount();
     this.loadOpenVacanciesCount();
     this.loadEmployeeAttendanceToday();
+    this.setUserName();
 
     setTimeout(() => {
       const latlong = dataJson;
@@ -534,7 +537,47 @@ loadEmployeeAttendanceToday(): void {
       icon: '📅',
       route: '/seafarers/appointment',
       cardColor: 'blue-card',
-      isShow: true
+      isShow: this.role !== 'SEAFARER',
+    },
+    {
+      title: 'Personal Details',
+      description: 'View the Seafarer Personal Details',
+      icon: '👤',
+      route: '/seafarers/seafarersRegistration',
+      cardColor: 'green-card',
+      isShow: this.role === 'SEAFARER',
+    },
+    {
+      title: 'Document Details',
+      description: 'View the Seafarer Document Details',
+      icon: '📄',
+      route: '/seafarers/otherDetailsRegistration',
+      cardColor: 'purple-card',
+      isShow: this.role === 'SEAFARER',
+    },
+    {
+      title: 'Certificate Details',
+      description: 'View the Seafarer Certificate Details',
+      icon: '📜',
+      route: '/seafarers/certificatesRegistration',
+      cardColor: 'blue-card',
+      isShow: this.role === 'SEAFARER',
+    },
+    {
+      title: 'Sea Service Details',
+      description: 'View the Seafarer Document Details',
+      icon: '⚓',
+      route: '/seafarers/seaServices',
+      cardColor: 'orange-card',
+      isShow: this.role === 'SEAFARER',
+    },
+    {
+      title: 'Seafarer CV',
+      description: 'View the Seafarer CV',
+      icon: '🪪',
+      route: '/seafarers/seafarerDoc',
+      cardColor: 'purple-card',
+      isShow: this.role === 'SEAFARER',
     },
     {
       title: 'Job Portal',
@@ -543,6 +586,14 @@ loadEmployeeAttendanceToday(): void {
       route: '/vessels/jobVacancies',
       cardColor: 'sky-card',
       isShow: true
+    },
+    {
+      title: 'Applied Jobs',
+      description: 'View the Seafarer Applied Jobs',
+      icon: '📋',
+      route: '/vessels/appliedJobs',
+      cardColor: 'green-card',
+      isShow: this.role === 'SEAFARER',
     },
     {
       title: 'Employee Registration',
@@ -594,5 +645,9 @@ loadEmployeeAttendanceToday(): void {
       isShow: this.role !== 'SEAFARER'
     },
   ];
+  }
+
+  public setUserName(): void {
+    this.userName = this.httpService.getLoginNameFromCache();
   }
 }

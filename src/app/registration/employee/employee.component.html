@@ -173,8 +173,10 @@
           <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
           <!-- Button with QR icon -->
-          <button mat-icon-button (click)="generateQRCode(element)">
-            <span class="material-symbols-outlined">qr_code_2</span>
+          <button mat-icon-button class="qr-action" (click)="generateQRCode(element)" matTooltip="Generate QR Code">
+            <span class="material-symbols-outlined">
+              qr_code_2
+            </span>
           </button>
         </td>
       </ng-container>

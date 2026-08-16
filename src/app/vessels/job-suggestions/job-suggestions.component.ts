@@ -66,7 +66,7 @@ export class JobSuggestionsComponent implements OnInit {
       return jobStatus.toLowerCase() === 'open';
     });
     this.jobSuggestions = openJobs.map(job => ({
-      label: `${this.vesselMap.get(+job.vesselName)} ~ ${job.position}`, // ✅ FIX
+      label: `${this.vesselMap.get(+job.vesselName)} ~ ${job.position}`, // FIX
       value: job
     }));
   });
@@ -77,7 +77,7 @@ getSelectedJob(): void {
   const selected = this.jobSuggestionsForm.value.selectedJob;
 
   if (!selected) {
-    this._messageService.showError('Please select a job');
+    this._messageService.showWarn('Please select a job');
     return;
   }
 

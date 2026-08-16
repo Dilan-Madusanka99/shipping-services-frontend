@@ -11,11 +11,12 @@ import Swal from 'sweetalert2';
 
 export interface PeriodicElement {
   sidNo: String;
+  surname: String;
   position: String;
   status: String;
 }
 
-const ELEMENT_DATA: any[] = [{ sidNo: 'S123', position: 'AB', status: 'active' }];
+const ELEMENT_DATA: any[] = [{ sidNo: 'S123', surname: 'dineep', position: 'AB', status: 'active' }];
 
 @Component({
   selector: 'app-standby-crew-members',
@@ -26,7 +27,7 @@ const ELEMENT_DATA: any[] = [{ sidNo: 'S123', position: 'AB', status: 'active' }
 export class StandbyCrewMembersComponent {
   standbyCrewMembersForm: FormGroup;
   
-    displayedColumns: string[] = ['sidNo', 'position', 'status', 'actions'];
+    displayedColumns: string[] = ['sidNo', 'surname','position', 'status', 'actions'];
   
     dataSource: MatTableDataSource<any>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -45,6 +46,7 @@ export class StandbyCrewMembersComponent {
     vesselDropdown: any = [];
     allVesselListDetails: any;
     sidMap = new Map<number, string>(); // [step 1]
+    surnameMap = new Map<number, string>();
   
     constructor(
       private fb: FormBuilder,
@@ -102,6 +104,7 @@ export class StandbyCrewMembersComponent {
     public createSidMap(): void {
       this.allSeafarersListDetails.forEach((seaFarer: any) => {
         this.sidMap.set(seaFarer.id, seaFarer.sidNo);
+        this.surnameMap.set(seaFarer.id, seaFarer.surname);
       });
       this.populateData();
     }
@@ -160,7 +163,7 @@ export class StandbyCrewMembersComponent {
         console.log('Form Submitted');
         console.log(this.standbyCrewMembersForm.value);
   
-        // if(!this.standbyCrewMembersForm.valid) return;
+        if(!this.standbyCrewMembersForm.valid) return;
         if (this.mode === 'add') {
           this.standbyCrewMembersServiceService.serviceCall(this.standbyCrewMembersForm.value).subscribe({
             next: (response: any) => {

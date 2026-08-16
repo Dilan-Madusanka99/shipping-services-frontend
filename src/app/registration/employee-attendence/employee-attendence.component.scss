@@ -208,3 +208,114 @@ label {
 ::ng-deep .mat-mdc-paginator {
   margin-top: 10px;
 }
+
+
+/* =========================================
+   EMPLOYEE ATTENDANCE STATUS BADGE
+========================================= */
+
+.attendance-status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 105px;
+  min-height: 34px;
+
+  padding: 7px 14px;
+
+  gap: 8px;
+
+  border-radius: 20px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  line-height: 1.2;
+  white-space: nowrap;
+
+  box-sizing: border-box;
+
+  transition: all 0.2s ease;
+}
+
+
+/* =========================================
+   STATUS DOT
+========================================= */
+
+.attendance-status-dot {
+  width: 10px;
+  height: 10px;
+
+  min-width: 10px;
+  min-height: 10px;
+
+  border-radius: 50%;
+
+  display: inline-block;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================
+   PRESENT - GREEN
+========================================= */
+
+.attendance-status-badge.present {
+  background-color: #ecfdf3;
+  color: #15803d;
+}
+
+.attendance-status-badge.present .attendance-status-dot {
+  background-color: #16a34a;
+}
+
+
+/* =========================================
+   ABSENT - RED
+========================================= */
+
+.attendance-status-badge.absent {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.attendance-status-badge.absent .attendance-status-dot {
+  background-color: #ef4444;
+}
+
+
+/* =========================================
+   HALF DAY - YELLOW
+========================================= */
+
+.attendance-status-badge.half-day {
+  background-color: #fefce8;
+  color: #a16207;
+}
+
+.attendance-status-badge.half-day .attendance-status-dot {
+  background-color: #eab308;
+}
+
+
+/* =========================================
+   HOVER EFFECT
+========================================= */
+
+.attendance-status-badge.present:hover {
+  background-color: #dcfce7;
+  transform: translateY(-1px);
+}
+
+.attendance-status-badge.absent:hover {
+  background-color: #fee2e2;
+  transform: translateY(-1px);
+}
+
+.attendance-status-badge.half-day:hover {
+  background-color: #fef9c3;
+  transform: translateY(-1px);
+}

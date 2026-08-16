@@ -154,7 +154,20 @@
 
       <ng-container matColumnDef="jobStatus">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Job Status </th>
-        <td mat-cell *matCellDef="let element"> {{element.jobStatus}} </td>
+        <td mat-cell *matCellDef="let element">
+        <span
+          class="job-status-badge"
+          [ngClass]="{
+            'open': element.jobStatus?.trim().toLowerCase() === 'open',
+            'close': element.jobStatus?.trim().toLowerCase() === 'close'
+          }"
+        >
+          <span class="job-status-dot"></span>
+          <span class="job-status-text">
+            {{ element.jobStatus }}
+          </span>
+        </span>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="jobClosingDate">
