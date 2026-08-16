@@ -56,7 +56,7 @@ export class StandbyCrewMembersComponent {
     ) {
       this.standbyCrewMembersForm = this.fb.group({
         sidNo: new FormControl('', [Validators.required]),
-        position: new FormControl('', [Validators.required]),
+        position: new FormControl({value: '', disabled: true}),
         status: new FormControl('', [Validators.required])
       });
     }
@@ -73,7 +73,8 @@ export class StandbyCrewMembersComponent {
           response.forEach((seafarers: any) => {
             const seafarersData = {
               id: seafarers.id,
-              sidNo: seafarers.sidNo
+              sidNo: seafarers.sidNo,
+              position: seafarers.position
             };
             this.allSeafarersDropdown.push(seafarersData);
           });
@@ -82,7 +83,7 @@ export class StandbyCrewMembersComponent {
         this.createSidMap(); // [step 2]
   
         // this.setSeafearersNoOnTable();
-      });
+      }); 
     }
   
     public setSeafearersNoOnTable(): void {
@@ -165,7 +166,7 @@ export class StandbyCrewMembersComponent {
   
         if(!this.standbyCrewMembersForm.valid) return;
         if (this.mode === 'add') {
-          this.standbyCrewMembersServiceService.serviceCall(this.standbyCrewMembersForm.value).subscribe({
+          this.standbyCrewMembersServiceService.serviceCall(this.standbyCrewMembersForm.getRawValue()).subscribe({
             next: (response: any) => {
               if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {
                 this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
@@ -181,7 +182,7 @@ export class StandbyCrewMembersComponent {
           });
         } else if (this.mode === 'edit') {
           this.standbyCrewMembersServiceService.editData(
-            this.selectedData?.id, this.standbyCrewMembersForm.value
+            this.selectedData?.id, this.standbyCrewMembersForm.getRawValue()
           ).subscribe({
             next: (response: any) => {
               let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
@@ -207,6 +208,7 @@ export class StandbyCrewMembersComponent {
       this.standbyCrewMembersForm.reset();
       this.saveButtonLabel = 'Save';
       this.standbyCrewMembersForm.enable();
+      this.standbyCrewMembersForm.get('position')?.disable();
       this.isButtonDisabled = false;
     }
   
@@ -282,10 +284,14 @@ export class StandbyCrewMembersComponent {
   
       this.patchFormSeafarersValues(selectedSeafarersId);
     }
-  
-    public patchFormSeafarersValues(seafarersId: number): void {
-      this.standbyCrewMembersForm.patchValue({
-        sidNo: seafarersId
+
+    public patchFormSeafarersValues(seaFarerId: number): void {
+      this.allSeafarersListDetails.forEach((seaFarer: any) => {
+        if (seaFarer.id === seaFarerId) {
+          this.standbyCrewMembersForm.patchValue({
+            position: seaFarer.position
+          });
+        }
       });
     }
 

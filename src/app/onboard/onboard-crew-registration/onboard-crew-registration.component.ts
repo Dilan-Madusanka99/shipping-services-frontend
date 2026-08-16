@@ -65,8 +65,8 @@ export class OnboardCrewRegistrationComponent {
       position: new FormControl('', [Validators.required]),
       imoNo: new FormControl('', [Validators.required]),
       vesselName: new FormControl({value: '', disabled: true}),
-      signOnDate: new FormControl('', [Validators.required]),
-      signOffDate: new FormControl('', [Validators.required, this.signOffDateValidator]),
+      signOnDate: new FormControl(null, [Validators.required]),
+      signOffDate: new FormControl(null, [Validators.required, this.signOffDateValidator]),
       status: new FormControl('', [Validators.required])
     });
   }
@@ -247,8 +247,8 @@ export class OnboardCrewRegistrationComponent {
     this.onboardCrewRegistrationForm.patchValue({
       sidNo: +data.sidNo,
       imoNo: +data.imoNo,
-      signOnDate: new Date(data.signOnDate).toISOString().substring(0, 10),
-      signOffDate: new Date(data.signOffDate).toISOString().substring(0, 10)
+      signOnDate: data.signOnDate ? new Date(data.signOnDate) : null,
+      signOffDate: data.signOffDate ? new Date(data.signOffDate) : null
     });
   }
 

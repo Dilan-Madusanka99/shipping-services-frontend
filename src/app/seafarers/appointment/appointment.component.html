@@ -69,7 +69,22 @@
 
       <ng-container matColumnDef="appointmentStatus">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Appointment Status</th>
-        <td mat-cell *matCellDef="let element"> {{element.appointmentStatus}} </td>
+        <td mat-cell *matCellDef="let element">
+        <span
+          class="appointment-status-badge"
+          [ngClass]="{
+            'done': element.appointmentStatus?.trim().toLowerCase() === 'done',
+            'cancelled': element.appointmentStatus?.trim().toLowerCase() === 'cancelled',
+            'scheduled': element.appointmentStatus?.trim().toLowerCase() === 'scheduled',
+            're-scheduled':  element.appointmentStatus?.trim().toLowerCase() === 're-scheduled'
+          }"
+        >
+          <span class="appointment-status-dot"></span>
+          <span class="appointment-status-text">
+            {{ element.appointmentStatus }}
+          </span>
+        </span>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">

@@ -196,3 +196,136 @@ label {
   overflow: hidden;
   min-width: 0;
 }
+
+
+/* =========================================
+   APPOINTMENT STATUS BADGE
+========================================= */
+
+.appointment-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 6px 12px;
+  border-radius: 20px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  transition: all 0.2s ease;
+}
+
+
+/* =========================================
+   STATUS DOT
+========================================= */
+
+.appointment-status-dot {
+  width: 10px;
+  height: 10px;
+
+  min-width: 10px;
+  min-height: 10px;
+
+  border-radius: 50%;
+
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+
+/* =========================================
+   DONE - GREEN
+========================================= */
+
+.appointment-status-badge.done {
+  background-color: #ecfdf3;
+  color: #15803d;
+}
+
+.appointment-status-badge.done .appointment-status-dot {
+  background-color: #16a34a;
+}
+
+
+/* =========================================
+   CANCELLED - RED
+========================================= */
+
+.appointment-status-badge.cancelled {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.appointment-status-badge.cancelled .appointment-status-dot {
+  background-color: #ef4444;
+}
+
+
+/* =========================================
+   SCHEDULED - YELLOW
+========================================= */
+
+.appointment-status-badge.scheduled {
+  background-color: #fefce8;
+  color: #a16207;
+}
+
+.appointment-status-badge.scheduled .appointment-status-dot {
+  background-color: #eab308;
+}
+
+
+/* =========================================
+   RE-SCHEDULED - ORANGE
+========================================= */
+
+.appointment-status-badge.re-scheduled {
+  background-color: #fff7ed;
+  color: #ea580c;
+}
+
+.appointment-status-badge.re-scheduled .appointment-status-dot {
+  background-color: #f97316;
+}
+
+
+/* =========================================
+   HOVER - DONE
+========================================= */
+
+.appointment-status-badge.done:hover {
+  background-color: #dcfce7;
+  transform: translateY(-1px);
+}
+
+
+/* =========================================
+   HOVER - CANCELLED
+========================================= */
+
+.appointment-status-badge.cancelled:hover {
+  background-color: #fee2e2;
+  transform: translateY(-1px);
+}
+
+
+/* =========================================
+   HOVER - SCHEDULED
+========================================= */
+
+.appointment-status-badge.scheduled:hover {
+  background-color: #fef9c3;
+  transform: translateY(-1px);
+}
+
+
+/* =========================================
+   HOVER - RE-SCHEDULED
+========================================= */
+
+.appointment-status-badge.re-scheduled:hover {
+  background-color: #ffedd5;
+  transform: translateY(-1px);
+}
