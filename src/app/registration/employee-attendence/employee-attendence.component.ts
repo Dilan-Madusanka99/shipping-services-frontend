@@ -95,15 +95,48 @@ export class EmployeeAttendenceComponent {
     }
   }
 
+  // public populateData(): void {
+  //   try {
+  //     this.employeeAttendenceService.getData().subscribe({
+  //       next: (dataList: any[]) => {
+  //         if (dataList.length <= 0) {
+  //           return;
+  //         }
+
+  //         this.dataSource = new MatTableDataSource(dataList);
+  //         this.dataSource.paginator = this.paginator;
+  //         this.dataSource.sort = this.sort;
+  //       },
+  //       error: (error) => {
+  //         this.messageService.showError('Action Failed With Error ' + error);
+  //       }
+  //     });
+  //   } catch (error) {
+  //     this.messageService.showError('Action Failed With Error ' + error);
+  //   }
+  // }
+
   public populateData(): void {
     try {
       this.employeeAttendenceService.getData().subscribe({
         next: (dataList: any[]) => {
-          if (dataList.length <= 0) {
+
+          if (!dataList || dataList.length === 0) {
             return;
           }
-
           this.dataSource = new MatTableDataSource(dataList);
+          this.dataSource.sortingDataAccessor = (item: any, property: string) => {
+
+            if (property === 'attandenceDate') {
+              const value = item.attandenceDate;
+
+              if (!value) {return 0;
+              }
+              const date = new Date(value);
+              return date.getTime();
+            }
+            return item[property];
+          };
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         },
@@ -111,6 +144,7 @@ export class EmployeeAttendenceComponent {
           this.messageService.showError('Action Failed With Error ' + error);
         }
       });
+
     } catch (error) {
       this.messageService.showError('Action Failed With Error ' + error);
     }

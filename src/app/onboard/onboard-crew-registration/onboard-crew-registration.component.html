@@ -118,17 +118,17 @@
 
       <ng-container matColumnDef="vesselName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Vessel Name</th>
-        <td mat-cell *matCellDef="let element">{{ element.vesselName }}</td>
+        <td mat-cell *matCellDef="let element">  {{ element.vesselName !== null ? element.vesselName : 'N/A' }}</td>
       </ng-container>
 
       <ng-container matColumnDef="signOnDate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>SignOn Date</th>
-        <td mat-cell *matCellDef="let element">{{ element.signOnDate | date: 'dd/MM/yyyy' }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.signOnDate !== null ? (element.signOnDate | date: 'dd/MM/yyyy') : 'N/A' }}</td>
       </ng-container>
 
       <ng-container matColumnDef="signOffDate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>SignOff Date</th>
-        <td mat-cell *matCellDef="let element">{{ element.signOffDate | date: 'dd/MM/yyyy' }}</td>
+        <td mat-cell *matCellDef="let element">  {{ element.signOffDate !== null ? (element.signOffDate | date: 'dd/MM/yyyy') : 'N/A' }}</td>
       </ng-container>
 
       <ng-container matColumnDef="status">

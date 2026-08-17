@@ -208,3 +208,74 @@ label {
 ::ng-deep .mat-mdc-paginator {
   margin-top: 10px;
 }
+
+
+/* =========================================
+   STOCK QUANTITY STATUS
+   ========================================= */
+
+.stock-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 64px;
+  padding: 6px 10px;
+
+  border-radius: 7px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  line-height: 1;
+  white-space: nowrap;
+}
+
+
+/* 0 = RED */
+.stock-zero {
+  background: #EF4444;
+  color: #ffffff;
+
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.25);
+}
+
+
+/* 1 - 9 = YELLOW */
+.stock-low {
+  background: #FBBF24;
+  color: #78350F;
+
+  box-shadow: 0 2px 6px rgba(251, 191, 36, 0.25);
+}
+
+
+/* 10+ = GREEN */
+.stock-good {
+  background: #4CAF50;
+  color: #ffffff;
+
+  box-shadow: 0 2px 6px rgba(76, 175, 80, 0.25);
+}
+
+
+/* OUT OF STOCK LABEL */
+
+.out-of-stock-label {
+  display: inline-flex;
+  align-items: center;
+
+  margin-left: 8px;
+  padding: 5px 9px;
+
+  border: 1px solid #EF4444;
+  border-radius: 6px;
+
+  background: #ffffff;
+  color: #EF4444;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}

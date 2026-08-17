@@ -34,13 +34,13 @@ export class SeafarersRegisteredByMonthlyComponent {
   public updateSeafarersRegisterdByMonth(data: any): void {
     const seafarersRegisteredByMonthData = data.map((data: any) => {
       return {
-        x: data.month,
+        x: data.position,
         y: data.cnt
       };
     });
 
     this.seafarersRegisteredByMonthOptions = {
-      series: [{ name: 'Seafarers Registered Per Month', data: seafarersRegisteredByMonthData }],
+      series: [{ name: 'Seafarers Registered by Position', data: seafarersRegisteredByMonthData }],
       chart: {
         type: 'bar',
         height: 350,
@@ -81,7 +81,7 @@ export class SeafarersRegisteredByMonthlyComponent {
         borderColor: '#e5e7eb'
       },
       title: {
-        text: 'Seafarers Registered Per Month',
+        text: 'Seafarers Registered by Position',
         align: 'center',
         style: {
           color: '#1f2937',

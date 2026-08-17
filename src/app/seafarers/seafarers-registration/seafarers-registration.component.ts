@@ -108,8 +108,8 @@ export class SeafarersRegistrationComponent {
       birthPlace: new FormControl('', [ Validators.pattern(/^[A-Za-z\s]+$/) ]), // only letters, spaces
       nic: new FormControl('', [Validators.pattern(/^([0-9]{9}[vVxX]|[0-9]{12})$/)]),
       religion: new FormControl('', []),
-      marriedStatus: new FormControl('', []),
-      gender: new FormControl('', [Validators.required]),
+      marriedStatus: new FormControl('Single', []),
+      gender: new FormControl('Male', [Validators.required]),
       noOfChildren: new FormControl('', [Validators.min(0), Validators.max(10), Validators.pattern(/^\d+$/)]), //& only digits (whole digit)
       address: new FormControl('', [Validators.pattern(/^[a-zA-Z0-9\s,.'\-\/#]*$/)]), // letters, numbers, /-,.#'
       home: new FormControl('', [Validators.pattern(/^0\d{9}$/)]), // first digit must be 0, others 0-9
@@ -120,7 +120,7 @@ export class SeafarersRegistrationComponent {
       kinAddress: new FormControl('', [ Validators.pattern(/^[a-zA-Z0-9\s,.'\-\/#]*$/) ]),
       kinMobile: new FormControl('', [Validators.pattern(/^07[0-9]{8}$/)]),
       kinEmail: new FormControl('', [Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/)]),
-      englishLanguage: new FormControl('')
+      englishLanguage: new FormControl('Good')
     });
   }
 
@@ -344,37 +344,94 @@ export class SeafarersRegistrationComponent {
   //   this.seafarersForm.updateValueAndValidity();
   // }
 
+  // public resetData(): void {
+  // const appliedDate = this.seafarersForm.get('appliedDate')?.value; // saved current applied date
+
+  // this.seafarersForm.reset();
+  // this.selectedData = null;
+
+  // this.seafarersForm.enable();
+
+  // this.seafarersForm.patchValue({appliedDate: appliedDate}); // Restore the previous Applied Date
+  // this.seafarersForm.get('appliedDate')?.disable();
+
+  // this.isButtonDisabled = false;
+
+  // // Reset image preview
+  // this.previewUrl = null;
+  // this.isFileSelected = false;
+
+  // if (window.localStorage.getItem('role') === 'SEAFARER' && this.dataSource?.data?.length > 0) {
+  //     this.mode = 'edit';
+  //     this.saveButtonLabel = 'Edit';
+  // } else if (window.localStorage.getItem('role') === 'SEAFARER' && this.dataSource?.data?.length == 0) {
+  //     this.mode = 'add';
+  //     this.saveButtonLabel = 'Save';
+  // } else {
+  //     this.saveButtonLabel = 'Edit';
+  //     this.mode = 'edit';
+  //     this.isButtonDisabled = true;
+  // }
+
+  // this.seafarersForm.setErrors(null);
+  // this.seafarersForm.updateValueAndValidity();
+  // }
+
   public resetData(): void {
-  const appliedDate = this.seafarersForm.get('appliedDate')?.value; // saved current applied date
 
-  this.seafarersForm.reset();
-  this.selectedData = null;
+    // Reset all form values
+    this.seafarersForm.reset();
 
-  this.seafarersForm.enable();
+    // Clear selected record
+    this.selectedData = null;
 
-  this.seafarersForm.patchValue({appliedDate: appliedDate}); // Restore the previous Applied Date
-  this.seafarersForm.get('appliedDate')?.disable();
+    // Enable the form
+    this.seafarersForm.enable();
 
-  this.isButtonDisabled = false;
+    // Set default values again
+    this.seafarersForm.patchValue({
+      appliedDate: new Date(),
+      availableDate: new Date()
+    });
 
-  // Reset image preview
-  this.previewUrl = null;
-  this.isFileSelected = false;
+    // Applied date should remain disabled
+    this.seafarersForm.get('appliedDate')?.disable();
 
-  if (window.localStorage.getItem('role') === 'SEAFARER' && this.dataSource?.data?.length > 0) {
+    // Reset validation state
+    this.seafarersForm.markAsPristine();
+    this.seafarersForm.markAsUntouched();
+
+    // Recalculate validation
+    this.seafarersForm.updateValueAndValidity();
+
+    // Reset image
+    this.previewUrl = null;
+    this.isFileSelected = false;
+    this.selectedFile = null;
+
+    // Reset button
+    this.isButtonDisabled = false;
+
+    // Reset mode
+    if (
+      window.localStorage.getItem('role') === 'SEAFARER' &&
+      this.dataSource?.data?.length > 0
+    ) {
       this.mode = 'edit';
       this.saveButtonLabel = 'Edit';
-  } else if (window.localStorage.getItem('role') === 'SEAFARER' && this.dataSource?.data?.length == 0) {
+    } 
+    else if (
+      window.localStorage.getItem('role') === 'SEAFARER' &&
+      this.dataSource?.data?.length === 0
+    ) {
       this.mode = 'add';
       this.saveButtonLabel = 'Save';
-  } else {
-      this.saveButtonLabel = 'Edit';
+    } 
+    else {
       this.mode = 'edit';
+      this.saveButtonLabel = 'Edit';
       this.isButtonDisabled = true;
-  }
-
-  this.seafarersForm.setErrors(null);
-  this.seafarersForm.updateValueAndValidity();
+    }
   }
 
   public editData(data: any): void {

@@ -188,7 +188,11 @@ export class OtherDetailsRegistrationComponent {
             const errorMessage = error;
             if (errorMessage.replace(/\s+/g, ' ').includes('Seafarers Registration Does Not Exists')) {
               this.messageService.showWarn('Please add your data!');
-            } else {
+            }
+            else if(errorMessage.replace(/\s+/g, ' ').includes('Other Details Registration Does Not Exists')){
+              this.messageService.showWarn('Please add your data!');
+            }
+            else {
               this.messageService.showError('Action Failed With Error ' + error);
             }
           }
