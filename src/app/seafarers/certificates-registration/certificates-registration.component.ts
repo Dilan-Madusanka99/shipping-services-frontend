@@ -105,6 +105,7 @@ export class CertificatesRegistrationComponent {
 
   ngOnInit(): void {
     this.getSeafarersList();
+    this.disableFields();
   }
 
   public getSeafarersList(): void {
@@ -369,4 +370,13 @@ export class CertificatesRegistrationComponent {
       sidNo: seafarersId
     });
   }
+
+      public disableFields(): void {
+      if (window.localStorage.getItem('role') === 'SEAFARER') {
+        this.certificatesRegistrationForm.get('verificationStatus')?.disable();
+      } else {
+        this.certificatesRegistrationForm.get('verificationStatus')?.enable();
+      }
+      this.certificatesRegistrationForm.updateValueAndValidity();
+    }
 }
