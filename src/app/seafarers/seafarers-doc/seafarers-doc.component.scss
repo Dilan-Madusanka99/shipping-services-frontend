@@ -286,6 +286,105 @@ body {
     font-weight: 500;
 }
 
+.cert-container {
+  margin-top: 24px;
+}
+
+.count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 8px;
+  margin-left: 8px;
+  border-radius: 11px;
+  background: #3498db;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+.cert-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+
+  th, td {
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid #e0e6ed;
+  }
+
+  th {
+    background: #f8f9fa;
+    color: #2c3e50;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  tbody tr:hover {
+    background: #f5f9ff;
+  }
+}
+
+.expired-cell { color: #e74c3c; }
+
+.exp-tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: #fdecea;
+  color: #e74c3c;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.empty-state {
+  padding: 20px;
+  text-align: center;
+  color: #95a5a6;
+}
+
+.sea-container {
+  margin-top: 24px;
+}
+
+.sea-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+
+  th, td {
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid #e0e6ed;
+    white-space: nowrap;
+  }
+
+  th {
+    background: #f8f9fa;
+    color: #2c3e50;
+    font-weight: 600;
+  }
+
+  tbody tr:hover {
+    background: #f5f9ff;
+  }
+}
+
+.months-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  background: #eaf2ff;
+  color: #2563eb;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
 @keyframes slideIn {
     from {
         transform: translateX(100%);

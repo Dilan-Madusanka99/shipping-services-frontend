@@ -181,7 +181,176 @@
         </div>
       </div>
     </div>
+
+    <!-- Seafarer ID -->
+    <div class="form-section">
+      <div class="section-header">
+        <h2>Seafarer ID</h2>
+      </div>
+      <div class="section-content">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="sidNo">SID No</label>
+            <input type="text" id="sidNo" formControlName="sidNo" />
+          </div>
+          <div class="form-field">
+            <label for="sidIssuedPlace">Issued Place</label>
+            <input type="text" id="sidIssuedPlace" formControlName="sidIssuedPlace" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="sidIssuedDate">Issued Date</label>
+            <input type="text" id="sidIssuedDate" formControlName="sidIssuedDate" />
+          </div>
+          <div class="form-field">
+            <label for="sidExpireDate">Expiry Date</label>
+            <input type="text" id="sidExpireDate" formControlName="sidExpireDate" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Passport -->
+    <div class="form-section">
+      <div class="section-header">
+        <h2>Passport</h2>
+      </div>
+      <div class="section-content">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="ppNo">Passport No</label>
+            <input type="text" id="ppNo" formControlName="ppNo" />
+          </div>
+          <div class="form-field">
+            <label for="ppIssuedPlace">Issued Place</label>
+            <input type="text" id="ppIssuedPlace" formControlName="ppIssuedPlace" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="ppIssuedDate">Issued Date</label>
+            <input type="text" id="ppIssuedDate" formControlName="ppIssuedDate" />
+          </div>
+          <div class="form-field">
+            <label for="ppExpireDate">Expiry Date</label>
+            <input type="text" id="ppExpireDate" formControlName="ppExpireDate" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Yellow Fever -->
+    <div class="form-section">
+      <div class="section-header">
+        <h2>Yellow Fever</h2>
+      </div>
+      <div class="section-content">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="yellowFeverNo">Certificate No</label>
+            <input type="text" id="yellowFeverNo" formControlName="yellowFeverNo" />
+          </div>
+          <div class="form-field">
+            <label for="yellowFeverIssuedPlace">Issued Place</label>
+            <input type="text" id="yellowFeverIssuedPlace" formControlName="yellowFeverIssuedPlace" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="yellowFeverIssuedDate">Issued Date</label>
+            <input type="text" id="yellowFeverIssuedDate" formControlName="yellowFeverIssuedDate" />
+          </div>
+          <div class="form-field">
+            <label for="yellowFeverExpireDate">Expiry Date</label>
+            <input type="text" id="yellowFeverExpireDate" formControlName="yellowFeverExpireDate" />
+          </div>
+        </div>
+      </div>
+    </div>
+
   </form>
+
+  <div class="form-container cert-container">
+    <div class="form-section">
+      <div class="section-header">
+        <h2>Certificates <span class="count-badge">{{ certificatesList.length }}</span></h2>
+      </div>
+      <div class="section-content">
+        <table class="cert-table" *ngIf="certificatesList.length > 0; else noCerts">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Number</th>
+              <th>Issued Place</th>
+              <th>Issued Date</th>
+              <th>Expiry Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cert of certificatesList; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ cert.cName || '—' }}</td>
+              <td>{{ cert.cNo || '—' }}</td>
+              <td>{{ cert.cIssuedPlace || '—' }}</td>
+              <td>{{ (cert.cIssuedDate | date:'dd/MM/yyyy') || '—' }}</td>
+              <td [class.expired-cell]="isExpired(cert.cExpiredDate)">
+                {{ (cert.cExpiredDate | date:'dd/MM/yyyy') || '—' }}
+                <span class="exp-tag" *ngIf="isExpired(cert.cExpiredDate)">EXPIRED</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <ng-template #noCerts>
+          <div class="empty-state">No certificates registered.</div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-container sea-container">
+    <div class="form-section">
+      <div class="section-header">
+        <h2>Sea Services <span class="count-badge">{{ seaServicesList.length }}</span></h2>
+      </div>
+      <div class="section-content">
+        <table class="sea-table" *ngIf="seaServicesList.length > 0; else noSea">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Company</th>
+              <th>Vessel Name</th>
+              <th>Vessel Type</th>
+              <th>Position</th>
+              <th>Flag</th>
+              <th>GRT</th>
+              <th>Sign On</th>
+              <th>Sign Off</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let svc of seaServicesList; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ svc.companyName || '—' }}</td>
+              <td>{{ svc.vesselName || '—' }}</td>
+              <td>{{ svc.vesselType || '—' }}</td>
+              <td>{{ svc.position || '—' }}</td>
+              <td>{{ svc.flag || '—' }}</td>
+              <td>{{ svc.grt || '—' }}</td>
+              <td>{{ (svc.signOn | date:'dd/MM/yyyy') || '—' }}</td>
+              <td>{{ (svc.signOff | date:'dd/MM/yyyy') || '—' }}</td>
+              <td><span class="months-badge">{{ calculateTotal(svc.signOn, svc.signOff) }}</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <ng-template #noSea>
+          <div class="empty-state">No sea service records found.</div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
 </div>
 
 

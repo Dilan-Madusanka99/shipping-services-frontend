@@ -24,6 +24,7 @@ export class SeafarersDocComponent {
   allSeafarersListDetails: any;
 
   certificatesList: any[] = []; // added
+  seaServicesList: any[] = [];
 
   isSidDisabled = false;
 
@@ -111,7 +112,7 @@ export class SeafarersDocComponent {
       cdcExpireDate: [''],
       yellowFeverNo: [''],
       yellowFeverIssuedPlace: [''],
-      kiyellowFeverIssuedDatenName: [''],
+      yellowFeverIssuedDate: [''],
       yellowFeverExpireDate: [''],
       // Certificate Details
       cName: [''],
@@ -203,22 +204,23 @@ export class SeafarersDocComponent {
     const pdf = new jsPDF('p', 'mm', 'a4');
     const v = this.userForm.value;
     let y = 20;
-
+    
     const section = (title: string) => {
+      if (y > 265) { pdf.addPage(); y = 20; }
       pdf.setFontSize(14); pdf.setFont('', 'bold');
       pdf.text(title, 15, y); y += 8;
       pdf.setFontSize(11); pdf.setFont('', 'normal');
     };
-
+  
     const row = (label: string, value: any) => {
       if (y > 280) { pdf.addPage(); y = 20; }
       pdf.text(`${label}:`, 15, y);
       pdf.text(`${value ?? ''}`, 70, y);
       y += 7;
     };
-
+  
     pdf.setFontSize(18); pdf.text('Seafarer Document', 15, y); y += 12;
-
+  
     section('Personal Details');
     row('Position', v.position);
     row('Applied Date', v.appliedDate);
@@ -233,23 +235,94 @@ export class SeafarersDocComponent {
     row('Married Status', v.marriedStatus);
     row('No of Children', v.noOfChildren);
     y += 4;
-
+  
     section('Contact Details');
     row('Address', v.address);
     row('Home', v.home);
     row('Mobile', v.mobile);
     row('Email', v.email);
     y += 4;
-
+  
     section('Next of Kin Details');
     row('Kin Name', v.kinName);
     row('Kin Relationship', v.kinRelationship);
     row('Kin Address', v.kinAddress);
     row('Kin Mobile', v.kinMobile);
     row('Kin Email', v.kinEmail);
-
+    y += 4;
+  
+    section('Seafarer ID');
+    row('SID No', v.sidNo);
+    row('Issued Place', v.sidIssuedPlace);
+    row('Issued Date', v.sidIssuedDate);
+    row('Expiry Date', v.sidExpireDate);
+    y += 4;
+  
+    section('Passport');
+    row('Passport No', v.ppNo);
+    row('Issued Place', v.ppIssuedPlace);
+    row('Issued Date', v.ppIssuedDate);
+    row('Expiry Date', v.ppExpireDate);
+    y += 4;
+  
+    section('Seaman Book (CDC)');
+    row('Book No', v.cdcNo);
+    row('Issued Place', v.cdcIssuedPlace);
+    row('Issued Date', v.cdcIssuedDate);
+    row('Expiry Date', v.cdcExpireDate);
+    y += 4;
+  
+    section('Yellow Fever');
+    row('Certificate No', v.yellowFeverNo);
+    row('Issued Place', v.yellowFeverIssuedPlace);
+    row('Issued Date', v.yellowFeverIssuedDate);
+    row('Expiry Date', v.yellowFeverExpireDate);
+    y += 4;
+  
+    // ---------- Certificates (array) ----------
+    section(`Certificates (${this.certificatesList.length})`);
+    if (this.certificatesList.length === 0) {
+      row('', 'No certificates registered.');
+    } else {
+      this.certificatesList.forEach((cert, i) => {
+        if (y > 275) { pdf.addPage(); y = 20; }
+        pdf.setFont('', 'bold');
+        pdf.text(`${i + 1}. ${cert.cName || '—'}`, 15, y);
+        pdf.setFont('', 'normal');
+        y += 7;
+        row('   Certificate No', cert.cNo);
+        row('   Issued Place', cert.cIssuedPlace);
+        row('   Issued Date', this.formatDateValue(cert.cIssuedDate));
+        row('   Expiry Date', this.formatDateValue(cert.cExpiredDate));
+        y += 2;
+      });
+    }
+    y += 4;
+  
+    // ---------- Sea Services (array) ----------
+    section(`Sea Services (${this.seaServicesList.length})`);
+    if (this.seaServicesList.length === 0) {
+      row('', 'No sea service records found.');
+    } else {
+      this.seaServicesList.forEach((svc, i) => {
+        if (y > 270) { pdf.addPage(); y = 20; }
+        pdf.setFont('', 'bold');
+        pdf.text(`${i + 1}. ${svc.vesselName || '—'} (${svc.companyName || '—'})`, 15, y);
+        pdf.setFont('', 'normal');
+        y += 7;
+        row('   Vessel Type', svc.vesselType);
+        row('   Position', svc.position);
+        row('   Flag', svc.flag);
+        row('   GRT', svc.grt);
+        row('   Sign On', this.formatDateValue(svc.signOn));
+        row('   Sign Off', this.formatDateValue(svc.signOff));
+        row('   Total Service', this.calculateTotal(svc.signOn, svc.signOff));
+        y += 2;
+      });
+    }
+  
     pdf.save('seafarer-document.pdf');
-}
+  }
 
   public onSeafarersSelect(event): void {
     let selectedSeafarersId = event;
@@ -318,8 +391,8 @@ export class SeafarersDocComponent {
 
           yellowFeverNo: otherDetails.yellowFeverNo,
           yellowFeverIssuedPlace: otherDetails.yellowFeverIssuedPlace,
-          kiyellowFeverIssuedDatenName: this.formatDateValue(
-            otherDetails.kiyellowFeverIssuedDatenName
+          yellowFeverIssuedDate: this.formatDateValue(
+            otherDetails.yellowFeverIssuedDate
           ),
           yellowFeverExpireDate: this.formatDateValue(
             otherDetails.yellowFeverExpireDate
@@ -330,38 +403,26 @@ export class SeafarersDocComponent {
   }
 
   private loadCertificateDetails(selectedSeafarersId: number): void {
-  this.certificateDetailsService.getBySeafarerId(selectedSeafarersId).subscribe((certificate: any) => {
-    if (certificate) {
-        this.userForm.patchValue({
-          cName: certificate.cName,
-          cNo: certificate.cNo,
-          cIssuedPlace: certificate.cIssuedPlace,
-          cIssuedDate: this.formatDateValue(certificate.cIssuedDate),
-          cExpiredDate: this.formatDateValue(certificate.cExpiredDate)
-        });
-    }
-  });
+    this.certificateDetailsService.getBySeafarerId(selectedSeafarersId).subscribe((certificate: any) => {
+      // Endpoint may return a single object or an array — normalise to a list
+      this.certificatesList = certificate
+        ? (Array.isArray(certificate) ? certificate : [certificate])
+        : [];
+    });
+  }
+
+  isExpired(dateStr: string): boolean {
+    if (!dateStr) return false;
+    return new Date(dateStr) < new Date();
   }
 
   private loadSeaServiceDetails(seafarersId: number): void {
-  this.seaServicesService.getBySeafarerId(seafarersId).subscribe((seaService: any) => {
-    if (seaService) {
-        this.userForm.patchValue({
-          companyName: seaService.companyName,
-          vesselName: seaService.vesselName,
-          vesselType: seaService.vesselType,
-          flag: seaService.flag,
-          grt: seaService.grt,
-          bhp: seaService.bhp,
-
-          signOn: this.formatDateValue(seaService.signOn),
-          signOff: this.formatDateValue(seaService.signOff),
-
-          totalMonths: seaService.totalMonths,
-          reason: seaService.reason
-        });
-    }
-  });
+    this.seaServicesService.getBySeafarerId(seafarersId).subscribe((seaService: any) => {
+      // Endpoint may return a single object or an array — normalise to a list
+      this.seaServicesList = seaService
+        ? (Array.isArray(seaService) ? seaService : [seaService])
+        : [];
+    });
   }
 
  // dates formated
@@ -377,4 +438,30 @@ export class SeafarersDocComponent {
       return '';
     }
   }
+
+calculateTotal(signOn: any, signOff: any): string {
+  if (!signOn || !signOff) return '—';
+
+  const start = new Date(signOn);
+  const end = new Date(signOff);
+
+  if (isNaN(start.getTime()) || isNaN(end.getTime()) || end < start) return '—';
+
+  let months =
+    (end.getFullYear() - start.getFullYear()) * 12 +
+    (end.getMonth() - start.getMonth());
+
+  let days = end.getDate() - start.getDate();
+
+  // Borrow days from the previous month when the day-of-month is negative
+  if (days < 0) {
+    months--;
+    const prevMonthDays = new Date(end.getFullYear(), end.getMonth(), 0).getDate();
+    days += prevMonthDays;
+  }
+
+  if (months < 0) months = 0;
+
+  return `${months} M ${days} D`;
+}
 }
