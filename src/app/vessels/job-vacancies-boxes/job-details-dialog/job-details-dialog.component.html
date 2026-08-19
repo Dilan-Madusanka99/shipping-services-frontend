@@ -62,15 +62,76 @@
   </mat-dialog-content>
 
   <!-- Footer -->
-  <mat-dialog-actions class="dialog-footer">
+  <!-- <mat-dialog-actions class="dialog-footer">
     <button mat-stroked-button class="btn-close" (click)="close()">Close</button>
     <button mat-flat-button
             class="btn-apply"
-            [disabled]="applying || applied || !isSeafarerRole"
+            [disabled]="applying || applied || !isSeafarerRole || !hasSeafarerRegistration || checkingRegistration"
             [hidden]="!isSeafarerRole"
             (click)="apply()">
-      <mat-spinner *ngIf="applying" diameter="18" class="btn-spinner"></mat-spinner>
-      <span *ngIf="!applying">{{ applied ? 'Applied' : 'Apply' }}</span>
+      <mat-spinner *ngIf="applying || checkingRegistration" diameter="18" class="btn-spinner"></mat-spinner>
+      <span *ngIf="!applying && !checkingRegistration">{{ applied ? 'Applied' : 'Apply' }}</span>
     </button>
+      <div class="registration-warning"
+          *ngIf="isSeafarerRole && !checkingRegistration && !hasSeafarerRegistration">
+
+        <mat-icon>warning</mat-icon>
+
+        <span>
+          Please complete your Seafarer Registration before applying for a job.
+        </span>
+
+      </div>
+  </mat-dialog-actions> -->
+
+  <mat-dialog-actions class="dialog-footer">
+
+    <!-- Buttons -->
+    <div class="footer-buttons">
+
+      <button
+        mat-stroked-button class="btn-close" (click)="close()">
+        Close
+      </button>
+
+      <button
+        mat-flat-button class="btn-apply" [disabled]="applying || applied || !isSeafarerRole || !hasSeafarerRegistration || checkingRegistration"
+        [hidden]="!isSeafarerRole"
+        (click)="apply()">
+
+        <mat-spinner
+          *ngIf="applying || checkingRegistration" diameter="18" class="btn-spinner">
+        </mat-spinner>
+
+        <span *ngIf="!applying && !checkingRegistration">
+          {{ applied ? 'Applied' : 'Apply' }}
+        </span>
+      </button>
+    </div>
+
+    <!-- Registration Warning -->
+    <div
+      class="registration-warning"
+      *ngIf="isSeafarerRole && !checkingRegistration && !hasSeafarerRegistration">
+
+      <div class="warning-icon">
+        <mat-icon>priority_high</mat-icon>
+      </div>
+
+      <div class="warning-content">
+        <div class="warning-title">
+          Please complete your Seafarer Registration
+        </div>
+
+        <div class="warning-text">
+          before applying for a job.
+        </div>
+      </div>
+
+      <div class="warning-decoration">
+        <mat-icon>assignment_ind</mat-icon>
+      </div>
+    </div>
   </mat-dialog-actions>
+  
 </div>

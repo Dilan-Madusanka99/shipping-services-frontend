@@ -6,6 +6,7 @@ import { JobPostingServiceService } from 'src/app/services/vessels/job-posting-s
 import { Job } from '../job-vacancies-model';
 import { HttpService } from 'src/app/services/http.service';
 import { MessageServiceService } from 'src/app/services/message-service/message-service.service';
+import { SeafarersServiceService } from 'src/app/services/seafarers/seafarers.service';
 
 export interface JobDetailsDialogData {
   job: Job & { imageSrc?: string | null };
@@ -30,10 +31,15 @@ export class JobDetailsDialogComponent implements OnInit {
   applying = false;
   applied = false;
   isSeafarerRole = false;
+  
+  // disable apply when null
+  hasSeafarerRegistration = false;
+  checkingRegistration = true;
 
   constructor(
     private dialogRef: MatDialogRef<JobDetailsDialogComponent>,
     private jobService: JobPostingServiceService,
+    private seafarerService: SeafarersServiceService,
     private httpService: HttpService,
     private _messageService: MessageServiceService,
     private snackBar: MatSnackBar,
@@ -49,16 +55,42 @@ export class JobDetailsDialogComponent implements OnInit {
     //   error: () => this.perfectMatch = false // fail silently — banner just doesn't show
     // });
     this.isSeafarerRole = this.httpService.getUserRole() === 'SEAFARER';
+
+  if (this.isSeafarerRole) {  // disabled apply when null 
+    this.checkSeafarerRegistration();
+  } else {
+    this.checkingRegistration = false;
+  }
+  }
+
+  // disabled apply when null
+  private checkSeafarerRegistration(): void {
+    const seafarerId = this.httpService.getUserId();
+
+    this.seafarerService.getSeafarerDataById(Number(seafarerId)).subscribe({
+      next: (response) => {
+        this.hasSeafarerRegistration = response != null;
+        this.checkingRegistration = false;
+      },
+      error: () => {
+        this.hasSeafarerRegistration = false;
+        this.checkingRegistration = false;
+      }
+    });
   }
 
   apply(): void {
+  if (!this.hasSeafarerRegistration) {
+    this._messageService.showWarn(
+      'Please complete your registration before applying.'
+    );
+    return;
+  }
+
     if (this.applying || this.applied) {
       return;
     }
-
     this.applying = true;
-
-
     console.log(this.data.job);
 
     const saveObject = {
