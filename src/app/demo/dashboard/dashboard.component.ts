@@ -38,7 +38,6 @@ interface MenuItem {
 interface DashboardStat {
   value: number;
   title: string;
-  change: string;
   compare: string;
   icon: string;
   color: string;
@@ -58,7 +57,6 @@ export default class DashboardComponent implements OnInit {
     {
       value: 0,
       title: 'Total Employees',
-      change: '+12%',
       compare: 'vs last month',
       icon: 'fas fa-users',
       color: 'blue',
@@ -67,7 +65,6 @@ export default class DashboardComponent implements OnInit {
     {
       value: 0,
       title: "Today's Attendance",
-      change: '+6%',
       compare: 'vs yesterday',
       icon: 'far fa-calendar-check',
       color: 'orange',
@@ -76,7 +73,6 @@ export default class DashboardComponent implements OnInit {
     {
       value: 0,
       title: 'Active Seafarers',
-      change: '+8%',
       compare: 'vs last month',
       icon: 'fas fa-anchor',
       color: 'green',
@@ -85,7 +81,6 @@ export default class DashboardComponent implements OnInit {
     {
       value: 0,
       title: 'Open Vacancies',
-      change: '-5%',
       compare: 'vs last month',
       icon: 'fas fa-briefcase',
       color: 'purple',

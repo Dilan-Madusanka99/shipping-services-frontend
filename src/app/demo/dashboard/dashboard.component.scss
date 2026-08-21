@@ -91,25 +91,25 @@
     color: #334155;
 }
 
-.up,
-.down {
-    font-size: 15px;
-    font-weight: 600;
-}
+// .up,
+// .down {
+//     font-size: 15px;
+//     font-weight: 600;
+// }
 
-.up {
-    color: #16a34a;
-}
+// .up {
+//     color: #16a34a;
+// }
 
-.down {
-    color: #ef4444;
-}
+// .down {
+//     color: #ef4444;
+// }
 
-.up small,
-.down small {
-    color: #8b95a7;
-    margin-left: 4px;
-}
+// .up small,
+// .down small {
+//     color: #8b95a7;
+//     margin-left: 4px;
+// }
 
   // MENU CARDS
 .cards-grid {
@@ -308,4 +308,13 @@
 .open-btn:hover{
     transform:scale(1.05);
     box-shadow:0 10px 20px rgba(37,99,235,.30);
+}
+
+
+
+/* Remove unwanted pseudo-element from dashboard icons */
+.menu-card .icon-box::before,
+.menu-card .icon-box::after {
+    content: none !important;
+    display: none !important;
 }
