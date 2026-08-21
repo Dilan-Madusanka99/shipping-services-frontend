@@ -208,3 +208,95 @@ label {
 ::ng-deep .mat-mdc-paginator {
   margin-top: 10px;
 }
+
+
+
+/* =========================================
+   Certificate STATUS BADGE
+========================================= */
+
+.verification-status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 90px;
+  height: 34px;
+
+  padding: 0 14px;
+  gap: 8px;
+
+  border-radius: 20px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  line-height: 1;
+  white-space: nowrap;
+
+  box-sizing: border-box;
+
+  transition: all 0.2s ease;
+}
+
+
+/* =========================================
+   STATUS DOT
+========================================= */
+
+.verification-status-dot {
+  width: 10px;
+  height: 10px;
+
+  min-width: 10px;
+  min-height: 10px;
+
+  border-radius: 50%;
+
+  display: inline-block;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================
+   Verified - GREEN
+========================================= */
+
+.verification-status-badge.verified {
+  background-color: #ecfdf3;
+  color: #15803d;
+}
+
+.verification-status-badge.verified .verification-status-dot {
+  background-color: #16a34a;
+}
+
+
+/* =========================================
+   Expired - RED
+========================================= */
+
+.verification-status-badge.expired {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.verification-status-badge.expired .verification-status-dot {
+  background-color: #ef4444;
+}
+
+
+/* =========================================
+   HOVER EFFECT
+========================================= */
+
+.verification-status-badge.verified:hover {
+  background-color: #dcfce7;
+  transform: translateY(-1px);
+}
+
+.verification-status-badge.expired:hover {
+  background-color: #fee2e2;
+  transform: translateY(-1px);
+}

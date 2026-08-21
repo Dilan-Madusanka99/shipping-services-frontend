@@ -70,7 +70,7 @@ export class SeafarersRegisteredByMonthlyComponent {
           }
         }
       },
-      colors: ['#f97316'],
+      colors: ['#6B5B95'],
       plotOptions: {
         bar: {
           borderRadius: 4,

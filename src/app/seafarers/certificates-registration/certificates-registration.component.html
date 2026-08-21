@@ -146,9 +146,27 @@
         <td mat-cell *matCellDef="let element">{{ element.cExpiredDate | date: 'dd/MM/yyyy' }}</td>
       </ng-container>
 
-      <ng-container matColumnDef="verificationStatus">
+      <!-- <ng-container matColumnDef="verificationStatus">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Verification Status</th>
         <td mat-cell *matCellDef="let element">{{ element.verificationStatus }}</td>
+      </ng-container> -->
+
+      <ng-container matColumnDef="verificationStatus">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Verification Status </th>
+        <td mat-cell *matCellDef="let element">
+        <span
+          class="verification-status-badge"
+          [ngClass]="{
+            'verified': element.verificationStatus?.trim().toLowerCase() === 'verified',
+            'expired': element.verificationStatus?.trim().toLowerCase() === 'expired'
+          }"
+        >
+          <span class="verification-status-dot"></span>
+          <span class="verification-status-text">
+            {{ element.verificationStatus }}
+          </span>
+        </span>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">

@@ -102,7 +102,7 @@ months = [
           }
         }
       },
-      colors: ['#f97316'],
+      colors: ['#3B82A0'],
       plotOptions: {
         bar: {
           borderRadius: 4,

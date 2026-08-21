@@ -99,7 +99,7 @@ export class CertificatesRegistrationComponent {
       cIssuedPlace: new FormControl('', [Validators.required]),
       cIssuedDate: new FormControl('', [Validators.required, notFutureDateValidator]),
       cExpiredDate: new FormControl('', [Validators.required, futureDateValidator]),
-      verificationStatus: new FormControl([''])
+      verificationStatus: new FormControl('Verified')
     });
   }
 
@@ -281,6 +281,7 @@ export class CertificatesRegistrationComponent {
     this.certificatesRegistrationForm.reset();
     this.saveButtonLabel = 'Save';
     this.certificatesRegistrationForm.enable();
+    this.certificatesRegistrationForm.get('verificationStatus')?.disable();
     this.isButtonDisabled = false;
 
     this.previewUrl = null;

@@ -70,7 +70,7 @@ export class VesselRegisteredByTypeComponent {
             }
           }
         },
-        colors: ['#f97316'],
+        colors: ['#3F4D67'],
         plotOptions: {
           bar: {
             borderRadius: 4,

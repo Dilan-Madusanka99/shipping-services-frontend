@@ -178,7 +178,7 @@ export class SeaServicesComponent implements OnInit{
   
           if(!this.seaServicesForm.valid) return;
           if (this.mode === 'add'){
-            this.seaServicesService.serviceCall(this.seaServicesForm.value).subscribe({
+            this.seaServicesService.serviceCall(this.seaServicesForm.getRawValue()).subscribe({
               next: (response: any) => {
                 if (this.dataSource && this.dataSource.data && this.dataSource.data.length > 0) {
                   this.dataSource = new MatTableDataSource([response, ...this.dataSource.data]);
@@ -194,7 +194,7 @@ export class SeaServicesComponent implements OnInit{
             });
           }
           else if (this.mode === 'edit'){
-            this.seaServicesService.editData(this.selectedData?.id, this.seaServicesForm.value).subscribe ({
+            this.seaServicesService.editData(this.selectedData?.id, this.seaServicesForm.getRawValue()).subscribe ({
               next: (response: any) => {
                 let elementIndex = this.dataSource.data.findIndex((element) => element.id === this.selectedData?.id);
                 this.dataSource.data[elementIndex] = response;
@@ -219,6 +219,7 @@ export class SeaServicesComponent implements OnInit{
         this.seaServicesForm.reset();
         this.saveButtonLabel = 'Save';
         this.seaServicesForm.enable();
+        this.seaServicesForm.get('totalMonths')?.disable();
         this.isButtonDisabled = false;
       }
   

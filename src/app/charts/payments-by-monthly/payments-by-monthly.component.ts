@@ -70,7 +70,7 @@ export class PaymentsByMonthlyComponent {
             }
           }
         },
-        colors: ['#f97316'],
+        colors: ['#1C6B6B'],
         plotOptions: {
           bar: {
             borderRadius: 4,
