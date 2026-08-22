@@ -27,6 +27,7 @@ export class SeafarersDocComponent {
   seaServicesList: any[] = [];
 
   isSidDisabled = false;
+  globalSidNo = '';
 
   constructor(
     private fb: FormBuilder,
@@ -340,6 +341,9 @@ export class SeafarersDocComponent {
     if (!seaFarer) {
       return;
     }
+
+    this.globalSidNo = seaFarer?.sidNo;
+
     this.userForm.patchValue({
       ...seaFarer,
       // Format dates
@@ -374,7 +378,7 @@ export class SeafarersDocComponent {
   this.otherDetailsService.getBySeafarerId(selectedSeafarersId).subscribe((otherDetails: any) => {
     if (otherDetails) {
         this.userForm.patchValue({
-          sidNo: otherDetails.sidNo,
+          sidNo: this.globalSidNo,
           sidIssuedPlace: otherDetails.sidIssuedPlace,
           sidIssuedDate: this.formatDateValue(otherDetails.sidIssuedDate),
           sidExpireDate: this.formatDateValue(otherDetails.sidExpireDate),
