@@ -128,6 +128,7 @@ export class SeaServicesComponent implements OnInit{
   public populateData(): void {
     try {
       if (window.localStorage.getItem('role') === 'SEAFARER') {
+        this.patchSid();
         /* If the role is seafarer then get only details related to SID no*/
         this.seaServicesService.getSeafarerData(window.localStorage.getItem('sid')).subscribe({
           next: (data: any) => {
@@ -168,6 +169,19 @@ export class SeaServicesComponent implements OnInit{
     } catch (error) {
       this.messageService.showError('Action Failed With Error ' + error);
     }
+  }
+
+  patchSid(): void {
+    const sidNo = window.localStorage.getItem('sid');
+
+    const sidDetails = this.seafarersDropdown.find((seafarer: any) => {
+      return seafarer.sidNo == sidNo;
+    });
+
+    this.seaServicesForm.get('sidNo')?.disable();
+    this.seaServicesForm.patchValue({
+      sidNo: sidDetails?.id
+    });
   }
   
     onSubmit() {
@@ -221,6 +235,13 @@ export class SeaServicesComponent implements OnInit{
         this.seaServicesForm.enable();
         this.seaServicesForm.get('totalMonths')?.disable();
         this.isButtonDisabled = false;
+
+        if (window.localStorage.getItem('role') === 'SEAFARER') {
+          this.patchSid();
+          this.seaServicesForm.get('sidNo')?.disable();
+        } else {
+          this.seaServicesForm.get('sidNo')?.enable();
+        }
       }
   
       public editData(data: any): void {

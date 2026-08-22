@@ -167,6 +167,7 @@ export class OtherDetailsRegistrationComponent {
   public populateData(): void {
     try {
       if (window.localStorage.getItem('role') === 'SEAFARER') {
+        this.patchSid();
         /* If the role is seafarer then get only details related to SID no*/ 
         this.seafarersService.getSeafarerData(window.localStorage.getItem('sid')).subscribe({
           next: (data) => {
@@ -218,11 +219,24 @@ export class OtherDetailsRegistrationComponent {
     }
   }
 
+  patchSid(): void {
+    const sidNo = window.localStorage.getItem('sid');
+
+    const sidDetails = this.seafarersDropdown.find((seafarer: any) => {
+      return seafarer.sidNo == sidNo;
+    });
+
+    this.otherDetailsRegistrationForm.get('sidNo')?.disable();
+    this.otherDetailsRegistrationForm.patchValue({
+      sidNo: sidDetails?.id
+    });
+  }
+
   public prepareSeafarerData(): FormData {
     const otherDetailsRegistrationFormData = new FormData();
     otherDetailsRegistrationFormData.append(
       'otherDetailsRegistrationForm',
-      new Blob([JSON.stringify(this.otherDetailsRegistrationForm.value)], {
+      new Blob([JSON.stringify(this.otherDetailsRegistrationForm.getRawValue())], {
         type: 'application/json'
       })
     );
@@ -435,15 +449,25 @@ export class OtherDetailsRegistrationComponent {
     if (window.localStorage.getItem('role') === 'SEAFARER' && this.dataSource?.data?.length > 0) {
       this.mode = 'edit';
       this.saveButtonLabel = 'Edit';
+      this.patchSid();
       this.otherDetailsRegistrationForm.get('sidNo')?.disable();
     } else if (window.localStorage.getItem('role') === 'SEAFARER' && this.dataSource?.data?.length == 0) {
       this.mode = 'add';
       this.saveButtonLabel = 'Save';
+      this.patchSid();
     } else {
-      this.saveButtonLabel = 'Edit';
-      this.mode = 'edit';
-      this.otherDetailsRegistrationForm.get('sidNo')?.disable();
+      this.saveButtonLabel = 'Save';
+      this.mode = 'add';
+      this.otherDetailsRegistrationForm.get('sidNo')?.enable();
     }
+
+    this.otherDetailsRegistrationForm.patchValue({
+      sidIssuedPlace: 'Colombo',
+      ppIssuedPlace: 'Colombo',
+      cdcIssuedPlace: 'Colombo',
+      yellowFeverIssuedPlace: 'Colombo'
+    });
+    this.otherDetailsRegistrationForm.updateValueAndValidity();
   }
 
   public editData(data: any): void {
