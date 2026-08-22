@@ -144,6 +144,7 @@ export class CertificatesRegistrationComponent {
   public populateData(): void {
     try {
       if (window.localStorage.getItem('role') === 'SEAFARER') {
+        this.patchSid();
         /* If the role is seafarer then get only details related to SID no*/
         this.seafarersService.getSeafarerData(window.localStorage.getItem('sid')).subscribe({
           next: (data: any) => {
@@ -185,11 +186,24 @@ export class CertificatesRegistrationComponent {
     }
   }
 
+  patchSid(): void {
+    const sidNo = window.localStorage.getItem('sid');
+
+    const sidDetails = this.seafarersDropdown.find((seafarer: any) => {
+      return seafarer.sidNo == sidNo;
+    });
+
+    this.certificatesRegistrationForm.get('sidNo')?.disable();
+    this.certificatesRegistrationForm.patchValue({
+      sidNo: sidDetails?.id
+    });
+  }
+
   public prepareSeafarerData(): FormData {
     const certificatesRegistrationFormData = new FormData();
     certificatesRegistrationFormData.append(
       'certificatesRegistrationForm',
-      new Blob([JSON.stringify(this.certificatesRegistrationForm.value)], {
+      new Blob([JSON.stringify(this.certificatesRegistrationForm.getRawValue())], {
         type: 'application/json'
       })
     );
