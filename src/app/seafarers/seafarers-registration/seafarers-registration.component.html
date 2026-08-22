@@ -173,7 +173,7 @@
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label> Name </mat-label>
         <input matInput placeholder="Name" formControlName="kinName" >
-        <mat-error *ngIf="seafarersForm.get('kinName')?.hasError('pattern')"> Only letters and spaces. </mat-error>
+        <mat-error *ngIf="seafarersForm.get('kinName')?.hasError('pattern')"> Only letters, . and spaces. </mat-error>
       </mat-form-field>
       
       <mat-form-field appearance="outline" class="example-full-width">

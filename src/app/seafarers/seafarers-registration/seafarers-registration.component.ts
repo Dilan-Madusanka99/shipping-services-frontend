@@ -137,7 +137,7 @@ export class SeafarersRegistrationComponent {
       home: new FormControl('', [Validators.pattern(/^0\d{9}$/)]), // first digit must be 0, others 0-9
       mobile: new FormControl('', [Validators.required, Validators.pattern(/^07[0-9]{8}$/)]), // 10 digit start with 07
       email: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/)]),
-      kinName: new FormControl('', [Validators.pattern(/^[A-Za-z\s]+$/)]),
+      kinName: new FormControl('', [Validators.pattern(/^[A-Za-z. ]+$/)]), // letters spaces and .
       kinRelationship: new FormControl('', [Validators.required]),
       kinAddress: new FormControl('', [ Validators.pattern(/^[a-zA-Z0-9\s,.'\-\/#]*$/) ]),
       kinMobile: new FormControl('', [Validators.pattern(/^07[0-9]{8}$/)]),
