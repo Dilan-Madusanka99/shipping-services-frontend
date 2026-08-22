@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators, FormGroupDirective } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -104,6 +104,8 @@ export class SeafarersRegistrationComponent {
   previewUrl!: SafeUrl | null;
   isFileSelected = false;
   // Photo upload [end]
+
+  @ViewChild(FormGroupDirective) formDirective!: FormGroupDirective;
 
   constructor(
     private fb: FormBuilder,
@@ -400,7 +402,7 @@ export class SeafarersRegistrationComponent {
   public resetData(): void {
 
     // Reset all form values
-    this.seafarersForm.reset();
+    this.formDirective.resetForm();
 
     // Clear selected record
     this.selectedData = null;
