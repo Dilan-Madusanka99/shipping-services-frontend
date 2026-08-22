@@ -338,6 +338,33 @@ constructor(
         sidNo: seafarersId
       });
     }
+
+    // flagLists: string[] = [];
+
+
+    // private getFlagList(): void {
+    //   this.seaServicesService.getData().subscribe({
+    //     next: (data: any[]) => {
+    //       this.flagLists = [...new Set(
+    //         data.map(item => item.flag?.trim()).filter(flag => flag)
+    //       )];
+    //     },
+    //     error: (error) => {
+    //       this.messageService.showError('Unable to load vessel flags: ' + error);
+    //     }
+    //   });
+    // }
+
+// <mat-form-field appearance="outline" class="example-full-width">
+//   <mat-label>Flag</mat-label>
+//   <mat-select formControlName="flaglist">
+//     <mat-option *ngFor="let flag of flagLists" [value]="flag">
+//       {{ flag }}
+//     </mat-option>
+//   </mat-select>
+//   <mat-error *ngIf="seaServicesForm.get('flag')?.hasError('required')"> Vessel flag is required. </mat-error>
+// </mat-form-field>
+
           
 }
 
