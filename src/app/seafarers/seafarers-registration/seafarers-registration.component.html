@@ -85,6 +85,7 @@
         <mat-datepicker-toggle matIconSuffix [for]="dob"></mat-datepicker-toggle>
         <mat-datepicker #dob></mat-datepicker>
           <mat-error *ngIf="seafarersForm.get('dob')?.hasError('underAge')"> Must be at least 18 years old. </mat-error>
+          <mat-error *ngIf="seafarersForm.get('dob')?.hasError('overAge')"> Age must not exceed 60 years.. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="example-full-width">

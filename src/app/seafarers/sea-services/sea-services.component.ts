@@ -80,7 +80,7 @@ export class SeaServicesComponent implements OnInit{
         grt: new FormControl('', [Validators.required,  Validators.pattern(/^\d+$/)]), // numbers only
         bhp: new FormControl('', [Validators.pattern(/^\d+$/)]), 
         signOn: new FormControl('', [Validators.required, notFutureDateValidator]),
-        signOff: new FormControl('', [Validators.required, notFutureDateValidator]),
+        signOff: new FormControl('', [Validators.required, notFutureDateValidator, this.signOffDateValidator]),
         totalMonths: new FormControl({ value: '', disabled: true }),
         reason: new FormControl('', [])
       });
@@ -371,4 +371,26 @@ export class SeaServicesComponent implements OnInit{
 
     }
 
+  // Validator for signoff date can't be the past dates from singon date
+  private signOffDateValidator = (control: AbstractControl): ValidationErrors | null => {
+    const signOffDate = control.value;
+    const signOnDate = this.seaServicesForm?.get('signOn')?.value;
+
+    if (!signOffDate || !signOnDate) {
+      return null;
+    }
+
+    const signOn = new Date(signOnDate);
+    const signOff = new Date(signOffDate);
+
+    // Remove time part
+    signOn.setHours(0, 0, 0, 0);
+    signOff.setHours(0, 0, 0, 0);
+
+    // Sign-off cannot be before sign-on
+    if (signOff < signOn) {
+      return { signOffBeforeSignOn: true };
+    }
+    return null;
+  };
 }

@@ -39,7 +39,7 @@ export function futureDateValidator(control: AbstractControl): ValidationErrors 
 }
 
 // DOB validation (above 18 years)
-  export function ageValidator(control: AbstractControl): ValidationErrors | null {
+  export function minAgeValidator(control: AbstractControl): ValidationErrors | null {
 
     if (!control.value) {
       return null;
@@ -56,6 +56,26 @@ export function futureDateValidator(control: AbstractControl): ValidationErrors 
     }
 
     return age >= 18 ? null : { underAge: true };
+  }
+
+  // DOB validation (age must not exceed 60 years)
+  export function maxAgeValidator(control: AbstractControl): ValidationErrors | null {
+
+    if (!control.value) {
+      return null;
+    }
+
+    const dob = new Date(control.value);
+    const today = new Date();
+
+    let age = today.getFullYear() - dob.getFullYear();
+    const monthDiff = today.getMonth() - dob.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+      age--;
+    }
+
+    return age >= 60 ? { overAge: true } : null;
   }
 
 @Component({
@@ -104,7 +124,7 @@ export class SeafarersRegistrationComponent {
       availableDate: new FormControl(new Date()),
       surname: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/) ]), // letters , spaces
       otherNames: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/) ]),
-      dob: new FormControl('', [ageValidator]),
+      dob: new FormControl('', [minAgeValidator, maxAgeValidator]),
       birthPlace: new FormControl('', [ Validators.pattern(/^[A-Za-z\s]+$/) ]), // only letters, spaces
       nic: new FormControl('', [Validators.pattern(/^([0-9]{9}[vVxX]|[0-9]{12})$/)]),
       religion: new FormControl('', []),
