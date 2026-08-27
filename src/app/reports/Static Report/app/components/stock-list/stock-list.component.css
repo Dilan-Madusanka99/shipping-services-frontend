@@ -648,3 +648,229 @@
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================
+   PROFESSIONAL MATTE BURGUNDY THEME
+   ========================================= */
+
+/* =========================================
+   TITLE ICON
+   ========================================= */
+
+.title-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 18px;
+
+    background: #9f1239;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+
+    box-shadow: 0 6px 14px rgba(159, 18, 57, 0.15);
+}
+
+
+/* =========================================
+   SEARCH
+   ========================================= */
+
+.search-box .mat-mdc-text-field-wrapper {
+    background: #fff8fa !important;
+
+    border-radius: 8px !important;
+
+    height: 58px !important;
+
+    border: 1px solid #e5cbd3;
+
+    box-shadow: none;
+
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+.search-box:hover .mat-mdc-text-field-wrapper {
+    background: white !important;
+
+    border-color: #c98fa1;
+}
+
+
+.search-box.mat-focused .mat-mdc-text-field-wrapper {
+    background: white !important;
+
+    border-color: #9f1239;
+
+    box-shadow: 0 0 0 3px rgba(159, 18, 57, 0.10);
+}
+
+
+.search-icon {
+    color: #9f1239 !important;
+
+    margin-right: 10px;
+
+    font-size: 24px;
+}
+
+
+/* =========================================
+   PRINT BUTTON
+   ========================================= */
+
+.print-btn {
+    width: 220px !important;
+
+    height: 55px;
+
+    border-radius: 8px !important;
+
+    background: #9f1239 !important;
+
+    color: white !important;
+
+    font-weight: 600;
+
+    font-size: 16px;
+
+    box-shadow: 0 5px 12px rgba(159, 18, 57, 0.15);
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.print-btn:hover {
+    background: #881337 !important;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 7px 15px rgba(159, 18, 57, 0.20);
+}
+
+
+.print-btn mat-icon {
+    margin-right: 8px;
+}
+
+
+/* =========================================
+   TABLE HEADER
+   ========================================= */
+
+table[mat-table] .mat-mdc-header-row {
+    display: table-row !important;
+
+    height: 60px !important;
+
+    background: #9f1239 !important;
+}
+
+
+/* =========================================
+   TABLE HEADER CELLS
+   ========================================= */
+
+table[mat-table] .mat-mdc-header-cell {
+    background: transparent !important;
+
+    color: white !important;
+
+    font-weight: 600;
+}
+
+
+/* =========================================
+   TABLE HOVER
+   ========================================= */
+
+table[mat-table] .mat-mdc-row:hover {
+    background: #fff5f7 !important;
+}
+
+
+/* =========================================
+   SORT ARROW
+   ========================================= */
+
+table[mat-table] .mat-sort-header-arrow {
+    color: white !important;
+}
+
+
+/* =========================================
+   REFRESH BUTTON
+   ========================================= */
+
+.refresh-btn {
+    width: 58px;
+
+    height: 58px;
+
+    border-radius: 10px !important;
+
+    background: #f8e7ed !important;
+
+    color: #9f1239 !important;
+
+    box-shadow: none;
+
+    border: 1px solid #e5cbd3;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.refresh-btn:hover {
+    transform: none;
+
+    background: #9f1239 !important;
+
+    color: white !important;
+
+    border-color: #9f1239;
+}
+
+
+/* =========================================
+   PAGINATOR
+   ========================================= */
+
+.mat-mdc-paginator {
+    border-top: 1px solid #edd8df;
+
+    background: white;
+
+    border-radius: 0 0 10px 10px;
+
+    box-shadow: none;
+}
+
+
+/* =========================================
+   PAGE BACKGROUND
+   ========================================= */
+
+body {
+    background: #faf6f7;
+}
